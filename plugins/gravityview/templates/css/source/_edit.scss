@@ -1,0 +1,85 @@
+.gv-edit-entry-wrapper {
+
+	.gform-footer {
+		#publishing-action {
+			width: 100%;
+			.alignright{
+				float: right;
+			}
+			input.gv-button-update, a.gv-button-cancel, a.gv-button-delete{
+				line-height: normal;
+				margin: 0;
+			}
+		}
+	}
+
+	.dashicons {
+		font-size: .925em;
+		padding: 0 .2em;
+		width: 1em;
+		height: 1em;
+		line-height: 1em;
+		#{$margin-left}: .5em;
+	}
+
+	// GF 2.5
+	.gravity-theme .gform_delete_file {
+		line-height: 1;
+		padding: .25em;
+		margin: 0 .25em;
+		background: var( --global-palette-btn-bg );
+		.dashicons {
+			margin: 0;
+			width: 20px;
+		}
+		&:hover {
+			background: var(--global-palette-btn-bg-hover);
+		}
+	}
+
+	.dashicons-dismiss {
+		color: #a10013;
+
+		&:hover {
+			color: #e20012;
+		}
+	}
+
+	.dashicons-download {
+		color: #406e20;
+
+		&:hover {
+			color: #469416;
+		}
+	}
+
+	// GF 2.5.6.4
+	.ginput_preview_control {
+		bottom: -0.25rem;
+		display: inline-block;
+		font-size: 1.25rem;
+		outline: none;
+		position: relative;
+		text-decoration: none;
+
+		&.gform-icon--circle-arrow-down {
+			color: #22a753;
+		}
+
+		&.gform-icon--circle-delete {
+			color: #dd301d;
+		}
+	}
+}
+
+@media only screen and (max-width: 400px) {
+	.gv-edit-entry-wrapper .gravity-theme .gform-footer {
+		#publishing-action {
+			input.gv-button-update, a.gv-button-cancel, a.gv-button-delete {
+				float: none;
+				margin-top: 3px;
+				display: inline-block;
+			}
+		}
+	}
+}
