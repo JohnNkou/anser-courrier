@@ -1,0 +1,120 @@
+// Include the DataTables source
+@import "../../../node_modules/datatables.net-src/css/jquery.dataTables.scss";
+
+.gv-datatables-container {
+
+	// nowrap used on the table when Responsive extension is enabled
+	table.nowrap {
+		table-layout: auto; // forces the cell content to set the column width (enables good responsive calculation)
+		width: 100% !important; // overrides the fixed width calculated by the responsive algorithm
+	}
+
+	.dataTables_filter,
+	.dataTables_length {
+		white-space: nowrap;
+		width: auto;
+	}
+
+	.dataTables_filter input[type="search"] {
+		width: auto;
+	}
+
+	.dataTable tr th.sorting_disabled {
+		cursor: default;
+		padding-right: 10px;
+		padding-left: 10px;
+
+		&:before,
+		&:after {
+			content: none;
+		}
+	}
+
+	.dataTables_wrapper .dataTables_processing {
+		z-index: 100000 !important;
+		height: auto;
+
+		background: rgba( 255, 255, 255, .98 );
+		border: 1px solid rgba( 230, 230, 230, .98 );
+		border-radius: 9px;
+
+		.dataTables_processing_text {
+			display: block;
+			padding: .75em .5em .5em .5em;
+			line-height: 1.5em;
+		}
+	}
+
+	// When Scroller is active, hide the page length selector
+	//div.DTS .dataTables_length{
+	//	display: none;
+	//}
+
+	.dataTables_length select {
+		padding-right: 25px;
+	}
+
+	input::-webkit-datetime-edit {
+		line-height: 1;
+		padding: 0;
+		margin-bottom: -.2em;
+	}
+
+	.date-input-wrapper.gv-dt-field-filter {
+		display: flex;
+		justify-content: start;
+		gap: 10px;
+  }
+
+	.gv-dt-field-filter {
+		display: block;
+		width: 100%;
+		min-width: 4em;
+	}
+}
+
+html[dir="rtl"] .gv-datatables-container {
+	.dataTables_length select {
+		padding-left: 25px;
+	}
+}
+
+.gv-table-view .gv-gallery .gv-field-file-uploads {
+	margin: 0;
+	padding: 0;
+}
+
+.gv-table-view .gv-gallery .gv-field-file-uploads li {
+	list-style: none;
+	display: inline-block;
+	max-width: 200px;
+	max-height: 200px;
+	margin-right: 1em;
+}
+.gv-table-view {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.gv-table-view th,
+.gv-table-view td {
+  padding: .3em;
+}
+
+.gv-table-view-content {
+  table-layout: fixed;
+
+  // The single entry view left column
+  > tbody > tr > th {
+    width: 35%;
+    vertical-align: top;
+  }
+
+  & th.gsurvey-likert-choice-label {
+    border: inherit;
+  }
+}
+
+.DTTT_print_info {
+	z-index: 10;
+}
