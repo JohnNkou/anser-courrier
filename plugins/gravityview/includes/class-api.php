@@ -725,7 +725,7 @@ class GravityView_API {
 	 *
 	 * @return string Link to the entry with the directory parent slug, or empty string if embedded post or View doesn't exist
 	 */
-	public static function entry_link( $entry, $post_id = null, $add_directory_args = true, $view_id = 0 ) {error_log("CLASS-API");
+	public static function entry_link( $entry, $post_id = null, $add_directory_args = true, $view_id = 0 ) {
 
 		if ( ! empty( $entry ) && ! is_array( $entry ) ) {
 			$entry = GVCommon::get_entry( $entry );

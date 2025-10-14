@@ -40,13 +40,13 @@ class gravityview extends \GV\Shortcode {
 	 *
 	 * @return string|null The output.
 	 */
-	public function callback( $passed_atts, $content = '', $tag = '' ) {error_log("CLASS-GV-SHORTCODE-GRAVITYVIEW");
-		$request = gravityview()->request;
+	public function callback( $passed_atts, $content = '', $tag = '' ) {
+		$request = gravityview()->request;error_log("Request ".json_encode($request));
 
 		if ( $request->is_admin() ) {
 			return '';
 		}
-
+error_log("Passed attrs ".json_encode($passed_atts));
 		$atts = wp_parse_args(
 			$passed_atts,
 			array(
@@ -56,7 +56,7 @@ class gravityview extends \GV\Shortcode {
 				'class'   => '',
 			)
 		);
-
+error_log("Attrs ".json_encode($atts));
 		if ( ! $view_id = $atts['id'] ? : $atts['view_id'] ) {
 			if ( $atts['detail'] && $view = $request->is_view() ) {
 				$view_id = $view->ID;
@@ -65,7 +65,7 @@ class gravityview extends \GV\Shortcode {
 
 		$atts['view_id'] = $view_id;
 		$view            = $this->get_view_by_atts( $atts );
-
+error_log("View obtained from attribute ".json_encode($view));
 		if ( is_wp_error( $view ) ) {
 			return $this->handle_error( $view );
 		}

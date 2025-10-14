@@ -218,7 +218,7 @@ class oEmbed {
 	 *
 	 * @return string The rendered oEmbed.
 	 */
-	private static function render_frontend( $view, $entry ) {error_log("CLASS-GV-OEMBED");
+	private static function render_frontend( $view, $entry ) {
 
 		// We do not give a hint that this content exists, for security purposes.
 		if ( 'trash' === get_post_status( $view->ID ) ) {
