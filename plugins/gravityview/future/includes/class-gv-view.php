@@ -1110,7 +1110,7 @@ class View implements \ArrayAccess {
 		}
 
 		if ( gravityview()->plugin->supports( Plugin::FEATURE_GFQUERY ) ) {
-error_log("SUPPORTING GFQUERY");
+			error_log("SUPPORTING GFQUERY");
 			$query_class = $this->get_query_class();
 
 			/** @type \GF_Query $query */
@@ -1475,7 +1475,7 @@ error_log("SUPPORTING GFQUERY");
 			do_action_ref_array( 'gravityview/view/query', array( &$query, $this, $request ) );
 
 			gravityview()->log->debug( 'GF_Query parameters: ', array( 'data' => Utils::gf_query_debug( $query ) ) );
-
+			error_log("RUNNING THE RUN_DB_QUERY");
 			$result = $this->run_db_query( $query );
 
 			list ( $db_entries, $query ) = $result;
