@@ -47,7 +47,7 @@ class Multi_Entry extends Entry implements \ArrayAccess {
 			$_entry->entries[ $entry['form_id'] ] = &$entry;
 		}
 
-		$_entry->ID = reset( $_entry->entries )['id'] ?? null;
+		$_entry->ID = reset( $_entry->entries )['id'] ?? null;error_log("from entries result ".json_encode($_entry));
 
 		return $_entry;
 	}
