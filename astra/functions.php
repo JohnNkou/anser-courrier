@@ -390,16 +390,19 @@ function load_gravityview(){
     $results = [];
 
     foreach ($entries->all() as $entry) {
+        $an = [];
         if($entry->is_multi()){
             foreach ($fields_array as $field) {
-                array_push($results, $entry->as_entry['_multi'][$field->form_id][$field->ID]);
+                $an[$field->label] = $entry->as_entry['_multi'][$field->form_id][$field->ID];
             }
         }
         else{
             foreach ($fields_array as $field) {
-                array_push($results, $entry[$field->ID]);
+                $an[$field->label] = $entry[$field->ID];
             }
         }
+
+        array_push($results, $an)
     }
 
     wp_send_json_success($results);
