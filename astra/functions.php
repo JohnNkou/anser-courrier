@@ -386,7 +386,7 @@ function load_gravityview(){
     $view = $short_code->get_view($attrs);
     $entries = $view->get_entries($request);
 
-    error_log("ENTRIES ".json_encode($entries));
+    error_log("ENTRIES ".json_encode($entries->all()));
 
     wp_send_json_success([]);
 }
