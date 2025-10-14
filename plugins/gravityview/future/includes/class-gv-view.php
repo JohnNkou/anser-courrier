@@ -1528,7 +1528,7 @@ class View implements \ArrayAccess {
 				$entries   = $entries->sort( new \GV\Entry_Sort( $field, $direction ) );
 			}
 		}
-error_log("Before entries ".json_encode($entries));
+
 		/**
 		 * Modify the entry fetching filters, sorts, offsets, limits.
 		 *
