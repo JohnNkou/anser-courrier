@@ -347,6 +347,8 @@ $gravityview_ajax_endpoint = 'load_gravityview';
 add_action("wp_ajax_$gravityflow_ajax_endpoint", 'load_gravityflow_inbox');
 add_action("wp_ajax_nopriv_$gravityview_ajax_endpoint", 'load_gravityflow_inbox');
 add_action("wp_enqueue_scripts", function(){
+    global $gravityview_ajax_endpoint;
+    
     if (is_page('boite-de-reception-4')) {
         wp_enqueue_script("gravityflow-inbox-ajax", '/js/anser_gravity_test.js');
         wp_localize_script('gravityflow-inbox-ajax', 'GravityFlowAjax',[
@@ -361,7 +363,7 @@ add_action("wp_enqueue_scripts", function(){
         wp_localize_script("gravityview-ajax", 'GravityViewAjax',[
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('gravityview_nonce'),
-            'action' => "$gravityview_ajax_endpoint"
+            'action' => $gravityview_ajax_endpoint
         ]);
     }
 });
