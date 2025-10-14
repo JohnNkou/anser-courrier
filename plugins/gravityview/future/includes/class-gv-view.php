@@ -1110,7 +1110,7 @@ class View implements \ArrayAccess {
 		}
 
 		if ( gravityview()->plugin->supports( Plugin::FEATURE_GFQUERY ) ) {
-
+error_log("SUPPORTING GFQUERY");
 			$query_class = $this->get_query_class();
 
 			/** @type \GF_Query $query */

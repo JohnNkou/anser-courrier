@@ -28,7 +28,7 @@ class View_Table_Template extends View_Template {
 	 * @param Request          $request
 	 */
 	public function __construct( View $view, Entry_Collection $entries, Request $request ) {
-
+		error_log("My entries ".json_encode($entries));
 	    add_filter( 'gravityview/template/field/label', array( __CLASS__, 'add_columns_sort_links' ), 100, 2 );
 
 		parent::__construct( $view, $entries, $request );
