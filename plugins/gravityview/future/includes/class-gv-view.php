@@ -778,7 +778,7 @@ class View implements \ArrayAccess {
 		 * @param $fields array Multi-array of fields with first level being the field zones.
 		 * @param $view_id int The View the fields are being pulled for.
 		 */
-		$configuration = apply_filters( 'gravityview/configuration/fields', (array) $view->_gravityview_directory_fields, $view->ID );
+		$configuration = apply_filters( 'gravityview/configuration/fields', (array) $view->_gravityview_directory_fields, $view->ID ); error_log("CONFIGURATIONS ".json_encode($configuration));
 
 		/**
 		 * Filter the View fields' configuration array.
@@ -1483,13 +1483,13 @@ class View implements \ArrayAccess {
 			/**
 			 * Map from Gravity Forms entries arrays to an Entry_Collection.
 			 */
-			if ( count( $this->joins ) ) { error_log("Has join");
+			if ( count( $this->joins ) ) {
 				foreach ( $db_entries as $entry ) {
 					$entries->add(
 						Multi_Entry::from_entries( array_map( '\GV\GF_Entry::from_entry', $entry ) )
 					);
 				}
-			} else {error_log("No Join");
+			} else {
 				array_map( array( $entries, 'add' ), array_map( '\GV\GF_Entry::from_entry', $db_entries ) );
 			}
 
