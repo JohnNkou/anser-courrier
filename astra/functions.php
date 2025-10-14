@@ -341,14 +341,25 @@ add_action("wp_head", function(){
 
 // Custom Ajax Endpoint for experimentation with ajax loading of Gravityflow
 
+
+
 add_action('wp_ajax_load_gravityflow_inbox', 'load_gravityflow_inbox');
 add_action('wp_ajax_nopriv_load_gravityflow_inbox', 'load_gravityflow_inbox');
 add_action("wp_enqueue_scripts", function(){
-    wp_enqueue_script("gravityflow-inbox-ajax", '/js/anser_gravity_test.js',['jquery'],'1.0',true);
-    wp_localize_script('gravityflow-inbox-ajax', 'GravityFlowAjax',[
-        'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('gravityflow_inbox_nonce')
-    ]);
+    if (is_page('boite-de-reception-4')) {
+        wp_enqueue_script("gravityflow-inbox-ajax", '/js/anser_gravity_test.js',['jquery'],'1.0',true);
+        wp_localize_script('gravityflow-inbox-ajax', 'GravityFlowAjax',[
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('gravityflow_inbox_nonce')
+        ]);   
+    }
+
+    if(is_page('mes-courriers-v2')){
+        wp_localize_script("gravityview-ajax", 'GravityViewAjax',[
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('gravityview_nonce')
+        ])
+    }
 });
 
 function load_gravityflow_inbox(){
