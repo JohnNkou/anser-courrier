@@ -379,7 +379,8 @@ class Extender extends \GV\Shortcode{
 function load_gravityview(){
     $request = gravityview()->request;
     $attrs = [
-        "id"=> 11857
+        "id"=> 11857,
+        "view_id"=> 11857
     ];
     $short_code = new Extender();
     $view = $short_code->get_view($attrs);
