@@ -360,7 +360,8 @@ add_action("wp_enqueue_scripts", function(){
         wp_enqueue_script('gravityview-ajax','/js/anser_view_test.js');
         wp_localize_script("gravityview-ajax", 'GravityViewAjax',[
             'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('gravityview_nonce')
+            'nonce' => wp_create_nonce('gravityview_nonce'),
+            'action' => $gravityview_ajax_endpoint
         ]);
     }
 });
