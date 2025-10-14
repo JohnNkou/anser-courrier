@@ -1036,7 +1036,7 @@ class View implements \ArrayAccess {
 	 *
 	 * @return \GV\Entry_Collection The entries.
 	 */
-	public function get_entries( $request = null ) {
+	public function get_entries( $request = null ) {error_log("Indeed this");
 		$entries = new \GV\Entry_Collection();
 
 		if ( ! $this->form ) {
