@@ -402,7 +402,7 @@ function load_gravityview(){
             }
         }
 
-        array_push($results, $an)
+        array_push($results, $an);
     }
 
     wp_send_json_success($results);
