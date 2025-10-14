@@ -372,7 +372,7 @@ add_action("wp_enqueue_scripts", function(){
 function load_gravityview(){
     $request = gravityview()->request;
     $attrs = [
-        "view_id"=> 11857
+        "id"=> 11857
     ];
     $short_code = new GV\Shortcodes\gravityview();
     $view = $short_code->callback($attrs);
