@@ -844,6 +844,11 @@ class View implements \ArrayAccess {
 		 */
 		do_action_ref_array( 'gravityview/view/get', array( &$view ) );
 
+		$fields = $view->fields->by_position( 'directory_table-columns' );
+		foreach ($fields->by_visible($view)->all() $value) {
+			error_log("VISIBLE FIELDS ".json_encode($value));
+		}
+
 		return $view;
 	}
 

@@ -16,7 +16,6 @@ class View_Table_Template extends View_Template {
 	 * @var string The template slug to be loaded (like "table", "list")
 	 */
 	public static $slug = 'table';
-	private $directed = false;
 
 	/**
      * Constructor. Add filters to modify output.
@@ -397,9 +396,6 @@ class View_Table_Template extends View_Template {
 			'markup'     => '<td id="{{ field_id }}" class="{{ class }}" data-label="{{label_value:data-label}}">{{ value }}</td>',
             'form'       => $form,
 		);
-		if($entry->is_multi()){
-			error_log("ENTRY DATA ".json_encode($entry-> as_entry()["_multi"][$field->form_id][$field->ID]));
-		}
 		/** Output. */
 		echo \gravityview_field_output( $args, $context );
 	}
