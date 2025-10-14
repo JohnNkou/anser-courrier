@@ -779,7 +779,6 @@ class View implements \ArrayAccess {
 		 * @param $view_id int The View the fields are being pulled for.
 		 */
 		$configuration = apply_filters( 'gravityview/configuration/fields', (array) $view->_gravityview_directory_fields, $view->ID );
-		error_log("CONFIGURATION ".json_encode($configuration));
 		/**
 		 * Filter the View fields' configuration array.
 		 *

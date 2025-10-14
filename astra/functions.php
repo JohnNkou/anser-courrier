@@ -389,7 +389,7 @@ function load_gravityview(){
 
 
     error_log("ENTRIES ".json_encode($entries->all()));
-    error_log("FIELDS ".json_encode($fields->by_visible($view)->all()));
+    error_log("FIELDS ".json_encode($fields));
 
     wp_send_json_success([]);
 }
