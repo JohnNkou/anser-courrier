@@ -354,7 +354,8 @@ add_action("wp_enqueue_scripts", function(){
         ]);   
     }
 
-    if(is_page('mes-courriers-v2')){
+    if(is_page('mes-courrier-v2')){
+        error_log("I'm on gravity Bebe");
         wp_localize_script("gravityview-ajax", 'GravityViewAjax',[
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('gravityview_nonce')
