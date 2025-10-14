@@ -187,7 +187,7 @@ class View_Table_Template extends View_Template {
 	 *
 	 * @return void
 	 */
-	public function the_columns() {
+	public function the_columns() { error_log("THE COLUMNS ".json_encode($this->view->fields));
 		$fields = $this->view->fields->by_position( 'directory_table-columns' );
 		foreach ( $fields->by_visible( $this->view )->all() as $field ) {
 			$context = Template_Context::from_template( $this, compact( 'field' ) );

@@ -110,7 +110,6 @@ class View_Renderer extends Renderer {
 			gravityview()->log->notice( '{template_class} not found, falling back to legacy', array( 'template_class' => $class ) );
 			$class = '\GV\View_Legacy_Template';
 		}
-error_log("THE CLASS IS $class");
 		/** @var \GV\View_Table_Template|\GV\View_List_Template|\GV\View_Legacy_Template $template */
 		$template = new $class( $view, $entries, $request );
 
