@@ -323,6 +323,7 @@ error_log("Sanitized atts ".json_encode($atts));
 				$request = $mock_request;
 			}
 			error_log("Choose laned ");
+			error_log("FIELDS ".json_encode($view->fields));
 			$renderer = new \GV\View_Renderer();
 			return self::_return( $renderer->render( $view, $request ) );
 		}
