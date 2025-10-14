@@ -190,10 +190,9 @@ class View_Table_Template extends View_Template {
 	 */
 	public function the_columns() {
 		$fields = $this->view->fields->by_position( 'directory_table-columns' );
-		error_log("The columns fields ".json_encode($fields));
 		foreach ( $fields->by_visible( $this->view )->all() as $field ) {
 			$context = Template_Context::from_template( $this, compact( 'field' ) );
-
+			error_log("the columnds field ".json_decode($field));
 			$args = array(
 				'field'        => is_numeric( $field->ID ) ? $field->as_configuration() : null,
 				'hide_empty'   => false,
