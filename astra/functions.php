@@ -371,8 +371,13 @@ add_action("wp_enqueue_scripts", function(){
 
 function load_gravityview(){
     $request = gravityview()->request;
+    $attrs = [
+        "view_id"=> 11857
+    ]
+    $short_code = new GV\Shortcode();
+    $view = $short_code->get_view_by_atts($attrs);
 
-    error_log("My request ".json_encode($request));
+    error_log("My View ".json_encode($view));
 
     wp_send_json_success([]);
 }
