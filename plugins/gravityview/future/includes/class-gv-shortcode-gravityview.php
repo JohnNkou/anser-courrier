@@ -40,7 +40,7 @@ class gravityview extends \GV\Shortcode {
 	 *
 	 * @return string|null The output.
 	 */
-	public function callback( $passed_atts, $content = '', $tag = '' ) {
+	public function callback( $passed_atts, $content = '', $tag = '' ) {error_log("CLASS-GV-SHORTCODE-GRAVITYVIEW");
 		$request = gravityview()->request;
 
 		if ( $request->is_admin() ) {

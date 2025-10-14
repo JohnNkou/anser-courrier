@@ -20,8 +20,8 @@ class GravityView_View_Data {
 
 		if ( ! empty( $passed_post ) ) {
 			$id_or_id_array = $this->maybe_get_view_id( $passed_post );
-			foreach ( is_array( $id_or_id_array ) ? $id_or_id_array : array( $id_or_id_array ) as $view_id ) {error_log("Checking for view ".$view_id);
-				if ( \GV\View::exists( $view_id ) && ! $this->views->contains( $view_id ) ) { error_log("Adding view ".$view_id);
+			foreach ( is_array( $id_or_id_array ) ? $id_or_id_array : array( $id_or_id_array ) as $view_id ) {
+				if ( \GV\View::exists( $view_id ) && ! $this->views->contains( $view_id ) ) {
 					$this->views->add( \GV\View::by_id( $view_id ) );
 				}
 			}

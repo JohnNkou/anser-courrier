@@ -24,7 +24,7 @@ class gventry extends \GV\Shortcode {
 	 *
 	 * @return string|null The output.
 	 */
-	public function callback( $atts, $content = '', $tag = '' ) {
+	public function callback( $atts, $content = '', $tag = '' ) { error_log("CLASS-GV-SHORTCODE-GVENTRY");
 		$request = gravityview()->request;
 
 		if ( $request->is_admin() ) {
