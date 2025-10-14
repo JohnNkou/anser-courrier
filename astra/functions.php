@@ -385,8 +385,11 @@ function load_gravityview(){
     $short_code = new Extender();
     $view = $short_code->get_view($attrs);
     $entries = $view->get_entries($request);
+    $fields = $view->fields->by_position('directory_table_columns');
+
 
     error_log("ENTRIES ".json_encode($entries->all()));
+    error_log("FIELDS ".json_encode($fields->by_visible($view)->all()));
 
     wp_send_json_success([]);
 }
