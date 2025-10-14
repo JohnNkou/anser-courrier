@@ -717,7 +717,7 @@ class GF_Query {
 	 *
 	 * @return array The rows.
 	 */
-	private function query() { error_log("DOING QUERIES");
+	private function query() {
 		if ( count( $this->queries ) ) {
 			GFCommon::log_debug( 'Reusing GF_Query is undefined behavior. Create a new instance instead.' );
 		}

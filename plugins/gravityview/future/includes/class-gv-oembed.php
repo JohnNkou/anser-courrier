@@ -152,7 +152,7 @@ class oEmbed {
 				$view = \GV\View::by_id( $matches['slug'] );
 			}
 
-			if ( ! $view ) {error_log("GV-OEMBED");
+			if ( ! $view ) {
 				$view = \GV\View::from_post( get_page_by_path( $matches['slug'], OBJECT, 'gravityview' ) );
 			}
 		}

@@ -1240,7 +1240,7 @@ class Astra_Breadcrumb_Trail {
 			return;
 		}
 		// Get parent post by the path.
-		$post = get_page_by_path( $path ); error_log("ASTR GET_PAGE_BY_PATH");
+		$post = get_page_by_path( $path );
 
 		if ( ! empty( $post ) ) {
 			$this->add_post_parents( $post->ID );
