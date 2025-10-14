@@ -369,7 +369,7 @@ add_action("wp_enqueue_scripts", function(){
     }
 });
 
-class Extender extends GV\Shortcodes{
+class Extender extends \GV\Shortcode{
     public function get_view($atts){
         return $this->get_view_by_atts($atts);
     }
