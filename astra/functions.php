@@ -369,13 +369,15 @@ add_action("wp_enqueue_scripts", function(){
     }
 });
 
+
 function load_gravityview(){
     $request = gravityview()->request;
     $attrs = [
         "id"=> 11857
     ];
     $short_code = new GV\Shortcodes\gravityview();
-    $view = $short_code->callback($attrs);
+    $short_code->callback($attrs);
+    $view = $short_code::current_view;
 
     error_log("My View ".json_encode($view));
 
