@@ -136,7 +136,7 @@ error_log("Attrs ".json_encode($atts));
 				$is_reembedded = true;
 			}
 		}
-error_log("Request is reembedded ".$is_reembedded)
+error_log("Request is reembedded ".$is_reembedded);
 		array_push( self::$callstack, true );
 		/**
 		 * Remove Widgets on a nested embedded View.
