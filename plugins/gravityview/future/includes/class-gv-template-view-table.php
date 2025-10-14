@@ -245,7 +245,6 @@ class View_Table_Template extends View_Template {
 	 * @return void
 	 */
 	public function the_entry( \GV\Entry $entry, $attributes ) {
-		error_log("THE ENTRY ".json_encode($entry));
 		$fields = $this->view->fields->by_position( 'directory_table-columns' )->by_visible( $this->view );
 
 		$context = Template_Context::from_template( $this, compact( 'entry', 'fields' ) );
@@ -397,7 +396,7 @@ class View_Table_Template extends View_Template {
             'label'      => self::get_field_column_label( $field, $context ),
 			'markup'     => '<td id="{{ field_id }}" class="{{ class }}" data-label="{{label_value:data-label}}">{{ value }}</td>',
             'form'       => $form,
-		);
+		); error_log("PuigTech ".json_encode($args));
 
 		/** Output. */
 		echo \gravityview_field_output( $args, $context );
