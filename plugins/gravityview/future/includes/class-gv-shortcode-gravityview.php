@@ -161,7 +161,7 @@ error_log("Sanitized atts ".json_encode($atts));
 			if ( ! is_wp_error( $error ) ) {
 				break;
 			}
-error_log("HAS ERROR ".json_encode($error));
+			error_log("HAS ERROR ".json_encode($error));
 			switch ( str_replace( 'gravityview/', '', $error->get_error_code() ) ) {
 				case 'post_password_required':
 					return self::_return( get_the_password_form( $view->ID ) );

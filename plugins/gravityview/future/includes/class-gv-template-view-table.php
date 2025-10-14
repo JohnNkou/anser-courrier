@@ -192,7 +192,7 @@ class View_Table_Template extends View_Template {
 		$fields = $this->view->fields->by_position( 'directory_table-columns' );
 		foreach ( $fields->by_visible( $this->view )->all() as $field ) {
 			$context = Template_Context::from_template( $this, compact( 'field' ) );
-			error_log("the columnds field ".json_encode($field));
+			
 			$args = array(
 				'field'        => is_numeric( $field->ID ) ? $field->as_configuration() : null,
 				'hide_empty'   => false,
