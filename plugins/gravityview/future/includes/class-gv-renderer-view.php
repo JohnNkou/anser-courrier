@@ -70,7 +70,6 @@ class View_Renderer extends Renderer {
 		 */
 		if ( $get_entries ) {
 			$entries = $view->get_entries( $request );
-			error_log("Entries getting ".json_encode($entries->all()));
 		} else { error_log("Initializing Entry_collection");
 			$entries = new \GV\Entry_Collection();
 		}

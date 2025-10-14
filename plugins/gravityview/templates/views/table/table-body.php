@@ -47,7 +47,7 @@ if ( 1 === (int) $gravityview->view->settings->get( 'no_entries_options', '0' ) 
 			</tr>
 			<?php
 		} else {
-			foreach ( $gravityview->entries->all() as $entry ) {
+			foreach ( $gravityview->entries->all() as $entry ) {error_log("Baby entri ".json_encode($entry));
 
 				// Add `alt` class to alternate rows
 				$alt = empty( $alt ) ? 'alt' : '';
