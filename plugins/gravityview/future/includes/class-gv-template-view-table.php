@@ -398,7 +398,12 @@ class View_Table_Template extends View_Template {
             'form'       => $form,
 		);
 		if($entry->is_multi()){
-			error_log("ENTRY DATA ".json_encode($entry->as_entry()['_isMulti'][$field->form_id][$field->ID]));
+			if($this->directed == false){
+				foreach ($entry->as_entry()[0] as $key => $value) {
+					error_log("ENTRY KEY $key");
+				}
+				$this->directed = true;
+			}
 		}
 		/** Output. */
 		echo \gravityview_field_output( $args, $context );
