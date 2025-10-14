@@ -369,15 +369,20 @@ add_action("wp_enqueue_scripts", function(){
     }
 });
 
+class Extender extends GV\Shortcodes{
+    public function get_view($atts){
+        return $this->get_view_by_atts($atts);
+    }
+}
+
 
 function load_gravityview(){
     $request = gravityview()->request;
     $attrs = [
         "id"=> 11857
     ];
-    $short_code = new GV\Shortcodes\gravityview();
-    $short_code->callback($attrs);
-    $view = $short_code::current_view;
+    $short_code = new Extender();
+    $view = $short_code->get_view($attrs);
 
     error_log("My View ".json_encode($view));
 

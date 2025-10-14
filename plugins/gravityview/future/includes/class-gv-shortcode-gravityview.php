@@ -46,7 +46,7 @@ class gravityview extends \GV\Shortcode {
 		if ( $request->is_admin() ) {
 			return '';
 		}
-error_log("Passed attrs ".json_encode($passed_atts));
+		error_log("Passed attrs ".json_encode($passed_atts));
 		$atts = wp_parse_args(
 			$passed_atts,
 			array(
@@ -56,7 +56,7 @@ error_log("Passed attrs ".json_encode($passed_atts));
 				'class'   => '',
 			)
 		);
-error_log("Attrs ".json_encode($atts));
+		error_log("Attrs ".json_encode($atts));
 		if ( ! $view_id = $atts['id'] ? : $atts['view_id'] ) {
 			if ( $atts['detail'] && $view = $request->is_view() ) {
 				$view_id = $view->ID;
