@@ -2,7 +2,7 @@ function Anser_loader(offset=0,page_size=10, search_term=''){
     let url = new URL(GravityFlowAjax.ajax_url),
     searchParams = url.searchParams;
     
-    searchParams.set('action', 'load_gravityflow_inbox');
+    searchParams.set('action', GravityFlowAjax.action);
     searchParams.set('security', GravityFlowAjax.nonce);
     searchParams.set('offset', offset);
     searchParams.set('page_size', page_size);
