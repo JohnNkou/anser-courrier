@@ -384,8 +384,9 @@ function load_gravityview(){
     ];
     $short_code = new Extender();
     $view = $short_code->get_view($attrs);
+    $entries = $view->get_entries($request);
 
-    error_log("My View ".json_encode($view));
+    error_log("ENTRIES ".json_encode($entries));
 
     wp_send_json_success([]);
 }
