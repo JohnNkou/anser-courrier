@@ -758,7 +758,7 @@ final class Legacy_Context {
 /** Add some global fix for field capability discrepancies. */
 add_filter(
 	'gravityview/configuration/fields',
-	function ( $fields ) { error_log("FINISHED");
+	function ( $fields ) { error_log("FINISHED ".json_encode($fields));
 		if ( empty( $fields ) ) {
 			return $fields;
 		}
