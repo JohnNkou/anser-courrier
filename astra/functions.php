@@ -351,6 +351,8 @@ add_action("wp_enqueue_scripts", function(){
     ]);
 });
 
+error_log("AM I BEING RELEVANT");
+
 function load_gravityflow_inbox(){
     // The global $post must be set in order for the gravityflow class to pass the request and not return an empty string
     check_ajax_referer('gravityflow_inbox_nonce', 'security');
