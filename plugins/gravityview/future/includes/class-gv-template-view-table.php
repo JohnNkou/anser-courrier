@@ -397,7 +397,7 @@ class View_Table_Template extends View_Template {
 			'markup'     => '<td id="{{ field_id }}" class="{{ class }}" data-label="{{label_value:data-label}}">{{ value }}</td>',
             'form'       => $form,
 		);
-		error_log("ENTRY DATA ".json_encode($entry->as_entry()[$field->id]));
+		error_log("ENTRY DATA ".json_encode($entry->as_entry()));
 		/** Output. */
 		echo \gravityview_field_output( $args, $context );
 	}
