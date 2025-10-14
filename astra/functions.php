@@ -387,8 +387,6 @@ function load_gravityview(){
     $entries = $view->get_entries($request);
     $fields = $view->fields->by_position('directory_table_columns');
 
-
-    error_log("ENTRIES ".json_encode($entries->all()));
     error_log("FIELDS ".json_encode($fields));
 
     wp_send_json_success([]);
