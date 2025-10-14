@@ -386,10 +386,23 @@ function load_gravityview(){
     $view = $short_code->get_view($attrs);
     $entries = $view->get_entries($request);
     $fields = $view->fields->by_position( 'directory_table-columns' );
+    $fields_array = $fields->by_visible($view)->all();
+    $results = [];
 
-    error_log("FIELDS ".json_encode($fields->by_visible($view)->all()));
+    foreach ($entries->all() as $entry) {
+        if($entry->is_multi()){
+            foreach ($fields_array as $field) {
+                array_push($results, $entry->as_entry['_multi'][$field->form_id][$field->ID]);
+            }
+        }
+        else{
+            foreach ($fields_array as $field) {
+                array_push($results, $entry[$form_id][$field->ID]);
+            }
+        }
+    }
 
-    wp_send_json_success([]);
+    wp_send_json_success($results);
 }
 
 
