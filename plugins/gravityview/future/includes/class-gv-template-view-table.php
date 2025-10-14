@@ -192,7 +192,7 @@ class View_Table_Template extends View_Template {
 		$fields = $this->view->fields->by_position( 'directory_table-columns' );
 		foreach ( $fields->by_visible( $this->view )->all() as $field ) {
 			$context = Template_Context::from_template( $this, compact( 'field' ) );
-			
+
 			$args = array(
 				'field'        => is_numeric( $field->ID ) ? $field->as_configuration() : null,
 				'hide_empty'   => false,
@@ -245,7 +245,7 @@ class View_Table_Template extends View_Template {
 	 * @return void
 	 */
 	public function the_entry( \GV\Entry $entry, $attributes ) {
-
+		error_log("THE ENTRY ".json_encode($entry));
 		$fields = $this->view->fields->by_position( 'directory_table-columns' )->by_visible( $this->view );
 
 		$context = Template_Context::from_template( $this, compact( 'entry', 'fields' ) );
