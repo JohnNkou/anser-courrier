@@ -16,12 +16,12 @@ class GravityView_View_Data {
 	 * @param null $passed_post
 	 */
 	private function __construct( $passed_post = null ) {
-		$this->views = new \GV\View_Collection(); error_log("MINESOTA ABLANT ".json_encode($passed_post));
+		$this->views = new \GV\View_Collection();
 
 		if ( ! empty( $passed_post ) ) {
 			$id_or_id_array = $this->maybe_get_view_id( $passed_post );
-			foreach ( is_array( $id_or_id_array ) ? $id_or_id_array : array( $id_or_id_array ) as $view_id ) {
-				if ( \GV\View::exists( $view_id ) && ! $this->views->contains( $view_id ) ) {
+			foreach ( is_array( $id_or_id_array ) ? $id_or_id_array : array( $id_or_id_array ) as $view_id ) {error_log("Checking for view ".$view_id);
+				if ( \GV\View::exists( $view_id ) && ! $this->views->contains( $view_id ) ) { error_log("Adding view ".$view_id);
 					$this->views->add( \GV\View::by_id( $view_id ) );
 				}
 			}
