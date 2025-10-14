@@ -397,7 +397,9 @@ class View_Table_Template extends View_Template {
 			'markup'     => '<td id="{{ field_id }}" class="{{ class }}" data-label="{{label_value:data-label}}">{{ value }}</td>',
             'form'       => $form,
 		);
-		error_log("ENTRY DATA ".json_encode($entry->as_entry()));
+		if($entry->is_multi()){
+			error_log("ENTRY DATA ".json_encode($entry->as_entry()['_isMulti'][$field->form_id][$field->ID]));
+		}
 		/** Output. */
 		echo \gravityview_field_output( $args, $context );
 	}
