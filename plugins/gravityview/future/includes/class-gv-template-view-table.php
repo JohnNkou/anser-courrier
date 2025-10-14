@@ -16,7 +16,7 @@ class View_Table_Template extends View_Template {
 	 * @var string The template slug to be loaded (like "table", "list")
 	 */
 	public static $slug = 'table';
-
+	private $directed = false;
 
 	/**
      * Constructor. Add filters to modify output.
@@ -399,7 +399,7 @@ class View_Table_Template extends View_Template {
 		);
 		if($entry->is_multi()){
 			if($this->directed == false){
-				foreach ($entry->as_entry()[0] as $key => $value) {
+				foreach ($entry->as_entry() as $key => $value) {
 					error_log("ENTRY KEY $key");
 				}
 				$this->directed = true;
