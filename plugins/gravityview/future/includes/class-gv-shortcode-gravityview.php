@@ -322,7 +322,7 @@ error_log("HAS ERROR ".json_encode($error));
 
 				$request = $mock_request;
 			}
-error_log("Choose laned ".json_encode($view));
+error_log("Choose laned ");
 			$renderer = new \GV\View_Renderer();
 			return self::_return( $renderer->render( $view, $request ) );
 		}
