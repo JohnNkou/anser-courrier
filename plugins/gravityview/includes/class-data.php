@@ -16,7 +16,7 @@ class GravityView_View_Data {
 	 * @param null $passed_post
 	 */
 	private function __construct( $passed_post = null ) {
-		$this->views = new \GV\View_Collection(); error_log("MINESOTA ABLANT");
+		$this->views = new \GV\View_Collection(); error_log("MINESOTA ABLANT ".$passed_post);
 
 		if ( ! empty( $passed_post ) ) {
 			$id_or_id_array = $this->maybe_get_view_id( $passed_post );
