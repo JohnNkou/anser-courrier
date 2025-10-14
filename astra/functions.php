@@ -374,8 +374,8 @@ function load_gravityview(){
     $attrs = [
         "view_id"=> 11857
     ];
-    $short_code = new GV\Shortcode();
-    $view = $short_code->get_view_by_atts($attrs);
+    $short_code = new GV\Shortcode\gravityview();
+    $view = $short_code->callback($attrs);
 
     error_log("My View ".json_encode($view));
 
