@@ -116,7 +116,7 @@ class GravityView_Entry_Link_Shortcode {
 	 *
 	 * @return null|string If admin or an error occurred, returns null. Otherwise, returns entry link output. If `$atts['return']` is 'url', the entry link URL. Otherwise, entry link `<a>` HTML tag.
 	 */
-	private function shortcode( $atts, $content = null, $context = 'gv_entry_link' ) {
+	private function shortcode( $atts, $content = null, $context = 'gv_entry_link' ) { error_log("THE SHORTCODE OF GRAVITYVIEW-ENTRY-LINK");
 		// Don't process when saving post. Keep processing if it's admin-ajax.php
 		if ( gravityview()->request->is_admin() ) {
 			return null;

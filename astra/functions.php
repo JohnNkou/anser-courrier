@@ -282,7 +282,6 @@ function sh_gravityflow_inbox_search_criteria( $search_criteria, $args ) {
 
 // **Ajout d'un filtre pour restreindre le resultat affiché au derniers 4 mois pour gravityflow page status
 add_filter( 'gravityflow_status_filter', function( $args ) {
-    error_log("Gravityflow status Debugging ".json_encode($args));
     $start_date = date( 'Y-m-d', strtotime('-120 days') );
     $end_date = date( 'Y-m-d', time() );
     $args['start_date'] = $start_date;
@@ -466,15 +465,12 @@ function build_search_criteria(){
 function set_search_criteria($term,$fields){
     add_filter("gravityflow_inbox_search_criteria",function ($search_criteria,$args) use ($term,$fields) {
         $field_filters = [];
-        error_log("IN FIELDS ".json_encode($fields));
         foreach ($fields as $field){
             array_push($field_filters,["key"=> $field, "operator"=> "is", "value"=> $term]);   
         }
         
         $search_criteria['mode'] = "any";
         $search_criteria['field_filters'] = $field_filters;
-        
-        error_log("New SEARCH CRITERIA ".json_encode($search_criteria));
         
         return $search_criteria;
     },10,2);
@@ -487,9 +483,6 @@ function set_search_criteria($term,$fields){
     }
     $field_filters['mode'] = "any";
     $search_criteria['field_filters'] = $field_filters;
-    
-    error_log("OUT FIELDS ".json_encode($fields));
-    error_log("Returned search criteria ".json_encode($search_criteria));
     
     return $search_criteria;
 }

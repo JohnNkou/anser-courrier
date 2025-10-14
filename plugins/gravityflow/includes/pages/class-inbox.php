@@ -160,7 +160,7 @@ class Gravity_Flow_Inbox {
 	 * @return array
 	 */
 	public static function get_entries( $args, &$total_count ) {
-		_deprecated_function( __METHOD__, '2.3.2', 'Gravity_Flow_API::get_inbox_entries' ); error_log("Logs entries ".json_encode($args)." with total $total_count");
+		_deprecated_function( __METHOD__, '2.3.2', 'Gravity_Flow_API::get_inbox_entries' );
 
 		return Gravity_Flow_API::get_inbox_entries( $args, $total_count );
 	}

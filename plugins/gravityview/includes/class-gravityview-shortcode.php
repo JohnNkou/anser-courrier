@@ -37,7 +37,7 @@ class GravityView_Shortcode {
 	 * @param string|null $content Content passed inside the shortcode
 	 * @return null|string If admin, null. Otherwise, output of $this->render_view()
 	 */
-	function shortcode( $passed_atts, $content = null ) {
+	function shortcode( $passed_atts, $content = null ) { error_log("THE SHORTCODE OF GRAVITYVIEW-SHORTCODE");
 
 		// Don't process when saving post.
 		if ( is_admin() ) {

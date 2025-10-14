@@ -613,7 +613,7 @@ class GFAPI {
 	 *
 	 * @return array|WP_Error Either an array of the Entry objects or a WP_Error instance.
 	 */
-	public static function get_entries( $form_ids, $search_criteria = array(), $sorting = null, $paging = null, &$total_count = null ) { error_log("Entry search_criteria ".json_encode($search_criteria));
+	public static function get_entries( $form_ids, $search_criteria = array(), $sorting = null, $paging = null, &$total_count = null ) {
 
 		if ( empty( $sorting ) ) {
 			$sorting = array( 'key' => 'id', 'direction' => 'DESC', 'is_numeric' => true );
@@ -679,7 +679,7 @@ class GFAPI {
 	 *
 	 * @return int The total count.
 	 */
-	public static function count_entries( $form_ids, $search_criteria = array() ) {error_log("Count Entries ".json_encode($search_criteria));
+	public static function count_entries( $form_ids, $search_criteria = array() ) {
 
 		if ( version_compare( GFFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
 			return GF_Forms_Model_Legacy::count_search_leads( $form_ids, $search_criteria );

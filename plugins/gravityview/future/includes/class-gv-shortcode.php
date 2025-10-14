@@ -71,7 +71,7 @@ class Shortcode {
 	 */
 	public static function add( $name = null ) {
 		$shortcode = new static();
-		$name      = $name ? $name : $shortcode->name; error_log("SHORT CODE NAME ".$name);
+		$name      = $name ? $name : $shortcode->name;
 		if ( shortcode_exists( $name ) ) {
 			if ( empty( self::$shortcodes[ $name ] ) ) {
 				gravityview()->log->error( 'Shortcode [{shortcode}] has already been registered elsewhere.', array( 'shortcode' => $name ) );
