@@ -8,7 +8,7 @@
  * @since 1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {//WITH LOVE
+if ( ! defined( 'ABSPATH' ) ) {//WITH LOVE AND STURM
 	exit; // Exit if accessed directly.
 }
 
