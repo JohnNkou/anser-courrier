@@ -396,7 +396,8 @@ class View_Table_Template extends View_Template {
             'label'      => self::get_field_column_label( $field, $context ),
 			'markup'     => '<td id="{{ field_id }}" class="{{ class }}" data-label="{{label_value:data-label}}">{{ value }}</td>',
             'form'       => $form,
-		); error_log("PuigTech ".json_encode($args));
+		); error_log("entry ".json_encode($entry));
+		error_log("AS ENTRY ".json_encode($entry->as_entry()));
 
 		/** Output. */
 		echo \gravityview_field_output( $args, $context );
