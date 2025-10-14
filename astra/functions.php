@@ -347,7 +347,7 @@ add_action('wp_ajax_load_gravityflow_inbox', 'load_gravityflow_inbox');
 add_action('wp_ajax_nopriv_load_gravityflow_inbox', 'load_gravityflow_inbox');
 add_action("wp_enqueue_scripts", function(){
     if (is_page('boite-de-reception-4')) {
-        wp_enqueue_script("gravityflow-inbox-ajax", '/js/anser_gravity_test.js',['jquery'],'1.0',true);
+        wp_enqueue_script("gravityflow-inbox-ajax", '/js/anser_gravity_test.js');
         wp_localize_script('gravityflow-inbox-ajax', 'GravityFlowAjax',[
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('gravityflow_inbox_nonce')
@@ -355,7 +355,7 @@ add_action("wp_enqueue_scripts", function(){
     }
 
     if(is_page('mes-courrier-v2')){
-        error_log("I'm on gravity Bebe");
+        wp_enqueue_script('gravityview-ajax','/js/anser_view_test.js');
         wp_localize_script("gravityview-ajax", 'GravityViewAjax',[
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('gravityview_nonce')
