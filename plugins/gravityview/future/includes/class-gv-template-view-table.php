@@ -399,7 +399,7 @@ class View_Table_Template extends View_Template {
 		);error_log("field ".json_encode($args['field']));
 		error_log("Value $value");
 		error_log("Column label ".$args['label']);
-
+		error_log("Entry ".json_encode($entry));
 		/** Output. */
 		echo \gravityview_field_output( $args, $context );
 	}
