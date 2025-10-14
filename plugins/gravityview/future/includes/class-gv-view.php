@@ -1484,7 +1484,7 @@ class View implements \ArrayAccess {
 			 * Map from Gravity Forms entries arrays to an Entry_Collection.
 			 */
 			if ( count( $this->joins ) ) {
-				foreach ( $db_entries as $entry ) { error_log("THE ENTRY ".json_encode($entry));
+				foreach ( $db_entries as $entry ) { error_log("FROM ENTRIES ".json_encode(Multi_Entry::from_entries( array_map( '\GV\GF_Entry::from_entry', $entry ) )));
 					$entries->add(
 						Multi_Entry::from_entries( array_map( '\GV\GF_Entry::from_entry', $entry ) )
 					);
