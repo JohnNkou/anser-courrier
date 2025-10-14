@@ -397,7 +397,7 @@ function load_gravityview(){
         }
         else{
             foreach ($fields_array as $field) {
-                array_push($results, $entry[$field->form_id][$field->ID]);
+                array_push($results, $entry[$field->ID]);
             }
         }
     }
