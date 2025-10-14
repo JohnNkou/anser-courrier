@@ -1475,10 +1475,10 @@ class View implements \ArrayAccess {
 			do_action_ref_array( 'gravityview/view/query', array( &$query, $this, $request ) );
 
 			gravityview()->log->debug( 'GF_Query parameters: ', array( 'data' => Utils::gf_query_debug( $query ) ) );
-			error_log("RUNNING THE RUN_DB_QUERY");
+
 			$result = $this->run_db_query( $query );
 
-			list ( $db_entries, $query ) = $result;
+			list ( $db_entries, $query ) = $result; error_log("DB_ENTRIES ".json_encode($db_entries));
 
 			/**
 			 * Map from Gravity Forms entries arrays to an Entry_Collection.
