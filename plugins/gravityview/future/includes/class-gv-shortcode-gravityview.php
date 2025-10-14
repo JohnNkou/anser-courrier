@@ -65,7 +65,7 @@ error_log("Attrs ".json_encode($atts));
 
 		$atts['view_id'] = $view_id;
 		$view            = $this->get_view_by_atts( $atts );
-error_log("View obtained from attribute ".json_encode($view));
+
 		if ( is_wp_error( $view ) ) {
 			return $this->handle_error( $view );
 		}
@@ -136,7 +136,7 @@ error_log("View obtained from attribute ".json_encode($view));
 				$is_reembedded = true;
 			}
 		}
-
+error_log("Request is reembedded ".$is_reembedded)
 		array_push( self::$callstack, true );
 		/**
 		 * Remove Widgets on a nested embedded View.
@@ -146,7 +146,7 @@ error_log("View obtained from attribute ".json_encode($view));
 		}
 
 		$atts = $this->parse_and_sanitize_atts( $atts );
-
+error_log("Sanitized atts ".json_encode($atts));
 		/**
 		 * Assign all `shortcode_atts` settings to the View so they can be used by layouts and extensions.
 		 * @used-by GV_Extension_DataTables_Data::get_datatables_script_configuration()
@@ -161,7 +161,7 @@ error_log("View obtained from attribute ".json_encode($view));
 			if ( ! is_wp_error( $error ) ) {
 				break;
 			}
-
+error_log("HAS ERROR ".json_encode($error));
 			switch ( str_replace( 'gravityview/', '', $error->get_error_code() ) ) {
 				case 'post_password_required':
 					return self::_return( get_the_password_form( $view->ID ) );
@@ -208,14 +208,14 @@ error_log("View obtained from attribute ".json_encode($view));
 		/**
 		 * View details.
 		 */
-		if ( $atts['detail'] ) {
+		if ( $atts['detail'] ) { error_log("Returning after details");
 			$entries = $view->get_entries( $request );
 			return self::_return( $this->detail( $view, $entries, $atts ) );
 
 			/**
 			 * Editing a single entry.
 			 */
-		} elseif ( ! $is_reembedded && ( $entry = $request->is_edit_entry( $view->form ? $view->form->ID : 0 ) ) ) {
+		} elseif ( ! $is_reembedded && ( $entry = $request->is_edit_entry( $view->form ? $view->form->ID : 0 ) ) ) {error_log("Editing an entry");
 
 			/**
 			 * When editing an entry don't render multiple views.
@@ -254,7 +254,7 @@ error_log("View obtained from attribute ".json_encode($view));
 			/**
 			 * Viewing a single entry.
 			 */
-		} elseif ( ! $is_reembedded && ( $entry = $request->is_entry( $view->form ? $view->form->ID : 0 ) ) ) {
+		} elseif ( ! $is_reembedded && ( $entry = $request->is_entry( $view->form ? $view->form->ID : 0 ) ) ) { error_log("Viewing a single entry");
 			/**
 			 * When viewing an entry don't render multiple views.
 			 */
@@ -302,7 +302,7 @@ error_log("View obtained from attribute ".json_encode($view));
 			/**
 			 * Just this view.
 			 */
-		} else {
+		} else {error_log("Other kind of entry");
 			/**
 			 * When viewing a specific View don't render the other Views.
 			 */
@@ -322,7 +322,7 @@ error_log("View obtained from attribute ".json_encode($view));
 
 				$request = $mock_request;
 			}
-
+error_log("Choose laned");
 			$renderer = new \GV\View_Renderer();
 			return self::_return( $renderer->render( $view, $request ) );
 		}
