@@ -138,5 +138,6 @@
       }
     });
     myPage_handler.load_data().then(result_handler);
+    console.log("EVERYTHING FINE HERE");
   });
 })();
