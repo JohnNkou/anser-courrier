@@ -429,8 +429,10 @@ function load_gravityflow_inbox(){
     }
     else{
         $search_criteria = build_search_criteria();
-        $entries = Gravity_Flow_API::get_inbox_entries( ["form_id"=>$form_ids, "paging"=> ["offset"=>$offset, "page_size"=> $page_size]]);
+        $toto = 0;
+        $entries = Gravity_Flow_API::get_inbox_entries( ["form_id"=>$form_ids, "paging"=> ["offset"=>$offset, "page_size"=> $page_size]],$toto);
         $totals = GFAPI::count_entries(explode(',', $form_ids), $search_criteria);
+        error_log("TOTO IS $toto");
     }
     
     $fields_values = [];
