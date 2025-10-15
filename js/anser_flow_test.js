@@ -4,8 +4,8 @@ var __commonJS = (cb, mod) => () => (mod || cb((mod = { exports: {} }).exports, 
 var require_anser_utily = __commonJS((exports2) => {
   function Anser_loader(offset = 0, page_size = 10, search_term = "") {
     let url = new URL(GravityFlowAjax.ajax_url), searchParams = url.searchParams;
-    searchParams.set("action", GravityFlowAjax.action);
-    searchParams.set("security", GravityFlowAjax.nonce);
+    searchParams.set("action", GravityAjax.action);
+    searchParams.set("security", GravityAjax.nonce);
     searchParams.set("offset", offset);
     searchParams.set("limit", page_size);
     if (search_term) {
@@ -119,7 +119,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
   }
 });
 
-// js/anser_gravity.js
+// js/anser_flow.js
 var { page_handler } = require_anser_utily();
 var { result_handler } = require_anser_flow_utils();
 var myPage_handler = new page_handler(result_handler);

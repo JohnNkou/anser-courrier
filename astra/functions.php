@@ -352,7 +352,7 @@ add_action("wp_enqueue_scripts", function(){
 
     if (is_page('boite-de-reception-4')) {
         wp_enqueue_script("gravityflow-inbox-ajax", '/js/anser_flow_test.js',[],null,true);
-        wp_localize_script('gravityflow-inbox-ajax', 'GravityFlowAjax',[
+        wp_localize_script('gravityflow-inbox-ajax', 'GravityAjax',[
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('gravityflow_inbox_nonce'),
             'action' => $gravityflow_ajax_endpoint
@@ -361,7 +361,7 @@ add_action("wp_enqueue_scripts", function(){
 
     if(is_page('mes-courrier-v2')){
         wp_enqueue_script('gravityview-ajax','/js/anser_view_test.js',[], null, true);
-        wp_localize_script("gravityview-ajax", 'GravityViewAjax',[
+        wp_localize_script("gravityview-ajax", 'GravityAjax',[
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('gravityview_nonce'),
             'action' => $gravityview_ajax_endpoint
