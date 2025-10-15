@@ -1104,7 +1104,7 @@ class View implements \ArrayAccess {
 			}
 		}
 		$parameters['search_criteria']['field_filters'] = $unique_field_filters;
-
+		error_log("Unique filter agrabat ".json_encode($parameters));
 		if ( ! empty( $parameters['search_criteria']['field_filters'] ) ) {
 			gravityview()->log->notice( 'search_criteria/field_filters is not empty, third-party code may be using legacy search_criteria filters.' );
 		}
@@ -1550,7 +1550,7 @@ class View implements \ArrayAccess {
 	 */
 	private function run_db_query( GF_Query $query ) {
 		$db_entries = null;
-
+		error_log("QUERY PASSED ".json_encode($query));
 		$query_introspect =  $query->_introspect();
 
 		$random_order = false;
