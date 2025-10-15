@@ -813,10 +813,11 @@ class GF_Query {
 		$sql = implode( ' ', array_filter( $sql, 'strlen' ) );
 
 		GFCommon::log_debug( __METHOD__ . '(): sql => ' . $sql );
-		error_log("SQL IS $sql ".strlen($sql));
+
 		$this->timer_start();
 		$results = $wpdb->get_results( $sql, ARRAY_N );
 		$this->queries []= array( $this->timer_stop(), $sql );
+		
 		if ( is_null( $results ) ) {
 			return array();
 		}
