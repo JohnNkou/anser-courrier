@@ -911,7 +911,7 @@ class GravityView_Widget_Search extends \GV\Widget {
 		gravityview()->log->debug( 'Returned Search Criteria: ', array( 'data' => $search_criteria ) );
 
 		unset( $get );
-		error_log("SEARCH CRITERIA CLASS-SEARCH-WIDGET");
+		error_log("SEARCH CRITERIA CLASS-SEARCH-WIDGET ".json_encode($search_criteria));
 		return $search_criteria;
 	}
 
