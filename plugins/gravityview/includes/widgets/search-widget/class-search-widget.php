@@ -708,8 +708,6 @@ class GravityView_Widget_Search extends \GV\Widget {
 		 * @param \GV\View $view The View being searched
 		 */
 		$trim_search_value = apply_filters( 'gravityview/search-trim-input', true, $view );
-		error_log('GET '.json_encode($get));
-		error_log("searchable fields ".json_encode($searchable_fields));
 		// add free search
 		if ( isset( $get['gv_search'] ) && '' !== $get['gv_search'] && in_array( 'search_all', $searchable_fields ) ) {
 			$search_all_value = $trim_search_value ? trim( $get['gv_search'] ) : $get['gv_search'];
@@ -912,6 +910,7 @@ class GravityView_Widget_Search extends \GV\Widget {
 
 		unset( $get );
 		error_log("SEARCH CRITERIA CLASS-SEARCH-WIDGET ".json_encode($search_criteria));
+		throw new Exception("Error Processing Request", 1);
 		
 		return $search_criteria;
 	}
