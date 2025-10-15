@@ -86,7 +86,7 @@ var require_anser_flow_utils = __commonJS((exports) => {
     update_entries_ids(entries, field_values);
     build_elements(entries);
   };
-  exports.update_entries_ids = function update_entries_ids(entries, field_values) {
+  function update_entries_ids(entries, field_values) {
     entries.forEach((entry) => {
       let form_id = entry.form_id, form = field_values[form_id];
       if (form) {
@@ -99,8 +99,8 @@ var require_anser_flow_utils = __commonJS((exports) => {
         console.error("No form_id " + form_id + " found in field_values");
       }
     });
-  };
-  exports.build_elements = function build_elements(entries) {
+  }
+  function build_elements(entries) {
     var html = "", tbody = document.querySelector("tbody");
     if (tbody) {
       entries.forEach((entry) => {
@@ -116,7 +116,7 @@ var require_anser_flow_utils = __commonJS((exports) => {
     } else {
       console.error("TBODY NOT FOUND");
     }
-  };
+  }
 });
 
 // js/anser_gravity.js
