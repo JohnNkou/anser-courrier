@@ -351,7 +351,7 @@ add_action("wp_enqueue_scripts", function(){
     global $gravityview_ajax_endpoint;
 
     if (is_page('boite-de-reception-4')) {
-        wp_enqueue_script("gravityflow-inbox-ajax", '/js/anser_gravity_test.js');
+        wp_enqueue_script("gravityflow-inbox-ajax", '/js/anser_gravity_test.js',[],null,true);
         wp_localize_script('gravityflow-inbox-ajax', 'GravityFlowAjax',[
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('gravityflow_inbox_nonce'),
