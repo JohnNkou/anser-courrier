@@ -16,18 +16,23 @@ function display_data(entries){
 				let value = entry[name];
 				trs += "<td>";
 
-				if(value.indexOf('http') == -1){
-					trs += value;
+				if(value.indexOf){
+					if(value.indexOf('http') == -1){
+						trs += value;
+					}
+					else{
+						let values = JSON.parse(value);
+						values.forEach((value)=>{
+							trs += "<a href='"+value+"'>";
+							let name = value.slice(value.lastIndexOf('/') + 1);
+							trs += name;
+
+							trs += "</a>";
+						})
+					}
 				}
 				else{
-					let values = JSON.parse(value);
-					values.forEach((value)=>{
-						trs += "<a href='"+value+"'>";
-						let name = value.slice(value.lastIndexOf('/') + 1);
-						trs += name;
-
-						trs += "</a>";
-					})
+					trs += value.toString();
 				}
 
 				trs += "</td>";
