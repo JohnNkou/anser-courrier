@@ -1088,6 +1088,7 @@ class View implements \ArrayAccess {
 			$parameters['paging'] = $paging_parameters['paging'];
 		}
 		error_log("UPLIFTING WITH paging_parameters ".json_encode($parameters));
+		error_log("Request paging ".json_encode($request->get_paging()));
 		$page = Utils::get( $parameters['paging'], 'current_page' ) ?
 			: ( ( ( $parameters['paging']['offset'] - $this->settings->get( 'offset' ) ) / \GV\Utils::get( $parameters, 'paging/page_size', 25 ) ) + 1 );
 
