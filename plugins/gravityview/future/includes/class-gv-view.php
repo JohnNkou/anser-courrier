@@ -1078,7 +1078,7 @@ class View implements \ArrayAccess {
 		}
 
 		if ( $request instanceof REST\Request ) {
-			error_log("GET PAGING CALLED");
+			error_log("GET PAGING CALLED ".json_encode($request->get_paging()));
 			$atts                 = $this->settings->as_atts();
 			$paging_parameters    = wp_parse_args(
 				$request->get_paging(),
