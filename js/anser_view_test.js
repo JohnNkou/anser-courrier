@@ -2,14 +2,14 @@ var __commonJS = (cb, mod) => () => (mod || cb((mod = { exports: {} }).exports, 
 
 // js/anser_utily.js
 var require_anser_utily = __commonJS((exports2) => {
-  function Anser_loader(offset = 0, page_size = 10, search_term = "") {
+  function Anser_loader(offset = 0, page_size = 10, queries = {}) {
     let url = new URL(GravityAjax.ajax_url), searchParams = url.searchParams;
     searchParams.set("action", GravityAjax.action);
     searchParams.set("security", GravityAjax.nonce);
     searchParams.set("offset", offset);
     searchParams.set("limit", page_size);
-    if (search_term) {
-      searchParams.set("term", search_term);
+    for (let name in queries) {
+      searchParams.set(name, queries[name]);
     }
     return fetch(url, { method: "POST" });
   }
@@ -50,9 +50,9 @@ var require_anser_utily = __commonJS((exports2) => {
         toggle_disable(false);
       });
     };
-    this.load_data = function(search_term = "", offset = this.page, limit = this.limit) {
+    this.load_data = function(queries = {}, offset = this.page, limit = this.limit) {
       display("Chargements des données...");
-      return Anser_loader(offset, limit, search_term).then((response) => response.json()).then((response) => {
+      return Anser_loader(offset, limit, queries).then((response) => response.json()).then((response) => {
         this.total_page = Math.ceil(response.data.total / this.limit);
         this.page = offset;
         display_nativation_handler(offset, this.total_page);
@@ -126,9 +126,14 @@ var myPage_handler = new page_handler(result_handler);
 var search_form = document.querySelector(".search_block");
 search_form.addEventListener("submit", (event) => {
   event.preventDefault();
-  let input = search_form.elements.s, value = input.value;
+  let input = search_form.elements.s, value = input.value, queries;
   if (value.length) {
-    myPage_handler.load_data(value, 0).then(result_handler);
+    queries = {
+      term: value,
+      gv_search: value,
+      mode: "all"
+    };
+    myPage_handler.load_data(queries, 0).then(result_handler);
   }
 });
 myPage_handler.load_data().then(result_handler);

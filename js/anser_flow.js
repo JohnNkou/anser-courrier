@@ -11,9 +11,10 @@ search_form.addEventListener('submit',(event)=>{
     input = form.elements.s;
 
     if(input.value.length){
-        let limit = myPage_handler.limit;
+        let limit = myPage_handler.limit,
+        queries = { term: input.value }
 
-        myPage_handler.load_data(input.value,0,limit).then(result_handler);
+        myPage_handler.load_data(queries,0,limit).then(result_handler);
         this.load_data(0,this.limit,input.value).then(result_handler);
     }
     else{

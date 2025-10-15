@@ -7,10 +7,17 @@ search_form.addEventListener('submit',(event)=>{
 	event.preventDefault();
 
 	let input = search_form.elements.s,
-	value = input.value;
+	value = input.value,
+	queries;
 
 	if(value.length){
-		myPage_handler.load_data(value,0).then(result_handler);
+		queries = {
+			term:value,
+			gv_search:value,
+			mode:'all'
+		};
+
+		myPage_handler.load_data(queries,0).then(result_handler);
 	}
 })
 
