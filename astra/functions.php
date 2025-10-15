@@ -562,7 +562,7 @@ function search_reception($term, $offset=0,$limit=15){
     	$entries_results = $wpdb->get_results($wpdb->prepare($entries_sql,$payloads), ARRAY_N);
         $query_total = (int)$wpdb->get_var( 'SELECT FOUND_ROWS()' );
     	$total_results = $wpdb->get_row($wpdb->prepare($total_entries_sql,$payloads), ARRAY_A);
-    
+        error_log("QUERY TOTAL IS $query_total");
     	$q = new GF_Query();
     
     	return ["entries"=>$q->get_entries($entries_results), "total"=> $total_results['total'], "query_total"=> $query_total];
