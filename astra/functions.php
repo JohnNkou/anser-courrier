@@ -419,19 +419,16 @@ function load_gravityflow_inbox(){
     $page_size = isset($_REQUEST['page_size'])? $_REQUEST['page_size']: 10;
     $required_fields = ["form_id","workflow_step","created_by","id","date_created"];
     $required_form_fields = ["objet","éxpediteur","numéro","référence"];
-    $query_total = 0;
+    $total = 0;
     
     if(isset($_REQUEST['term'])){
         $results = search_reception($_REQUEST['term'],$offset,$page_size);
         $entries = $results['entries'];
-        $totals = $results['total'];
-        $query_total = $results['query_total'];
+        $total = $results['total'];
     }
     else{
         $search_criteria = build_search_criteria();
-        $entries = Gravity_Flow_API::get_inbox_entries( ["form_id"=>$form_ids, "paging"=> ["offset"=>$offset, "page_size"=> $page_size]],$query_total);
-        $totals = GFAPI::count_entries(explode(',', $form_ids), $search_criteria);
-        error_log("TOTO IS $toto");
+        $entries = Gravity_Flow_API::get_inbox_entries( ["form_id"=>$form_ids, "paging"=> ["offset"=>$offset, "page_size"=> $page_size]],$total);
     }
     
     $fields_values = [];
@@ -477,7 +474,7 @@ function load_gravityflow_inbox(){
        return array_intersect_key($entry, array_flip($required_fields)); 
     },$entries);
     
-    wp_send_json_success(["entries"=>$filtered_entries, "field_values"=> $fields_values, "total"=> $totals, "query_total"=> $query_total]);
+    wp_send_json_success(["entries"=>$filtered_entries, "field_values"=> $fields_values, "total"=> $total]);
 }
 
 function get_display_name($user_id){
@@ -557,16 +554,13 @@ function search_reception($term, $offset=0,$limit=15){
     if($current_user){
         $user_id = $current_user->ID;
         $entry_meta_table = GFFormsModel::get_entry_meta_table_name();
-    	$entries_sql = "SELECT DISTINCT entry_id as id FROM $entry_meta_table as t1 WHERE t1.meta_value = %s AND (SELECT id FROM $entry_meta_table as t2 WHERE entry_id = t1.entry_id AND meta_key = %s LIMIT 1) LIMIT %d,%d";
-    	$total_entries_sql = "SELECT COUNT(DISTINCT entry_id) as total FROM $entry_meta_table as t1 WHERE t1.meta_value = %s AND (SELECT id FROM $entry_meta_table as t2 WHERE entry_id = t1.entry_id AND meta_key = %s LIMIT 1) LIMIT %d,%d";
+    	$sql = "SELECT DISTINCT entry_id as id FROM $entry_meta_table as t1 WHERE t1.meta_value = %s AND (SELECT id FROM $entry_meta_table as t2 WHERE entry_id = t1.entry_id AND meta_key = %s LIMIT 1) LIMIT %d,%d";
     	$payloads = [$term,"workflow_user_id_$user_id",$offset,$limit];
-    	$entries_results = $wpdb->get_results($wpdb->prepare($entries_sql,$payloads), ARRAY_N);
-        $query_total = (int)$wpdb->get_var( 'SELECT FOUND_ROWS()' );
-    	$total_results = $wpdb->get_row($wpdb->prepare($total_entries_sql,$payloads), ARRAY_A);
-        error_log("QUERY TOTAL IS $query_total");
+    	$entries_results = $wpdb->get_results($wpdb->prepare($sql,$payloads), ARRAY_N);
+        $query_total = (int)$wpdb->get_var('SELECT FOUND_ROWS()');
     	$q = new GF_Query();
     
-    	return ["entries"=>$q->get_entries($entries_results), "total"=> $total_results['total'], "query_total"=> $query_total];
+    	return ["entries"=>$q->get_entries($entries_results), "total"=> $query_total];
     }
     error_log("search_reception called without a valid user");
     
