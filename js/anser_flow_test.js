@@ -41,7 +41,7 @@ var require_anser_utily = __commonJS((exports2) => {
     }
     this.goTo = (newPage) => {
       toggle_disable(true);
-      return this.load_data(newPage * 10).then((json_response) => {
+      return this.load_data("", newPage * 10).then((json_response) => {
         this.page = newPage;
         console.log("THE NEW PAGE IS", this.page);
         display_nativation_handler(newPage, this.total_page);
@@ -50,7 +50,7 @@ var require_anser_utily = __commonJS((exports2) => {
         toggle_disable(false);
       });
     };
-    this.load_data = function(offset = this.page, limit = this.limit, search_term = "") {
+    this.load_data = function(search_term = "", offset = this.page, limit = this.limit) {
       display("Chargements des données...");
       return Anser_loader(offset, limit, search_term).then((response) => response.json()).then((response) => {
         this.total_page = Math.ceil(response.data.total / this.limit);
@@ -129,7 +129,7 @@ search_form.addEventListener("submit", (event) => {
   let form = event.target, input = form.elements.s;
   if (input.value.length) {
     let limit = myPage_handler.limit;
-    myPage_handler.load_data(0, limit, input.value).then(result_handler);
+    myPage_handler.load_data(input.value, 0, limit).then(result_handler);
     exports.load_data(0, exports.limit, input.value).then(result_handler);
   } else {
     console.warn("Nothing to search for");

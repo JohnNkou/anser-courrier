@@ -13,7 +13,7 @@ search_form.addEventListener('submit',(event)=>{
     if(input.value.length){
         let limit = myPage_handler.limit;
 
-        myPage_handler.load_data(0,limit, input.value).then(result_handler);
+        myPage_handler.load_data(input.value,0,limit).then(result_handler);
         this.load_data(0,this.limit,input.value).then(result_handler);
     }
     else{
