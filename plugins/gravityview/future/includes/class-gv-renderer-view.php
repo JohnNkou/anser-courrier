@@ -68,7 +68,7 @@ class View_Renderer extends Renderer {
 		/**
 		 * Fetch entries for this View.
 		 */
-		if ( $get_entries ) {
+		if ( $get_entries ) { error_log("class-gv-renderer getting entries");
 			$entries = $view->get_entries( $request );
 		} else { error_log("Initializing Entry_collection");
 			$entries = new \GV\Entry_Collection();
