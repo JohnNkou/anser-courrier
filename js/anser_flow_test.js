@@ -79,44 +79,60 @@ var require_anser_utily = __commonJS((exports2) => {
   };
 });
 
-// js/anser_view_util.js
-var require_anser_view_util = __commonJS((exports2) => {
-  exports2.result_handler = function(json_response) {
-    let { entries, total } = json_response.data;
-    display_data(entries);
+// js/anser_flow_utils.js
+var require_anser_flow_utils = __commonJS((exports2) => {
+  exports2.result_handler = function result_handler(json_response) {
+    let { entries, field_values } = json_response.data;
+    update_entries_ids(entries, field_values);
+    build_elements(entries);
   };
-  function display_data(entries) {
-    let trs = "", tbody = document.querySelector("tbody");
+  function update_entries_ids(entries, field_values) {
+    entries.forEach((entry) => {
+      let form_id = entry.form_id, form = field_values[form_id];
+      if (form) {
+        Object.keys(form).forEach((key) => {
+          let field_id = form[key];
+          entry[key] = entry[field_id];
+          delete entry[field_id];
+        });
+      } else {
+        console.error("No form_id " + form_id + " found in field_values");
+      }
+    });
+  }
+  function build_elements(entries) {
+    var html = "", tbody = document.querySelector("tbody");
     if (tbody) {
       entries.forEach((entry) => {
-        trs += "<tr>";
-        for (let name in entry) {
-          let value = entry[name];
-          trs += "<td>";
-          if (value.indexOf("http") == -1) {
-            trs += value;
-          } else {
-            let values = JSON.parse(value);
-            values.forEach((value2) => {
-              trs += "<a href='" + value2 + "'>";
-              let name2 = value2.slice(value2.lastIndexOf("/") + 1);
-              trs += name2;
-              trs += "</a>";
-            });
-          }
-          trs += "</td>";
-        }
-        trs += "</tr>";
+        html += "<tr>";
+        html += "<td>" + entry.created_by + "</td>";
+        html += "<td>" + entry.workflow_step + "</td>";
+        html += "<td>" + entry["numéro"] + "</td>";
+        html += "<td>" + entry["objet"] + "</td>";
+        html += "<td>" + entry["référence"] + "</td>";
+        html += "</tr>";
       });
-      tbody.innerHTML = trs;
+      tbody.innerHTML = html;
     } else {
-      console.error("No tbody found");
+      console.error("TBODY NOT FOUND");
     }
   }
 });
 
-// js/anser_view.js
+// js/anser_gravity.js
 var { page_handler } = require_anser_utily();
-var { result_handler } = require_anser_view_util();
+var { result_handler } = require_anser_flow_utils();
 var myPage_handler = new page_handler(result_handler);
+var search_form = document.querySelector(".search_block");
+search_form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  let form = event.target, input = form.elements.s;
+  if (input.value.length) {
+    let limit = myPage_handler.limit;
+    myPage_handler.load_data(0, limit, input.value).then(result_handler);
+    exports.load_data(0, exports.limit, input.value).then(result_handler);
+  } else {
+    console.warn("Nothing to search for");
+  }
+});
 myPage_handler.load_data().then(result_handler);

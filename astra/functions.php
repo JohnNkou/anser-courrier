@@ -422,13 +422,13 @@ function load_gravityflow_inbox(){
     $form_ids = "94,22,17,14,75,16,2,3,5,7,8,12,11,21,4,64,74,84,96";
     $current_user = wp_get_current_user();
     $offset = isset($_REQUEST['offset'])? $_REQUEST['offset']: 0;
-    $page_size = isset($_REQUEST['page_size'])? $_REQUEST['page_size']: 10;
+    $limit = isset($_REQUEST['limit'])? $_REQUEST['limit']: 10;
     $required_fields = ["form_id","workflow_step","created_by","id","date_created"];
     $required_form_fields = ["objet","éxpediteur","numéro","référence"];
     $total = 0;
     
     if(isset($_REQUEST['term'])){
-        $results = search_reception($_REQUEST['term'],$offset,$page_size);
+        $results = search_reception($_REQUEST['term'],$offset,$limit);
         $entries = $results['entries'];
         $total = $results['total'];
     }
