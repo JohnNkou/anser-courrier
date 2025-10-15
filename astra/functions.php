@@ -560,11 +560,12 @@ function search_reception($term, $offset=0,$limit=15){
     	$total_entries_sql = "SELECT COUNT(DISTINCT entry_id) as total FROM $entry_meta_table as t1 WHERE t1.meta_value = %s AND (SELECT id FROM $entry_meta_table as t2 WHERE entry_id = t1.entry_id AND meta_key = %s LIMIT 1) LIMIT %d,%d";
     	$payloads = [$term,"workflow_user_id_$user_id",$offset,$limit];
     	$entries_results = $wpdb->get_results($wpdb->prepare($entries_sql,$payloads), ARRAY_N);
+        $query_total = (int)$wpdb->get_var( 'SELECT FOUND_ROWS()' );
     	$total_results = $wpdb->get_row($wpdb->prepare($total_entries_sql,$payloads), ARRAY_A);
     
     	$q = new GF_Query();
     
-    	return ["entries"=>$q->get_entries($entries_results), "total"=> $total_results['total'], "query_total"=> $q->total_found];
+    	return ["entries"=>$q->get_entries($entries_results), "total"=> $total_results['total'], "query_total"=> $query_total];
     }
     error_log("search_reception called without a valid user");
     

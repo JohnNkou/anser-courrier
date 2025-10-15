@@ -1503,12 +1503,12 @@ class GF_Query {
 		$meta_clauses_str =  empty ( $meta_clauses ) ?  '' : sprintf( 'OR (%s)', join( ' OR ', $meta_clauses ) );
 
 		$sql = sprintf( "
-SELECT entry_id, meta_key, meta_value, item_index 
-FROM $entry_meta_table 
-WHERE entry_id IN(%s) 
-AND ( meta_key REGEXP '^[0-9|.]+$'
-%s )
-", $placeholders, $meta_clauses_str );
+			SELECT entry_id, meta_key, meta_value, item_index 
+			FROM $entry_meta_table 
+			WHERE entry_id IN(%s) 
+			AND ( meta_key REGEXP '^[0-9|.]+$'
+			%s )
+			", $placeholders, $meta_clauses_str );
 		$metaset = $wpdb->get_results( $wpdb->prepare( $sql, $ids ), ARRAY_A );
 
 
