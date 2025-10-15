@@ -378,25 +378,22 @@ class Extender extends \GV\Shortcode{
 
 function load_gravityview(){
     $request = gravityview()->request;
+    $limit = isset($_GET['limit'])? (int)$_GET['limit'] : 25;
+    $offset = isset($_GET['offset'])? (int)$_GET['offset'] : 0;
     $attrs = [
         "id"=> 11857,
         "view_id"=> 11857
     ];
     $short_code = new Extender();
     $view = $short_code->get_view($attrs);
-    $entries = $view->get_entries($request);
-    $limit = isset($_GET['limit'])? (int)$_GET['limit'] : 25;
-    $offset = isset($_GET['offset'])? (int)$_GET['offset'] : 0;
     $view->settings->update([
         "page_size"=> $limit,
         "offset"=> $offset
     ]);
-    
+    $entries = $view->get_entries($request);
     $fields = $view->fields->by_position( 'directory_table-columns' );
     $fields_array = $fields->by_visible($view)->all();
     $results = [];
-
-    error_log("ON FIELDS ".json_encode($fields_array[0]));
 
     foreach ($entries->all() as $entry) {
         $an = [];
