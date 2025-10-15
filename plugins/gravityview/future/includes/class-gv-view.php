@@ -1061,10 +1061,10 @@ class View implements \ArrayAccess {
 		 * @todo: Stop using _frontend and use something like $request->get_search_criteria() instead
 		 */
 		$parameters = GravityView_frontend::get_view_entries_parameters( $parameters, $this->form->ID );
-
+		error_log("FRONT END PARAMETER ".json_encode($parameters));
 		$parameters['context_view_id'] = $this->ID;
 		$parameters                    = GVCommon::calculate_get_entries_criteria( $parameters, $this->form->ID );
-
+		error_log("GVCOMMON ".json_encode($parameters));
 		if ( ! is_array( $parameters ) ) {
 			$parameters = array();
 		}
@@ -1087,7 +1087,7 @@ class View implements \ArrayAccess {
 			);
 			$parameters['paging'] = $paging_parameters['paging'];
 		}
-
+		error_log("UPLIFTING WITH paging_parameters ".json_encode($parameters));
 		$page = Utils::get( $parameters['paging'], 'current_page' ) ?
 			: ( ( ( $parameters['paging']['offset'] - $this->settings->get( 'offset' ) ) / \GV\Utils::get( $parameters, 'paging/page_size', 25 ) ) + 1 );
 
