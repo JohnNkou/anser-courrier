@@ -419,11 +419,13 @@ function load_gravityflow_inbox(){
     $page_size = isset($_REQUEST['page_size'])? $_REQUEST['page_size']: 10;
     $required_fields = ["form_id","workflow_step","created_by","id","date_created"];
     $required_form_fields = ["objet","éxpediteur","numéro","référence"];
+    $query_total;
     
     if(isset($_REQUEST['term'])){
         $results = search_reception($_REQUEST['term'],$offset,$page_size);
         $entries = $results['entries'];
         $totals = $results['total'];
+        $query_total = $results['query_total'];
     }
     else{
         $search_criteria = build_search_criteria();
@@ -474,7 +476,7 @@ function load_gravityflow_inbox(){
        return array_intersect_key($entry, array_flip($required_fields)); 
     },$entries);
     
-    wp_send_json_success(["entries"=>$filtered_entries, "field_values"=> $fields_values, "total"=> $totals, "-entries"=> $entries]);
+    wp_send_json_success(["entries"=>$filtered_entries, "field_values"=> $fields_values, "total"=> $totals, "query_total"=> $query_total]);
 }
 
 function get_display_name($user_id){
@@ -562,7 +564,7 @@ function search_reception($term, $offset=0,$limit=15){
     
     	$q = new GF_Query();
     
-    	return ["entries"=>$q->get_entries($entries_results), "total"=> $total_results['total']];
+    	return ["entries"=>$q->get_entries($entries_results), "total"=> $total_results['total'], "query_total"=> $->total_found];
     }
     error_log("search_reception called without a valid user");
     
