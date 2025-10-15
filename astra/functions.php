@@ -419,7 +419,7 @@ function load_gravityflow_inbox(){
     $page_size = isset($_REQUEST['page_size'])? $_REQUEST['page_size']: 10;
     $required_fields = ["form_id","workflow_step","created_by","id","date_created"];
     $required_form_fields = ["objet","éxpediteur","numéro","référence"];
-    $query_total;
+    $query_total = 0;
     
     if(isset($_REQUEST['term'])){
         $results = search_reception($_REQUEST['term'],$offset,$page_size);
@@ -429,8 +429,7 @@ function load_gravityflow_inbox(){
     }
     else{
         $search_criteria = build_search_criteria();
-        $toto = 0;
-        $entries = Gravity_Flow_API::get_inbox_entries( ["form_id"=>$form_ids, "paging"=> ["offset"=>$offset, "page_size"=> $page_size]],$toto);
+        $entries = Gravity_Flow_API::get_inbox_entries( ["form_id"=>$form_ids, "paging"=> ["offset"=>$offset, "page_size"=> $page_size]],$query_total);
         $totals = GFAPI::count_entries(explode(',', $form_ids), $search_criteria);
         error_log("TOTO IS $toto");
     }
