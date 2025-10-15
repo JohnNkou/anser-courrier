@@ -93,16 +93,20 @@ var require_anser_view_util = __commonJS((exports2) => {
         for (let name in entry) {
           let value = entry[name];
           trs += "<td>";
-          if (value.indexOf("http") == -1) {
-            trs += value;
+          if (value.indexOf) {
+            if (value.indexOf("http") == -1) {
+              trs += value;
+            } else {
+              let values = JSON.parse(value);
+              values.forEach((value2) => {
+                trs += "<a href='" + value2 + "'>";
+                let name2 = value2.slice(value2.lastIndexOf("/") + 1);
+                trs += name2;
+                trs += "</a>";
+              });
+            }
           } else {
-            let values = JSON.parse(value);
-            values.forEach((value2) => {
-              trs += "<a href='" + value2 + "'>";
-              let name2 = value2.slice(value2.lastIndexOf("/") + 1);
-              trs += name2;
-              trs += "</a>";
-            });
+            trs += value.toString();
           }
           trs += "</td>";
         }
