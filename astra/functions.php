@@ -400,7 +400,7 @@ function load_gravityview(){
         }
         else{
             foreach ($fields_array as $field) {
-                $an[$field->label] = $entry[$field->ID];
+                $an[$field->custom_label ?: $field->label] = $entry[$field->ID];
             }
         }
 
