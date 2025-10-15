@@ -910,7 +910,7 @@ class GravityView_Widget_Search extends \GV\Widget {
 
 		unset( $get );
 		error_log("SEARCH CRITERIA CLASS-SEARCH-WIDGET ".json_encode($search_criteria));
-		throw new Exception("Error Processing Request", 1);
+		//throw new Exception("Error Processing Request", 1);
 		
 		return $search_criteria;
 	}
