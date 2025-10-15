@@ -387,6 +387,7 @@ function load_gravityview(){
 
     if(isset($_REQUEST['term'])){
         $_GET['gv_search'] = $_REQUEST['term'];
+        $_GET['mode'] = 'all';
         error_log("Setting gv_search");
     }
 
