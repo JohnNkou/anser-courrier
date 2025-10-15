@@ -564,7 +564,7 @@ function search_reception($term, $offset=0,$limit=15){
     
     	$q = new GF_Query();
     
-    	return ["entries"=>$q->get_entries($entries_results), "total"=> $total_results['total'], "query_total"=> $->total_found];
+    	return ["entries"=>$q->get_entries($entries_results), "total"=> $total_results['total'], "query_total"=> $q->total_found];
     }
     error_log("search_reception called without a valid user");
     
