@@ -817,7 +817,7 @@ class GF_Query {
 		$this->timer_start();
 		$results = $wpdb->get_results( $sql, ARRAY_N );
 		$this->queries []= array( $this->timer_stop(), $sql );
-
+		error_log("SQL IS $sql");
 		if ( is_null( $results ) ) {
 			return array();
 		}

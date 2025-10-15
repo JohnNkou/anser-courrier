@@ -1550,7 +1550,7 @@ class View implements \ArrayAccess {
 	 */
 	private function run_db_query( GF_Query $query ) {
 		$db_entries = null;
-		error_log("QUERY PASSED ".json_encode($query));
+		
 		$query_introspect =  $query->_introspect();
 
 		$random_order = false;
