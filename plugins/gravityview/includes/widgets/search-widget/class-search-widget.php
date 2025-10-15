@@ -712,7 +712,7 @@ class GravityView_Widget_Search extends \GV\Widget {
 		// add free search
 		if ( isset( $get['gv_search'] ) && '' !== $get['gv_search'] && in_array( 'search_all', $searchable_fields ) ) {
 			$search_all_value = $trim_search_value ? trim( $get['gv_search'] ) : $get['gv_search'];
-			error_log("JONADA?");
+			
 			$criteria = $this->get_criteria_from_query( $search_all_value, $split_words );
 
 			$form = GFAPI::get_form( $form_id );

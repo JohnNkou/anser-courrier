@@ -176,7 +176,7 @@ class View_Renderer extends Renderer {
 
 		/** @todo Deprecate this! */
 		$parameters = \GravityView_frontend::get_view_entries_parameters( $parameters, $view->form->ID );
-error_log("Parameters ".json_encode($parameters));
+		error_log("FrontEnded Parameters ".json_encode($parameters));
 		global $post;
 
 		/** Mock the legacy state for the widgets and whatnot */
