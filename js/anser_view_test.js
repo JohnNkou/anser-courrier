@@ -1,7 +1,7 @@
 function data_loader(){
-	var url = new URL(GravityFlowAjax.ajax_url);
-	url.searchParams.set('action', GravityFlowAjax.action);
-	url.searchParams.set('nonce', GravityFlowAjax.nonce);
+	var url = new URL(GravityViewAjax.ajax_url);
+	url.searchParams.set('action', GravityViewAjax.action);
+	url.searchParams.set('nonce', GravityViewAjax.nonce);
 
 	return fetch(url,{ method:'GET' })
 }
