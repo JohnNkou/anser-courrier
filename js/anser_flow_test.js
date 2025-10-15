@@ -3,7 +3,7 @@ var __commonJS = (cb, mod) => () => (mod || cb((mod = { exports: {} }).exports, 
 // js/anser_utily.js
 var require_anser_utily = __commonJS((exports2) => {
   function Anser_loader(offset = 0, page_size = 10, search_term = "") {
-    let url = new URL(GravityFlowAjax.ajax_url), searchParams = url.searchParams;
+    let url = new URL(GravityAjax.ajax_url), searchParams = url.searchParams;
     searchParams.set("action", GravityAjax.action);
     searchParams.set("security", GravityAjax.nonce);
     searchParams.set("offset", offset);
