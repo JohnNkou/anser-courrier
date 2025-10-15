@@ -708,11 +708,11 @@ class GravityView_Widget_Search extends \GV\Widget {
 		 * @param \GV\View $view The View being searched
 		 */
 		$trim_search_value = apply_filters( 'gravityview/search-trim-input', true, $view );
-
+		error_log('GET '.json_encode($get));
+		error_log("searchable fields ".json_encode($searchable_fields));
 		// add free search
 		if ( isset( $get['gv_search'] ) && '' !== $get['gv_search'] && in_array( 'search_all', $searchable_fields ) ) {
 			$search_all_value = $trim_search_value ? trim( $get['gv_search'] ) : $get['gv_search'];
-			error_log("YUP");
 			$criteria = $this->get_criteria_from_query( $search_all_value, $split_words );
 
 			$form = GFAPI::get_form( $form_id );
