@@ -389,6 +389,8 @@ function load_gravityview(){
     $fields_array = $fields->by_visible($view)->all();
     $results = [];
 
+    error_log("ON FIELDS ".json_encode($fields_array[0]));
+
     foreach ($entries->all() as $entry) {
         $an = [];
         if($entry->is_multi()){
