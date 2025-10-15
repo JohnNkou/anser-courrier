@@ -384,6 +384,12 @@ function load_gravityview(){
         "id"=> 11857,
         "view_id"=> 11857
     ];
+
+    if(isset($_REQUEST['term'])){
+        $_GET['gv_search'] = $_REQUEST['term'];
+        error_log("Setting gv_search");
+    }
+
     $short_code = new Extender();
     $view = $short_code->get_view($attrs);
     $view->settings->update([
