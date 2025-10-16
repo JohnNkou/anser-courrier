@@ -59,30 +59,30 @@ var require_anser_utily = __commonJS((exports2) => {
       });
     };
     this.load_data = function(queries = {}, offset = this.page, limit = this.limit) {
-      display("Chargements des données...");
+      toggle_loader();
       return Anser_loader(offset, limit, { ...with_queries, ...queries }).then((response) => response.json()).then((response) => {
         this.total_page = Math.ceil(response.data.total / this.limit);
         this.page = offset;
         display_nativation_handler(offset, this.total_page);
         return response;
       }).finally(() => {
-        display("");
+        toggle_loader();
       });
     };
     function display_nativation_handler(page, total) {
       if (page == 0) {
-        prevPage.style.display = "none";
+        prevPage.classList.add("hidden");
       } else {
-        prevPage.style.display = "inline";
+        prevPage.classList.remove("hidden");
       }
       if (page >= total - 1) {
-        nextPage.style.display = "none";
+        nextPage.classList.add("hidden");
       } else {
-        nextPage.style.display = "inline";
+        nextPage.classList.remove("hidden");
       }
     }
-    function display(text) {
-      loader.textContent = text;
+    function toggle_loader() {
+      loader.classList.toggle("hidden");
     }
   };
 });
