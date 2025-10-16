@@ -377,12 +377,18 @@ class Extender extends \GV\Shortcode{
 
 
 function load_gravityview(){
+    if(!isset($_GET['id'])){
+        http_send_status(400);
+        return wp_send_json_error("No id given");
+    }
+
     $request = gravityview()->request;
     $limit = isset($_GET['limit'])? (int)$_GET['limit'] : 25;
     $offset = isset($_GET['offset'])? (int)$_GET['offset'] : 0;
+    $id = $_GET['id'];
     $attrs = [
-        "id"=> 11857,
-        "view_id"=> 11857
+        "id"=> $id,
+        "view_id"=> $id
     ];
     $short_code = new Extender();
     $view = $short_code->get_view($attrs);
