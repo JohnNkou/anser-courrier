@@ -115,7 +115,7 @@ var require_anser_view_util = __commonJS((exports2) => {
                   default:
                     className += " bg-green-500";
                 }
-                trs += "<a class='" + className + "'> " + value + "</a>";
+                trs += "<span class='" + className + "'> " + value + "</span>";
               } else {
                 trs += value;
               }

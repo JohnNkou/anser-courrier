@@ -32,7 +32,7 @@ function display_data(entries){
 								className += ' bg-green-500';
 							}
 							
-							trs += "<a class='" + className + "'> "+ value + "</a>";
+							trs += "<span class='" + className + "'> "+ value + "</span>";
 						}
 						else{
 							trs += value;
