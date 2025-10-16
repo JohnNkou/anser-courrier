@@ -378,6 +378,7 @@ class Extender extends \GV\Shortcode{
 
 function load_gravityview(){
     if(!isset($_GET['id'])){
+        http_response_code(400);
         return wp_send_json_error("No id given");
     }
 
