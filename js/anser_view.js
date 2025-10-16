@@ -13,8 +13,10 @@ search_form.addEventListener('submit',(event)=>{
 	if(value.length){
 		queries = {
 			term:value,
-			gv_search:value,
-			mode:'all'
+			filter_2:value,
+			filter_5:value,
+			filter_6:value,
+			mode:'any'
 		};
 
 		myPage_handler.load_data(queries,0).then(result_handler);
