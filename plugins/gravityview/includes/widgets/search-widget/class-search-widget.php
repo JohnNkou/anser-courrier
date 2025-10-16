@@ -687,7 +687,6 @@ class GravityView_Widget_Search extends \GV\Widget {
 		$searchable_fields        = $this->get_view_searchable_fields( $view );
 		$searchable_field_objects = $this->get_view_searchable_fields( $view, true );
 		error_log("SEARCHABLE FIELD ".json_encode($searchable_fields));
-		throw new Exception("Error Processing Request", 1);
 		
 		/**
 		 * Search for each word separately or the whole phrase?
