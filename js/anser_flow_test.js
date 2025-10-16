@@ -40,7 +40,7 @@ var require_anser_utily = __commonJS((exports2) => {
       nextPage.disabled = prevPage.disabled = value;
     }
     this.addQueries = (queries) => {
-      with_queries = { ...with_queries, ...new_queries };
+      with_queries = { ...with_queries, ...queries };
     };
     this.removeQueries = (queries) => {
       for (let name in queries) {
