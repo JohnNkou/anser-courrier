@@ -3,13 +3,6 @@ const { page_handler } = require('./anser_utily.js'),
 myPage_handler = new page_handler(result_handler),
 search_form = document.querySelector('.search_block');
 
-if(typeof _Page == "undefined"){
-	alert("_Page is undefined");
-}
-if(!_Page.view_id){
-	alert("No view_id found");
-}
-
 if(typeof _Page != 'undefined' && _Page.view_id){
 	myPage_handler.addQueries({ id: _Page.view_id });
 
@@ -35,4 +28,12 @@ if(typeof _Page != 'undefined' && _Page.view_id){
 	})
 
 	myPage_handler.load_data().then(result_handler);
+}
+else{
+	if(typeof _Page == "undefined"){
+		alert("_Page is undefined");
+	}
+	if(!_Page.view_id){
+		alert("No view_id found");
+	}
 }
