@@ -113,6 +113,19 @@ var require_anser_view_util = __commonJS((exports2) => {
                 trs += "</a>";
               });
             }
+          } else if (name == "État") {
+            let className = "p-1 rounded text-white shadow-md";
+            switch (value) {
+              case "pending":
+                className += " bg-blue-500";
+                break;
+              case "rejected":
+                className += " bg-red-500";
+                break;
+              default:
+                className += " bg-green-500";
+            }
+            trs += "<a class='" + className + "'> " + value + "</a>";
           } else {
             trs += value.toString();
           }
