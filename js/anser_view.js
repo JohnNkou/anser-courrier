@@ -14,8 +14,7 @@ search_form.addEventListener('submit',(event)=>{
 		queries = {
 			term:value,
 			filter_2:value,
-			filter_5:value,
-			filter_6:value,
+			filter_4:value,
 			mode:'any'
 		};
 
