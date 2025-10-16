@@ -3,23 +3,36 @@ const { page_handler } = require('./anser_utily.js'),
 myPage_handler = new page_handler(result_handler),
 search_form = document.querySelector('.search_block');
 
-search_form.addEventListener('submit',(event)=>{
-	event.preventDefault();
+if(typeof _Page == "undefined"){
+	alert("_Page is undefined");
+}
+if(!_Page.view_id){
+	alert("No view_id found");
+}
 
-	let input = search_form.elements.s,
-	value = input.value,
-	queries;
+if(typeof _Page != 'undefined' && _Page.view_id){
+	myPage_handler.addQueries({ id: _Page.view_id });
 
-	if(value.length){
-		queries = {
-			term:value,
-			filter_2:value,
-			filter_4:value,
-			mode:'any'
-		};
+	search_form.addEventListener('submit',(event)=>{
+		event.preventDefault();
 
-		myPage_handler.load_data(queries,0).then(result_handler);
-	}
-})
+		let input = search_form.elements.s,
+		value = input.value,
+		queries;
 
-myPage_handler.load_data().then(result_handler);
+		if(value.length){
+			queries = {
+				term:value,
+				filter_2:value,
+				filter_4:value,
+				mode:'any'
+			};
+
+			myPage_handler.load_data(queries,0).then(result_handler).then(()=>{
+				myPage_handler.addQueries(queries);
+			});
+		}
+	})
+
+	myPage_handler.load_data().then(result_handler);
+}
