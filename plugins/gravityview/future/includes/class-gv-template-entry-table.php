@@ -40,7 +40,7 @@ class Entry_Table_Template extends Entry_Template {
 
 		/** @type \GV\Field_Collection $fields */
 		$fields = $this->view->fields->by_position( 'single_table-columns' )->by_visible( $this->view );
-
+		error_log("THE FIELDS ARE ".json_encode($fields));
 		$context = Template_Context::from_template( $this, compact( 'fields' ) );
 
 		/**
