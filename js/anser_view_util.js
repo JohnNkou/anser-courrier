@@ -1,10 +1,10 @@
-exports.result_handler = function result_handler(json_response){
+function result_handler(json_response){
 	let { entries, total } = json_response.data;
 
 	display_data(entries);
 }
 
-exports.filter_handler = function filter_handler(page_handler){
+function filter_handler(page_handler){
 	let filter_root = document.querySelector('.status_filter'),
 	links = filter_root.querySelectorAll('a');
 
@@ -98,3 +98,7 @@ function display_data(entries){
 		console.error("No tbody found");
 	}
 }
+
+exports.result_handler = result_handler;
+
+exports.filter_handler = filter_handler;

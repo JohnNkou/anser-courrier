@@ -89,11 +89,11 @@ var require_anser_utily = __commonJS((exports2) => {
 
 // js/anser_view_util.js
 var require_anser_view_util = __commonJS((exports2) => {
-  exports2.result_handler = function result_handler(json_response) {
+  function result_handler(json_response) {
     let { entries, total } = json_response.data;
     display_data(entries);
-  };
-  exports2.filter_handler = function filter_handler(page_handler) {
+  }
+  function filter_handler(page_handler) {
     let filter_root = document.querySelector(".status_filter"), links = filter_root.querySelectorAll("a");
     function reset_link_style() {
       links.forEach((link) => {
@@ -116,7 +116,7 @@ var require_anser_view_util = __commonJS((exports2) => {
         }
       }
     };
-  };
+  }
   function display_data(entries) {
     let trs = "", tbody = document.querySelector("tbody");
     if (tbody) {
@@ -164,12 +164,14 @@ var require_anser_view_util = __commonJS((exports2) => {
       console.error("No tbody found");
     }
   }
+  exports2.result_handler = result_handler;
+  exports2.filter_handler = filter_handler;
 });
 
 // js/anser_view.js
 var { page_handler } = require_anser_utily();
-var { result_handler: result_handler2, filter_handler } = require_anser_view_util();
-var myPage_handler = new page_handler(result_handler2);
+var { result_handler, filter_handler } = require_anser_view_util();
+var myPage_handler = new page_handler(result_handler);
 var search_form = document.querySelector(".search_block");
 if (typeof _Page != "undefined" && _Page.view_id) {
   filter_handler(myPage_handler);
@@ -184,12 +186,12 @@ if (typeof _Page != "undefined" && _Page.view_id) {
         filter_4: value,
         mode: "any"
       };
-      myPage_handler.load_data(queries, 0).then(result_handler2).then(() => {
+      myPage_handler.load_data(queries, 0).then(result_handler).then(() => {
         myPage_handler.addQueries(queries);
       });
     }
   });
-  myPage_handler.load_data().then(result_handler2);
+  myPage_handler.load_data().then(result_handler);
 } else {
   if (typeof _Page == "undefined") {
     alert("_Page is undefined");
