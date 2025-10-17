@@ -1,4 +1,4 @@
-exports.result_handler = function(json_response){
+exports.result_handler = function result_handler(json_response){
 	let { entries, total } = json_response.data;
 
 	display_data(entries);

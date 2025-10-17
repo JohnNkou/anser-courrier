@@ -89,7 +89,7 @@ var require_anser_utily = __commonJS((exports2) => {
 
 // js/anser_view_util.js
 var require_anser_view_util = __commonJS((exports2) => {
-  exports2.result_handler = function(json_response) {
+  exports2.result_handler = function result_handler(json_response) {
     let { entries, total } = json_response.data;
     display_data(entries);
   };
