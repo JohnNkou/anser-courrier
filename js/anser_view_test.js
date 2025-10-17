@@ -112,7 +112,7 @@ var require_anser_view_util = __commonJS((exports2) => {
           } else {
             page_handler.removeQueries(["filter_workflow_final_status"]);
           }
-          page_handler.load_data().then(result_handler);
+          page_handler.load_data({}, 0).then(result_handler);
         }
       }
     };

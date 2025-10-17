@@ -32,7 +32,7 @@ function filter_handler(page_handler){
 					page_handler.removeQueries(["filter_workflow_final_status"]);
 				}
 
-				page_handler.load_data().then(result_handler);
+				page_handler.load_data({},0).then(result_handler);
 			}
 		}
 	}
