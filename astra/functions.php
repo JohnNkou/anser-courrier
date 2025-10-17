@@ -352,7 +352,7 @@ add_action("wp_enqueue_scripts", function(){
 
     if(is_page(['boite-de-reception-4','mes-courrier-v2'])){
         wp_enqueue_script('tailwindcss','https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4');
-        wp_enqueue_script('custom_globe','/css/global.css');
+        wp_enqueue_style('custom_globe','/css/global.css');
     }
 
     if (is_page('boite-de-reception-4')) {
