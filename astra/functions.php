@@ -364,7 +364,7 @@ add_action("wp_enqueue_scripts", function(){
         ]);   
     }
 
-    if(is_page('mes-courrier-v2')){
+    if(is_page(['mes-courrier-v2','mes-factures-v2'])){
         wp_enqueue_script('gravityview-ajax','/js/anser_view_test.js',[], null, true);
         wp_localize_script("gravityview-ajax", 'GravityAjax',[
             'ajax_url' => admin_url('admin-ajax.php'),
