@@ -1707,7 +1707,7 @@ class GravityView_Widget_Search extends \GV\Widget {
 			gravityview()->log->debug( 'No search fields configured for widget:', array( 'data' => $widget_args ) );
 			return;
 		}
-
+		error_log("WIDGET ARGS ".json_encode($widget_args));
 		// prepare fields
 		foreach ( $search_fields as $k => $field ) {
 			error_log("FIELD ".json_encode($field));
