@@ -156,7 +156,8 @@ class GravityView_Field_GravityView_View extends GravityView_Field {
 	 */
 	public static function render_frontend( $field_settings, $context ) {
 		global $post;
-
+		throw new Exception("render_frontend Processing Request", 1);
+		
 		$view_id = $field_settings['view_id'] ?? null;
 		$form    = $context->views->form->form ?? GFAPI::get_form( $field_settings['form_id'] ?? 0 );
 
