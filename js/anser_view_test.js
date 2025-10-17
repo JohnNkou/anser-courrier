@@ -172,7 +172,7 @@ var { result_handler, filter_handler } = require_anser_view_util();
 var myPage_handler = new page_handler(result_handler);
 var search_form = document.querySelector(".search_block");
 if (typeof _Page != "undefined" && _Page.view_id) {
-  filter_handler();
+  filter_handler(myPage_handler);
   myPage_handler.addQueries({ id: _Page.view_id });
   search_form.addEventListener("submit", (event) => {
     event.preventDefault();
