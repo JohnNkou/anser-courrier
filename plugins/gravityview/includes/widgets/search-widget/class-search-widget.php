@@ -686,7 +686,6 @@ class GravityView_Widget_Search extends \GV\Widget {
 
 		$searchable_fields        = $this->get_view_searchable_fields( $view );
 		$searchable_field_objects = $this->get_view_searchable_fields( $view, true );
-		error_log("SEARCHABLE FIELD ".json_encode($searchable_fields));
 		
 		/**
 		 * Search for each word separately or the whole phrase?
@@ -1693,7 +1692,6 @@ class GravityView_Widget_Search extends \GV\Widget {
 	 * @return void
 	 */
 	public function render_frontend( $widget_args, $content = '', $context = '' ) {
-		error_log("WIDGET ARGUMENTS ".json_encode($widget_args));
 		$gravityview_view = GravityView_View::getInstance();
 
 		if ( empty( $gravityview_view ) ) {
@@ -1804,7 +1802,6 @@ class GravityView_Widget_Search extends \GV\Widget {
 		}
 
 		$this->maybe_enqueue_flexibility();
-		throw new Exception("Mum Processing Request", 1);
 		
 		$gravityview_view->render( 'widget', 'search', false );
 	}

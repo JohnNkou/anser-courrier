@@ -1278,7 +1278,7 @@ function gravityview_before() {
 	 */
 	if ( count( $args = func_get_args() ) ) {
 		$gravityview = reset( $args );
-		if ( $gravityview instanceof \GV\Template_Context ) { error_log("GRAVITY ".json_encode($gravityview));
+		if ( $gravityview instanceof \GV\Template_Context ) {
 			/**
 			 * Prepend content to the View.
 			 *
