@@ -263,7 +263,8 @@ class gravityview extends \GV\Shortcode {
 			}
 
 			$entryset = $entry->is_multi() ? $entry->entries : array( $entry );
-
+			error_log("Entry to view is ".json_encode($entry));
+			error_log("Entryset is ".json_encode($entryset));
 			foreach ( $entryset as $e ) {
 				if ( 'active' != $e['status'] ) {
 					gravityview()->log->notice( 'Entry ID #{entry_id} is not active', array( 'entry_id' => $e->ID ) );
