@@ -112,7 +112,7 @@ var require_anser_view_util = __commonJS((exports2) => {
           } else {
             page_handler.removeQueries(["filter_workflow_final_status"]);
           }
-          page_handler.load_data();
+          page_handler.load_data().then(result_handler);
         }
       }
     };
@@ -168,8 +168,8 @@ var require_anser_view_util = __commonJS((exports2) => {
 
 // js/anser_view.js
 var { page_handler } = require_anser_utily();
-var { result_handler, filter_handler } = require_anser_view_util();
-var myPage_handler = new page_handler(result_handler);
+var { result_handler: result_handler2, filter_handler } = require_anser_view_util();
+var myPage_handler = new page_handler(result_handler2);
 var search_form = document.querySelector(".search_block");
 if (typeof _Page != "undefined" && _Page.view_id) {
   filter_handler(myPage_handler);
@@ -184,12 +184,12 @@ if (typeof _Page != "undefined" && _Page.view_id) {
         filter_4: value,
         mode: "any"
       };
-      myPage_handler.load_data(queries, 0).then(result_handler).then(() => {
+      myPage_handler.load_data(queries, 0).then(result_handler2).then(() => {
         myPage_handler.addQueries(queries);
       });
     }
   });
-  myPage_handler.load_data().then(result_handler);
+  myPage_handler.load_data().then(result_handler2);
 } else {
   if (typeof _Page == "undefined") {
     alert("_Page is undefined");
