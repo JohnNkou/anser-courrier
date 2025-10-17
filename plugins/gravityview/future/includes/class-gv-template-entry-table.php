@@ -60,7 +60,7 @@ class Entry_Table_Template extends Entry_Template {
 		 * @since 2.0
 		 */
 		$fields = apply_filters( 'gravityview/template/table/fields', $fields, $context );
-		error_log("PUG ".json_encode($fields->all()));
+
 		foreach ( $fields->all() as $field ) {
 			$context = Template_Context::from_template( $this, compact( 'field' ) );
 
@@ -70,13 +70,14 @@ class Entry_Table_Template extends Entry_Template {
 			if ( ! $entry ) {
 				continue;
 			}
-
+			error_log("entry ".json_encode($entry));
 			/**
 			 * @deprecated Here for back-compatibility.
 			 */
 			$column_label = apply_filters( 'gravityview_render_after_label', $field->get_label( $this->view, $form, $entry ), $field->as_configuration() );
+			error_log("label 1 $column_label");
 			$column_label = apply_filters( 'gravityview/template/field_label', $column_label, $field->as_configuration(), $form->form ? $form->form : null, $entry->as_entry() );
-
+			error_log("label 2 $column_label");
 			/**
 			 * Override the field label.
 			 *
@@ -85,7 +86,7 @@ class Entry_Table_Template extends Entry_Template {
 			 * @param \GV\Template_Context $context The context.
 			 */
 			$column_label = apply_filters( 'gravityview/template/field/label', $column_label, $context );
-
+			error_log("label 3 $column_label");
 			/**
 			 * @filter `gravityview/template/table/entry/hide_empty`
 			 * @param boolean $hide_empty Should the row be hidden if the value is empty? Default: don't hide.
