@@ -51,7 +51,7 @@ class Entry_Table_Template extends Entry_Template {
 		 */
 		$fields = apply_filters( 'gravityview_table_cells', $fields->as_configuration(), \GravityView_View::getInstance() );
 		$fields = Field_Collection::from_configuration( $fields );
-		error_log("Modified fields ".print_r($fields,true));
+
 		/**
 		 * Modify the fields displayed in this tables.
 		 *
@@ -60,7 +60,7 @@ class Entry_Table_Template extends Entry_Template {
 		 * @since 2.0
 		 */
 		$fields = apply_filters( 'gravityview/template/table/fields', $fields, $context );
-
+		error_log("PUG ".json_encode($fields->all()));
 		foreach ( $fields->all() as $field ) {
 			$context = Template_Context::from_template( $this, compact( 'field' ) );
 
