@@ -14,7 +14,11 @@ img:is([sizes="auto" i], [sizes^="auto," i]) {
 #main td, #main th{
     border:none;
 }
-
+#main td{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 #main tr + tr td{
     border-top:1px solid silver;
 }
