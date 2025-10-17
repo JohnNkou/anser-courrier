@@ -1,5 +1,5 @@
-const { page_handler, filter_handler } = require('./anser_utily.js'),
-{ result_handler } = require('./anser_view_util.js'),
+const { page_handler } = require('./anser_utily.js'),
+{ result_handler, filter_handler } = require('./anser_view_util.js'),
 myPage_handler = new page_handler(result_handler),
 search_form = document.querySelector('.search_block');
 

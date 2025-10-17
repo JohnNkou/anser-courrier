@@ -167,8 +167,8 @@ var require_anser_view_util = __commonJS((exports2) => {
 });
 
 // js/anser_view.js
-var { page_handler, filter_handler } = require_anser_utily();
-var { result_handler } = require_anser_view_util();
+var { page_handler } = require_anser_utily();
+var { result_handler, filter_handler } = require_anser_view_util();
 var myPage_handler = new page_handler(result_handler);
 var search_form = document.querySelector(".search_block");
 if (typeof _Page != "undefined" && _Page.view_id) {
