@@ -94,7 +94,7 @@ var require_anser_view_util = __commonJS((exports2) => {
     display_data(entries);
   };
   exports2.filter_handler = function filter_handler(page_handler) {
-    let filter_root = document.querySelector("status_filter"), links = filter_root.querySelectorAll("a");
+    let filter_root = document.querySelector(".status_filter"), links = filter_root.querySelectorAll("a");
     function reset_link_style() {
       links.forEach((link) => {
         link.classList.remove("active");
