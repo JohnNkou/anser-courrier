@@ -1692,7 +1692,6 @@ class GravityView_Widget_Search extends \GV\Widget {
 	 * @return void
 	 */
 	public function render_frontend( $widget_args, $content = '', $context = '' ) {
-		error_log("widget_args 0".json_encode($widget_args));
 		$gravityview_view = GravityView_View::getInstance();
 
 		if ( empty( $gravityview_view ) ) {
@@ -1704,7 +1703,6 @@ class GravityView_Widget_Search extends \GV\Widget {
 
 		// get configured search fields
 		$search_fields = ! empty( $widget_args['search_fields'] ) ? json_decode( $widget_args['search_fields'], true ) : '';
-		error_log("SEARCH FIELD 1 ".json_encode($search_fields));
 		if ( empty( $search_fields ) || ! is_array( $search_fields ) ) {
 			gravityview()->log->debug( 'No search fields configured for widget:', array( 'data' => $widget_args ) );
 			return;
@@ -1712,11 +1710,11 @@ class GravityView_Widget_Search extends \GV\Widget {
 
 		// prepare fields
 		foreach ( $search_fields as $k => $field ) {
-
+			error_log("FIELD ".json_encode($field));
 			$updated_field = $field;
 
 			$updated_field = $this->get_search_filter_details( $updated_field, $context, $widget_args );
-
+			error_log("UPDATED FIELDS ".json_encode($updated_field));
 			switch ( $field['field'] ) {
 
 				case 'search_all':
@@ -1770,7 +1768,7 @@ class GravityView_Widget_Search extends \GV\Widget {
 
 			$search_fields[ $k ] = $updated_field;
 		}
-		error_log("SEARCH FIELD 2".json_encode($search_fields));
+		
 		gravityview()->log->debug( 'Calculated Search Fields: ', array( 'data' => $search_fields ) );
 
 		/**
@@ -1795,7 +1793,7 @@ class GravityView_Widget_Search extends \GV\Widget {
 		$gravityview_view->search_class = self::get_search_class( $custom_class );
 
 		$gravityview_view->search_clear = ! empty( $widget_args['search_clear'] ) ? $widget_args['search_clear'] : false;
-		error_log("SEARCH FIELD 3 ".json_encode($gravityview_view->search_fields));
+		
 		if ( $this->has_date_field( $search_fields ) ) {
 			// enqueue datepicker stuff only if needed!
 			$this->enqueue_datepicker();
