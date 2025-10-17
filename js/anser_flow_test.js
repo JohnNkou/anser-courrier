@@ -49,7 +49,7 @@ var require_anser_utily = __commonJS((exports2) => {
     };
     this.goTo = (newPage) => {
       toggle_disable(true);
-      return this.load_data(with_queries, newPage * 10).then((json_response) => {
+      return this.load_data(with_queries, newPage * this.limit).then((json_response) => {
         this.page = newPage;
         console.log("THE NEW PAGE IS", this.page);
         display_nativation_handler(newPage, this.total_page);
