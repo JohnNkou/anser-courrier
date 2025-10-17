@@ -136,7 +136,7 @@ class gravityview extends \GV\Shortcode {
 				$is_reembedded = true;
 			}
 		}
-error_log("Request is reembedded ".$is_reembedded);
+		error_log("Request is reembedded ".$is_reembedded);
 		array_push( self::$callstack, true );
 		/**
 		 * Remove Widgets on a nested embedded View.
@@ -146,7 +146,7 @@ error_log("Request is reembedded ".$is_reembedded);
 		}
 
 		$atts = $this->parse_and_sanitize_atts( $atts );
-error_log("Sanitized atts ".json_encode($atts));
+		error_log("Sanitized atts ".json_encode($atts));
 		/**
 		 * Assign all `shortcode_atts` settings to the View so they can be used by layouts and extensions.
 		 * @used-by GV_Extension_DataTables_Data::get_datatables_script_configuration()
@@ -323,6 +323,7 @@ error_log("Sanitized atts ".json_encode($atts));
 				$request = $mock_request;
 			}
 			error_log("Choose laned ");
+			error_log("Widget ".json_encode($widgets->as_configuration()));
 			$renderer = new \GV\View_Renderer();
 			return self::_return( $renderer->render( $view, $request ) );
 		}

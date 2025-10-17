@@ -925,7 +925,6 @@ class GravityView_View extends \GV\Gamajo_Template_Loader {
 		}
 
 		$widgets = $view->widgets->by_position( "$zone*" );
-		error_log("WIDGJET HOOK CLASS-TEMPLATE ".json_encode($widgets));
 		/**
 		 * Prevent output if no widgets to show.
 		 *
