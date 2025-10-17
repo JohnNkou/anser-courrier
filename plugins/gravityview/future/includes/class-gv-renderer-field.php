@@ -54,8 +54,8 @@ class Field_Renderer extends Renderer {
 		if ( ! $class || ! class_exists( $class ) ) {
 			gravityview()->log->error( '{template_class} not found', array( 'template_class' => $class ) );
 			return null;
-		}
-
+		}	
+		error_log("Field class $class");
 		/** @var \GV\Field_Template $class */
 		$renderer = new $class( $field, $view, $source, $entry, $request );
 		ob_start();
