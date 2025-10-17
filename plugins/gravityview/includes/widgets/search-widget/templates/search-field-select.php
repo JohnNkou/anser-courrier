@@ -31,6 +31,7 @@ $placeholder = \GV\Utils::get( $gf_field, 'placeholder', '' );
  * @param string $field_type Field type: "select" or "multiselect"
  */
 $default_option = apply_filters( 'gravityview/extension/search/select_default', ( '' === $placeholder ? '&mdash;' : $placeholder ), 'select' );
+throw new Exception("Error Processing Request", 1);
 
 ?>
 <div class="gv-search-box gv-search-field-select">
