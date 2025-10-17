@@ -91,6 +91,7 @@ var require_anser_utily = __commonJS((exports2) => {
 var require_anser_flow_utils = __commonJS((exports2) => {
   exports2.result_handler = function result_handler(json_response) {
     let { entries, field_values } = json_response.data;
+    console.log("ENTRIES ARE", entries);
     update_entries_ids(entries, field_values);
     build_elements(entries);
   };
