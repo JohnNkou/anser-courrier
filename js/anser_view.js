@@ -23,6 +23,7 @@ if(typeof _Page != 'undefined' && _Page.view_id){
 
 				_Page.filters.forEach((filter_name)=>{ queries[filter_name] = value });
 
+				myPage_handler.removeQueries(['filter_workflow_final_status']);
 				myPage_handler.load_data(queries,0).then(result_handler).then(()=>{
 					myPage_handler.addQueries(queries);
 				});
