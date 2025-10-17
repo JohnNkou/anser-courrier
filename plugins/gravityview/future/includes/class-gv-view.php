@@ -1044,7 +1044,6 @@ class View implements \ArrayAccess {
 		}
 
 		$parameters = $this->settings->as_atts();
-		error_log("THE PARAMETERS ".json_encode($parameters));
 		/**
 		 * Remove multiple sorting before calling legacy filters.
 		 * This allows us to fake it till we make it.
@@ -1061,10 +1060,10 @@ class View implements \ArrayAccess {
 		 * @todo: Stop using _frontend and use something like $request->get_search_criteria() instead
 		 */
 		$parameters = GravityView_frontend::get_view_entries_parameters( $parameters, $this->form->ID );
-		error_log("FRONT END PARAMETER ".json_encode($parameters));
+
 		$parameters['context_view_id'] = $this->ID;
 		$parameters                    = GVCommon::calculate_get_entries_criteria( $parameters, $this->form->ID );
-		error_log("GVCOMMON ".json_encode($parameters));
+		
 		if ( ! is_array( $parameters ) ) {
 			$parameters = array();
 		}
@@ -1078,7 +1077,6 @@ class View implements \ArrayAccess {
 		}
 
 		if ( $request instanceof REST\Request ) {
-			error_log("GET PAGING CALLED ".json_encode($request->get_paging()));
 			$atts                 = $this->settings->as_atts();
 			$paging_parameters    = wp_parse_args(
 				$request->get_paging(),
@@ -1088,7 +1086,7 @@ class View implements \ArrayAccess {
 			);
 			$parameters['paging'] = $paging_parameters['paging'];
 		}
-		error_log("UPLIFTING WITH paging_parameters ".json_encode($parameters));
+		
 		$page = Utils::get( $parameters['paging'], 'current_page' ) ?
 			: ( ( ( $parameters['paging']['offset'] - $this->settings->get( 'offset' ) ) / \GV\Utils::get( $parameters, 'paging/page_size', 25 ) ) + 1 );
 
@@ -1104,7 +1102,7 @@ class View implements \ArrayAccess {
 			}
 		}
 		$parameters['search_criteria']['field_filters'] = $unique_field_filters;
-		error_log("Unique filter agrabat ".json_encode($parameters));
+		
 		if ( ! empty( $parameters['search_criteria']['field_filters'] ) ) {
 			gravityview()->log->notice( 'search_criteria/field_filters is not empty, third-party code may be using legacy search_criteria filters.' );
 		}
