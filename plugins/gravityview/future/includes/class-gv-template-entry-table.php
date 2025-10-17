@@ -40,7 +40,6 @@ class Entry_Table_Template extends Entry_Template {
 
 		/** @type \GV\Field_Collection $fields */
 		$fields = $this->view->fields->by_position( 'single_table-columns' )->by_visible( $this->view );
-		error_log("THE FIELDS ARE ".json_encode($fields->all()));
 		$context = Template_Context::from_template( $this, compact( 'fields' ) );
 
 		/**
@@ -52,7 +51,7 @@ class Entry_Table_Template extends Entry_Template {
 		 */
 		$fields = apply_filters( 'gravityview_table_cells', $fields->as_configuration(), \GravityView_View::getInstance() );
 		$fields = Field_Collection::from_configuration( $fields );
-
+		error_log("Modified fields ".print_r($fields,true));
 		/**
 		 * Modify the fields displayed in this tables.
 		 *
