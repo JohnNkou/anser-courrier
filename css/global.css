@@ -10,6 +10,7 @@ img:is([sizes="auto" i], [sizes^="auto," i]) {
 }
 #main table{
     border-bottom:1px solid silver;
+    table-layout: fixed;
 }
 #main td, #main th{
     border:none;
