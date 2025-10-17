@@ -70,7 +70,7 @@ class Entry_Table_Template extends Entry_Template {
 			if ( ! $entry ) {
 				continue;
 			}
-			error_log("label ".print_r($field,true));
+			
 			/**
 			 * @deprecated Here for back-compatibility.
 			 */
