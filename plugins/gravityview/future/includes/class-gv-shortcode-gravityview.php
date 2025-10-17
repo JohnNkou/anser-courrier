@@ -323,7 +323,7 @@ class gravityview extends \GV\Shortcode {
 				$request = $mock_request;
 			}
 			error_log("Choose laned ");
-			error_log("Widget ".json_encode($widgets->as_configuration()));
+			error_log("Widget ".json_encode($view->widgets->as_configuration()));
 			$renderer = new \GV\View_Renderer();
 			return self::_return( $renderer->render( $view, $request ) );
 		}
