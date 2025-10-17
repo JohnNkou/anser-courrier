@@ -71,13 +71,13 @@ class Entry_Table_Template extends Entry_Template {
 				continue;
 			}
 			error_log("entry ".json_encode($entry));
+			error_log("label:".$field->label."\nvalue: ".$this->the_field($field));
 			/**
 			 * @deprecated Here for back-compatibility.
 			 */
 			$column_label = apply_filters( 'gravityview_render_after_label', $field->get_label( $this->view, $form, $entry ), $field->as_configuration() );
-			error_log("label 1 $column_label");
 			$column_label = apply_filters( 'gravityview/template/field_label', $column_label, $field->as_configuration(), $form->form ? $form->form : null, $entry->as_entry() );
-			error_log("label 2 $column_label");
+
 			/**
 			 * Override the field label.
 			 *
@@ -86,7 +86,7 @@ class Entry_Table_Template extends Entry_Template {
 			 * @param \GV\Template_Context $context The context.
 			 */
 			$column_label = apply_filters( 'gravityview/template/field/label', $column_label, $context );
-			error_log("label 3 $column_label");
+			
 			/**
 			 * @filter `gravityview/template/table/entry/hide_empty`
 			 * @param boolean $hide_empty Should the row be hidden if the value is empty? Default: don't hide.
