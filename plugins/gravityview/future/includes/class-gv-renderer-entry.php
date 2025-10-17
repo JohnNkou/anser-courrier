@@ -55,7 +55,7 @@ class Entry_Renderer extends Renderer {
 		do_action( 'gravityview_render_entry_' . $view->ID, $entry, $view, $request );
 
 		/** Entry does not belong to this view. */
-		if ( $view->joins && $entry instanceof Multi_Entry ) {
+		if ( $view->joins && $entry instanceof Multi_Entry ) { error_log("Entry instance of Multi_Entry");
 			$form_ids = array();
 			foreach ( $view->joins as $join ) {
 				$form_ids[] = $join->join->ID;
@@ -132,7 +132,7 @@ class Entry_Renderer extends Renderer {
 			$class = '\GV\Entry_Legacy_Template';
 		}
 		$template = new $class( $entry, $view, $request );
-
+		error_log("THE TEMPLATE CLASS USED TO RENDER THE VIEW IS $class");
 		add_action(
 			'gravityview/template/after',
 			$view_id_output = function ( $context ) {
