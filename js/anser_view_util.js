@@ -26,6 +26,7 @@ function filter_handler(page_handler){
 				reset_link_style();
 				target.classList.add('active');
 				if(value){
+					page_handler.removeQueries([..._Page.filters,'term']);
 					page_handler.addQueries({ filter_workflow_final_status: value, mode:'all' });
 				}
 				else{
