@@ -826,6 +826,7 @@ class View implements \ArrayAccess {
 		$view->settings->update( array( 'template' => gravityview_get_directory_entries_template_id( $view->ID ) ) );
 		$view->settings->update( array( 'template_single_entry' => gravityview_get_single_entry_template_id( $view->ID ) ) );
 		error_log("WIDGETS ".json_encode($view->widgets));
+		error_log('SETTINGS '.json_encode($view->settings));
 		/** View basics. */
 		$view->settings->update(
 			array(
