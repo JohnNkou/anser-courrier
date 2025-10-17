@@ -1693,7 +1693,7 @@ class GravityView_Widget_Search extends \GV\Widget {
 	 * @return void
 	 */
 	public function render_frontend( $widget_args, $content = '', $context = '' ) {
-
+		error_log("WIDGET ARGUMENTS ".json_encode($widget_args));
 		$gravityview_view = GravityView_View::getInstance();
 
 		if ( empty( $gravityview_view ) ) {
