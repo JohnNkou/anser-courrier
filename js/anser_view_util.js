@@ -4,7 +4,7 @@ exports.result_handler = function(json_response){
 	display_data(entries);
 }
 
-function filter_handler(page_handler){
+exports.filter_handler = function filter_handler(page_handler){
 	let filter_root = document.querySelector('status_filter'),
 	links = filter_root.querySelectorAll('a');
 
