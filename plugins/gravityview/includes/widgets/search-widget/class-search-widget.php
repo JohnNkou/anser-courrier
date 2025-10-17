@@ -1692,6 +1692,7 @@ class GravityView_Widget_Search extends \GV\Widget {
 	 * @return void
 	 */
 	public function render_frontend( $widget_args, $content = '', $context = '' ) {
+		error_log("widget_args 0".json_encode($widget_args));
 		$gravityview_view = GravityView_View::getInstance();
 
 		if ( empty( $gravityview_view ) ) {
@@ -1703,7 +1704,7 @@ class GravityView_Widget_Search extends \GV\Widget {
 
 		// get configured search fields
 		$search_fields = ! empty( $widget_args['search_fields'] ) ? json_decode( $widget_args['search_fields'], true ) : '';
-
+		error_log("SEARCH FIELD 1 ".json_encode($search_fields));
 		if ( empty( $search_fields ) || ! is_array( $search_fields ) ) {
 			gravityview()->log->debug( 'No search fields configured for widget:', array( 'data' => $widget_args ) );
 			return;
@@ -1769,7 +1770,7 @@ class GravityView_Widget_Search extends \GV\Widget {
 
 			$search_fields[ $k ] = $updated_field;
 		}
-
+		error_log("SEARCH FIELD 2".json_encode($search_fields));
 		gravityview()->log->debug( 'Calculated Search Fields: ', array( 'data' => $search_fields ) );
 
 		/**
@@ -1782,7 +1783,6 @@ class GravityView_Widget_Search extends \GV\Widget {
 		 * @type array
 		 */
 		$gravityview_view->search_fields = apply_filters( 'gravityview_widget_search_filters', $search_fields, $this, $widget_args, $context );
-
 		$gravityview_view->permalink_fields = $this->add_no_permalink_fields( array(), $this, $widget_args );
 
 		$gravityview_view->search_layout = ! empty( $widget_args['search_layout'] ) ? $widget_args['search_layout'] : 'horizontal';
@@ -1795,7 +1795,7 @@ class GravityView_Widget_Search extends \GV\Widget {
 		$gravityview_view->search_class = self::get_search_class( $custom_class );
 
 		$gravityview_view->search_clear = ! empty( $widget_args['search_clear'] ) ? $widget_args['search_clear'] : false;
-
+		error_log("SEARCH FIELD 3 ".json_encode($gravityview_view->search_fields));
 		if ( $this->has_date_field( $search_fields ) ) {
 			// enqueue datepicker stuff only if needed!
 			$this->enqueue_datepicker();
