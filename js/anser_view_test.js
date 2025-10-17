@@ -43,9 +43,9 @@ var require_anser_utily = __commonJS((exports2) => {
       with_queries = { ...with_queries, ...queries };
     };
     this.removeQueries = (queries) => {
-      for (let name in queries) {
-        delete with_queries[name];
-      }
+      queries.forEach((querie_name) => {
+        delete with_queries[querie_name];
+      });
     };
     this.goTo = (newPage) => {
       toggle_disable(true);
@@ -143,11 +143,12 @@ var require_anser_view_util = __commonJS((exports2) => {
 });
 
 // js/anser_view.js
-var { page_handler } = require_anser_utily();
+var { page_handler, filter_handler } = require_anser_utily();
 var { result_handler } = require_anser_view_util();
 var myPage_handler = new page_handler(result_handler);
 var search_form = document.querySelector(".search_block");
 if (typeof _Page != "undefined" && _Page.view_id) {
+  filter_handler();
   myPage_handler.addQueries({ id: _Page.view_id });
   search_form.addEventListener("submit", (event) => {
     event.preventDefault();

@@ -4,6 +4,40 @@ exports.result_handler = function(json_response){
 	display_data(entries);
 }
 
+function filter_handler(page_handler){
+	let filter_root = document.querySelector('status_filter'),
+	links = filter_root.querySelectorAll('a');
+
+
+	function reset_link_style(){
+		links.forEach((link)=>{
+			link.classList.remove('active');
+		})
+	}
+
+	filter_root.onclick = function(event){
+		event.preventDefault();
+
+		let target = event.target,
+		value = target.getAttribute('data-value');
+
+		if(target.tagName.toLowerCase() == 'a'){
+			if(!target.classList.contains('active')){
+				reset_link_style();
+				target.classList.add('active');
+				if(value){
+					page_handler.addQueries({ filter_workflow_final_status: value, mode:'all' });
+				}
+				else{
+					page_handler.removeQueries(["filter_workflow_final_status"]);
+				}
+
+				page_handler.load_data();
+			}
+		}
+	}
+}
+
 function display_data(entries){
 	let trs = "",
 	tbody = document.querySelector('tbody');

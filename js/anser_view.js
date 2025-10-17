@@ -1,9 +1,10 @@
-const { page_handler } = require('./anser_utily.js'),
+const { page_handler, filter_handler } = require('./anser_utily.js'),
 { result_handler } = require('./anser_view_util.js'),
 myPage_handler = new page_handler(result_handler),
 search_form = document.querySelector('.search_block');
 
 if(typeof _Page != 'undefined' && _Page.view_id){
+	filter_handler();
 	myPage_handler.addQueries({ id: _Page.view_id });
 
 	search_form.addEventListener('submit',(event)=>{

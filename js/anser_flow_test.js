@@ -43,9 +43,9 @@ var require_anser_utily = __commonJS((exports2) => {
       with_queries = { ...with_queries, ...queries };
     };
     this.removeQueries = (queries) => {
-      for (let name in queries) {
-        delete with_queries[name];
-      }
+      queries.forEach((querie_name) => {
+        delete with_queries[querie_name];
+      });
     };
     this.goTo = (newPage) => {
       toggle_disable(true);
