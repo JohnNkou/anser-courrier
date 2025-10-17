@@ -176,21 +176,26 @@ var search_form = document.querySelector(".search_block");
 if (typeof _Page != "undefined" && _Page.view_id) {
   filter_handler(myPage_handler);
   myPage_handler.addQueries({ id: _Page.view_id });
-  search_form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    let input = search_form.elements.s, value = input.value, queries;
-    if (value.length) {
-      queries = {
-        term: value,
-        filter_2: value,
-        filter_4: value,
-        mode: "any"
-      };
-      myPage_handler.load_data(queries, 0).then(result_handler).then(() => {
-        myPage_handler.addQueries(queries);
-      });
-    }
-  });
+  if (_Page.filters) {
+    search_form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      let input = search_form.elements.s, value = input.value, queries;
+      if (value.length) {
+        queries = {
+          term: value,
+          mode: "any"
+        };
+        _Page.filters.forEach((filter_name) => {
+          queries[filter_name] = value;
+        });
+        myPage_handler.load_data(queries, 0).then(result_handler).then(() => {
+          myPage_handler.addQueries(queries);
+        });
+      }
+    });
+  } else {
+    console.error("No filter on _page constant");
+  }
   myPage_handler.load_data().then(result_handler);
 } else {
   if (typeof _Page == "undefined") {
