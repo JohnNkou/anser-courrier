@@ -1804,7 +1804,8 @@ class GravityView_Widget_Search extends \GV\Widget {
 		}
 
 		$this->maybe_enqueue_flexibility();
-
+		throw new Exception("Mum Processing Request", 1);
+		
 		$gravityview_view->render( 'widget', 'search', false );
 	}
 
