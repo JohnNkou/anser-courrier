@@ -100,6 +100,10 @@ function display_data(entries){
 	}
 }
 
+function entry_click_handler(){
+	
+}
+
 exports.result_handler = result_handler;
 
 exports.filter_handler = filter_handler;

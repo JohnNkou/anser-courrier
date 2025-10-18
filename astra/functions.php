@@ -463,7 +463,8 @@ function load_gravityview(){
         $an = [];
         if($entry->is_multi()){
             foreach ($fields_array as $field) {
-                $an[ $field->custom_label ?: $field->label] = $entry->as_entry['_multi'][$field->form_id][$field->ID];
+                $entry = $entry->as_entry['_multi'][$field->form_id];
+                $an[ $field->custom_label ?: $field->label] = $entry[$field->ID];
             }
         }
         else{
@@ -471,7 +472,7 @@ function load_gravityview(){
                 $an[$field->custom_label ?: $field->label] = $entry[$field->ID];
             }
         }
-
+        $an['id'] = $entry->ID;
         array_push($results, $an);
     }
 
