@@ -42,8 +42,6 @@ class Entry_Table_Template extends Entry_Template {
 		$fields = $this->view->fields->by_position( 'single_table-columns' )->by_visible( $this->view );
 		$context = Template_Context::from_template( $this, compact( 'fields' ) );
 
-		error_log("fields all count ". count($fields->all()));
-		error_log("Filtered bield by position ".count($fields->by_position('single_table-columns')->by_visible($this->view)->all()));
 		/**
 		 * Modify the fields displayed in a table.
 		 *
@@ -98,7 +96,8 @@ class Entry_Table_Template extends Entry_Template {
 			$markup = '<tr id="{{ field_id }}" class="{{ class }}"><th scope="row">{{ label }}</th><td>{{ value }}</td></tr>';
 
 			$source   = is_numeric( $field->ID ) ? ( GF_Form::by_id( $field->form_id ) ? : $this->view->form ) : new Internal_Source();
-
+			error_log("label $column_label");
+			error_log("value ".print_r($field->get_value($this->view, $source, $this->entry),true));
 			/**
 			 * Modifies the table row markup for an entry.
 			 *
