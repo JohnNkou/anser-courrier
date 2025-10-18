@@ -343,10 +343,11 @@ add_action("wp_head", function(){
 
 $gravityflow_ajax_endpoint = 'load_gravityflow_inbox';
 $gravityview_ajax_endpoint = 'load_gravityview';
+$gravityview_entry_view_endpoint = 'load_gravityview_entry';
 
-add_action("wp_ajax_$gravityflow_ajax_endpoint", 'load_gravityflow_inbox');
-add_action("wp_ajax_nopriv_$gravityflow_ajax_endpoint", 'load_gravityflow_inbox');
-add_action("wp_ajax_$gravityview_ajax_endpoint","load_gravityview");
+add_action("wp_ajax_$gravityflow_ajax_endpoint", $gravityflow_ajax_endpoint);
+add_action("wp_ajax_nopriv_$gravityview_ajax_endpoint", $gravityview_ajax_endpoint);
+add_action("wp_ajax_$gravityview_ajax_endpoint",$gravityview_entry_view_endpoint);
 add_action("wp_enqueue_scripts", function(){
     global $gravityflow_ajax_endpoint, $gravityview_ajax_endpoint;
 
@@ -369,7 +370,8 @@ add_action("wp_enqueue_scripts", function(){
         wp_localize_script("gravityview-ajax", 'GravityAjax',[
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('gravityview_nonce'),
-            'action' => $gravityview_ajax_endpoint
+            'action' => $gravityview_ajax_endpoint,
+            'entry' => $gravityview_entry_view_endpoint
         ]);
     }
 });
@@ -378,6 +380,61 @@ class Extender extends \GV\Shortcode{
     public function get_view($atts){
         return $this->get_view_by_atts($atts);
     }
+}
+
+function load_gravityview_entry(){
+    if(!isset($_GET['entry_id'])){
+        http_response_code(400);
+        return wp_send_json_error("No entry_id given");
+    }
+    if(!isset($_GET['view_id'])){
+        http_response_code(400);
+        return wp_send_json_error("No view_id given");
+    }
+
+    $entries = explode(",", $_GET['entry_id']);
+
+    if(count($entries) > 1){
+        return wp_send_json_error("No yet implemented");
+        //pass
+    }
+    else{
+        handle_single_entry($entries[0],$_GET['view_id']);
+    }
+}
+
+function handle_single_entry($entry_id,$view_id){
+    $view = get_view($view_id);
+    $form = isset($view->form)? $view->form : GF_Form::by_id($field->form_id);
+    $form_id = (isset($view->form))? $view->form->ID : 0;
+    $entry = GF_Entry::by_id($entry_id,$form_id);
+    $fields = $view->fields->by_position('single_table_columns')->by_visible($view);
+    $results = [];
+
+    foreach ($fields->all() as $field) {
+        $label = $field->label;
+        $value = $field->get_value($view,$form,$entry,null);
+
+        if(is_array($value) && count($value) = 0)
+            continue;
+        else if(strlen($value) == 0){
+            continue;
+        }
+
+        $results[$label] = $value;
+    }
+
+    return wp_send_json_success(["entries"=> $results]);
+}
+
+function get_view($id){
+    $short_code = new Extender();
+    $attrs = [
+        "id"=> $id,
+        "view_id" => $id
+    ]
+
+    return $short_code->get_view($attrs);
 }
 
 
@@ -392,13 +449,7 @@ function load_gravityview(){
     $limit = isset($_GET['limit'])? (int)$_GET['limit'] : 25;
     $offset = isset($_GET['offset'])? (int)$_GET['offset'] : 0;
     $id = $_GET['id'];
-    $attrs = [
-        "id"=> $id,
-        "view_id"=> $id
-    ];
-    $short_code = new Extender();
-    $view = $short_code->get_view($attrs);
-
+    $view = get_view($id);
     $view->settings->update([
         "page_size"=> $limit,
         "offset"=> $offset
