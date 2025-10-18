@@ -437,7 +437,20 @@ function handle_single_entry($entry_id,$view_id){
 
         if(is_array($value)){
             if(count($value) == 0)
-            continue;
+                continue;
+            elseif(count(array_filter($value,function($v){
+                if(is_string($v) && strlen($v) > 0){
+                    return true;
+                }
+
+                if(is_array($v) && count($v) > 0){
+                    return true;
+                }
+
+                return false;
+            })) == 0){
+                continue;
+            }
         }
         else if(is_object($value) && is_empty($value)){
             continue;
