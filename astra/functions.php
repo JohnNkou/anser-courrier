@@ -468,7 +468,6 @@ function load_gravityview(){
             }
         }
         else{
-            error_log("Not multi entry");
             foreach ($fields_array as $field) {
                 $an[$field->custom_label ?: $field->label] = $entry[$field->ID];
             }

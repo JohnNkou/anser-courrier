@@ -122,8 +122,12 @@ var require_anser_view_util = __commonJS((exports2) => {
     let trs = "", tbody = document.querySelector("tbody");
     if (tbody) {
       entries.forEach((entry) => {
-        trs += "<tr>";
+        let id = entry.id;
+        trs += "<tr entry_id='" + id + "'>";
         for (let name in entry) {
+          if (name == "id") {
+            continue;
+          }
           let value = entry[name];
           trs += "<td>";
           if (value.indexOf) {

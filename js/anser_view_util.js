@@ -45,9 +45,13 @@ function display_data(entries){
 
 	if(tbody){
 		entries.forEach((entry)=>{
-			trs += "<tr>";
+			let id = entry.id;
+			trs += "<tr entry_id='" + id +"'>";
 
 			for(let name in entry){
+				if(name == 'id'){
+					continue;
+				}
 				let value = entry[name];
 				trs += "<td>";
 
@@ -101,7 +105,7 @@ function display_data(entries){
 }
 
 function entry_click_handler(){
-	
+
 }
 
 exports.result_handler = result_handler;
