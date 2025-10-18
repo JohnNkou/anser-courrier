@@ -407,7 +407,7 @@ function handle_single_entry($entry_id,$view_id){
     $view = get_view($view_id);
     $form = isset($view->form)? $view->form : GF_Form::by_id($field->form_id);
     $form_id = (isset($view->form))? $view->form->ID : 0;
-    $entry = GF_Entry::by_id($entry_id,$form_id);
+    $entry = GV\GF_Entry::by_id($entry_id,$form_id);
     $fields = $view->fields->by_position('single_table_columns')->by_visible($view);
     $results = [];
 
