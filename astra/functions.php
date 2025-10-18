@@ -412,6 +412,7 @@ function handle_single_entry($entry_id,$view_id){
 
     error_log("entrie is $entry_id");
     error_log("fields are ".print_r($view->fields->by_position('single_table_columns'),true));
+    error_log("First fields ".print_r($view->fields,true));
 
     foreach ($fields->all() as $field) {
         $label = $field->label;
