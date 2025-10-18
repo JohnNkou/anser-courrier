@@ -393,7 +393,7 @@ function load_gravityview_entry(){
     }
 
     $entries = explode(",", $_GET['entry_id']);
-
+    error_log("ENTRIES ARE ".json_encode($entries));
     if(count($entries) > 1){
         return wp_send_json_error("No yet implemented");
         //pass
