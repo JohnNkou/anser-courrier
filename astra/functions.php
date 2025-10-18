@@ -402,6 +402,25 @@ function load_gravityview_entry(){
     }
 }
 
+function is_empty($objet){
+    foreach ($objec as $value) {
+        if(is_array($value) && count($value) > 0){
+            return false;
+        }
+
+        if(is_string($value) && strlen($objet) > 0){
+            return false;
+        }
+        if(is_object($value)){
+            if(is_empty($value) == false){
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
 function handle_single_entry($entry_id,$view_id){
     $view = get_view($view_id);
     $form = isset($view->form)? $view->form : GF_Form::by_id($field->form_id);
@@ -420,8 +439,24 @@ function handle_single_entry($entry_id,$view_id){
             if(count($value) == 0)
             continue;
         }
-        else if(strlen($value) == 0){
+        else if(is_object($value) && is_empty($value)){
             continue;
+        }
+        else{
+            if(strlen($value) == 0){
+                continue;
+            }
+
+            if($value[0] == "["){
+                $value = json_decode($value);
+
+                if(is_array($value) && count($value) == 0){
+                    continue;
+                }
+                else if(is_object($value) && is_empty($value)){
+                    continue;
+                }
+            }
         }
 
         $results[$label] = $value;
