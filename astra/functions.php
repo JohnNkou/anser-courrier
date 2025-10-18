@@ -432,7 +432,7 @@ function get_view($id){
     $attrs = [
         "id"=> $id,
         "view_id" => $id
-    ]
+    ];
 
     return $short_code->get_view($attrs);
 }
