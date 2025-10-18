@@ -407,17 +407,13 @@ function handle_single_entry($entry_id,$view_id){
     $form = isset($view->form)? $view->form : GF_Form::by_id($field->form_id);
     $form_id = (isset($view->form))? $view->form->ID : 0;
     $entry = GV\GF_Entry::by_id($entry_id,$form_id);
-    $fields = $view->fields->by_position('single_table_columns')->by_visible($view);
+    $fields = $view->fields->by_position('single_table-columns')->by_visible($view);
     $results = [];
-
-    error_log("entrie is $entry_id");
-    error_log("fields are ".print_r($view->fields->by_position('single_table_columns'),true));
-    error_log("First fields ".print_r($view->fields,true));
 
     foreach ($fields->all() as $field) {
         $label = $field->label;
         $value = $field->get_value($view,$form,$entry,null);
-        error_log("FIELD ".json_encode($field));
+        
         if(is_array($value) && count($value) == 0)
             continue;
         else if(strlen($value) == 0){
