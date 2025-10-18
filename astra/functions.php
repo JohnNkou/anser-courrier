@@ -399,8 +399,6 @@ function load_gravityview(){
     $short_code = new Extender();
     $view = $short_code->get_view($attrs);
 
-    error_log("ENTRY BY REQUEST ".json_encode($request->is_entry( $view->form ? $view->form->ID : 0 )));
-
     $view->settings->update([
         "page_size"=> $limit,
         "offset"=> $offset
