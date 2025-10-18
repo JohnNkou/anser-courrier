@@ -414,7 +414,7 @@ function handle_single_entry($entry_id,$view_id){
     foreach ($fields->all() as $field) {
         $label = $field->label;
         $value = $field->get_value($view,$form,$entry,null);
-
+        error_log("FIELD ".json_encode($field));
         if(is_array($value) && count($value) == 0)
             continue;
         else if(strlen($value) == 0){
