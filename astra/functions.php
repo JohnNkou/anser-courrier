@@ -414,6 +414,8 @@ function handle_single_entry($entry_id,$view_id){
         $label = $field->label;
         $value = $field->get_value($view,$form,$entry,null);
 
+        error_log("labe $label, value :".print_r($value,true));
+
         if(is_array($value)){
             if(count($value) == 0)
             continue;
