@@ -415,7 +415,7 @@ function handle_single_entry($entry_id,$view_id){
         $label = $field->label;
         $value = $field->get_value($view,$form,$entry,null);
 
-        if(is_array($value) && count($value) = 0)
+        if(is_array($value) && count($value) == 0)
             continue;
         else if(strlen($value) == 0){
             continue;
