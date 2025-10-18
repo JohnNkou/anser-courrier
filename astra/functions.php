@@ -393,7 +393,6 @@ function load_gravityview_entry(){
     }
 
     $entries = explode(",", $_GET['entry_id']);
-    error_log("ENTRIES ARE ".json_encode($entries));
     if(count($entries) > 1){
         return wp_send_json_error("No yet implemented");
         //pass
@@ -410,6 +409,9 @@ function handle_single_entry($entry_id,$view_id){
     $entry = GV\GF_Entry::by_id($entry_id,$form_id);
     $fields = $view->fields->by_position('single_table_columns')->by_visible($view);
     $results = [];
+
+    error_log("entrie is $entry_id");
+    error_log("fields are ".print_r($fields,true));
 
     foreach ($fields->all() as $field) {
         $label = $field->label;
