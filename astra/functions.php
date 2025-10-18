@@ -386,6 +386,7 @@ function load_gravityview(){
         http_response_code(400);
         return wp_send_json_error("No id given");
     }
+    error_log("LOAD GRAVITY VIEW REQUEST ".print_r(gravityview()->request));
 
     $request = gravityview()->request;
     $limit = isset($_GET['limit'])? (int)$_GET['limit'] : 25;
