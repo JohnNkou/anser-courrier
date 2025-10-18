@@ -43,7 +43,7 @@ class Entry_Table_Template extends Entry_Template {
 		$context = Template_Context::from_template( $this, compact( 'fields' ) );
 
 		error_log("fields all count ". count($fields->all()));
-		error_log("Filtered bield by position ".count($fields->by_position('single_table-columns')->by_visible($this->view)));
+		error_log("Filtered bield by position ".count($fields->by_position('single_table-columns')->by_visible($this->view)->all()));
 		/**
 		 * Modify the fields displayed in a table.
 		 *
