@@ -268,7 +268,7 @@ abstract class Field_Template extends Template {
 			gravityview()->log->error( 'Entry is invalid for field. Returning empty.' );
 			return;
 		}
-		error_log("Source class ".get_class($this->source));
+		
 		/** Retrieve the value. */
 		$display_value = $value = $this->field->get_value( $this->view, $this->source, $entry );
 
