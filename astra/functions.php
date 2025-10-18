@@ -347,7 +347,7 @@ $gravityview_entry_view_endpoint = 'load_gravityview_entry';
 
 add_action("wp_ajax_$gravityflow_ajax_endpoint", $gravityflow_ajax_endpoint);
 add_action("wp_ajax_$gravityview_ajax_endpoint",$gravityview_ajax_endpoint);
-add_action("wp_ajax_$gravityview_ajax_endpoint", $gravityview_entry_view_endpoint);
+add_action("wp_ajax_$gravityview_entry_view_endpoint", $gravityview_entry_view_endpoint);
 add_action("wp_enqueue_scripts", function(){
     global $gravityflow_ajax_endpoint, $gravityview_ajax_endpoint, $gravityview_entry_view_endpoint;
 
