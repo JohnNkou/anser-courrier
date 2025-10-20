@@ -165,12 +165,11 @@ function display_entry_data(entry,entry_id){
 	span_number_node.textContent = entry_id;
 
 	modal.onclick = function(event){
-		event.preventDefault();
-
 		let target = event.target;
 
 		if(target.classList.contains('close')){
 			modal.classList.toggle('hidden');
+			event.preventDefault();
 		}
 	}
 

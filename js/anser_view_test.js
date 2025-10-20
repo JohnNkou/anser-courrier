@@ -204,10 +204,10 @@ var require_anser_view_util = __commonJS((exports2) => {
     modal.classList.toggle("hidden");
     span_number_node.textContent = entry_id;
     modal.onclick = function(event) {
-      event.preventDefault();
       let target = event.target;
       if (target.classList.contains("close")) {
         modal.classList.toggle("hidden");
+        event.preventDefault();
       }
     };
     for (let entry_name in entry) {
