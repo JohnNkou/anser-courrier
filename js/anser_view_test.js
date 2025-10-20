@@ -170,8 +170,38 @@ var require_anser_view_util = __commonJS((exports2) => {
       console.error("No tbody found");
     }
   }
+  function build_link(src) {
+    let resource_name = src.slice(src.lastIndexOf("/") + 1), a = "<a src='" + src + "'>" + resource_name + "</a>";
+    return a;
+  }
+  function has_index(keys, name) {
+    let length = keys.length;
+    while (length--) {
+      if (name.toLowerCase().indexOf(keys[length]) != -1) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function is_header(name) {
+    let keys = ["saumis", "date", "heure"];
+    return has_index(keys, name);
+  }
+  function is_contact(name) {
+    let keys = ["téléphone", "e-mail", "adresse"];
+    return has_index(keys, name);
+  }
+  function is_information(name) {
+    let keys = ["numéro", "référence", "expéditeur", "objet", "commentaire"];
+    return has_index(keys, name);
+  }
+  function is_documents(name) {
+    let keys = ["scanné", "jointe"];
+    return has_index(keys, name);
+  }
   function display_entry_data(entry, entry_id) {
-    let modal = document.querySelector(".modal"), span_number_node = modal.querySelector(".courrier_number"), container = modal.querySelector(".classMan"), datas = "";
+    let modal = document.querySelector(".modal"), span_number_node = modal.querySelector(".courrier_number"), container = modal.querySelector(".classMan"), headers = [], informations = [], contacts = [], documents = [], autres = [], datas = "";
+    span_number_node.textContent = entry_id;
     modal.classList.toggle("hidden");
     modal.onclick = function(event) {
       event.preventDefault();
@@ -181,27 +211,46 @@ var require_anser_view_util = __commonJS((exports2) => {
       }
     };
     for (let entry_name in entry) {
-      let value = entry[entry_name];
-      datas += "<div>";
-      datas += "<p>" + entry_name + "</p>";
+      let value = entry[entry_name], current_slot;
+      if (is_information(entry_name)) {
+        current_slot = informations;
+      } else if (is_header(entry_name)) {
+        current_slot = headers;
+      } else if (is_contact(entry_name)) {
+        current_slot = contacts;
+      } else if (is_documents(entry_name)) {
+        current_slot = documents;
+      } else {
+        current_slot = autres;
+      }
+      current_slot.push("<div><p>" + entry_name + "</p>");
       if (value.push || Object.prototype.toString.call(value) == Object.prototype.toString.call({})) {
-        datas += "<p>";
+        current_slot.push("<p>");
         if (value.push) {
           value.forEach((v) => {
-            datas += "<span>" + v + "</span>";
+            if (v.indexOf("http") != -1) {
+              v = build_link(v);
+            }
+            current_slot.push("<span>" + v + "</span>");
           });
         } else {
           for (let name in value) {
-            datas += "<span>" + value[name] + "</span>";
+            if (value.indexOf("http") != -1) {
+              value = build_link(value);
+            }
+            current_slot.push("<span>" + value + "</span>");
           }
         }
-        datas += "</p>";
+        current_slot.push("</p></div>");
       } else {
-        datas += "<p>" + value + "</p>";
+        current_slot.push("<p>" + value + "</p>");
       }
-      datas += "</div>";
     }
-    container.innerHTML = datas;
+    container.innerHTML += "<div class='information'>" + headers.join("") + "</div>";
+    container.innerHTML += "<div class='card'>" + informations.join("") + "</div>";
+    container.innerHTML += "<div class='card'>" + contacts.join("") + "</div>";
+    container.innerHTML += "<div class='card'>" + documents.join("") + "</div>";
+    container.innerHTML += "<div class='card'>" + autres.join("") + "</div>";
   }
   function get_entry_id(node, deep) {
     let entry_id = node.getAttribute("entry_id");
