@@ -221,8 +221,8 @@ var require_anser_view_util = __commonJS((exports2) => {
             nonce: GravityAjax.nonce
           }, myPage_handler = new page_handler(null, queries);
           myPage_handler.load_data().then((json_response) => {
-            let { entries } = json_response;
-            display_entry_data(entries);
+            let { entries } = json_response.data;
+            display_entry_data(entries, entry_id);
           });
         } else {
           console.log("No entry id found");

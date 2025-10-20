@@ -178,9 +178,9 @@ function entry_click_handler(){
 
 
 				myPage_handler.load_data().then((json_response)=>{
-					let { entries } = json_response;
+					let { entries } = json_response.data;
 
-					display_entry_data(entries);
+					display_entry_data(entries, entry_id);
 				})
 			}
 			else{
