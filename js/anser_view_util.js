@@ -1,3 +1,5 @@
+const { page_handler }  = require('./anser_utily.js');
+
 function result_handler(json_response){
 	let { entries, total } = json_response.data;
 
@@ -104,10 +106,93 @@ function display_data(entries){
 	}
 }
 
-function entry_click_handler(){
+function display_entry_data(entries,entry_id){
+	let modal = document.querySelector('.modal'),
+	span_number_node = modal.querySelector('.courrier_number'),
+	container = modal.querySelector('classMan'),
+	datas = "";
 
+	modal.classList.toggle('hidden');
+
+	modal.onclick = function(event){
+		event.preventDefault();
+
+		let target = event.target;
+
+		if(target.classList.contains('close')){
+			modal.classList.toggle('hidden');
+		}
+	}
+
+	entries.forEach((entry)=>{
+		datas += "<div>";
+		for(let name in entry){
+			let value = entry[name];
+			datas += "<p>" + name + "</p>";
+
+			if(value.push){
+				datas += "<p>";
+				value.forEach((v)=>{
+					datas += "<span>"+v+"</span>";
+				})
+				datas += "</p>";
+			}
+		}
+
+		data += "</div>";
+	})
+
+	container.innerHTML = data;
+}
+
+function get_entry_id(node,deep){
+	let entry_id = node.getAttribute('entry_id');
+
+	if(deep == 0){
+		return null;
+	}
+	if(entry_id){
+		return entry_id;
+	}
+	else{
+		return get_entry_id(node.parentNode,deep - 1);
+	}
+}
+
+function entry_click_handler(){
+	let tbody = document.querySelector('tbody');
+
+	if(tbody){
+		tbody.addEventListener('click',(event)=>{
+			let target = event.currentTarget,
+			entry_id = get_entry_id(target,5);
+
+			if(entry_id){
+				let queries = {
+					view_id: 	_Page.view_id,
+					entry_id: 	entry_id,
+					action: 	GravityAjax.entry,
+					nonce: 		GravityAjax.nonce
+				},
+				myPage_handler = new page_handler(null,queries);
+
+
+				myPage_handler.load_data().then((json_response)=>{
+					let { entries } = json_response;
+
+					display_entry_data(entries);
+				})
+			}
+			else{
+				console.log("No entry id found");
+			}
+		})
+	}
+	else{
+		console.error("No tbody found for registering entry_click_handler");
+	}
 }
 
 exports.result_handler = result_handler;
-
 exports.filter_handler = filter_handler;
+exports.entry_click_handler = entry_click_handler;
