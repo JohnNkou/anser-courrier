@@ -160,9 +160,9 @@ function display_entry_data(entry,entry_id){
 	autres = [],
 	datas = "";
 
-	span_number_node.textContent = entry_id;
-
 	modal.classList.toggle('hidden');
+
+	span_number_node.textContent = entry_id;
 
 	modal.onclick = function(event){
 		event.preventDefault();
