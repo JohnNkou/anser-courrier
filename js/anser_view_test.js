@@ -171,7 +171,7 @@ var require_anser_view_util = __commonJS((exports2) => {
     }
   }
   function build_link(src) {
-    let resource_name = src.slice(src.lastIndexOf("/") + 1), a = "<a target='blank' href='" + src + "'>" + resource_name + "</a>";
+    let resource_name = src.slice(src.lastIndexOf("/") + 1), a = "<a target='_blank' href='" + src + "'>" + resource_name + "</a>";
     return a;
   }
   function has_index(keys, name) {
