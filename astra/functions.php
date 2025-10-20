@@ -475,7 +475,7 @@ function handle_single_entry($entry_id,$view_id){
         $results[$label] = $value;
     }
 
-    return wp_send_json_success(["entries"=> $results]);
+    return wp_send_json_success(["entry"=> $results]);
 }
 
 function get_view($id){

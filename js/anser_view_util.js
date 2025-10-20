@@ -106,7 +106,7 @@ function display_data(entries){
 	}
 }
 
-function display_entry_data(entries,entry_id){
+function display_entry_data(entry,entry_id){
 	let modal = document.querySelector('.modal'),
 	span_number_node = modal.querySelector('.courrier_number'),
 	container = modal.querySelector('classMan'),
@@ -124,23 +124,34 @@ function display_entry_data(entries,entry_id){
 		}
 	}
 
-	entries.forEach((entry)=>{
+	for(let entry_name in entry){
+		let value = entry[entry_name];
+
 		datas += "<div>";
-		for(let name in entry){
-			let value = entry[name];
-			datas += "<p>" + name + "</p>";
+		
+		datas += "<p>" + name + "</p>";
+
+		if(value.push || Object.prototype.toString.call(value) == Object.prototype.toString.call({})){
+			datas += "<p>";
 
 			if(value.push){
-				datas += "<p>";
 				value.forEach((v)=>{
 					datas += "<span>"+v+"</span>";
 				})
-				datas += "</p>";
 			}
+			else{
+				for(let name in value){
+					datas += "<span>" + value[name] + "</span>";
+				}
+			}
+			datas += "</p>";
+		}
+		else{
+			datas += "<p>" + value + "</p>";
 		}
 
 		data += "</div>";
-	})
+	}
 
 	container.innerHTML = data;
 }
@@ -178,9 +189,9 @@ function entry_click_handler(){
 
 
 				myPage_handler.load_data().then((json_response)=>{
-					let { entries } = json_response.data;
+					let { entry } = json_response.data;
 
-					display_entry_data(entries, entry_id);
+					display_entry_data(entry, entry_id);
 				})
 			}
 			else{

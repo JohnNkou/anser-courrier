@@ -8,8 +8,8 @@ var require_anser_utily = __commonJS((exports2) => {
     searchParams.set("security", GravityAjax.nonce);
     searchParams.set("offset", offset);
     searchParams.set("limit", page_size);
-    for (let name in queries) {
-      searchParams.set(name, queries[name]);
+    for (let name2 in queries) {
+      searchParams.set(name2, queries[name2]);
     }
     return fetch(url, { method: "POST" });
   }
@@ -125,15 +125,15 @@ var require_anser_view_util = __commonJS((exports2) => {
       entries.forEach((entry) => {
         let id = entry.id;
         trs += "<tr entry_id='" + id + "'>";
-        for (let name in entry) {
-          if (name == "id") {
+        for (let name2 in entry) {
+          if (name2 == "id") {
             continue;
           }
-          let value = entry[name];
+          let value = entry[name2];
           trs += "<td>";
           if (value.indexOf) {
             if (value.indexOf("http") == -1) {
-              if (name == "État") {
+              if (name2 == "État") {
                 let className = "p-1 rounded text-white shadow-md";
                 switch (value) {
                   case "pending":
@@ -153,8 +153,8 @@ var require_anser_view_util = __commonJS((exports2) => {
               let values = JSON.parse(value);
               values.forEach((value2) => {
                 trs += "<a href='" + value2 + "'>";
-                let name2 = value2.slice(value2.lastIndexOf("/") + 1);
-                trs += name2;
+                let name3 = value2.slice(value2.lastIndexOf("/") + 1);
+                trs += name3;
                 trs += "</a>";
               });
             }
@@ -170,7 +170,7 @@ var require_anser_view_util = __commonJS((exports2) => {
       console.error("No tbody found");
     }
   }
-  function display_entry_data(entries, entry_id) {
+  function display_entry_data(entry, entry_id) {
     let modal = document.querySelector(".modal"), span_number_node = modal.querySelector(".courrier_number"), container = modal.querySelector("classMan"), datas = "";
     modal.classList.toggle("hidden");
     modal.onclick = function(event) {
@@ -180,21 +180,27 @@ var require_anser_view_util = __commonJS((exports2) => {
         modal.classList.toggle("hidden");
       }
     };
-    entries.forEach((entry) => {
+    for (let entry_name in entry) {
+      let value = entry[entry_name];
       datas += "<div>";
-      for (let name in entry) {
-        let value = entry[name];
-        datas += "<p>" + name + "</p>";
+      datas += "<p>" + name + "</p>";
+      if (value.push || Object.prototype.toString.call(value) == Object.prototype.toString.call({})) {
+        datas += "<p>";
         if (value.push) {
-          datas += "<p>";
           value.forEach((v) => {
             datas += "<span>" + v + "</span>";
           });
-          datas += "</p>";
+        } else {
+          for (let name2 in value) {
+            datas += "<span>" + value[name2] + "</span>";
+          }
         }
+        datas += "</p>";
+      } else {
+        datas += "<p>" + value + "</p>";
       }
       data += "</div>";
-    });
+    }
     container.innerHTML = data;
   }
   function get_entry_id(node, deep) {
@@ -221,8 +227,8 @@ var require_anser_view_util = __commonJS((exports2) => {
             nonce: GravityAjax.nonce
           }, myPage_handler = new page_handler(null, queries);
           myPage_handler.load_data().then((json_response) => {
-            let { entries } = json_response.data;
-            display_entry_data(entries, entry_id);
+            let { entry } = json_response.data;
+            display_entry_data(entry, entry_id);
           });
         } else {
           console.log("No entry id found");
