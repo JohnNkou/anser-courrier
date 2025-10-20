@@ -167,6 +167,8 @@ function entry_click_handler(){
 			let target = event.currentTarget,
 			entry_id = get_entry_id(target,5);
 
+			window.currentTarget = target;
+
 			if(entry_id){
 				let queries = {
 					view_id: 	_Page.view_id,
