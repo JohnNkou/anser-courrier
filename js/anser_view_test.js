@@ -171,7 +171,7 @@ var require_anser_view_util = __commonJS((exports2) => {
     }
   }
   function display_entry_data(entry, entry_id) {
-    let modal = document.querySelector(".modal"), span_number_node = modal.querySelector(".courrier_number"), container = modal.querySelector("classMan"), datas = "";
+    let modal = document.querySelector(".modal"), span_number_node = modal.querySelector(".courrier_number"), container = modal.querySelector(".classMan"), datas = "";
     modal.classList.toggle("hidden");
     modal.onclick = function(event) {
       event.preventDefault();
