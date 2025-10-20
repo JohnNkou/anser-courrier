@@ -248,6 +248,7 @@ var require_anser_view_util = __commonJS((exports2) => {
       } else {
         current_slot.push("<p>" + value + "</p>");
       }
+      current_slot.push("</p>");
     }
     container.innerHTML += "<div class='information'>" + headers.join("") + "</div>";
     container.innerHTML += "<div class='card'>" + informations.join("") + "</div>";

@@ -225,6 +225,7 @@ function display_entry_data(entry,entry_id){
 		else{
 			current_slot.push("<p>" + value + "</p>");
 		}
+		current_slot.push("</p>");
 	}
 
 	container.innerHTML += "<div class='information'>" + headers.join("") + "</div>";
