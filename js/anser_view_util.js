@@ -209,12 +209,14 @@ function display_entry_data(entry,entry_id){
 			}
 			else{
 				for(let name in value){
-					value = value[name];
-					if(value.indexOf('http') != -1){
-						value = build_link(value);
-					}
+					let _value = value[name];
+					if(_value){
+						if(_value.indexOf('http') != -1){
+							_value = build_link(value);
+						}
 
-					current_slot.push("<span>" + value + "</span>");
+						current_slot.push("<span>" + _value + "</span>");
+					}
 				}
 			}
 
