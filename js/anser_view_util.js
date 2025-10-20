@@ -108,7 +108,7 @@ function display_data(entries){
 
 function build_link(src){
 	let resource_name = src.slice(src.lastIndexOf('/') + 1),
-	a = "<a target='blank' src='" + src + "'>" + resource_name + "</a>";
+	a = "<a target='blank' href='" + src + "'>" + resource_name + "</a>";
 
 	return a;
 }
