@@ -20,6 +20,9 @@ img:is([sizes="auto" i], [sizes^="auto," i]) {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+#main tr{
+    cursor: default;
+}
 #main tr + tr td{
     border-top:1px solid silver;
 }
