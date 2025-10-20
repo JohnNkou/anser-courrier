@@ -184,7 +184,7 @@ var require_anser_view_util = __commonJS((exports2) => {
     return false;
   }
   function is_header(name) {
-    let keys = ["saumis", "date", "heure"];
+    let keys = ["soumis", "date", "heure"];
     return has_index(keys, name);
   }
   function is_contact(name) {
