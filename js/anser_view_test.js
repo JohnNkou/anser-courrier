@@ -212,8 +212,7 @@ var require_anser_view_util = __commonJS((exports2) => {
     let tbody = document.querySelector("tbody");
     if (tbody) {
       tbody.addEventListener("click", (event) => {
-        let target = event.currentTarget, entry_id = get_entry_id(target, 5);
-        window.currentTarget = target;
+        let target = event.target, entry_id = get_entry_id(target, 5);
         if (entry_id) {
           let queries = {
             view_id: _Page.view_id,
