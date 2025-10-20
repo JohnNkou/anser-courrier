@@ -8,8 +8,8 @@ var require_anser_utily = __commonJS((exports2) => {
     searchParams.set("security", GravityAjax.nonce);
     searchParams.set("offset", offset);
     searchParams.set("limit", page_size);
-    for (let name2 in queries) {
-      searchParams.set(name2, queries[name2]);
+    for (let name in queries) {
+      searchParams.set(name, queries[name]);
     }
     return fetch(url, { method: "POST" });
   }
@@ -125,15 +125,15 @@ var require_anser_view_util = __commonJS((exports2) => {
       entries.forEach((entry) => {
         let id = entry.id;
         trs += "<tr entry_id='" + id + "'>";
-        for (let name2 in entry) {
-          if (name2 == "id") {
+        for (let name in entry) {
+          if (name == "id") {
             continue;
           }
-          let value = entry[name2];
+          let value = entry[name];
           trs += "<td>";
           if (value.indexOf) {
             if (value.indexOf("http") == -1) {
-              if (name2 == "État") {
+              if (name == "État") {
                 let className = "p-1 rounded text-white shadow-md";
                 switch (value) {
                   case "pending":
@@ -153,8 +153,8 @@ var require_anser_view_util = __commonJS((exports2) => {
               let values = JSON.parse(value);
               values.forEach((value2) => {
                 trs += "<a href='" + value2 + "'>";
-                let name3 = value2.slice(value2.lastIndexOf("/") + 1);
-                trs += name3;
+                let name2 = value2.slice(value2.lastIndexOf("/") + 1);
+                trs += name2;
                 trs += "</a>";
               });
             }
@@ -183,7 +183,7 @@ var require_anser_view_util = __commonJS((exports2) => {
     for (let entry_name in entry) {
       let value = entry[entry_name];
       datas += "<div>";
-      datas += "<p>" + name + "</p>";
+      datas += "<p>" + entry_name + "</p>";
       if (value.push || Object.prototype.toString.call(value) == Object.prototype.toString.call({})) {
         datas += "<p>";
         if (value.push) {
@@ -191,8 +191,8 @@ var require_anser_view_util = __commonJS((exports2) => {
             datas += "<span>" + v + "</span>";
           });
         } else {
-          for (let name2 in value) {
-            datas += "<span>" + value[name2] + "</span>";
+          for (let name in value) {
+            datas += "<span>" + value[name] + "</span>";
           }
         }
         datas += "</p>";

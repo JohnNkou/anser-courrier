@@ -129,7 +129,7 @@ function display_entry_data(entry,entry_id){
 
 		datas += "<div>";
 		
-		datas += "<p>" + name + "</p>";
+		datas += "<p>" + entry_name + "</p>";
 
 		if(value.push || Object.prototype.toString.call(value) == Object.prototype.toString.call({})){
 			datas += "<p>";
