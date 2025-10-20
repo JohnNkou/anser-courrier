@@ -220,12 +220,13 @@ function display_entry_data(entry,entry_id){
 				}
 			}
 
-			current_slot.push("</p></div>");
+			current_slot.push("</p>");
 		}
 		else{
 			current_slot.push("<p>" + value + "</p>");
 		}
-		current_slot.push("</p>");
+
+		current_slot.push("</div>");
 	}
 
 	container.innerHTML += "<div class='information'>" + headers.join("") + "</div>";

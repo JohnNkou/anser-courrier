@@ -244,11 +244,11 @@ var require_anser_view_util = __commonJS((exports2) => {
             }
           }
         }
-        current_slot.push("</p></div>");
+        current_slot.push("</p>");
       } else {
         current_slot.push("<p>" + value + "</p>");
       }
-      current_slot.push("</p>");
+      current_slot.push("</div>");
     }
     container.innerHTML += "<div class='information'>" + headers.join("") + "</div>";
     container.innerHTML += "<div class='card'>" + informations.join("") + "</div>";
