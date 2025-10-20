@@ -209,6 +209,7 @@ function display_entry_data(entry,entry_id){
 			}
 			else{
 				for(let name in value){
+					value = value[name];
 					if(value.indexOf('http') != -1){
 						value = build_link(value);
 					}
