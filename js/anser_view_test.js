@@ -199,7 +199,7 @@ var require_anser_view_util = __commonJS((exports2) => {
       } else {
         datas += "<p>" + value + "</p>";
       }
-      data += "</div>";
+      datas += "</div>";
     }
     container.innerHTML = data;
   }

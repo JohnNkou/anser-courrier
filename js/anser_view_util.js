@@ -150,7 +150,7 @@ function display_entry_data(entry,entry_id){
 			datas += "<p>" + value + "</p>";
 		}
 
-		data += "</div>";
+		datas += "</div>";
 	}
 
 	container.innerHTML = data;
