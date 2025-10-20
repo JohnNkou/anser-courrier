@@ -153,7 +153,7 @@ function display_entry_data(entry,entry_id){
 		datas += "</div>";
 	}
 
-	container.innerHTML = data;
+	container.innerHTML = datas;
 }
 
 function get_entry_id(node,deep){

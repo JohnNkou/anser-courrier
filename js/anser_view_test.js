@@ -201,7 +201,7 @@ var require_anser_view_util = __commonJS((exports2) => {
       }
       datas += "</div>";
     }
-    container.innerHTML = data;
+    container.innerHTML = datas;
   }
   function get_entry_id(node, deep) {
     let entry_id = node.getAttribute("entry_id");
