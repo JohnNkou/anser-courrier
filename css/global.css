@@ -21,7 +21,7 @@ img:is([sizes="auto" i], [sizes^="auto," i]) {
     text-overflow: ellipsis;
 }
 #main tr{
-    cursor: default;
+    cursor: pointer;
 }
 #main tr + tr td{
     border-top:1px solid silver;
