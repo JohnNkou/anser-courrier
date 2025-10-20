@@ -230,8 +230,10 @@ var require_anser_view_util = __commonJS((exports2) => {
           value.forEach((v) => {
             if (v.indexOf("http") != -1) {
               v = build_link(v);
+              current_slot.push(v);
+            } else {
+              current_slot.push("<span>" + v + "</span>");
             }
-            current_slot.push("<span>" + v + "</span>");
           });
         } else {
           for (let name in value) {

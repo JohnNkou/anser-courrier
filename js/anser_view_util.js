@@ -202,9 +202,11 @@ function display_entry_data(entry,entry_id){
 				value.forEach((v)=>{
 					if(v.indexOf('http') != -1){
 						v = build_link(v);
+						current_slot.push(v);
 					}
-
-					current_slot.push("<span>" + v + "</span>");
+					else{
+						current_slot.push("<span>" + v + "</span>");
+					}
 				})
 			}
 			else{
