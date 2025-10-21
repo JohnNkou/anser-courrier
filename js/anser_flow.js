@@ -5,7 +5,10 @@ myPage_handler = new page_handler(result_handler);
 var search_form = document.querySelector('.search_block');
 
 if(typeof _Page != "undefined"){
-        search_form.addEventListener('submit',(event)=>{
+    myPage_handler.load_data().then(result_handler);
+    entry_click_handler();
+
+    search_form.addEventListener('submit',(event)=>{
         event.preventDefault();
 
         let form = event.target,
@@ -22,6 +25,4 @@ if(typeof _Page != "undefined"){
             console.warn("Nothing to search for");
         }
     })
-
-    myPage_handler.load_data().then(result_handler);
 }

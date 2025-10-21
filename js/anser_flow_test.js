@@ -115,7 +115,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     var html = "", tbody = document.querySelector("tbody");
     if (tbody) {
       entries.forEach((entry) => {
-        html += "<tr>";
+        html += "<tr id='" + entry.id + "' form_id='" + entry.form_id + "'>";
         html += "<td>" + entry.created_by + "</td>";
         html += "<td>" + entry.workflow_step + "</td>";
         html += "<td>" + entry["numéro"] + "</td>";
@@ -131,19 +131,22 @@ var require_anser_flow_utils = __commonJS((exports2) => {
 });
 
 // js/anser_flow.js
-var { page_handler } = require_anser_utily();
-var { result_handler } = require_anser_flow_utils();
-var myPage_handler = new page_handler(result_handler);
+var { page_handler: page_handler2 } = require_anser_utily();
+var { result_handler, entry_click_handler } = require_anser_flow_utils();
+var myPage_handler = new page_handler2(result_handler);
 var search_form = document.querySelector(".search_block");
-search_form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  let form = event.target, input = form.elements.s;
-  if (input.value.length) {
-    let limit = myPage_handler.limit, queries = { term: input.value };
-    myPage_handler.load_data(queries, 0, limit).then(result_handler);
-    exports.load_data(0, exports.limit, input.value).then(result_handler);
-  } else {
-    console.warn("Nothing to search for");
-  }
-});
-myPage_handler.load_data().then(result_handler);
+if (typeof _Page != "undefined") {
+  myPage_handler.load_data().then(result_handler);
+  entry_click_handler();
+  search_form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    let form = event.target, input = form.elements.s;
+    if (input.value.length) {
+      let limit = myPage_handler.limit, queries = { term: input.value };
+      myPage_handler.load_data(queries, 0, limit).then(result_handler);
+      exports.load_data(0, exports.limit, input.value).then(result_handler);
+    } else {
+      console.warn("Nothing to search for");
+    }
+  });
+}
