@@ -305,24 +305,28 @@ var { result_handler, filter_handler, entry_click_handler } = require_anser_view
 var myPage_handler = new page_handler(result_handler);
 var search_form = document.querySelector(".search_block");
 if (typeof _Page != "undefined" && _Page.view_id) {
+  let queries = { id: _Page.view_id };
+  if (_Page.secret) {
+    queries.secret = _Page.secret;
+  }
   filter_handler(myPage_handler);
   entry_click_handler();
-  myPage_handler.addQueries({ id: _Page.view_id });
+  myPage_handler.addQueries(queries);
   if (_Page.filters) {
     search_form.addEventListener("submit", (event) => {
       event.preventDefault();
-      let input = search_form.elements.s, value = input.value, queries;
+      let input = search_form.elements.s, value = input.value, queries2;
       if (value.length) {
-        queries = {
+        queries2 = {
           term: value,
           mode: "any"
         };
         _Page.filters.forEach((filter_name) => {
-          queries[filter_name] = value;
+          queries2[filter_name] = value;
         });
         myPage_handler.removeQueries(["filter_workflow_final_status"]);
-        myPage_handler.load_data(queries, 0).then(result_handler).then(() => {
-          myPage_handler.addQueries(queries);
+        myPage_handler.load_data(queries2, 0).then(result_handler).then(() => {
+          myPage_handler.addQueries(queries2);
         });
       }
     });

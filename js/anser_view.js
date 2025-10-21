@@ -4,9 +4,16 @@ myPage_handler = new page_handler(result_handler),
 search_form = document.querySelector('.search_block');
 
 if(typeof _Page != 'undefined' && _Page.view_id){
+	let queries = { id: _Page.view_id };
+
+	if(_Page.secret){
+		queries.secret = _Page.secret;
+	}
+
 	filter_handler(myPage_handler);
 	entry_click_handler();
-	myPage_handler.addQueries({ id: _Page.view_id });
+
+	myPage_handler.addQueries(queries);
 
 	if(_Page.filters){
 		search_form.addEventListener('submit',(event)=>{

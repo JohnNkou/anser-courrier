@@ -478,12 +478,16 @@ function handle_single_entry($entry_id,$view_id){
     return wp_send_json_success(["entry"=> $results]);
 }
 
-function get_view($id){
+function get_view($id,$secret){
     $short_code = new Extender();
     $attrs = [
         "id"=> $id,
         "view_id" => $id
     ];
+
+    if($secret){
+        $attrs["secret"] = $secret;
+    }
 
     return $short_code->get_view($attrs);
 }
@@ -500,7 +504,8 @@ function load_gravityview(){
     $limit = isset($_GET['limit'])? (int)$_GET['limit'] : 25;
     $offset = isset($_GET['offset'])? (int)$_GET['offset'] : 0;
     $id = $_GET['id'];
-    $view = get_view($id);
+    $secret = $_GET['secret'] ?: Null;
+    $view = get_view($id,$secret);
     error_log("THE VIEW ".print_r($view,true));
     $view->settings->update([
         "page_size"=> $limit,
