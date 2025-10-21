@@ -383,22 +383,26 @@ class Extender extends \GV\Shortcode{
 }
 
 function load_gravityview_entry(){
-    if(!isset($_GET['entry_id'])){
+    $entry_id = $_GET['entry_id'] ?: null;
+    $view_id = $_GET['view_id'] ?: null;
+
+    if($entry_id === null){
         http_response_code(400);
         return wp_send_json_error("No entry_id given");
     }
-    if(!isset($_GET['view_id'])){
+    if($view_id === null){
         http_response_code(400);
         return wp_send_json_error("No view_id given");
     }
 
-    $entries = explode(",", $_GET['entry_id']);
+    $entries = explode(",", $entry_id);
     if(count($entries) > 1){
+        handle_multi_entry($entries,$view_id)
         return wp_send_json_error("No yet implemented");
         //pass
     }
     else{
-        handle_single_entry($entries[0],$_GET['view_id']);
+        handle_single_entry($entries[0],$view_id);
     }
 }
 
@@ -421,9 +425,22 @@ function is_empty($objet){
     return true;
 }
 
+function handle_multi_entry($entries,$view_id){
+    $view = get_view($view_id);
+    $form = isset($view->form)? $view->form: GF_Form::by_id($field->form_id);
+    $form_id = (isset($view->form))? $view->form->ID:0;
+    $entries = array_map(function($entry_id) use ($form_id){
+        return GV\GF_Entry::by_id($entry_id,$form_id);
+    }, arr1);
+    $entry = GV\Multi_Entry::from_entries($entries);
+
+    error_log("ENTRIES ".print_r($entries,true));
+    error_log("ENTRY ".print_r($entry));
+}
+
 function handle_single_entry($entry_id,$view_id){
     $secret = $_GET['secret'] ?: null;
-    $view = get_view($view_id,$secret);
+    $view = get_view($view_id);
     $form = isset($view->form)? $view->form : GF_Form::by_id($field->form_id);
     $form_id = (isset($view->form))? $view->form->ID : 0;
     $entry = GV\GF_Entry::by_id($entry_id,$form_id);
@@ -479,15 +496,15 @@ function handle_single_entry($entry_id,$view_id){
     return wp_send_json_success(["entry"=> $results]);
 }
 
-function get_view($id,$secret){
+function get_view($id){
     $short_code = new Extender();
     $attrs = [
         "id"=> $id,
         "view_id" => $id
     ];
 
-    if($secret){
-        $attrs["secret"] = $secret;
+    if(isset($_GET['secret'])){
+        $attrs["secret"] = $_GET['secret'];
     }
 
     return $short_code->get_view($attrs);
@@ -505,8 +522,7 @@ function load_gravityview(){
     $limit = isset($_GET['limit'])? (int)$_GET['limit'] : 25;
     $offset = isset($_GET['offset'])? (int)$_GET['offset'] : 0;
     $id = $_GET['id'];
-    $secret = $_GET['secret'] ?: Null;
-    $view = get_view($id,$secret);
+    $view = get_view($id);
     $view->settings->update([
         "page_size"=> $limit,
         "offset"=> $offset
