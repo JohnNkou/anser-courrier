@@ -624,7 +624,7 @@ function build_inbox_results($form,$entry,$current_step){
         }
         $is_product_field = GFCommon::is_product_field($field->type);
 
-        $display_field = $current_step && $is_assignee ? Gravity_Flow_Entry_Detail::is_display_field($field,$current_step,$form,$entry,$is_product_field) : self::is_display_field($field, $display_field_step, $form, $entry, $is_product_field);
+        $display_field = $current_step && $is_assignee ? Gravity_Flow_Entry_Detail::is_display_field($field,$current_step,$form,$entry,$is_product_field) : Gravity_Flow_Entry_Detail::is_display_field($field, $display_field_step, $form, $entry, $is_product_field);
         $field->gravityflow_is_display_field = $display_field;
 
         switch (RGFormsModel::get_input_type( $field )) {
