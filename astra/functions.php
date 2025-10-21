@@ -442,7 +442,7 @@ function build_entries_array($view,$entry){
     $results = [];
 
     foreach ($fields->all() as $field) {
-        $label = $field->label;
+        $label = $field->custom_label ?: $field->label;
 
         if($entry->is_multi()){
             $value = $entry->as_entry()['_multi'][$field->form_id][$field->ID];
