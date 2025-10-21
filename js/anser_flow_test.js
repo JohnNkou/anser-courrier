@@ -91,12 +91,12 @@ var require_anser_utily = __commonJS((exports2) => {
 
 // js/anser_flow_utils.js
 var require_anser_flow_utils = __commonJS((exports2) => {
-  exports2.result_handler = function result_handler(json_response) {
+  function result_handler(json_response) {
     let { entries, field_values } = json_response.data;
     console.log("ENTRIES ARE", entries);
     update_entries_ids(entries, field_values);
     build_elements(entries);
-  };
+  }
   function update_entries_ids(entries, field_values) {
     entries.forEach((entry) => {
       let form_id = entry.form_id, form = field_values[form_id];
@@ -128,6 +128,39 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       console.error("TBODY NOT FOUND");
     }
   }
+  function get_entry_ids(node, repeat) {
+    if (repeat && node) {
+      let form_id = node.getAttribute("form_id"), entry_id = node.getAttribute("entry_id");
+      if (form_id && entry_id) {
+        return { form_id, entry_id };
+      }
+      return get_entry_ids(node.parentNode, repeat--);
+    } else {
+      return null;
+    }
+  }
+  function entry_click_handler() {
+    let tbody = document.querySelector("tbody");
+    if (!tbody) {
+      return console.error("Couldn't load Entry_click_handler because no tbody element was found");
+    }
+    tbody.addEventListener("click", (event) => {
+      let target = event.target, payloads = get_entry_ids(target);
+      if (payloads) {
+        let queries = {
+          entry_id: payloads.entry_id,
+          id: payloads.form_id,
+          action: GravityAjax.entry,
+          nonce: GravityAjax.nonce
+        }, myPage_handler = new page_handler(null, queries);
+        myPage_handler.load_data();
+      } else {
+        console.error("No entry_id and form_id found");
+      }
+    });
+  }
+  exports2.result_handler = result_handler;
+  exports2.entry_click_handler = entry_click_handler;
 });
 
 // js/anser_flow.js
