@@ -5650,7 +5650,7 @@ PRIMARY KEY  (id)
 			}
 
 			$entry_id = absint( rgget( 'lid' ) );
-
+			error_log("GOT A ENTRY ID $entry_id");
 			if ( empty( $entry_id ) && ! empty( $a['entry_id'] ) ) {
 				$entry_id = absint( $a['entry_id'] );
 			}
@@ -5672,7 +5672,7 @@ PRIMARY KEY  (id)
 			if ( ! empty( $a['title'] ) ) {
 				$html .= sprintf( '<h3>%s</h3>', $a['title'] );
 			}
-            
+            error_log("printing a ".print_r($a,true));
 			switch ( $a['page'] ) {
 				case 'inbox':
 					$html .= $this->get_shortcode_inbox_page( $a );
