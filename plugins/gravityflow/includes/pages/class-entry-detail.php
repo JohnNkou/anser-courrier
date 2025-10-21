@@ -935,7 +935,7 @@ class Gravity_Flow_Entry_Detail {
 
 		foreach ( $form['fields'] as &$field ) {
 			/* @var GF_Field $field */
-			error_log("Displaying field ".print_r($field,true));
+			error_log("Displaying field ".json_encode($field,true));
 			// Not needed as we're always adminOnly.
 			$field->adminOnly = false;
 
@@ -947,7 +947,7 @@ class Gravity_Flow_Entry_Detail {
 
 			switch ( RGFormsModel::get_input_type( $field ) ) {
 				case 'section' :
-
+					error_log("SECTION FIELD ".print_r($field,true));
 					if ( ! self::is_section_empty( $field, $current_step, $form, $entry, $display_empty_fields ) ) {
 						$count ++;
 						$is_last = $count >= $field_count ? true : false;
@@ -969,6 +969,7 @@ class Gravity_Flow_Entry_Detail {
 
 				case 'html':
 					if ( $display_field ) {
+						error_log("HTML FIELD ".print_r($field));
 						$content = GFCommon::replace_variables( $field->content, $form, $entry, false, true, false, 'html' );
 						$content = do_shortcode( $content );
 						?>
