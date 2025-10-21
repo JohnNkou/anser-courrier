@@ -616,7 +616,12 @@ function build_inbox_results($form,$entry,$current_step){
     }
 
     foreach ($form['fields'] as &$field) {
-        $current_array = (count($results) > 0) ? $results[$current_index] : &$results;
+        if(count($results) > 0){
+            $current_array = &$results[$current_index];
+        }
+        else{
+            $current_array = &$results;
+        }
         $is_product_field = GFCommon::is_product_field($field->type);
 
         $display_field = $current_step && $is_assignee ? Gravity_Flow_Entry_Detail::is_display_field($field,$current_step,$form,$entry,$is_product_field) : self::is_display_field($field, $display_field_step, $form, $entry, $is_product_field);
