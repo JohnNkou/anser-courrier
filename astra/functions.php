@@ -527,7 +527,7 @@ function load_gravityview(){
                 array_push($entry_ids,$_entry['id']);
             }
 
-            $id = join(",",$entry_ids);
+            $id = join(",", array_unique($entry_ids));
         }
         else{
             foreach ($fields_array as $field) {
