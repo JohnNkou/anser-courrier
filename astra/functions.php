@@ -511,6 +511,7 @@ function load_gravityview(){
         "offset"=> $offset
     ]);
     $entries = $view->get_entries($request);
+    error_log("ENTRIES IN ASTRA ".print_r($entries,true));
     $fields = $view->fields->by_position( 'directory_table-columns' );
     $fields_array = $fields->by_visible($view)->all();
     $results = [];
