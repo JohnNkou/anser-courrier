@@ -4770,7 +4770,7 @@ PRIMARY KEY  (id)
 				require_once( $this->get_base_path() . '/includes/pages/class-entry-detail.php' );
 
 				$step = $this->get_current_step( $form, $entry );
-				error_log("Current Step ".print_r($step,true));
+				error_log("Current Step ".json_encode($step,true));
 				if ( $step ) {
 					$token = $this->decode_access_token();
 					error_log("Token with scope ".json_encode($token));
@@ -4881,7 +4881,7 @@ PRIMARY KEY  (id)
 				}
 
 				error_log("End of Sorrwos");
-				
+
 				Gravity_Flow_Entry_Detail::entry_detail( $form, $entry, $step, $args );
 				return;
 			} else {
