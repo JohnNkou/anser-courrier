@@ -506,52 +506,6 @@ function handle_single_entry($entry_id,$view_id){
     $entry = GV\GF_Entry::by_id($entry_id,$form_id);
     $results = build_entries_array($view,$entry);
 
-    /*foreach ($fields->all() as $field) {
-        $label = $field->label;
-        $value = $field->get_value($view,$form,$entry,null);
-
-        error_log("labe $label, value :".print_r($value,true));
-
-        if(is_array($value)){
-            if(count($value) == 0)
-                continue;
-            elseif(count(array_filter($value,function($v){
-                if(is_string($v) && strlen($v) > 0){
-                    return true;
-                }
-
-                if(is_array($v) && count($v) > 0){
-                    return true;
-                }
-
-                return false;
-            })) == 0){
-                continue;
-            }
-        }
-        else if(is_object($value) && is_empty($value)){
-            continue;
-        }
-        else{
-            if(strlen($value) == 0){
-                continue;
-            }
-
-            if($value[0] == "["){
-                $value = json_decode($value);
-
-                if(is_array($value) && count($value) == 0){
-                    continue;
-                }
-                else if(is_object($value) && is_empty($value)){
-                    continue;
-                }
-            }
-        }
-
-        $results[$label] = $value;
-    }*/
-
     return wp_send_json_success(["entry"=> $results]);
 }
 
@@ -623,6 +577,10 @@ function load_gravityflow_inbox_entry(){
     $entry = GFAPI::get_entry($entry_id);
     $passed_id = rgget("id");
     $form_id = $entry['form_id'];
+
+    if(!$entry_id || !$passed_id){
+        return wp_send_json_error("Should provide an entry_id and a passed_id");
+    }
 
     if(!empty($passed_id) && $form_id != $passed_id){
         return wp_send_json_error("Entry form id with passed id differents");
