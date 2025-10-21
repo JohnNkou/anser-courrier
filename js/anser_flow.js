@@ -26,3 +26,6 @@ if(typeof _Page != "undefined"){
         }
     })
 }
+else{
+    console.error("No _Page found");
+}

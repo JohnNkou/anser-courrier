@@ -149,4 +149,6 @@ if (typeof _Page != "undefined") {
       console.warn("Nothing to search for");
     }
   });
+} else {
+  console.error("No _Page found");
 }
