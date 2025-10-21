@@ -433,9 +433,11 @@ function handle_multi_entry($entries,$view_id){
         return GV\GF_Entry::by_id($entry_id,$form_id);
     }, $entries);
     $entry = GV\Multi_Entry::from_entries($entries);
+    $results = build_entries_array($view,$entry)
 }
 
-function build_entries_array($entry,$fields){
+function build_entries_array($view,$entry){
+    $fields = $view->fields->by_position('single_table-columns')->by_visible($view);
     $results = [];
 
     foreach ($fields->all() as $field) {
@@ -499,8 +501,7 @@ function handle_single_entry($entry_id,$view_id){
     $form = isset($view->form)? $view->form : GF_Form::by_id($field->form_id);
     $form_id = (isset($view->form))? $view->form->ID : 0;
     $entry = GV\GF_Entry::by_id($entry_id,$form_id);
-    $fields = $view->fields->by_position('single_table-columns')->by_visible($view);
-    $results = build_entries_array($entry,$fields);
+    $results = build_entries_array($view,$entry);
 
     /*foreach ($fields->all() as $field) {
         $label = $field->label;
