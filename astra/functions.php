@@ -344,9 +344,11 @@ add_action("wp_head", function(){
 $gravityflow_ajax_endpoint = 'load_gravityflow_inbox';
 $gravityview_ajax_endpoint = 'load_gravityview';
 $gravityview_entry_view_endpoint = 'load_gravityview_entry';
+$gravityflow_inbox_entry_ajax_endpoint = 'load_gravityflow_inbox_entry'
 
 add_action("wp_ajax_$gravityflow_ajax_endpoint", $gravityflow_ajax_endpoint);
 add_action("wp_ajax_$gravityview_ajax_endpoint",$gravityview_ajax_endpoint);
+add_action("wp_ajax_$gravityflow_inbox_entry_ajax_endpoint","load_gravityflow_inbox_entry");
 add_action("wp_ajax_$gravityview_entry_view_endpoint", $gravityview_entry_view_endpoint);
 add_action("wp_enqueue_scripts", function(){
     global $gravityflow_ajax_endpoint, $gravityview_ajax_endpoint, $gravityview_entry_view_endpoint;
@@ -616,6 +618,88 @@ function load_gravityview(){
 }
 
 
+function load_gravityflow_inbox_entry(){
+    $entry_id = $_GET['entry_id'] ?: null;
+    $entry = GFAPI::get_entry($entry_id);
+    $passed_id = rgget("id");
+    $form_id = $entry['form_id'];
+
+    if(!empty($passed_id) && $form_id != $passed_id){
+        return wp_send_json_error("Entry form id with passed id differents");
+    }
+
+    $form = GFAPI::get_form($form_id);
+    $GFFlow = Gravity_Flow_API::get_instance();
+    $current_step = $GFFlow->get_current_step($form,$entry);
+    $results = build_inbox_results($form,$entry,$current_step);
+
+    return wp_send_json_success(["inbox"=> $results]);
+}
+
+function build_inbox_results($form,$entry,$current_step){
+    $results = [];
+    $current_index = 0;
+    $display_empty_fields = false;
+    $is_assignee = $current_step ? $current_step->is_user_assignee() : false;
+    $complete_step = gravity_flow()->get_workflow_complete_step($form->ID, $entry);
+
+    if(! $is_assignee){
+        if($current_step){
+            $display_field_step = ! empty($_POST) ? $current_step : gravity_flow()->get_workflow_start_step($form->ID,$entry);
+
+            if($current_step->get_current_assignee_status() == 'complete' || $current_step->get_current_assignee_status() == 'approved'){
+                $display_field_step = gravity_flow()->get_workflow_complete_step($form->ID,$entry);
+            }
+        }
+        else{
+            $display_field_step = $complete_step;
+        }
+    }
+
+    foreach ($form['fields'] as &$field) {
+        $current_array = (count($results) > 0) ? $results[$current_index] : &$results;
+        $is_product_field = GFCommon::is_product_field($field->type);
+
+        $display_field = $current_step && $is_assignee ? Gravity_Flow_Entry_Detail::is_display_field($field,$current_step,$form,$entry,$is_product_field) : self::is_display_field($field, $display_field_step, $form, $entry, $is_product_field);
+        $field->gravityflow_is_display_field = $display_field;
+
+        switch (RGFormsModel::get_input_type( $field )) {
+            case 'section':
+                if(! Gravity_Flow_Entry_Detail::is_section_empty($field,$current_step,$form, $entry, $display_empty_fields)){
+                    $current_array[$current_index++] = [$field->label];
+                }
+                break;
+            case 'html':
+                if($display_field){
+                    $content = GFCommon::replace_variables($field->content, $form, $entry, false, true, false, 'html');
+                    $content = do_shortcode($content);
+
+                    array_push($current_array,$content)
+                }
+                break;
+            default:
+                if ($is_product_field) {
+                    $has_product_fields = true;
+                }
+
+                if(!$display_field){
+                    continue;
+                }
+
+                $value = RGFormsModel::get_lead_field_value($entry, $field);
+                $display_value = Gravity_Flow_Entry_Detail::get_display_value($value,$field,$entry,$form);
+                $label = self::get_label($field, $entry);
+
+                if($display_empty_fields || ! empty($display_value) || $display_value === '0'){
+                    array_push($current_array, ["label"=> $label, "value"=> $display_value ]);
+                }
+
+                break;
+        }
+    }
+
+    return $results;
+}
 
 function load_gravityflow_inbox(){
     // The global $post must be set in order for the gravityflow class to pass the request and not return an empty string
