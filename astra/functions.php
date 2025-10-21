@@ -398,8 +398,6 @@ function load_gravityview_entry(){
     $entries = explode(",", $entry_id);
     if(count($entries) > 1){
         handle_multi_entry($entries,$view_id);
-        return wp_send_json_error("No yet implemented");
-        //pass
     }
     else{
         handle_single_entry($entries[0],$view_id);
@@ -434,6 +432,8 @@ function handle_multi_entry($entries,$view_id){
     }, $entries);
     $entry = GV\Multi_Entry::from_entries($entries);
     $results = build_entries_array($view,$entry);
+
+    return wp_send_json_success(["entry"=> $results]);
 }
 
 function build_entries_array($view,$entry){
