@@ -1,0 +1,72 @@
+.modal {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    margin: auto;
+    overflow-y:scroll;
+    padding: 1em;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    z-index: 100;
+    background-color: #00000026;
+}
+ .modal.hidden {
+    display: none;
+}
+ .modal .containers {
+    position: relative;
+    background-color: #f1f1f1;
+    box-shadow: 0px 0px 3px black;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    padding: 1em;
+}
+ .modal .containers * {
+    margin: 0;
+    padding: 0;
+}
+ #content .modal header {
+    margin-bottom: 1em;
+}
+ .modal .containers .classMan {
+    display: flex;
+    flex-direction:column;
+    flex-wrap: wrap;
+    gap:1em;
+}
+ .classMan .information{
+    width:100%;
+    display:flex;
+    font-size:0.8em;
+    gap:2em;
+}
+ .classMan p, .classMan span{
+    cursor:default;
+}
+ .card{
+    background-color:white;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    box-shadow:0px 0px 3px #0000001a;
+    border-radius:1em 1em 1em 1em;
+}
+.card p:first-child{
+    font-weight:bold;
+}
+ .modal .close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 1em;
+    font-weight: bold;
+}
+ #content .classMan div {
+    /* border:1px solid black; */
+    padding: 0.5em;
+}
