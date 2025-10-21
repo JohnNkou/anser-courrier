@@ -97,6 +97,9 @@ class Entry_Table_Template extends Entry_Template {
 
 			$source   = is_numeric( $field->ID ) ? ( GF_Form::by_id( $field->form_id ) ? : $this->view->form ) : new Internal_Source();
 			error_log("label $column_label: ". $this->the_field($field));
+			error_log("field id ".$field->ID." with form_id: ".$field->form_id);
+			error_log("Entry ".json_encode($this->entry));
+
 			/**
 			 * Modifies the table row markup for an entry.
 			 *
