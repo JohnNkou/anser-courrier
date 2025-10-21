@@ -91,6 +91,7 @@ var require_anser_utily = __commonJS((exports2) => {
 
 // js/anser_flow_utils.js
 var require_anser_flow_utils = __commonJS((exports2) => {
+  var { page_handler } = require_anser_utily();
   function result_handler(json_response) {
     let { entries, field_values } = json_response.data;
     console.log("ENTRIES ARE", entries);
@@ -164,9 +165,9 @@ var require_anser_flow_utils = __commonJS((exports2) => {
 });
 
 // js/anser_flow.js
-var { page_handler: page_handler2 } = require_anser_utily();
+var { page_handler } = require_anser_utily();
 var { result_handler, entry_click_handler } = require_anser_flow_utils();
-var myPage_handler = new page_handler2(result_handler);
+var myPage_handler = new page_handler(result_handler);
 var search_form = document.querySelector(".search_block");
 if (typeof _Page != "undefined") {
   myPage_handler.load_data().then(result_handler);
