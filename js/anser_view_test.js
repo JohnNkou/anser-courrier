@@ -281,7 +281,11 @@ var require_anser_view_util = __commonJS((exports2) => {
             entry_id,
             action: GravityAjax.entry,
             nonce: GravityAjax.nonce
-          }, myPage_handler = new page_handler(null, queries);
+          }, myPage_handler;
+          if (_Page.secret) {
+            queries.secret = _Page.secret;
+          }
+          myPage_handler = new page_handler(null, queries);
           myPage_handler.load_data().then((json_response) => {
             let { entry } = json_response.data;
             display_entry_data(entry, entry_id);

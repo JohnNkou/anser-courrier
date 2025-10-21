@@ -269,6 +269,12 @@ function entry_click_handler(){
 					action: 	GravityAjax.entry,
 					nonce: 		GravityAjax.nonce
 				},
+				myPage_handler;
+
+				if(_Page.secret){
+					queries.secret = _Page.secret;
+				}
+
 				myPage_handler = new page_handler(null,queries);
 
 

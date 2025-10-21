@@ -422,7 +422,8 @@ function is_empty($objet){
 }
 
 function handle_single_entry($entry_id,$view_id){
-    $view = get_view($view_id);
+    $secret = $_GET['secret'] ?: null;
+    $view = get_view($view_id,$secret);
     $form = isset($view->form)? $view->form : GF_Form::by_id($field->form_id);
     $form_id = (isset($view->form))? $view->form->ID : 0;
     $entry = GV\GF_Entry::by_id($entry_id,$form_id);
