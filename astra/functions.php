@@ -435,7 +435,7 @@ function handle_multi_entry($entries,$view_id){
     $entry = GV\Multi_Entry::from_entries($entries);
 
     error_log("ENTRIES ".print_r($entries,true));
-    error_log("ENTRY ".print_r($entry));
+    error_log("ENTRY ".print_r($entry,true));
 }
 
 function handle_single_entry($entry_id,$view_id){
