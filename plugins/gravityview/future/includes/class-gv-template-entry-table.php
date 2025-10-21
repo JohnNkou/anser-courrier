@@ -99,7 +99,7 @@ class Entry_Table_Template extends Entry_Template {
 			error_log("label $column_label: ". $this->the_field($field));
 			error_log("field id ".$field->ID." with form_id: ".$field->form_id);
 			if($this->entry->is_multi()){
-				error_log("Entry ".json_encode($this->entry->as_entry()));
+				error_log("Field value: ".$this->entry->as_entry()['_multi'][$field->form_id][$field->ID]);
 			}
 
 			/**
