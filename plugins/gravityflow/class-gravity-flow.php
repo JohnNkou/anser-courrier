@@ -4743,7 +4743,7 @@ PRIMARY KEY  (id)
 				}
 
 				$entry = GFAPI::get_entry( $entry_id );
-				error_log("Outputting entry ".print_r($entry,true));
+				error_log("Outputting entry ".json_encode($entry,true));
 				if ( is_wp_error( $entry ) ) {
 					esc_html_e( 'Oops! We could not locate your entry.', 'gravityflow' );
 					return;
@@ -4761,6 +4761,7 @@ PRIMARY KEY  (id)
 				$form = GFAPI::get_form( $form_id );
 
 				$process_entry_detail = apply_filters( 'gravityflow_inbox_entry_detail_pre_process', true, $form, $entry );
+				error_log("Processing entry detail ".print_r($process_entry_detail,true));
 
 				if ( ! $process_entry_detail || is_wp_error( $process_entry_detail ) ) {
 					return;
@@ -4769,10 +4770,10 @@ PRIMARY KEY  (id)
 				require_once( $this->get_base_path() . '/includes/pages/class-entry-detail.php' );
 
 				$step = $this->get_current_step( $form, $entry );
-
+				error_log("Current Step ".print_r($step,true));
 				if ( $step ) {
 					$token = $this->decode_access_token();
-
+					error_log("Token with scope ".json_encode($token));
 					if ( isset( $token['scopes']['action'] ) ) {
 						if ( $token['scopes']['action'] === 'cancel_workflow' ) {
 							$entry_id = rgars( $token, 'scopes/entry_id' );
@@ -4830,6 +4831,8 @@ PRIMARY KEY  (id)
 
 				$feedback = $this->maybe_process_admin_action( $form, $entry );
 
+				error_log("Feedback is ".print_r($feedback,true));
+
 				if ( empty( $feedback ) && $step ) {
 
 					$feedback = $step->process_status_update( $form, $entry );
@@ -4877,6 +4880,8 @@ PRIMARY KEY  (id)
 					$args['check_permissions'] = false;
 				}
 
+				error_log("End of Sorrwos");
+				
 				Gravity_Flow_Entry_Detail::entry_detail( $form, $entry, $step, $args );
 				return;
 			} else {
