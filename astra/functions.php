@@ -344,7 +344,7 @@ add_action("wp_head", function(){
 $gravityflow_ajax_endpoint = 'load_gravityflow_inbox';
 $gravityview_ajax_endpoint = 'load_gravityview';
 $gravityview_entry_view_endpoint = 'load_gravityview_entry';
-$gravityflow_inbox_entry_ajax_endpoint = 'load_gravityflow_inbox_entry'
+$gravityflow_inbox_entry_ajax_endpoint = 'load_gravityflow_inbox_entry';
 
 add_action("wp_ajax_$gravityflow_ajax_endpoint", $gravityflow_ajax_endpoint);
 add_action("wp_ajax_$gravityview_ajax_endpoint",$gravityview_ajax_endpoint);
