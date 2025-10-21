@@ -4743,7 +4743,7 @@ PRIMARY KEY  (id)
 				}
 
 				$entry = GFAPI::get_entry( $entry_id );
-
+				error_log("Outputting entry ".print_r($entry,true));
 				if ( is_wp_error( $entry ) ) {
 					esc_html_e( 'Oops! We could not locate your entry.', 'gravityflow' );
 					return;
@@ -5672,7 +5672,7 @@ PRIMARY KEY  (id)
 			if ( ! empty( $a['title'] ) ) {
 				$html .= sprintf( '<h3>%s</h3>', $a['title'] );
 			}
-            error_log("printing a ".print_r($a,true));
+            
 			switch ( $a['page'] ) {
 				case 'inbox':
 					$html .= $this->get_shortcode_inbox_page( $a );
