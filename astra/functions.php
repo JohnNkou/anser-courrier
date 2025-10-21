@@ -518,18 +518,24 @@ function load_gravityview(){
 
     foreach ($entries->all() as $entry) {
         $an = [];
-        if($entry->is_multi()){ error_log("MULTI ENTRY ".json_encode($entry->as_entry()['_multi']));
+        $id;
+        if($entry->is_multi()){
+            $entry_ids = [];
             foreach ($fields_array as $field) {
                 $_entry = $entry->as_entry()['_multi'][$field->form_id];
                 $an[ $field->custom_label ?: $field->label] = $_entry[$field->ID];
+                array_push($entry_ids,$_entry['id']);
             }
+
+            $id = join(",",$entry_ids);
         }
         else{
             foreach ($fields_array as $field) {
                 $an[$field->custom_label ?: $field->label] = $entry[$field->ID];
             }
+            $id = $entry->ID;
         }
-        $an['id'] = $entry->ID;
+        $an['id'] = $id;
         array_push($results, $an);
     }
 
