@@ -634,7 +634,7 @@ function build_inbox_results($form,$entry,$current_step){
         switch (RGFormsModel::get_input_type( $field )) {
             case 'section':
                 if(! Gravity_Flow_Entry_Detail::is_section_empty($field,$current_step,$form, $entry, $display_empty_fields)){
-                    $current_array[++$current_index] = [$field->label];
+                    $results[++$current_index] = [$field->label];
                 }
                 break;
             case 'html':
