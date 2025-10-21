@@ -96,11 +96,6 @@ class Entry_Table_Template extends Entry_Template {
 			$markup = '<tr id="{{ field_id }}" class="{{ class }}"><th scope="row">{{ label }}</th><td>{{ value }}</td></tr>';
 
 			$source   = is_numeric( $field->ID ) ? ( GF_Form::by_id( $field->form_id ) ? : $this->view->form ) : new Internal_Source();
-			error_log("label $column_label: ". $this->the_field($field));
-			error_log("field id ".$field->ID." with form_id: ".$field->form_id);
-			if($this->entry->is_multi()){
-				error_log("Field value: ".$this->entry->as_entry()['_multi'][$field->form_id][$field->ID]);
-			}
 
 			/**
 			 * Modifies the table row markup for an entry.
