@@ -145,7 +145,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       return console.error("Couldn't load Entry_click_handler because no tbody element was found");
     }
     tbody.addEventListener("click", (event) => {
-      let target = event.target, payloads = get_entry_ids(target);
+      let target = event.target, payloads = get_entry_ids(target, 5);
       if (payloads) {
         let queries = {
           entry_id: payloads.entry_id,
