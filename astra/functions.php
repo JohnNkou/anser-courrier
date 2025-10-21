@@ -596,9 +596,9 @@ function load_gravityflow_inbox_entry(){
 }
 
 function build_inbox_results($form,$entry,$current_step){
-    require_once ABSPATH . "wp-content/plugins/gravityflow/includes/pages/class-entry-detail.php";
+    require_once ABSPATH . "/wp-content/plugins/gravityflow/includes/pages/class-entry-detail.php";
 
-    $results = [];
+    $results = [[]];
     $current_index = 0;
     $display_empty_fields = false;
     $is_assignee = $current_step ? $current_step->is_user_assignee() : false;
