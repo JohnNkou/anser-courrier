@@ -935,7 +935,7 @@ class Gravity_Flow_Entry_Detail {
 
 		foreach ( $form['fields'] as &$field ) {
 			/* @var GF_Field $field */
-
+			error_log("Displaying field ".print_r($field,true));
 			// Not needed as we're always adminOnly.
 			$field->adminOnly = false;
 
