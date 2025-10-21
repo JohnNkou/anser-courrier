@@ -638,7 +638,7 @@ function build_inbox_results($form,$entry,$current_step){
                     $content = GFCommon::replace_variables($field->content, $form, $entry, false, true, false, 'html');
                     $content = do_shortcode($content);
 
-                    array_push($current_array,$content)
+                    array_push($current_array,$content);
                 }
                 break;
             default:
