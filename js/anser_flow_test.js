@@ -130,7 +130,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
   }
   function get_entry_ids(node, repeat) {
     if (repeat && node) {
-      let form_id = node.getAttribute("form_id"), entry_id = node.getAttribute("entry_id");
+      let form_id = node.getAttribute("form_id"), entry_id = node.getAttribute("id");
       if (form_id && entry_id) {
         return { form_id, entry_id };
       }
