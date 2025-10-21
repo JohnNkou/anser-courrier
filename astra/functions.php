@@ -519,7 +519,7 @@ function load_gravityview(){
         $an = [];
         if($entry->is_multi()){ error_log("ENTRY CLASS ".get_class($entry));
             foreach ($fields_array as $field) {
-                $entry = $entry->as_entry();
+                $my_entry = $entry->as_entry();
                 //$entry = $entry['_multi'][$field->form_id];
                 //error_log("entry array ".json_encode($entry));
                 //['_multi'][$field->form_id];
