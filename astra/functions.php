@@ -364,7 +364,8 @@ add_action("wp_enqueue_scripts", function(){
         wp_localize_script('gravityflow-inbox-ajax', 'GravityAjax',[
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('gravityflow_inbox_nonce'),
-            'action' => $gravityflow_ajax_endpoint
+            'action' => $gravityflow_ajax_endpoint,
+            'entry' => $gravityflow_inbox_entry_ajax_endpoint
         ]);   
     }
 
