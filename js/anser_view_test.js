@@ -70,15 +70,17 @@ var require_anser_utily = __commonJS((exports2) => {
       });
     };
     function display_nativation_handler(page, total) {
-      if (page == 0) {
-        prevPage.classList.add("hidden");
-      } else {
-        prevPage.classList.remove("hidden");
-      }
-      if (page >= total - 1) {
-        nextPage.classList.add("hidden");
-      } else {
-        nextPage.classList.remove("hidden");
+      if (navigationHandler) {
+        if (page == 0) {
+          prevPage.classList.add("hidden");
+        } else {
+          prevPage.classList.remove("hidden");
+        }
+        if (page >= total - 1) {
+          nextPage.classList.add("hidden");
+        } else {
+          nextPage.classList.remove("hidden");
+        }
       }
     }
     function toggle_loader() {
