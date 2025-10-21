@@ -652,7 +652,7 @@ function build_inbox_results($form,$entry,$current_step){
 
                 $value = RGFormsModel::get_lead_field_value($entry, $field);
                 $display_value = Gravity_Flow_Entry_Detail::get_display_value($value,$field,$entry,$form);
-                $label = self::get_label($field, $entry);
+                $label = Gravity_Flow_Entry_Detail::get_label($field, $entry);
 
                 if($display_empty_fields || ! empty($display_value) || $display_value === '0'){
                     array_push($current_array, ["label"=> $label, "value"=> $display_value ]);
