@@ -433,7 +433,7 @@ function handle_multi_entry($entries,$view_id){
         return GV\GF_Entry::by_id($entry_id,$form_id);
     }, $entries);
     $entry = GV\Multi_Entry::from_entries($entries);
-    $results = build_entries_array($view,$entry)
+    $results = build_entries_array($view,$entry);
 }
 
 function build_entries_array($view,$entry){
