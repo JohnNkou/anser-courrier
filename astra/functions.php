@@ -588,7 +588,7 @@ function load_gravityflow_inbox_entry(){
     }
 
     $form = GFAPI::get_form($form_id);
-    $GFFlow = Gravity_Flow_API::get_instance();
+    $GFFlow = Gravity_Flow::get_instance();
     $current_step = $GFFlow->get_current_step($form,$entry);
     $results = build_inbox_results($form,$entry,$current_step);
 
@@ -683,7 +683,7 @@ function load_gravityflow_inbox(){
     }
     else{
         $search_criteria = build_search_criteria();
-        $entries = Gravity_Flow_API::get_inbox_entries( ["form_id"=>$form_ids, "paging"=> ["offset"=>$offset, "page_size"=> $page_size]],$total);
+        $entries = Gravity_Flow_API::get_inbox_entries( ["form_id"=>$form_ids, "paging"=> ["offset"=>$offset, "page_size"=> $limit]],$total);
     }
     
     $fields_values = [];
