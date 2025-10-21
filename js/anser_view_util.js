@@ -230,12 +230,21 @@ function display_entry_data(entry,entry_id){
 		current_slot.push("</div>");
 	}
 
-	
-	datas += "<div class='information'>" + headers.join("") + "</div>";
-	datas += "<div class='card'>" + informations.join("") + "</div>";
-	datas += "<div class='card'>" + contacts.join("") + "</div>";
-	datas += "<div class='card'>" + documents.join("") + "</div>";
-	datas += "<div class='card'>" + autres.join("") + "</div>";
+	if(headers.length){
+		datas += "<div class='information'>" + headers.join("") + "</div>";
+	}
+	if(informations.length){
+		datas += "<div class='card'>" + informations.join("") + "</div>";
+	}
+	if(contacts.length){
+		datas += "<div class='card'>" + contacts.join("") + "</div>";
+	}
+	if(documents.length){
+		datas += "<div class='card'>" + documents.join("") + "</div>";
+	}
+	if(autres.length){
+		datas += "<div class='card'>" + autres.join("") + "</div>";
+	}
 
 	container.innerHTML = datas;
 }
