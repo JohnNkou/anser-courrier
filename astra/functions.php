@@ -397,7 +397,7 @@ function load_gravityview_entry(){
 
     $entries = explode(",", $entry_id);
     if(count($entries) > 1){
-        handle_multi_entry($entries,$view_id)
+        handle_multi_entry($entries,$view_id);
         return wp_send_json_error("No yet implemented");
         //pass
     }
