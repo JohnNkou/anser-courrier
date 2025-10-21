@@ -1267,7 +1267,7 @@ class View implements \ArrayAccess {
 			/**
 			 * Any joins?
 			 */
-			if ( gravityview()->plugin->supports( Plugin::FEATURE_JOINS ) && count( $this->joins ) ) {
+			if ( gravityview()->plugin->supports( Plugin::FEATURE_JOINS ) && count( $this->joins ) ) { error_log("View has join");
 				foreach ( $this->joins as $join ) {
 					$query = $join->as_query_join( $query );
 
@@ -1324,7 +1324,7 @@ class View implements \ArrayAccess {
 				/**
 				 * Unions?
 				 */
-			} elseif ( gravityview()->plugin->supports( Plugin::FEATURE_UNIONS ) && count( $this->unions ) ) {
+			} elseif ( gravityview()->plugin->supports( Plugin::FEATURE_UNIONS ) && count( $this->unions ) ) { error_log("Has UNION");
 				$query_parameters = $query->_introspect();
 
 				$unions_sql = array();
