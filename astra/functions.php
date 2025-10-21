@@ -602,7 +602,7 @@ function build_inbox_results($form,$entry,$current_step){
     $is_assignee = $current_step ? $current_step->is_user_assignee() : false;
     $complete_step = gravity_flow()->get_workflow_complete_step($form->ID, $entry);
 
-    error_log("ABSPATH IS ".$GLOBALS['ABSPATH']);
+    error_log("ABSPATH IS ". abspath());
 
     if(! $is_assignee){
         if($current_step){
