@@ -431,7 +431,7 @@ function handle_multi_entry($entries,$view_id){
     $form_id = (isset($view->form))? $view->form->ID:0;
     $entries = array_map(function($entry_id) use ($form_id){
         return GV\GF_Entry::by_id($entry_id,$form_id);
-    }, arr1);
+    }, $entries);
     $entry = GV\Multi_Entry::from_entries($entries);
 
     error_log("ENTRIES ".print_r($entries,true));
