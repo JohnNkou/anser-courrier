@@ -351,7 +351,7 @@ add_action("wp_ajax_$gravityview_ajax_endpoint",$gravityview_ajax_endpoint);
 add_action("wp_ajax_$gravityflow_inbox_entry_ajax_endpoint","load_gravityflow_inbox_entry");
 add_action("wp_ajax_$gravityview_entry_view_endpoint", $gravityview_entry_view_endpoint);
 add_action("wp_enqueue_scripts", function(){
-    global $gravityflow_ajax_endpoint, $gravityview_ajax_endpoint, $gravityview_entry_view_endpoint;
+    global $gravityflow_ajax_endpoint, $gravityview_ajax_endpoint, $gravityview_entry_view_endpoint,$gravityflow_inbox_entry_ajax_endpoint;
 
     if(is_page(['boite-de-reception-4','mes-courrier-v2','mes-factures-v2'])){
         wp_enqueue_script('tailwindcss','https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4');
@@ -365,7 +365,7 @@ add_action("wp_enqueue_scripts", function(){
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('gravityflow_inbox_nonce'),
             'action' => $gravityflow_ajax_endpoint,
-            'entry' => "GommFu"
+            'entry' => $gravityflow_inbox_entry_ajax_endpoint
         ]);   
     }
 
