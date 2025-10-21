@@ -433,9 +433,64 @@ function handle_multi_entry($entries,$view_id){
         return GV\GF_Entry::by_id($entry_id,$form_id);
     }, $entries);
     $entry = GV\Multi_Entry::from_entries($entries);
+}
 
-    error_log("ENTRIES ".print_r($entries,true));
-    error_log("ENTRY ".print_r($entry,true));
+function build_entries_array($entry,$fields){
+    $results = [];
+
+    foreach ($fields->all() as $field) {
+        $label = $field->label;
+
+        if($entry->is_multi()){
+            $value = $entry->as_entry()['_multi'][$field->form_id][$field->ID];
+        }
+        else{
+            $value = $entry->as_entry()[$field->ID];
+        }
+
+        error_log("labe $label, value :".print_r($value,true));
+
+        if(is_array($value)){
+            if(count($value) == 0)
+                continue;
+            elseif(count(array_filter($value,function($v){
+                if(is_string($v) && strlen($v) > 0){
+                    return true;
+                }
+
+                if(is_array($v) && count($v) > 0){
+                    return true;
+                }
+
+                return false;
+            })) == 0){
+                continue;
+            }
+        }
+        else if(is_object($value) && is_empty($value)){
+            continue;
+        }
+        else{
+            if(strlen($value) == 0){
+                continue;
+            }
+
+            if($value[0] == "["){
+                $value = json_decode($value);
+
+                if(is_array($value) && count($value) == 0){
+                    continue;
+                }
+                else if(is_object($value) && is_empty($value)){
+                    continue;
+                }
+            }
+        }
+
+        $results[$label] = $value;
+    }
+
+    return $results;
 }
 
 function handle_single_entry($entry_id,$view_id){
@@ -445,9 +500,9 @@ function handle_single_entry($entry_id,$view_id){
     $form_id = (isset($view->form))? $view->form->ID : 0;
     $entry = GV\GF_Entry::by_id($entry_id,$form_id);
     $fields = $view->fields->by_position('single_table-columns')->by_visible($view);
-    $results = [];
+    $results = build_entries_array($entry,$fields);
 
-    foreach ($fields->all() as $field) {
+    /*foreach ($fields->all() as $field) {
         $label = $field->label;
         $value = $field->get_value($view,$form,$entry,null);
 
@@ -491,7 +546,7 @@ function handle_single_entry($entry_id,$view_id){
         }
 
         $results[$label] = $value;
-    }
+    }*/
 
     return wp_send_json_success(["entry"=> $results]);
 }
