@@ -518,7 +518,7 @@ function load_gravityview(){
 
     foreach ($entries->all() as $entry) {
         $an = [];
-        if($entry->is_multi()){ error_log("MULTI ENTRY ".$entry->as_entry()['_multi']);
+        if($entry->is_multi()){ error_log("MULTI ENTRY ".json_encode($entry->as_entry()['_multi']));
             foreach ($fields_array as $field) {
                 $_entry = $entry->as_entry()['_multi'][$field->form_id];
                 $an[ $field->custom_label ?: $field->label] = $_entry[$field->ID];
