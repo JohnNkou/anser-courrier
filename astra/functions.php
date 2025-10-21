@@ -506,7 +506,6 @@ function load_gravityview(){
     $id = $_GET['id'];
     $secret = $_GET['secret'] ?: Null;
     $view = get_view($id,$secret);
-    error_log("THE VIEW ".print_r($view,true));
     $view->settings->update([
         "page_size"=> $limit,
         "offset"=> $offset
