@@ -151,9 +151,9 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     };
     span_title.textContent = form_title;
     span_entry_number.textContent = entry_id;
-    inboxes.forEach((inboxes2) => {
+    inboxes.forEach((_inboxes) => {
       let inSection = false;
-      inboxes2.forEach((inbox2) => {
+      _inboxes.forEach((inbox2) => {
         switch (inbox2.type) {
           case "section":
             bodyHtml += "<section>";
