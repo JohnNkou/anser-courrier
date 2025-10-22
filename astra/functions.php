@@ -723,14 +723,12 @@ function load_gravityflow_inbox(){
     $filtered_entries = array_map(function($entry) use ($required_fields){
         $display_name = get_display_name($entry['created_by']);
         $step_name = get_current_step_name($entry['form_id'], $entry['workflow_step']);
-        $form = GFAPI::get_form($entry->form_id);
+        $form = GFAPI::get_form($entry['form_id']);
 
         foreach ($entry as $key => $value) {
             $parsed_key = (int)$key;
 
             if (is_int($parsed_key)) {
-                $form = GFAPI::get_form($entry['form_id']);
-
                 if($form){
                     $field = array_find($form['fields'],function($field) use ($parsed_key){
                         return $field->ID == $parsed_key;
@@ -741,6 +739,7 @@ function load_gravityflow_inbox(){
                     }
                     else{
                         error_log("No FIELD FOUND FOR KEY $key");
+                        error_log(print_r($form['fields']),true);
                     }
                 }
                 else{
