@@ -756,6 +756,9 @@ function load_gravityflow_inbox(){
         if($step_name){
             $new_entry['workflow_step'] = $step_name;
         }
+
+        $new_entry['form_id'] = $entry['form_id'];
+        $new_entry['id'] = $entry['id'];
         
        return $new_entry; 
     },$entries);
