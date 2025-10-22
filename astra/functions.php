@@ -737,6 +737,7 @@ function load_gravityflow_inbox(){
 
                     if($field){
                         if(in_array(strtolower($field->label), $required_form_fields)){
+                            error_log("FIELD IN REQUIRED_FORM_FIELD ".$field->label);
                             $entry[$field->label] = $entry[$key];
                             //unset($entry[$key]);
                         }
