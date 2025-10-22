@@ -669,7 +669,6 @@ function build_inbox_results($form,$entry,$current_step){
     return $results;
 }
 
-function get_display_value
 
 function load_gravityflow_inbox(){
     // The global $post must be set in order for the gravityflow class to pass the request and not return an empty string
