@@ -756,7 +756,7 @@ function load_gravityflow_inbox(){
             $entry['workflow_step'] = $step_name;
         }
         
-       return array_intersect_key($entry, array_flip($required_fields)); 
+       return $entry; 
     },$entries);
     
     wp_send_json_success(["entries"=>$filtered_entries, "field_values"=> $fields_values, "total"=> $total]);
