@@ -751,7 +751,6 @@ function load_gravityflow_inbox(){
                         if(($label = array_find($required_form_fields,function($label) use ($field){
                             return strpos(strtolower($field->label),$label) !== false;
                         }))){
-                            error_log("FIELD IN REQUIRED_FORM_FIELD ".$field->label);
                             if(!isset($new_entry[$label])){
                                 $new_entry[$label] = $entry[$key];
                             }
