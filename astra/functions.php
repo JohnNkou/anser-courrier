@@ -752,7 +752,9 @@ function load_gravityflow_inbox(){
                             return strpos(strtolower($field->label),$label) !== false;
                         }))){
                             error_log("FIELD IN REQUIRED_FORM_FIELD ".$field->label);
-                            $new_entry[$label] = $entry[$key];
+                            if(!isset($new_entry[$label])){
+                                $new_entry[$label] = $entry[$key];
+                            }
                         }
                     }
                 }
