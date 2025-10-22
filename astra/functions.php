@@ -678,7 +678,7 @@ function load_gravityflow_inbox(){
     $offset = isset($_REQUEST['offset'])? $_REQUEST['offset']: 0;
     $limit = isset($_REQUEST['limit'])? $_REQUEST['limit']: 10;
     $required_fields = ["form_id","workflow_step","created_by","id","date_created"];
-    $required_form_fields = ["objet","éxpediteur","numéro","référence"];
+    $required_form_fields = ["objet","expéditeur","numéro","référence"];
     $total = 0;
     
     if(isset($_REQUEST['term'])){
@@ -736,7 +736,7 @@ function load_gravityflow_inbox(){
 
         $new_entry['form_id'] = $entry['form_id'];
         $new_entry['id'] = $entry['id'];
-        
+
         foreach ($entry as $key => $value) {
             $parsed_key = (int)$key;
 
