@@ -729,10 +729,10 @@ function load_gravityflow_inbox(){
         foreach ($entry as $key => $value) {
             $parsed_key = (int)$key;
 
-            if (is_int($parsed_key)) {
+            if ($parsed_key > 0) {
                 if($form){
                     $field = array_find($form['fields'],function($field) use ($parsed_key){
-                        return $field->ID == $parsed_key;
+                        return $field->id == $parsed_key;
                     });
 
                     if($field){
