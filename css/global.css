@@ -1,5 +1,6 @@
 #content{
     background-color:rgb(0 0 0 / 4%);
+    margin-left:3em;
 }
 img:is([sizes="auto" i], [sizes^="auto," i]) {
     contain-intrinsic-size: 3000px 1500px
