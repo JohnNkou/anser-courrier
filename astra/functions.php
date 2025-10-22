@@ -669,6 +669,8 @@ function build_inbox_results($form,$entry,$current_step){
     return $results;
 }
 
+function get_display_value
+
 function load_gravityflow_inbox(){
     // The global $post must be set in order for the gravityflow class to pass the request and not return an empty string
     check_ajax_referer('gravityflow_inbox_nonce', 'security');
@@ -691,6 +693,8 @@ function load_gravityflow_inbox(){
     }
     
     $fields_values = [];
+
+    error_log("FORM FIELDS ".print_r(GFAPI::get_form($form_ids[0]),true));
     
     foreach (explode(",",$form_ids) as $form_id){
         $fields_values[$form_id] = [];
@@ -722,6 +726,7 @@ function load_gravityflow_inbox(){
     $filtered_entries = array_map(function($entry) use ($required_fields){
         $display_name = get_display_name($entry['created_by']);
         $step_name = get_current_step_name($entry['form_id'], $entry['workflow_step']);
+        $form = GFAPI::get_form($entry->form_id);
         
         if($display_name){
             $entry['created_by'] = $display_name;

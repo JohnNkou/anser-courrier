@@ -63,6 +63,3 @@ img:is([sizes="auto" i], [sizes^="auto," i]) {
 #content .loader h1{
     color:white;
 }
-#main{
-    background-color:white;
-}
