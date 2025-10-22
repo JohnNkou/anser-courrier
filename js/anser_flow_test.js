@@ -147,6 +147,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     back.onclick = (event) => {
       event.preventDefault();
       content_node.innerHTML = "";
+      span_title.textContent = "";
+      span_entry_number.textContent = "";
       create_table_entry_toggler()();
     };
     span_title.textContent = form_title;
