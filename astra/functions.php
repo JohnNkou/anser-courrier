@@ -741,7 +741,7 @@ function load_gravityflow_inbox(){
                     else{
                         error_log("No FIELD FOUND FOR KEY $key");
                         if(!$shown){
-                            error_log(print_r($form['fields']),true);
+                            error_log(print_r($form['fields'],true));
                             $shown = true;
                         }
                         
