@@ -101,8 +101,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     if (tbody) {
       entries.forEach((entry) => {
         html += "<tr id='" + entry.id + "' form_id='" + entry.form_id + "'>";
-        html += "<td>            <div class='reception-info'>            <p class='creator'>" + (entry["expéditeur"] || "Inconnu") + "</p>            <p class='numero'>" + (entry["numéro"] || "") + "</p>            </div>  </td>";
-        html += "<td>" + (entry["objet"] || "") + "</td>";
+        html += "<td width='50%'>            <div class='reception-info'>            <p class='creator'>" + (entry["expéditeur"] || "Inconnu") + "</p>            <p class='numero'>" + (entry["numéro"] || "") + "</p>            </div>  </td>";
+        html += "<td width='50%'>" + (entry["objet"] || "") + "</td>";
         html += "<td class='text-center'><span class='step-status rounded'>" + entry["workflow_step"] + "</span></td>";
         html += "<td>" + (entry["date"] || "") + "</td>";
         html += "</tr>";
@@ -123,21 +123,77 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       return null;
     }
   }
+  function create_table_entry_toggler() {
+    let table = document.querySelector("table"), entry_viewer = document.querySelector(".entry-detail");
+    if (!table || !entry_viewer) {
+      throw Error("table or entry_viewer not found");
+    }
+    return () => {
+      table.classList.toggle("hidden");
+      entry_viewer.classList.toggle("hidden");
+    };
+  }
+  function display_entry(paylods, entry_id) {
+    let { inbox, form_title } = payloads, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), bodyHtml = "";
+    if (!content_node) {
+      return console.error("Content node not found");
+    }
+    if (!span_title || !span_entry_number) {
+      return console.error("No span_title or span entry_number found");
+    }
+    if (!back) {
+      return console.error("Back button not found");
+    }
+    back.onclick = (event) => {
+      event.preventDefault();
+      content_node.innerHTML = "";
+      create_table_entry_toggler()();
+    };
+    span_title.textContent = form_title;
+    span_entry_number.textContent = entry_id;
+    inboxes.forEach((inboxes2) => {
+      let inSection = false;
+      inboxes2.forEach((inbox2) => {
+        switch (inbox2.type) {
+          case "section":
+            bodyHtml += "<section>";
+            bodyHtml += "<h5 class='title'>" + inbox2.value + "</h5>";
+            inSection = true;
+            break;
+          case "html":
+            bodyHtml += "<div class='card'>" + inbox2.value + "</div>";
+            break;
+          case "text":
+            bodyHtml += "<div class='card'><p>" + inbox2.label + "</p><p>" + inbox2.value + "</p></div>";
+            break;
+          default:
+            console.error("Unknwon inbox type", inbox2);
+        }
+      });
+      if (inSection) {
+        bodyHtml += "</section>";
+      }
+    });
+    content_node.innerHTML = bodyHtml;
+  }
   function entry_click_handler() {
-    let tbody = document.querySelector("tbody");
+    let tbody = document.querySelector("tbody"), entry_toggler = create_table_entry_toggler();
     if (!tbody) {
       return console.error("Couldn't load Entry_click_handler because no tbody element was found");
     }
     tbody.addEventListener("click", (event) => {
-      let target = event.target, payloads = get_entry_ids(target, 5);
-      if (payloads) {
+      let target = event.target, payloads2 = get_entry_ids(target, 5);
+      if (payloads2) {
         let queries = {
-          entry_id: payloads.entry_id,
-          id: payloads.form_id,
+          entry_id: payloads2.entry_id,
+          id: payloads2.form_id,
           action: GravityAjax.entry,
           nonce: GravityAjax.nonce
         }, myPage_handler = new page_handler(null, queries);
-        myPage_handler.load_data();
+        entry_toggler();
+        myPage_handler.load_data().then((json_response) => {
+          display_entry(json_response, payloads2.entry_id);
+        });
       } else {
         console.error("No entry_id and form_id found");
       }
