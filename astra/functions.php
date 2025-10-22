@@ -736,15 +736,10 @@ function load_gravityflow_inbox(){
                     });
 
                     if($field){
-                        error_log("FIELD NAME FOR KEY $key is ".$field->label);
-                    }
-                    else{
-                        error_log("No FIELD FOUND FOR KEY $key");
-                        if(!$shown){
-                            error_log(print_r($form['fields'],true));
-                            $shown = true;
+                        if(in_array(strtolower($field->label), $required_form_fields)){
+                            $entry[$field->label] = $entry[$key];
+                            //unset($entry[$key]);
                         }
-                        
                     }
                 }
                 else{
