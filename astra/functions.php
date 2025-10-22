@@ -725,6 +725,7 @@ function load_gravityflow_inbox(){
         $display_name = get_display_name($entry['created_by']);
         $step_name = get_current_step_name($entry['form_id'], $entry['workflow_step']);
         $form = GFAPI::get_form($entry['form_id']);
+        $new_entry = [];
 
         foreach ($entry as $key => $value) {
             $parsed_key = (int)$key;
@@ -738,7 +739,7 @@ function load_gravityflow_inbox(){
                     if($field){
                         if(in_array(strtolower($field->label), $required_form_fields)){
                             error_log("FIELD IN REQUIRED_FORM_FIELD ".$field->label);
-                            $entry[$field->label] = $entry[$key];
+                            $new_entry[$field->label] = $entry[$key];
                             //unset($entry[$key]);
                         }
                     }
@@ -750,13 +751,13 @@ function load_gravityflow_inbox(){
         }
         
         if($display_name){
-            $entry['created_by'] = $display_name;
+            $new_entry['created_by'] = $display_name;
         }
         if($step_name){
-            $entry['workflow_step'] = $step_name;
+            $new_entry['workflow_step'] = $step_name;
         }
         
-       return $entry; 
+       return $new_entry; 
     },$entries);
     
     wp_send_json_success(["entries"=>$filtered_entries, "field_values"=> $fields_values, "total"=> $total]);
