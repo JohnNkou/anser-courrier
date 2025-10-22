@@ -763,6 +763,10 @@ function load_gravityflow_inbox(){
                 }
             }
         }
+
+        if(!$shown){
+            error_log(print_r($entry,true));
+        }
         
        return $new_entry; 
     },$entries);
