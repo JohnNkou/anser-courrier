@@ -692,8 +692,6 @@ function load_gravityflow_inbox(){
     }
     
     $fields_values = [];
-
-    error_log("FORM FIELDS ".print_r(GFAPI::get_form($form_ids[0]),true));
     
     foreach (explode(",",$form_ids) as $form_id){
         $fields_values[$form_id] = [];
@@ -726,6 +724,30 @@ function load_gravityflow_inbox(){
         $display_name = get_display_name($entry['created_by']);
         $step_name = get_current_step_name($entry['form_id'], $entry['workflow_step']);
         $form = GFAPI::get_form($entry->form_id);
+
+        foreach ($entry as $key => $value) {
+            $parsed_key = (int)$key;
+
+            if (is_int($parsed_key)) {
+                $form = GFAPI::get_form($entry->form_id);
+
+                if($form){
+                    $field = array_find($form['fields'],function($field) use ($parsed_key){
+                        return $field->ID == $parsed_key;
+                    });
+
+                    if($field){
+                        error_log("FIELD NAME FOR KEY $key is ".$field->label);
+                    }
+                    else{
+                        error_log("No FIELD FOUND FOR KEY $key");
+                    }
+                }
+                else{
+                    error_log("Key $key with no form found");
+                }
+            }
+        }
         
         if($display_name){
             $entry['created_by'] = $display_name;
