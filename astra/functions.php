@@ -729,7 +729,7 @@ function load_gravityflow_inbox(){
             $parsed_key = (int)$key;
 
             if (is_int($parsed_key)) {
-                $form = GFAPI::get_form($entry->form_id);
+                $form = GFAPI::get_form($entry['form_id']);
 
                 if($form){
                     $field = array_find($form['fields'],function($field) use ($parsed_key){
