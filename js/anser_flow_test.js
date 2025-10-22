@@ -134,7 +134,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     };
   }
   function display_entry(payloads, entry_id) {
-    let { inbox, form_title } = payloads, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), bodyHtml = "";
+    let { inbox: inboxes, form_title } = payloads, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), bodyHtml = "";
     if (!content_node) {
       return console.error("Content node not found");
     }
@@ -153,21 +153,21 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     span_entry_number.textContent = entry_id;
     inboxes.forEach((_inboxes) => {
       let inSection = false;
-      _inboxes.forEach((inbox2) => {
-        switch (inbox2.type) {
+      _inboxes.forEach((inbox) => {
+        switch (inbox.type) {
           case "section":
             bodyHtml += "<section>";
-            bodyHtml += "<h5 class='title'>" + inbox2.value + "</h5>";
+            bodyHtml += "<h5 class='title'>" + inbox.value + "</h5>";
             inSection = true;
             break;
           case "html":
-            bodyHtml += "<div class='card'>" + inbox2.value + "</div>";
+            bodyHtml += "<div class='card'>" + inbox.value + "</div>";
             break;
           case "text":
-            bodyHtml += "<div class='card'><p>" + inbox2.label + "</p><p>" + inbox2.value + "</p></div>";
+            bodyHtml += "<div class='card'><p>" + inbox.label + "</p><p>" + inbox.value + "</p></div>";
             break;
           default:
-            console.error("Unknwon inbox type", inbox2);
+            console.error("Unknwon inbox type", inbox);
         }
       });
       if (inSection) {
