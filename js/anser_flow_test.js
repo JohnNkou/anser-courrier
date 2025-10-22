@@ -101,8 +101,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     if (tbody) {
       entries.forEach((entry, i) => {
         html += "<tr id='" + entry.id + "' form_id='" + entry.form_id + "'>";
-        html += "<td " + (i == 0 ? 'width="40%"' : "") + "'>            <div class='reception-info'>            <p class='creator'>" + (entry["expéditeur"] || "Inconnu") + "</p>            <p class='numero'>" + (entry["numéro"] || "") + "</p>            </div>  </td>";
-        html += "<td " + (i == 0 ? 'width="50%"' : "") + " width='50%'>" + (entry["objet"] || "") + "</td>";
+        html += "<td " + (i == 0 ? 'width="20%"' : "") + "'>            <div class='reception-info'>            <p class='creator'>" + (entry["expéditeur"] || "Inconnu") + "</p>            <p class='numero'>" + (entry["numéro"] || "") + "</p>            </div>  </td>";
+        html += "<td " + (i == 0 ? 'width="40%"' : "") + ">" + (entry["objet"] || "") + "</td>";
         html += "<td class='text-center'><span class='step-status rounded'>" + entry["workflow_step"] + "</span></td>";
         html += "<td>" + (entry["date"] || "") + "</td>";
         html += "</tr>";
