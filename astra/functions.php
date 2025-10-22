@@ -745,7 +745,7 @@ function load_gravityflow_inbox(){
                     $field = array_find($form['fields'],function($field) use ($parsed_key){
                         return $field->id == $parsed_key;
                     });
-
+                    error_log("ID $key with form label:".$field->label);
                     if($field){
 
                         if(($label = array_find($required_form_fields,function($label) use ($field){
