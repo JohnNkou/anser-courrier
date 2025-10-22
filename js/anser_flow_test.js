@@ -104,7 +104,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         html += "<td " + (i == 0 ? 'width="20%"' : "") + "'>            <div class='reception-info'>            <p class='creator'>" + (entry["expéditeur"] || "Inconnu") + "</p>            <p class='numero'>" + (entry["numéro"] || "") + "</p>            </div>  </td>";
         html += "<td " + (i == 0 ? 'width="50%"' : "") + ">" + (entry["objet"] || "") + "</td>";
         html += "<td class='text-center'><span class='step-status rounded'>" + entry["workflow_step"] + "</span></td>";
-        html += "<td>" + (entry["date"] || "") + "</td>";
+        html += "<td class='text-center'>" + (entry["date"] || "") + "</td>";
         html += "</tr>";
       });
       tbody.innerHTML = html;
