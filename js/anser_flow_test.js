@@ -99,10 +99,10 @@ var require_anser_flow_utils = __commonJS((exports2) => {
   function build_elements(entries) {
     var html = "", tbody = document.querySelector("tbody");
     if (tbody) {
-      entries.forEach((entry) => {
+      entries.forEach((entry, i) => {
         html += "<tr id='" + entry.id + "' form_id='" + entry.form_id + "'>";
-        html += "<td width='50%'>            <div class='reception-info'>            <p class='creator'>" + (entry["expéditeur"] || "Inconnu") + "</p>            <p class='numero'>" + (entry["numéro"] || "") + "</p>            </div>  </td>";
-        html += "<td width='50%'>" + (entry["objet"] || "") + "</td>";
+        html += "<td " + (i == 0 ? 'width="30%"' : "") + "'>            <div class='reception-info'>            <p class='creator'>" + (entry["expéditeur"] || "Inconnu") + "</p>            <p class='numero'>" + (entry["numéro"] || "") + "</p>            </div>  </td>";
+        html += "<td" + (i == 0 ? 'width="50%"' : "") + " width='50%'>" + (entry["objet"] || "") + "</td>";
         html += "<td class='text-center'><span class='step-status rounded'>" + entry["workflow_step"] + "</span></td>";
         html += "<td>" + (entry["date"] || "") + "</td>";
         html += "</tr>";
