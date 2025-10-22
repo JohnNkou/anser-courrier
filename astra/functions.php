@@ -737,10 +737,12 @@ function load_gravityflow_inbox(){
                     });
 
                     if($field){
-                        if(in_array(strtolower($field->label), $required_form_fields)){
+
+                        if(array_find($required_form_fields,function($label) use ($field){
+                            return strpos(strtolower($field->label,$label) !== false);
+                        })){
                             error_log("FIELD IN REQUIRED_FORM_FIELD ".$field->label);
                             $new_entry[$field->label] = $entry[$key];
-                            //unset($entry[$key]);
                         }
                     }
                 }
