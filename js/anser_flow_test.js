@@ -158,6 +158,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           case "section":
             bodyHtml += "<section>";
             bodyHtml += "<h5 class='title'>" + inbox.value + "</h5>";
+            bodyHtml += "<div>";
             inSection = true;
             break;
           case "html":
@@ -171,7 +172,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         }
       });
       if (inSection) {
-        bodyHtml += "</section>";
+        bodyHtml += "</div></section>";
       }
     });
     content_node.innerHTML = bodyHtml;
