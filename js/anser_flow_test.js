@@ -133,7 +133,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       entry_viewer.classList.toggle("hidden");
     };
   }
-  function display_entry(paylods, entry_id) {
+  function display_entry(payloads, entry_id) {
     let { inbox, form_title } = payloads, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), bodyHtml = "";
     if (!content_node) {
       return console.error("Content node not found");
@@ -182,17 +182,17 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       return console.error("Couldn't load Entry_click_handler because no tbody element was found");
     }
     tbody.addEventListener("click", (event) => {
-      let target = event.target, payloads2 = get_entry_ids(target, 5);
-      if (payloads2) {
+      let target = event.target, payloads = get_entry_ids(target, 5);
+      if (payloads) {
         let queries = {
-          entry_id: payloads2.entry_id,
-          id: payloads2.form_id,
+          entry_id: payloads.entry_id,
+          id: payloads.form_id,
           action: GravityAjax.entry,
           nonce: GravityAjax.nonce
         }, myPage_handler = new page_handler(null, queries);
         entry_toggler();
         myPage_handler.load_data().then((json_response) => {
-          display_entry(json_response, payloads2.entry_id);
+          display_entry(json_response, payloads.entry_id);
         });
       } else {
         console.error("No entry_id and form_id found");
