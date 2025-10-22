@@ -12,6 +12,11 @@ img:is([sizes="auto" i], [sizes^="auto," i]) {
     border-bottom:1px solid silver;
     table-layout: fixed;
 }
+#my-content{
+    padding:1em;
+    background-color:white;
+    margin-top:1em;
+}
 #main td, #main th{
     border:none;
 }
