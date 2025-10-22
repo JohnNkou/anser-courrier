@@ -356,7 +356,6 @@ add_action("wp_enqueue_scripts", function(){
     if(is_page(['boite-de-reception-4','mes-courrier-v2','mes-factures-v2'])){
         wp_enqueue_script('tailwindcss','https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4');
         wp_enqueue_style('custom_globe','/css/global.css');
-        wp_enqueue_style('modal_style','/css/modal.css');
     }
 
     if (is_page('boite-de-reception-4')) {
@@ -371,6 +370,7 @@ add_action("wp_enqueue_scripts", function(){
 
     if(is_page(['mes-courrier-v2','mes-factures-v2'])){
         wp_enqueue_script('gravityview-ajax','/js/anser_view_test.js',[], null, true);
+        wp_enqueue_style('modal_style','/css/modal.css');
         wp_localize_script("gravityview-ajax", 'GravityAjax',[
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('gravityview_nonce'),
