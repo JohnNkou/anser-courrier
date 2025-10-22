@@ -721,7 +721,7 @@ function load_gravityflow_inbox(){
     }
     
     $shown = false;
-    $filtered_entries = array_map(function($entry) use ($required_fields, &$shown){
+    $filtered_entries = array_map(function($entry) use ($required_fields, &$shown, $required_form_fields){
         $display_name = get_display_name($entry['created_by']);
         $step_name = get_current_step_name($entry['form_id'], $entry['workflow_step']);
         $form = GFAPI::get_form($entry['form_id']);
