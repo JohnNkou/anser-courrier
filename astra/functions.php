@@ -632,7 +632,7 @@ function build_inbox_results($form,$entry,$current_step){
         switch (RGFormsModel::get_input_type( $field )) {
             case 'section':
                 if(! Gravity_Flow_Entry_Detail::is_section_empty($field,$current_step,$form, $entry, $display_empty_fields)){
-                    $results[++$current_index] = [$field->label];
+                    $results[++$current_index] = ["type"=>"section", "value"=> $field->label];
                 }
                 break;
             case 'html':
@@ -640,7 +640,7 @@ function build_inbox_results($form,$entry,$current_step){
                     $content = GFCommon::replace_variables($field->content, $form, $entry, false, true, false, 'html');
                     $content = do_shortcode($content);
 
-                    array_push($current_array,$content);
+                    array_push($current_array,["type"=> "html", $value=> $content]);
                 }
                 break;
             default:
@@ -657,7 +657,7 @@ function build_inbox_results($form,$entry,$current_step){
                 $label = Gravity_Flow_Entry_Detail::get_label($field, $entry);
 
                 if($display_empty_fields || ! empty($display_value) || $display_value === '0'){
-                    array_push($current_array, ["label"=> $label, "value"=> $display_value ]);
+                    array_push($current_array, ["label"=> $label, "value"=> $display_value, "type"=> "text" ]);
                 }
 
                 break;
