@@ -727,6 +727,16 @@ function load_gravityflow_inbox(){
         $form = GFAPI::get_form($entry['form_id']);
         $new_entry = [];
 
+        if($display_name){
+            $new_entry['created_by'] = $display_name;
+        }
+        if($step_name){
+            $new_entry['workflow_step'] = $step_name;
+        }
+
+        $new_entry['form_id'] = $entry['form_id'];
+        $new_entry['id'] = $entry['id'];
+        
         foreach ($entry as $key => $value) {
             $parsed_key = (int)$key;
 
@@ -751,16 +761,6 @@ function load_gravityflow_inbox(){
                 }
             }
         }
-        
-        if($display_name){
-            $new_entry['created_by'] = $display_name;
-        }
-        if($step_name){
-            $new_entry['workflow_step'] = $step_name;
-        }
-
-        $new_entry['form_id'] = $entry['form_id'];
-        $new_entry['id'] = $entry['id'];
         
        return $new_entry; 
     },$entries);

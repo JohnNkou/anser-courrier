@@ -94,23 +94,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
   var { page_handler } = require_anser_utily();
   function result_handler(json_response) {
     let { entries, field_values } = json_response.data;
-    console.log("ENTRIES ARE", entries);
-    update_entries_ids(entries, field_values);
     build_elements(entries);
-  }
-  function update_entries_ids(entries, field_values) {
-    entries.forEach((entry) => {
-      let form_id = entry.form_id, form = field_values[form_id];
-      if (form) {
-        Object.keys(form).forEach((key) => {
-          let field_id = form[key];
-          entry[key] = entry[field_id];
-          delete entry[field_id];
-        });
-      } else {
-        console.error("No form_id " + form_id + " found in field_values");
-      }
-    });
   }
   function build_elements(entries) {
     var html = "", tbody = document.querySelector("tbody");
@@ -119,9 +103,9 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         html += "<tr id='" + entry.id + "' form_id='" + entry.form_id + "'>";
         html += "<td>" + entry.created_by + "</td>";
         html += "<td>" + entry.workflow_step + "</td>";
-        html += "<td>" + entry["numéro"] + "</td>";
-        html += "<td>" + entry["objet"] + "</td>";
-        html += "<td>" + entry["référence"] + "</td>";
+        html += "<td>" + (entry["numéro"] || "") + "</td>";
+        html += "<td>" + (entry["objet"] || "") + "</td>";
+        html += "<td>" + (entry["référence"] || "") + "</td>";
         html += "</tr>";
       });
       tbody.innerHTML = html;
