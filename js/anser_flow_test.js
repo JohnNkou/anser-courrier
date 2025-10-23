@@ -183,7 +183,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       event.preventDefault();
       let target = event.target, index = target.getAttribute("index");
       if (index != null) {
-        if (!index.classList.contains("active")) {
+        if (!target.classList.contains("active")) {
           contents.forEach((content, _index) => {
             if (_index == index) {
               content.classList.remove("hidden");
