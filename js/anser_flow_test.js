@@ -192,7 +192,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           id: payloads.form_id,
           action: GravityAjax.entry,
           nonce: GravityAjax.nonce
-        }, myPage_handler = new page_handler(null, queries);
+        }, myPage_handler = new page_handler(null, table, queries);
         entry_toggler();
         myPage_handler.load_data().then((json_response) => {
           display_entry(json_response.data, payloads.entry_id, payloads.numero);
