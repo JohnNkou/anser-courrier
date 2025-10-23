@@ -602,7 +602,7 @@ function get_workflow_info($current_step,$form, $entry){
     $step_info = [];
 
     if($current_step !== false && $current_step instanceof Gravity_Flow_Step){
-        $step_info["name"]=> $current_step->get_name();
+        $step_info["name"] = $current_step->get_name();
         
         if($current_step instanceof Gravity_Flow_Step_Approval){
             $step_info["assignes"] = [];
