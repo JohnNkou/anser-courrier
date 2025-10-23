@@ -270,7 +270,7 @@ add_shortcode('gf_nested_count', function($atts) {
 // **Ajout d'un filter pour restreindre le resultat affiché au derniers 4 mois pour gravityflow page inbox
 
 
-add_filter( 'gravityflow_inbox_search_criteria', 'sh_gravityflow_inbox_search_criteria', 10, 2 );
+/*add_filter( 'gravityflow_inbox_search_criteria', 'sh_gravityflow_inbox_search_criteria', 10, 2 );
 function sh_gravityflow_inbox_search_criteria( $search_criteria, $args ) {
     $start_date = date( 'Y-m-d', strtotime('-120 days') );
     $end_date = date( 'Y-m-d', time() );
@@ -278,17 +278,17 @@ function sh_gravityflow_inbox_search_criteria( $search_criteria, $args ) {
     $search_criteria['end_date'] = $end_date;
      
     return $search_criteria;
-}
+}*/
 
 // **Ajout d'un filtre pour restreindre le resultat affiché au derniers 4 mois pour gravityflow page status
-add_filter( 'gravityflow_status_filter', function( $args ) {
+/*add_filter( 'gravityflow_status_filter', function( $args ) {
     $start_date = date( 'Y-m-d', strtotime('-120 days') );
     $end_date = date( 'Y-m-d', time() );
     $args['start_date'] = $start_date;
     $args['end_date'] = $end_date;
     return $args;
 
-}, 10, 1 );
+}, 10, 1 );*/
 
 // ** Custom
 add_filter("gform_field_filters", function($filters, $form){
