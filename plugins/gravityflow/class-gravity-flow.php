@@ -4774,7 +4774,7 @@ PRIMARY KEY  (id)
 				if ( $step ) {
 					$token = $this->decode_access_token();
 					error_log("Token with scope ".print_r($token,true));
-					if ( isset( $token['scopes']['action'] ) ) {
+					if ( isset( $token['scopes']['action'] ) ) { error_log("Token is defined");
 						if ( $token['scopes']['action'] === 'cancel_workflow' ) {
 							$entry_id = rgars( $token, 'scopes/entry_id' );
 							if ( empty( $entry_id ) || $entry_id != $entry['id'] ) {
@@ -4831,7 +4831,7 @@ PRIMARY KEY  (id)
 
 				$feedback = $this->maybe_process_admin_action( $form, $entry );
 
-				error_log("Feedback is ".print_r($feedback,true));
+				error_log("Feedback is $feedback");
 
 				if ( empty( $feedback ) && $step ) {
 					error_log("Processing status update");
