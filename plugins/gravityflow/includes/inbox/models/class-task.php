@@ -722,7 +722,7 @@ class Task implements Model {
 		$args = $this->parse_args( $args );
 
 		$tasks = array();
-
+		error_log("INBOX TASKS ARGS ".print_r($args,true));
 		$entries = $this->api->get_inbox_entries( $args );
 
 		if ( empty( $entries ) ) {

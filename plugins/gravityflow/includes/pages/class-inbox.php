@@ -39,6 +39,7 @@ class Gravity_Flow_Inbox {
 		}
 
 		if ( $args['legacy'] ) {
+			error_log("Displaying legacy");
 			self::display_legacy( $args );
 			return;
 		}

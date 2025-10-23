@@ -4888,7 +4888,6 @@ PRIMARY KEY  (id)
 				Gravity_Flow_Entry_Detail::entry_detail( $form, $entry, $step, $args );
 				return;
 			} else { error_log("No feedback here");
-				error_log("ARGS ".print_r($args,true));
 				?>
 				<div class="gravityflow_wrap gf_entry_wrap gravityflow_workflow_wrap gravityflow_workflow_detail">
 					<?php if ( $args['show_header'] ) :	?>
