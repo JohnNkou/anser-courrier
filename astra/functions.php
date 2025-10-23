@@ -594,33 +594,55 @@ function load_gravityflow_inbox_entry(){
     $results = build_inbox_results($form,$entry,$current_step);
     $workflow_info = get_workflow_info($current_step, $form, $entry);
 
-    return wp_send_json_success(["inbox"=> $results, "form_title"=> $form['title'], "worflow_info"=> $workflow_info]);
+    array_push($results,$workflow_info);
+
+    return wp_send_json_success(["inbox"=> $results, "form_title"=> $form['title']]);
 }
 
 function get_workflow_info($current_step,$form, $entry){
     $date_format = apply_filters('gravityflow_date_format_entry_detail','');
-    $step_info = [];
+    $results = [];
+    $date_created = Gravity_Flow_Common::format_date($entry['date_created'],$date_format, false, true);
+    $last_modified = Gravity_Flow_Common::format_date($entry['workflow_timestamp'],$date_format, false, true);
+    $creator = get_display_name($entry['created_by']);
+    $assigne_ul = "<ul>";
 
     if($current_step !== false && $current_step instanceof Gravity_Flow_Step){
-        $step_info["name"] = $current_step->get_name();
+        $step_name = $current_step->get_name();
         
         if($current_step instanceof Gravity_Flow_Step_Approval){
-            $step_info["assignes"] = [];
 
             foreach ($current_step->get_assignees() as $assigne) {
-                array_push($step_info["assignes"], $assigne->get_status_label());
+                $label = $assigne->get_status_label();
+
+                $assigne_ul += "<li>$label</li>";
             }
+            $assigne_ul += "</ul>";
         }
+
+        array_push($results,[
+            "type"=>"section",
+            "value"=>"Workflow"
+        ], [
+            "type"=> "text",
+            "label"=> "Envoyée par",
+            "value"=> $creator,
+        ], [
+            "type"=> "text",
+            "label"=> "Envoyée",
+            "value"=> $date_created
+        ], [
+            "type"=> "text",
+            "label"=> "Mis à jour récente",
+            "value"=> $last_modified
+        ], [
+            "type"=> "text",
+            "label"=> $step_name,
+            "value"=> $assigne_ul
+        ]);
     }
 
-    error_log("LAST UPDATED IS ".Gravity_Flow_Common::format_date($entry['workflow_timestamp'],$date_format,false,true));
-
-    return [
-        "date_created"=> Gravity_Flow_Common::format_date($entry['date_created'],$date_format, false, true),
-        "date_modifié"=> (!empty($entry['workflow_timestamp']))? Gravity_Flow_Common::format_date($entry['workflow_timestamp'],$date_format, false, true) : '',
-        "creator"=> get_display_name($entry['created_by']),
-        "step_info"=> $step_info
-    ];
+    return $results;
 }
 
 function build_inbox_results($form,$entry,$current_step){
