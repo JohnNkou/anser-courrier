@@ -116,7 +116,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     if (repeat && node) {
       let form_id = node.getAttribute("form_id"), entry_id = node.getAttribute("id"), entry_numero = node.getAttribute("numero");
       if (form_id && entry_id) {
-        return { form_id, entry_id };
+        return { form_id, entry_id, numero };
       }
       return get_entry_ids(node.parentNode, repeat--);
     } else {
@@ -133,7 +133,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       entry_viewer.classList.toggle("hidden");
     };
   }
-  function display_entry(payloads, entry_id, numero) {
+  function display_entry(payloads, entry_id, numero2) {
     let { inbox: inboxes, form_title } = payloads, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), bodyHtml = "";
     if (!content_node) {
       return console.error("Content node not found");
@@ -152,7 +152,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       create_table_entry_toggler()();
     };
     span_title.textContent = form_title;
-    span_entry_number.textContent = numero;
+    span_entry_number.textContent = numero2;
     inboxes.forEach((_inboxes) => {
       let inSection = false;
       _inboxes.forEach((inbox) => {
