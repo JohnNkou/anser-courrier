@@ -1,6 +1,7 @@
 const { page_handler } = require('./anser_utily.js'),
 { result_handler, entry_click_handler } = require('./anser_flow_utils.js'),
-myPage_handler = new page_handler(result_handler);
+tbody = document.querySelector('tbody'),
+myPage_handler = new page_handler(result_handler,tbody);
 
 var search_form = document.querySelector('.search_block');
 
