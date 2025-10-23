@@ -1,6 +1,6 @@
 const { page_handler } = require('./anser_utily.js'),
 { result_handler, entry_click_handler } = require('./anser_flow_utils.js'),
-table = document.querySelector('table'),
+table = document.querySelector('.main-table'),
 tbody = table.querySelector('tbody'),
 myPage_handler = new page_handler((json_response)=>result_handler(json_response,tbody),table);
 

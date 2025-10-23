@@ -209,7 +209,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
 // js/anser_flow.js
 var { page_handler } = require_anser_utily();
 var { result_handler, entry_click_handler } = require_anser_flow_utils();
-var table = document.querySelector("table");
+var table = document.querySelector(".main-table");
 var tbody = table.querySelector("tbody");
 var myPage_handler = new page_handler((json_response) => result_handler(json_response, tbody), table);
 var search_form = document.querySelector(".search_block");
