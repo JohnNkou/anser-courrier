@@ -214,14 +214,14 @@ var tbody = table.querySelector("tbody");
 var myPage_handler = new page_handler((json_response) => result_handler(json_response, tbody), table);
 var search_form = document.querySelector(".search_block");
 if (typeof _Page != "undefined") {
-  myPage_handler.load_data().then((json_response) => result_handler(json_response, tbody));
+  myPage_handler.load_data().then((json_response) => result_handler(json_response, table));
   entry_click_handler(table);
   search_form.addEventListener("submit", (event) => {
     event.preventDefault();
     let form = event.target, input = form.elements.s;
     if (input.value.length) {
       let limit = myPage_handler.limit, queries = { term: input.value };
-      myPage_handler.load_data(queries, 0, limit).then((json_response) => result_handler(json_response, tbody));
+      myPage_handler.load_data(queries, 0, limit).then((json_response) => result_handler(json_response, table));
     } else {
       console.warn("Nothing to search for");
     }
