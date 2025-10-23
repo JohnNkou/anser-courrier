@@ -3368,7 +3368,7 @@ PRIMARY KEY  (id)
 		public function maybe_display_entry_detail_step_status( $current_step, $form, $entry, $args ) {
 			if ( false !== $current_step && $current_step instanceof Gravity_Flow_Step ) {
 				$display_workflow_info = (bool) $args['workflow_info'];
-				error_log("CURRENT STEP IS IS IS ".print_r($current_step));
+				
 				if ( $display_workflow_info ) {
 					echo '<hr style="margin-top:10px;"/>';
 				}
