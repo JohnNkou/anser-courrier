@@ -617,7 +617,7 @@ function get_workflow_info($current_step,$form, $entry){
 
     return [
         "date_created"=> Gravity_Flow_Common::format_date($entry['date_created'],$date_format, false, true),
-        "date_modifié"=> Gravity_Flow_Common::format_date($entry['workflow_timestamp'],$date_format, false, true),
+        "date_modifié"=> (!empty($entry['workflow_timestamp']))? Gravity_Flow_Common::format_date($entry['workflow_timestamp'],$date_format, false, true) : '',
         "creator"=> get_display_name($entry['created_by']),
         "step_info"=> $step_info
     ];
