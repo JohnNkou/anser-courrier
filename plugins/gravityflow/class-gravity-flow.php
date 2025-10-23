@@ -3310,12 +3310,12 @@ PRIMARY KEY  (id)
 			 * @param string $date_format A date format string - defaults to the date format setting in the WordPress general settings.
 			 */
 			$date_format = apply_filters( 'gravityflow_date_format_entry_detail', '' );
-			error_log("DATE FORMAT IS $date_format");
 			$date_created = Gravity_Flow_Common::format_date( $entry['date_created'], $date_format, false, true );
 			printf( '<div class="gravityflow-status-box-field gravityflow-status-box-field-submitted-time"><span class="gravityflow-status-box-field-label">%s: </span><span class="gravityflow-status-box-field-value">%s</span></div>', esc_html__( 'Submitted', 'gravityflow' ), esc_html( $date_created ) );
 
 			if ( ! empty( $entry['workflow_timestamp'] ) ) {
 				$last_updated = Gravity_Flow_Common::format_date( $entry['workflow_timestamp'], $date_format, false, true );
+				error_log("LAST UPDATED IS $last_updated");
 				if ( $date_created != $last_updated ) {
 					printf( '<div class="gravityflow-status-box-field gravityflow-status-box-field-last-updated"><span class="gravityflow-status-box-field-label">%s: </span><span class="gravityflow-status-box-field-value">%s</span></div>', esc_html__( 'Last updated', 'gravityflow' ), esc_html( $last_updated ) );
 				}
