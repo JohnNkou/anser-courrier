@@ -457,8 +457,6 @@ function build_entries_array($view,$entry){
             $value = $entry->as_entry()[$field->ID];
         }
 
-        error_log("labe $label, value :".print_r($value,true));
-
         if(is_array($value)){
             if(count($value) == 0)
                 continue;
@@ -746,7 +744,6 @@ function load_gravityflow_inbox(){
                     $field = array_find($form['fields'],function($field) use ($parsed_key){
                         return $field->id == $parsed_key;
                     });
-                    error_log("ID $key with form label:".$field->label);
                     if($field){
 
                         if(($label = array_find($required_form_fields,function($label) use ($field){
@@ -762,10 +759,6 @@ function load_gravityflow_inbox(){
                     error_log("Key $key with no form found");
                 }
             }
-        }
-
-        if(!$shown){
-            error_log(print_r($entry,true));
         }
         
        return $new_entry; 

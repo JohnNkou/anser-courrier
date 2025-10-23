@@ -4834,10 +4834,12 @@ PRIMARY KEY  (id)
 				error_log("Feedback is ".print_r($feedback,true));
 
 				if ( empty( $feedback ) && $step ) {
+					error_log("Processing status update");
 
 					$feedback = $step->process_status_update( $form, $entry );
 
 					if ( $feedback && ! is_wp_error( $feedback ) ) {
+						error_log("Processing status update after feedback not a wordpress error");
 						$this->process_workflow( $form, $entry_id );
 					}
 				}
@@ -4853,7 +4855,7 @@ PRIMARY KEY  (id)
 					</div>
 					<?php
 
-				} elseif ( $feedback ) {
+				} elseif ( $feedback ) { error_log("Feed back is not an wordpress error so processing feedback");
 					GFCache::flush();
 
 					$entry = GFAPI::get_entry( $entry_id ); // Refresh entry.
@@ -4884,7 +4886,7 @@ PRIMARY KEY  (id)
 
 				Gravity_Flow_Entry_Detail::entry_detail( $form, $entry, $step, $args );
 				return;
-			} else {
+			} else { error_log("No feedback here");
 
 				?>
 				<div class="gravityflow_wrap gf_entry_wrap gravityflow_workflow_wrap gravityflow_workflow_detail">
