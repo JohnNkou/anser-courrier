@@ -675,7 +675,7 @@ function handle_gravityflow_action($step){
                 array_push($action,[
                     "type"=>"submit",
                     "value"=> $save_process_button_text,
-                    "id"=> "gravityflow_save_progress_button"
+                    "id"=> "gravityflow_save_progress_button",
                     "name"=> "in_progress",
                     "disabled"=> true,
                     "action"=> [
