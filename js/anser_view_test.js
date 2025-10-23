@@ -319,7 +319,7 @@ var require_anser_view_util = __commonJS((exports2) => {
 var { page_handler } = require_anser_utily();
 var { result_handler, filter_handler, entry_click_handler } = require_anser_view_util();
 var search_form = document.querySelector(".search_block");
-var table = document.querySelector("table");
+var table = document.querySelector(".main-table");
 var tbody = table.querySelector("tbody");
 var myPage_handler = new page_handler(result_handler, table);
 if (typeof _Page == "undefined" || !_Page.view_id) {

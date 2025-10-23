@@ -1,7 +1,7 @@
 const { page_handler } = require('./anser_utily.js'),
 { result_handler, filter_handler, entry_click_handler } = require('./anser_view_util.js'),
 search_form = document.querySelector('.search_block'),
-table = document.querySelector('table'),
+table = document.querySelector('.main-table'),
 tbody = table.querySelector('tbody'),
 myPage_handler = new page_handler(result_handler,table);
 
