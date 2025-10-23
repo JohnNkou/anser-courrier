@@ -5468,9 +5468,11 @@ PRIMARY KEY  (id)
 		 * @param int   $entry_id The entry ID.
 		 */
 		public function process_workflow( $form, $entry_id ) {
+			error_log("class-gravity-flow->process_workflow");
 
 			$entry = GFAPI::get_entry( $entry_id );
 			if ( ! is_wp_error( $entry ) && isset( $entry['workflow_step'] ) ) {
+				error_log("Entry is not an wp_error and entry has a workflow_step not null");
 
 				$this->log_debug( __METHOD__ . '() - processing. entry id ' . $entry_id );
 
@@ -5480,35 +5482,37 @@ PRIMARY KEY  (id)
 				$partial_entry_pending_start = false;
 
 				if ( empty( $step_id ) && ( empty( $entry['workflow_final_status'] ) || $entry['workflow_final_status'] == 'pending') ) {
+					error_log("step_id is null and entry workflow_final_status is empty or pending");
+
 					$this->log_debug( __METHOD__ . '() - not yet started workflow. starting.' );
 					// Starting workflow.
 					$form_id = absint( $form['id'] );
 					$step = $this->get_first_step( $form_id, $entry );
 					$this->log_event( 'workflow', 'started', $form['id'], $entry_id );
-					if ( $step ) {
+					if ( $step ) { error_log("Step is not null")
 						$step->start();
 						$this->log_debug( __METHOD__ . '() - started.' );
-					} elseif ( ! empty( $entry['partial_entry_id'] ) && $this->get_workflow_start_step( $form_id, $entry ) ) {
+					} elseif ( ! empty( $entry['partial_entry_id'] ) && $this->get_workflow_start_step( $form_id, $entry ) ) { error_log("entry partial_entry_id is not empty and get_workflow_start_step returned something");
 						$partial_entry_pending_start = true;
 						$this->log_debug( __METHOD__ . '() - start condition not met.' );
 					} else {
 						$this->log_debug( __METHOD__ . '() - no first step.' );
 					}
-				} else {
+				} else {error_log("Retrieve the step from the get_step function");
 					$this->log_debug( __METHOD__ . '() - resuming workflow.' );
 					$step = $this->get_step( $step_id, $entry );
 				}
 
 				$step_complete = false;
 
-				if ( $step ) {
+				if ( $step ) { error_log("Now step is defiend");
 					$step_id = $step->get_id();
 					$step_complete = $step->end_if_complete();
 					$this->log_debug( __METHOD__ . '() - step ' . $step_id . ' complete: ' . ( $step_complete ? 'yes' : 'no' ) );
 				}
 
 				while ( $step_complete && $step ) {
-
+					error_log("Looping while there step_complete and step are thruthy");
 					$this->log_debug( __METHOD__ . '() - getting next step.' );
 
 					// Refresh the entry before getting the next step.
@@ -5516,6 +5520,7 @@ PRIMARY KEY  (id)
 
 					// Workflow could have been updated using a hook.
 					if ( $entry[ 'workflow_final_status' ] == 'cancelled' ) {
+						error_log("The entry is cancelled");
 						$this->log_debug( __METHOD__ . '() - workflow cancelled, stopping.' );
 						return;
 					}
@@ -5523,18 +5528,19 @@ PRIMARY KEY  (id)
 					$step          = $this->get_next_step( $step, $entry, $form );
 					$step_complete = false;
 
-					if ( $step ) {
+					if ( $step ) { error_log("The next step is ".json_encode($step)." and the step_complete is set to false");
 						$step_id       = $step->get_id();
 						$step_complete = $step->start();
-						if ( $step_complete ) {
+						if ( $step_complete ) { error_log("The next step is setting step_complete to true and ending the step");
 							$step->end();
 						}
 					}
+					error_log("Updating workflow_step to the new step_id");
 					$entry['workflow_step'] = $step_id;
 				}
 
-				if ( ! $partial_entry_pending_start ) {
-					if ( $step == false ) {
+				if ( ! $partial_entry_pending_start ) {error_log("partial_entry_pending_start is not empty");
+					if ( $step == false ) { error_log("Step is false");
 						$this->log_debug( __METHOD__ . '() - ending workflow.' );
 						gform_delete_meta( $entry_id, 'workflow_step' );
 
@@ -5557,7 +5563,7 @@ PRIMARY KEY  (id)
 						GFAPI::send_notifications( $form, $entry, 'workflow_complete' );
 					} else {
 						$this->log_debug( __METHOD__ . '() - not ending workflow.' );
-						$step_id = $step->get_id();
+						$step_id = $step->get_id(); error_log("Updating the entry worflow_step through the gform_update_meta function");
 						gform_update_meta( $entry_id, 'workflow_step', $step_id );
 					}
                 }
