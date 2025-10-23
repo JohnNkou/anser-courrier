@@ -4745,7 +4745,6 @@ PRIMARY KEY  (id)
 				}
 
 				$entry = GFAPI::get_entry( $entry_id );
-				error_log("Outputting entry ".json_encode($entry,true));
 				if ( is_wp_error( $entry ) ) {
 					esc_html_e( 'Oops! We could not locate your entry.', 'gravityflow' );
 					return;
