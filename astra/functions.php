@@ -615,9 +615,9 @@ function get_workflow_info($current_step,$form, $entry){
             foreach ($current_step->get_assignees() as $assigne) {
                 $label = $assigne->get_status_label();
 
-                $assigne_ul += "<li>$label</li>";
+                $assigne_ul .= "<li>$label</li>";
             }
-            $assigne_ul += "</ul>";
+            $assigne_ul .= "</ul>";
         }
 
         array_push($results,[
