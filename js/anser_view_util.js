@@ -275,8 +275,8 @@ function entry_click_handler(table){
 				let queries = {
 					view_id: 	_Page.view_id,
 					entry_id: 	entry_id,
-					action: 	GravityAjax.entry,
-					nonce: 		GravityAjax.nonce
+					action: 	GravityAjax.view_entry,
+					nonce: 		GravityAjax.view_nonce
 				},
 				myPage_handler;
 

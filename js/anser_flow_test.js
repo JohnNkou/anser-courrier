@@ -188,8 +188,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         let queries = {
           entry_id: payloads.entry_id,
           id: payloads.form_id,
-          action: GravityAjax.entry,
-          nonce: GravityAjax.nonce
+          action: GravityAjax.flow_entry,
+          nonce: GravityAjax.flow_nonce
         }, myPage_handler = new page_handler(null, table, queries);
         entry_toggler();
         myPage_handler.load_data().then((json_response) => {
@@ -406,8 +406,8 @@ var require_anser_view_util = __commonJS((exports2) => {
           let queries = {
             view_id: _Page.view_id,
             entry_id,
-            action: GravityAjax.entry,
-            nonce: GravityAjax.nonce
+            action: GravityAjax.view_entry,
+            nonce: GravityAjax.view_nonce
           }, myPage_handler;
           if (_Page.secret) {
             queries.secret = _Page.secret;
@@ -437,12 +437,16 @@ var { result_handler: result_handler_2, entry_click_handler: entry_click_handler
 var table = document.querySelector(".main-table");
 var second_table = document.querySelector(".second-table");
 var tbody = table.querySelector("tbody");
-var myPage_handler = new page_handler((json_response) => result_handler(json_response, tbody), table);
+var myPage_handler = new page_handler((json_response) => result_handler(json_response, table), table);
+var myPage_handler_2 = new page_handler((json_response) => result_handler_2(json_response, second_table), second_table);
 var search_form = document.querySelector(".search_block");
 if (typeof _Page != "undefined") {
-  myPage_handler.addQueries({ action: GravityAjax.action, security: GravityAjax.nonce });
+  myPage_handler.addQueries({ action: GravityAjax.flow_action, security: GravityAjax.flow_nonce });
+  myPage_handler_2.addQueries({ action: GravityAjax.view_action, security: GravityAjax.view_nonce });
   myPage_handler.load_data().then((json_response) => result_handler(json_response, table));
+  myPage_handler_2.load_data().then((json_response) => result_handler(json_response, second_table));
   entry_click_handler(table);
+  entry_click_handler_2(second_table);
   search_form.addEventListener("submit", (event) => {
     event.preventDefault();
     let form = event.target, input = form.elements.s;

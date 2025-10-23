@@ -289,8 +289,8 @@ var require_anser_view_util = __commonJS((exports2) => {
           let queries = {
             view_id: _Page.view_id,
             entry_id,
-            action: GravityAjax.entry,
-            nonce: GravityAjax.nonce
+            action: GravityAjax.view_entry,
+            nonce: GravityAjax.view_nonce
           }, myPage_handler;
           if (_Page.secret) {
             queries.secret = _Page.secret;
@@ -323,7 +323,7 @@ var myPage_handler = new page_handler(result_handler, table);
 if (typeof _Page == "undefined" || !_Page.view_id) {
   console.error("_Page object should have a view_id property");
 } else {
-  let queries = { id: _Page.view_id, action: GravityAjax.action, security: GravityAjax.nonce };
+  let queries = { id: _Page.view_id, action: GravityAjax.view_action, security: GravityAjax.view_nonce };
   if (_Page.secret) {
     queries.secret = _Page.secret;
   }

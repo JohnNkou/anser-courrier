@@ -9,7 +9,7 @@ if(typeof _Page == "undefined" || !_Page.view_id){
 	console.error("_Page object should have a view_id property");
 }
 else{
-	let queries = { id: _Page.view_id, action:GravityAjax.action, security: GravityAjax.nonce };
+	let queries = { id: _Page.view_id, action:GravityAjax.view_action, security: GravityAjax.view_nonce };
 
 	if(_Page.secret){
 		queries.secret = _Page.secret;

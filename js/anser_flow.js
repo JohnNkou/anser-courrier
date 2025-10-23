@@ -4,14 +4,18 @@ const { page_handler } = require('./anser_utily.js'),
 table = document.querySelector('.main-table'),
 second_table = document.querySelector('.second-table'),
 tbody = table.querySelector('tbody'),
-myPage_handler = new page_handler((json_response)=>result_handler(json_response,tbody),table);
+myPage_handler = new page_handler((json_response)=>result_handler(json_response,table),table),
+myPage_handler_2 = new page_handler((json_response)=> result_handler_2(json_response,second_table),second_table);
 
 var search_form = document.querySelector('.search_block');
 
 if(typeof _Page != "undefined"){
-    myPage_handler.addQueries({ action: GravityAjax.action, security:GravityAjax.nonce });
+    myPage_handler.addQueries({ action: GravityAjax.flow_action, security:GravityAjax.flow_nonce });
+    myPage_handler_2.addQueries({ action: GravityAjax.view_action, security:GravityAjax.view_nonce });
     myPage_handler.load_data().then((json_response)=> result_handler(json_response,table));
+    myPage_handler_2.load_data().then((json_response)=> result_handler(json_response,second_table));
     entry_click_handler(table);
+    entry_click_handler_2(second_table);
 
     search_form.addEventListener('submit',(event)=>{
         event.preventDefault();
