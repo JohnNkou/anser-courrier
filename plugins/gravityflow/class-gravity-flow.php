@@ -4773,7 +4773,7 @@ PRIMARY KEY  (id)
 				error_log("Current Step ".json_encode($step,true));
 				if ( $step ) {
 					$token = $this->decode_access_token();
-					error_log("Token with scope ".print_r($token));
+					error_log("Token with scope ".print_r($token,true));
 					if ( isset( $token['scopes']['action'] ) ) {
 						if ( $token['scopes']['action'] === 'cancel_workflow' ) {
 							$entry_id = rgars( $token, 'scopes/entry_id' );
