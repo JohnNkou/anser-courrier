@@ -1,12 +1,13 @@
 const { page_handler } = require('./anser_utily.js'),
 { result_handler, entry_click_handler } = require('./anser_flow_utils.js'),
 table = document.querySelector('table'),
-myPage_handler = new page_handler(result_handler,table);
+tbody = table.querySelector('tbody'),
+myPage_handler = new page_handler((json_response)=>result_handler(json_response,tbody),table);
 
 var search_form = document.querySelector('.search_block');
 
 if(typeof _Page != "undefined"){
-    myPage_handler.load_data().then(result_handler);
+    myPage_handler.load_data().then((json_response)=> result_handler(json_response,tbody));
     entry_click_handler();
 
     search_form.addEventListener('submit',(event)=>{

@@ -210,10 +210,11 @@ var require_anser_flow_utils = __commonJS((exports2) => {
 var { page_handler } = require_anser_utily();
 var { result_handler, entry_click_handler } = require_anser_flow_utils();
 var table = document.querySelector("table");
-var myPage_handler = new page_handler(result_handler, table);
+var tbody = table.querySelector("tbody");
+var myPage_handler = new page_handler((json_response) => result_handler(json_response, tbody), table);
 var search_form = document.querySelector(".search_block");
 if (typeof _Page != "undefined") {
-  myPage_handler.load_data().then(result_handler);
+  myPage_handler.load_data().then((json_response) => result_handler(json_response, tbody));
   entry_click_handler();
   search_form.addEventListener("submit", (event) => {
     event.preventDefault();
