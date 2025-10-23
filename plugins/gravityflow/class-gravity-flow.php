@@ -5489,7 +5489,7 @@ PRIMARY KEY  (id)
 					$form_id = absint( $form['id'] );
 					$step = $this->get_first_step( $form_id, $entry );
 					$this->log_event( 'workflow', 'started', $form['id'], $entry_id );
-					if ( $step ) { error_log("Step is not null")
+					if ( $step ) { error_log("Step is not null");
 						$step->start();
 						$this->log_debug( __METHOD__ . '() - started.' );
 					} elseif ( ! empty( $entry['partial_entry_id'] ) && $this->get_workflow_start_step( $form_id, $entry ) ) { error_log("entry partial_entry_id is not empty and get_workflow_start_step returned something");
