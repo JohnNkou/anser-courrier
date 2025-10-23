@@ -3316,6 +3316,7 @@ PRIMARY KEY  (id)
 			if ( ! empty( $entry['workflow_timestamp'] ) ) {
 				$last_updated = Gravity_Flow_Common::format_date( $entry['workflow_timestamp'], $date_format, false, true );
 				error_log("LAST UPDATED IS $last_updated");
+				error_log("WITH DATE FORMAT $date_format");
 				if ( $date_created != $last_updated ) {
 					printf( '<div class="gravityflow-status-box-field gravityflow-status-box-field-last-updated"><span class="gravityflow-status-box-field-label">%s: </span><span class="gravityflow-status-box-field-value">%s</span></div>', esc_html__( 'Last updated', 'gravityflow' ), esc_html( $last_updated ) );
 				}
