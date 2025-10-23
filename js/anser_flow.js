@@ -1,5 +1,5 @@
 const { page_handler } = require('./anser_utily.js'),
-{ result_handler, entry_click_handler } = require('./anser_flow_utils.js'),
+{ result_handler, entry_click_handler, onglet_handler } = require('./anser_flow_utils.js'),
 { result_handler:result_handler_2, entry_click_handler:entry_click_handler_2 } = require('./anser_view_util.js'),
 table = document.querySelector('.main-table'),
 second_table = document.querySelector('.second-table'),
@@ -14,8 +14,10 @@ if(typeof _Page != "undefined"){
     myPage_handler_2.addQueries({ id: _Page.view_id, secret: _Page.secret, action: GravityAjax.view_action, security:GravityAjax.view_nonce });
     myPage_handler.load_data().then((json_response)=> result_handler(json_response,table));
     myPage_handler_2.load_data().then((json_response)=> result_handler_2(json_response,second_table));
+
     entry_click_handler(table);
     entry_click_handler_2(second_table);
+    onglet_handler([table,second_table]);
 
     search_form.addEventListener('submit',(event)=>{
         event.preventDefault();

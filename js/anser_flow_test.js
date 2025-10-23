@@ -177,6 +177,31 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     });
     content_node.innerHTML = bodyHtml;
   }
+  function onglet_handler(contents) {
+    let onglets = document.querySelector(".onglets");
+    onglets.addEventListener("click", (event) => {
+      event.preventDefault();
+      let target = event.target, index = target.getAttribute("index");
+      if (index != null) {
+        if (!index.classList.contains("active")) {
+          contents.forEach((content, _index) => {
+            if (_index == index) {
+              content.classList.remove("hidden");
+            } else {
+              content.classList.add("hidden");
+            }
+          });
+          Array.prototype.forEach.call(onglets.children, (child, _index) => {
+            if (index == _index) {
+              child.classList.add("active");
+            } else {
+              child.classList.remove("active");
+            }
+          });
+        }
+      }
+    });
+  }
   function entry_click_handler(table) {
     let tbody = table.querySelector("tbody"), entry_toggler = create_table_entry_toggler();
     if (!tbody) {
@@ -202,6 +227,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
   }
   exports2.result_handler = result_handler;
   exports2.entry_click_handler = entry_click_handler;
+  exports2.onglet_handler = onglet_handler;
 });
 
 // js/anser_view_util.js
@@ -432,7 +458,7 @@ var require_anser_view_util = __commonJS((exports2) => {
 
 // js/anser_flow.js
 var { page_handler } = require_anser_utily();
-var { result_handler, entry_click_handler } = require_anser_flow_utils();
+var { result_handler, entry_click_handler, onglet_handler } = require_anser_flow_utils();
 var { result_handler: result_handler_2, entry_click_handler: entry_click_handler_2 } = require_anser_view_util();
 var table = document.querySelector(".main-table");
 var second_table = document.querySelector(".second-table");
@@ -447,6 +473,7 @@ if (typeof _Page != "undefined") {
   myPage_handler_2.load_data().then((json_response) => result_handler_2(json_response, second_table));
   entry_click_handler(table);
   entry_click_handler_2(second_table);
+  onglet_handler([table, second_table]);
   search_form.addEventListener("submit", (event) => {
     event.preventDefault();
     let form = event.target, input = form.elements.s;
