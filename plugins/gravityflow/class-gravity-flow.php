@@ -4732,7 +4732,7 @@ PRIMARY KEY  (id)
 
 			$args = array_merge( $defaults, $args );
 
-			error_log("ARGS IS ".print_r($args));
+			error_log("ARGS IS ".print_r($args,true));
 
 			if ( rgget( 'view' ) == 'entry' || ! empty( $args['entry_id'] ) ) {
 
