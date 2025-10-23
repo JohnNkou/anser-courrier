@@ -608,7 +608,7 @@ function get_workflow_info($current_step,$form, $entry){
             $step_info["assignes"] = [];
 
             foreach ($current_step->get_assignees() as $assigne) {
-                array_push($step_info["assignes", $assigne->get_status_label()])
+                array_push($step_info["assignes"], $assigne->get_status_label())
             }
         }
     }
