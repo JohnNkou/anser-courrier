@@ -4837,7 +4837,7 @@ PRIMARY KEY  (id)
 					error_log("Processing status update");
 
 					$feedback = $step->process_status_update( $form, $entry );
-
+					error_log("Feed back after calling process_status_update ".print_r($feedback));
 					if ( $feedback && ! is_wp_error( $feedback ) ) {
 						error_log("Processing status update after feedback not a wordpress error");
 						$this->process_workflow( $form, $entry_id );
