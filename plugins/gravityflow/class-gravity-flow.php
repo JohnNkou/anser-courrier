@@ -3239,13 +3239,15 @@ PRIMARY KEY  (id)
 
 			$current_user_is_assignee = false;
 
-			if ( $current_step && ! $display_workflow_info && ! $step_status ) {
+			if ( $current_step && ! $display_workflow_info && ! $step_status ) { error_log("Have current step by display_workflow_info and step_status are booth false");
 				$current_user_assignee_key = $current_step->get_current_assignee_key();
-				if ( $current_user_assignee_key ) {
+				if ( $current_user_assignee_key ) { error_log("Finding out is the current user is asignned to this task");
 					$assignee                 = $current_step->get_assignee( $current_user_assignee_key );
 					$current_user_is_assignee = $assignee->is_current_user();
 				}
 			}
+			
+			error_log("Is USER ASIGNED $current_user_is_assignee");
 
 			if ( $current_user_is_assignee || $display_workflow_info || ( $current_step && $step_status ) ) {
 				?>
@@ -4732,8 +4734,6 @@ PRIMARY KEY  (id)
 
 			$args = array_merge( $defaults, $args );
 
-			error_log("ARGS IS ".print_r($args,true));
-
 			if ( rgget( 'view' ) == 'entry' || ! empty( $args['entry_id'] ) ) {
 
 				$entry_id = absint( rgget( 'lid' ) );
@@ -5662,7 +5662,7 @@ PRIMARY KEY  (id)
 					return;
 				}
 			}
-			error_log("Original a ".print_r($a,true));
+
 			$entry_id = absint( rgget( 'lid' ) );
 			error_log("GOT A ENTRY ID $entry_id");
 			if ( empty( $entry_id ) && ! empty( $a['entry_id'] ) ) {

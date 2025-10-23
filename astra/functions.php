@@ -593,10 +593,140 @@ function load_gravityflow_inbox_entry(){
     $current_step = $GFFlow->get_current_step($form,$entry);
     $results = build_inbox_results($form,$entry,$current_step);
     $workflow_info = get_workflow_info($current_step, $form, $entry);
+    $actions_data = handle_gravityflow_action($current_step);
 
     array_push($results,$workflow_info);
 
-    return wp_send_json_success(["inbox"=> $results, "form_title"=> $form['title']]);
+    return wp_send_json_success(["inbox"=> $results, "form_title"=> $form['title'], "actions"=> $actions_data]);
+}
+
+function handle_gravityflow_action($step){
+    $action = null;
+    $can_update = false;
+
+
+    foreach ($this->get_assignees() as $assignee) {
+        if($assignee->is_current_user()){
+            $can_update = true;
+            break;
+        }
+    }
+
+    if($can_update){
+        $step_id = $step->get_id();
+
+        if($step instanceof Gravity_Flow_Step_Approval){
+            $action = [
+                [
+                    "type"=>"hidden",
+                    "name"=>"_wpnonce",
+                    "value"=> wp_create_nonce("gravityflow_approvals_".$step_id) 
+                ],
+                [
+                    "type"=>"hidden",
+                    "id"=>"gravityflow_approval_new_status_step",
+                    "name"=> "gravityflow_approval_new_status_Step_".$step_id,
+                    "value"=>""
+                ]
+                [
+                    "type"=>"button",
+                    "value"=>"approved",
+                    "class"=>"btn-success",
+                    "label"=> esc_html__('Approve','gravityflow'),
+                    "action"=>[
+                        [
+                            "set_id"=>"#gravityflow_approval_new_status_step",
+                            "to"=>"approved"
+                        ]
+                    ]
+                ],
+                [
+                    "type"=>"button",
+                    "value"=>"rejected",
+                    "class"=>"btn-failure",
+                    "label"=> esc_html__('Reject','gravityflow'),
+                    "action"=>[
+                        [
+                            "set_id"=>"#gravityflow_approval_new_status_step",
+                            "to"=>"rejected"
+                        ]
+                    ]
+                ]
+            ];
+        }
+        else if($step instanceof Gravity_Flow_Step_User_Input){
+            $action = [];
+
+            $default_status = $step->default_status ? $step->default_status : 'complete';
+
+            if (in_array($default_status, array('hidden','submit_buttons'), true)) {
+                array_push($action, [
+                    "type"=>"hidden",
+                    "id"=> "gravityflow_status_hidden",
+                    "name"=> "gravityflow_status",
+                    "value"=>"complete"
+                ]);
+            }
+
+            if($step->default_status == 'submit_buttons'){
+                $save_process_button_text = esc_html('Save','gravityflow');
+                $submit_button_text = esc_html__('Submit', 'gravityflow');
+
+                array_push($action,[
+                    "type"=>"submit",
+                    "value"=> $save_process_button_text,
+                    "id"=> "gravityflow_save_progress_button"
+                    "name"=> "in_progress",
+                    "disabled"=> true,
+                    "action"=> [
+                        [
+                            "set_id"=>"#action",
+                            "to"=> "update"
+                        ],
+                        [
+                            "set_id"=>"#gravityflow_status_hidden",
+                            "to"=>"in_progress"
+                        ]
+                    ]
+                ], [
+                    "type"=> "submit",
+                    "id"=>"gravityflow_submit_button",
+                    "disabled"=>"disabled",
+                    "action"=>[
+                        [
+                            "set_id"=>"#action",
+                            "to"=>"update"
+                        ],
+                        [
+                            "set_id"=>"#gravityflow_status_hidden",
+                            "to"=>"complete"
+                        ]
+                    ],
+                    "value"=>$submit_button_text,
+                    "name"=>"save"
+                ]);
+            }
+            else{
+                $button_text = $step->default_status == 'hidden' ? esc_html__( 'Submit', 'gravityflow' ) : esc_html__( 'Update', 'gravityflow' );
+
+                array_push($action,[
+                    "type"=>"submit",
+                    "value"=> $button_text,
+                    "name"=> "save",
+                    "disabled"=>"disabled",
+                    "id"=>"gravityflow_update_button",
+                    "action"=>[
+                        [
+                            "set_id"=> "#action",
+                            "to"=>"update"
+                        ]
+                    ]
+                ]);
+            }
+        }
+    }
+
+    return $action;
 }
 
 function get_workflow_info($current_step,$form, $entry){
