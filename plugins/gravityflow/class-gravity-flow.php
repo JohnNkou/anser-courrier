@@ -5662,7 +5662,7 @@ PRIMARY KEY  (id)
 					return;
 				}
 			}
-			error_log("Original a ".print_r($a));
+			error_log("Original a ".print_r($a,true));
 			$entry_id = absint( rgget( 'lid' ) );
 			error_log("GOT A ENTRY ID $entry_id");
 			if ( empty( $entry_id ) && ! empty( $a['entry_id'] ) ) {
