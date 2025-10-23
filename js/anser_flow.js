@@ -8,7 +8,7 @@ var search_form = document.querySelector('.search_block');
 
 if(typeof _Page != "undefined"){
     myPage_handler.load_data().then((json_response)=> result_handler(json_response,tbody));
-    entry_click_handler();
+    entry_click_handler(table);
 
     search_form.addEventListener('submit',(event)=>{
         event.preventDefault();
