@@ -627,7 +627,7 @@ function handle_gravityflow_action($step){
                     "id"=>"gravityflow_approval_new_status_step",
                     "name"=> "gravityflow_approval_new_status_Step_".$step_id,
                     "value"=>""
-                ]
+                ],
                 [
                     "type"=>"button",
                     "value"=>"approved",
