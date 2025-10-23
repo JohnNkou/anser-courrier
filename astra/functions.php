@@ -969,7 +969,7 @@ function get_current_step_name($form_id,$step_id){
     return null;
 }
 
-function build_search_criteria(){
+function build_search_criteria($include_date=true){
     $search_criteria = [];
     $field_filters = [];
     $status = "active";
@@ -985,8 +985,10 @@ function build_search_criteria(){
     
     $field_filters["mode"] = "any";
     $search_criteria['field_filters'] = $field_filters;
-    $search_criteria['start_date'] = $start_date;
-    $search_criteria['end_date'] = $end_date;
+    if($include_date){
+        $search_criteria['start_date'] = $start_date;
+        $search_criteria['end_date'] = $end_date;
+    }
     $search_criteria['status'] = $status;
     
     return $search_criteria;
