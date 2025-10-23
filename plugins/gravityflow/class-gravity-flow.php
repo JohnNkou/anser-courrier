@@ -4844,7 +4844,7 @@ PRIMARY KEY  (id)
 					}
 				}
 
-				if ( is_wp_error( $feedback ) ) {
+				if ( is_wp_error( $feedback ) ) { error_log("Received a feedback error $feedback ".print_r($feedback,true));
 					$error_data = $feedback->get_error_data();
 					if ( ! empty( $error_data['form'] ) ) {
 						$form = $error_data['form'];
