@@ -613,6 +613,8 @@ function get_workflow_info($current_step,$form, $entry){
         }
     }
 
+    error_log("ENTRY BOTA ".print_r($entry,true));
+
     return [
         "date_created"=> Gravity_Flow_Common::format_date($entry['date_created'],$date_format, false, true),
         "date_modifié"=> Gravity_Flow_Common::format_date($entry['workflow_timestamp'],$date_format, false, true),
