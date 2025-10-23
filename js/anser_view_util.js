@@ -284,7 +284,7 @@ function entry_click_handler(table){
 					queries.secret = _Page.secret;
 				}
 
-				myPage_handler = new page_handler(null,queries);
+				myPage_handler = new page_handler(null,table,queries);
 
 
 				myPage_handler.load_data().then((json_response)=>{
