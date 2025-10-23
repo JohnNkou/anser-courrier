@@ -605,7 +605,7 @@ function handle_gravityflow_action($step){
     $can_update = false;
 
 
-    foreach ($this->get_assignees() as $assignee) {
+    foreach ($step->get_assignees() as $assignee) {
         if($assignee->is_current_user()){
             $can_update = true;
             break;
