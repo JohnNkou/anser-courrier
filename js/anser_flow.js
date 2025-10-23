@@ -1,12 +1,15 @@
 const { page_handler } = require('./anser_utily.js'),
 { result_handler, entry_click_handler } = require('./anser_flow_utils.js'),
+{ result_handler:result_handler_2, entry_click_handler:entry_click_handler_2 } = require('./anser_view_util.js'),
 table = document.querySelector('.main-table'),
+second_table = document.querySelector('.second-table'),
 tbody = table.querySelector('tbody'),
 myPage_handler = new page_handler((json_response)=>result_handler(json_response,tbody),table);
 
 var search_form = document.querySelector('.search_block');
 
 if(typeof _Page != "undefined"){
+    myPage_handler.addQueries({ action: GravityAjax.action, security:GravityAjax.nonce });
     myPage_handler.load_data().then((json_response)=> result_handler(json_response,table));
     entry_click_handler(table);
 

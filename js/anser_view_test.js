@@ -4,8 +4,6 @@ var __commonJS = (cb, mod) => () => (mod || cb((mod = { exports: {} }).exports, 
 var require_anser_utily = __commonJS((exports2) => {
   function Anser_loader(offset = 0, page_size = 10, queries = {}) {
     let url = new URL(GravityAjax.ajax_url), searchParams = url.searchParams;
-    searchParams.set("action", GravityAjax.action);
-    searchParams.set("security", GravityAjax.nonce);
     searchParams.set("offset", offset);
     searchParams.set("limit", page_size);
     for (let name in queries) {
@@ -325,7 +323,7 @@ var myPage_handler = new page_handler(result_handler, table);
 if (typeof _Page == "undefined" || !_Page.view_id) {
   console.error("_Page object should have a view_id property");
 } else {
-  let queries = { id: _Page.view_id };
+  let queries = { id: _Page.view_id, action: GravityAjax.action, security: GravityAjax.nonce };
   if (_Page.secret) {
     queries.secret = _Page.secret;
   }
