@@ -92,12 +92,12 @@ var require_anser_utily = __commonJS((exports2) => {
 // js/anser_flow_utils.js
 var require_anser_flow_utils = __commonJS((exports2) => {
   var { page_handler } = require_anser_utily();
-  function result_handler(json_response) {
+  function result_handler(json_response, table) {
     let { entries, field_values } = json_response.data;
-    build_elements(entries);
+    build_elements(table, entries);
   }
-  function build_elements(entries) {
-    var html = "", tbody = document.querySelector("tbody");
+  function build_elements(table, entries) {
+    var html = "", tbody = table.querySelector("tbody");
     if (tbody) {
       entries.forEach((entry, i) => {
         html += "<tr numero='" + entry["numéro"] + "' id='" + entry.id + "' form_id='" + entry.form_id + "'>";
@@ -179,8 +179,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     });
     content_node.innerHTML = bodyHtml;
   }
-  function entry_click_handler() {
-    let tbody = document.querySelector("tbody"), entry_toggler = create_table_entry_toggler();
+  function entry_click_handler(table) {
+    let tbody = table.querySelector("tbody"), entry_toggler = create_table_entry_toggler();
     if (!tbody) {
       return console.error("Couldn't load Entry_click_handler because no tbody element was found");
     }
@@ -221,8 +221,7 @@ if (typeof _Page != "undefined") {
     let form = event.target, input = form.elements.s;
     if (input.value.length) {
       let limit = myPage_handler.limit, queries = { term: input.value };
-      myPage_handler.load_data(queries, 0, limit).then(result_handler);
-      exports.load_data(0, exports.limit, input.value).then(result_handler);
+      myPage_handler.load_data(queries, 0, limit).then((json_response) => result_handler(json_response, tbody));
     } else {
       console.warn("Nothing to search for");
     }
