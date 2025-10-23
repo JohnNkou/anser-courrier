@@ -1,10 +1,14 @@
 const { page_handler } = require('./anser_utily.js'),
 { result_handler, filter_handler, entry_click_handler } = require('./anser_view_util.js'),
 search_form = document.querySelector('.search_block'),
-tbody = document.querySelector('tbody'),
-myPage_handler = new page_handler(result_handler,tbody);
+table = document.querySelector('table'),
+tbody = table.querySelector('tbody'),
+myPage_handler = new page_handler(result_handler,table);
 
-if(typeof _Page != 'undefined' && _Page.view_id){
+if(typeof _Page == "undefined" || !_Page.view_id){
+	console.error("_Page object should have a view_id property");
+}
+else{
 	let queries = { id: _Page.view_id };
 
 	if(_Page.secret){
@@ -33,7 +37,7 @@ if(typeof _Page != 'undefined' && _Page.view_id){
 				_Page.filters.forEach((filter_name)=>{ queries[filter_name] = value });
 
 				myPage_handler.removeQueries(['filter_workflow_final_status']);
-				myPage_handler.load_data(queries,0).then((json_response)=> result_handler(json_response,tbody)).then(()=>{
+				myPage_handler.load_data(queries,0).then((json_response)=> result_handler(json_response,table)).then(()=>{
 					myPage_handler.addQueries(queries);
 				});
 			}
@@ -43,13 +47,5 @@ if(typeof _Page != 'undefined' && _Page.view_id){
 		console.error("No filter on _page constant");
 	}
 
-	myPage_handler.load_data().then((json_response)=> result_handler(json_response,tbody));
-}
-else{
-	if(typeof _Page == "undefined"){
-		alert("_Page is undefined");
-	}
-	if(!_Page.view_id){
-		alert("No view_id found");
-	}
+	myPage_handler.load_data().then((json_response)=> result_handler(json_response,table));
 }

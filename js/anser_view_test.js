@@ -319,9 +319,12 @@ var require_anser_view_util = __commonJS((exports2) => {
 var { page_handler } = require_anser_utily();
 var { result_handler, filter_handler, entry_click_handler } = require_anser_view_util();
 var search_form = document.querySelector(".search_block");
-var tbody = document.querySelector("tbody");
-var myPage_handler = new page_handler(result_handler, tbody);
-if (typeof _Page != "undefined" && _Page.view_id) {
+var table = document.querySelector("table");
+var tbody = table.querySelector("tbody");
+var myPage_handler = new page_handler(result_handler, table);
+if (typeof _Page == "undefined" || !_Page.view_id) {
+  console.error("_Page object should have a view_id property");
+} else {
   let queries = { id: _Page.view_id };
   if (_Page.secret) {
     queries.secret = _Page.secret;
@@ -342,7 +345,7 @@ if (typeof _Page != "undefined" && _Page.view_id) {
           queries2[filter_name] = value;
         });
         myPage_handler.removeQueries(["filter_workflow_final_status"]);
-        myPage_handler.load_data(queries2, 0).then((json_response) => result_handler(json_response, tbody)).then(() => {
+        myPage_handler.load_data(queries2, 0).then((json_response) => result_handler(json_response, table)).then(() => {
           myPage_handler.addQueries(queries2);
         });
       }
@@ -350,12 +353,5 @@ if (typeof _Page != "undefined" && _Page.view_id) {
   } else {
     console.error("No filter on _page constant");
   }
-  myPage_handler.load_data().then((json_response) => result_handler(json_response, tbody));
-} else {
-  if (typeof _Page == "undefined") {
-    alert("_Page is undefined");
-  }
-  if (!_Page.view_id) {
-    alert("No view_id found");
-  }
+  myPage_handler.load_data().then((json_response) => result_handler(json_response, table));
 }
