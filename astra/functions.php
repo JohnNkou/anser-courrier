@@ -609,7 +609,7 @@ function get_workflow_info($current_step,$form, $entry){
 
     if($current_step !== false && $current_step instanceof Gravity_Flow_Step){
         $step_name = $current_step->get_name();
-        
+        error_log("STEP CLASS ".get_class($current_step));
         if($current_step instanceof Gravity_Flow_Step_Approval){
 
             foreach ($current_step->get_assignees() as $assigne) {
