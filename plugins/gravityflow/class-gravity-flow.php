@@ -4732,6 +4732,8 @@ PRIMARY KEY  (id)
 
 			$args = array_merge( $defaults, $args );
 
+			error_log("ARGS IS ".print_r($args));
+
 			if ( rgget( 'view' ) == 'entry' || ! empty( $args['entry_id'] ) ) {
 
 				$entry_id = absint( rgget( 'lid' ) );
