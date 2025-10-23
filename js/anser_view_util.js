@@ -1,9 +1,9 @@
 const { page_handler }  = require('./anser_utily.js');
 
-function result_handler(json_response,tbody){
+function result_handler(json_response,table){
 	let { entries, total } = json_response.data;
 
-	display_data(entries,tbody);
+	display_data(entries,table);
 }
 
 function filter_handler(page_handler){
@@ -41,8 +41,9 @@ function filter_handler(page_handler){
 	}
 }
 
-function display_data(entries,tbody){
-	let trs = "";
+function display_data(entries,table){
+	let trs = "",
+	tbody = table.querySelector('tbody');
 
 	if(tbody){
 		entries.forEach((entry)=>{
@@ -262,8 +263,8 @@ function get_entry_id(node,deep){
 	}
 }
 
-function entry_click_handler(){
-	let tbody = document.querySelector('tbody');
+function entry_click_handler(table){
+	let tbody = table.querySelector('tbody');
 
 	if(tbody){
 		tbody.addEventListener('click',(event)=>{

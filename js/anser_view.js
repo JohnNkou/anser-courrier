@@ -16,7 +16,7 @@ else{
 	}
 
 	filter_handler(myPage_handler);
-	entry_click_handler();
+	entry_click_handler(table);
 
 	myPage_handler.addQueries(queries);
 

@@ -92,9 +92,9 @@ var require_anser_utily = __commonJS((exports2) => {
 // js/anser_view_util.js
 var require_anser_view_util = __commonJS((exports2) => {
   var { page_handler } = require_anser_utily();
-  function result_handler(json_response, tbody) {
+  function result_handler(json_response, table) {
     let { entries, total } = json_response.data;
-    display_data(entries, tbody);
+    display_data(entries, table);
   }
   function filter_handler(page_handler2) {
     let filter_root = document.querySelector(".status_filter"), links = filter_root.querySelectorAll("a");
@@ -121,8 +121,8 @@ var require_anser_view_util = __commonJS((exports2) => {
       }
     };
   }
-  function display_data(entries, tbody) {
-    let trs = "";
+  function display_data(entries, table) {
+    let trs = "", tbody = table.querySelector("tbody");
     if (tbody) {
       entries.forEach((entry) => {
         let id = entry.id;
@@ -282,8 +282,8 @@ var require_anser_view_util = __commonJS((exports2) => {
       return get_entry_id(node.parentNode, deep - 1);
     }
   }
-  function entry_click_handler() {
-    let tbody = document.querySelector("tbody");
+  function entry_click_handler(table) {
+    let tbody = table.querySelector("tbody");
     if (tbody) {
       tbody.addEventListener("click", (event) => {
         let target = event.target, entry_id = get_entry_id(target, 5);
@@ -330,7 +330,7 @@ if (typeof _Page == "undefined" || !_Page.view_id) {
     queries.secret = _Page.secret;
   }
   filter_handler(myPage_handler);
-  entry_click_handler();
+  entry_click_handler(table);
   myPage_handler.addQueries(queries);
   if (_Page.filters) {
     search_form.addEventListener("submit", (event) => {
