@@ -13,8 +13,8 @@ var require_anser_utily = __commonJS((exports2) => {
     }
     return fetch(url, { method: "POST" });
   }
-  exports2.page_handler = function page_handler(navigationHandler, default_queries = {}) {
-    let nextPage = document.querySelector(".nextPage"), prevPage = document.querySelector(".previousPage"), loader = document.querySelector("#loader"), with_queries = default_queries;
+  exports2.page_handler = function page_handler(navigationHandler, body, default_queries = {}) {
+    let nextPage = body.querySelector(".nextPage"), prevPage = body.querySelector(".previousPage"), loader = document.querySelector("#loader"), with_queries = default_queries;
     this.page = 0;
     this.total_page = 0;
     this.limit = 15;
@@ -100,7 +100,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     var html = "", tbody = document.querySelector("tbody");
     if (tbody) {
       entries.forEach((entry, i) => {
-        html += "<tr id='" + entry.id + "' form_id='" + entry.form_id + "'>";
+        html += "<tr numero='" + entry["numéro"] + "' id='" + entry.id + "' form_id='" + entry.form_id + "'>";
         html += "<td " + (i == 0 ? 'width="20%"' : "") + "'>            <div class='reception-info'>            <p class='creator'>" + (entry["expéditeur"] || "Inconnu") + "</p>            <p class='numero'>" + (entry["numéro"] || "") + "</p>            </div>  </td>";
         html += "<td " + (i == 0 ? 'width="50%"' : "") + ">" + (entry["objet"] || "") + "</td>";
         html += "<td class='text-center'><span class='step-status rounded'>" + entry["workflow_step"] + "</span></td>";
@@ -114,7 +114,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
   }
   function get_entry_ids(node, repeat) {
     if (repeat && node) {
-      let form_id = node.getAttribute("form_id"), entry_id = node.getAttribute("id");
+      let form_id = node.getAttribute("form_id"), entry_id = node.getAttribute("id"), entry_numero = node.getAttribute("numero");
       if (form_id && entry_id) {
         return { form_id, entry_id };
       }
@@ -133,7 +133,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       entry_viewer.classList.toggle("hidden");
     };
   }
-  function display_entry(payloads, entry_id) {
+  function display_entry(payloads, entry_id, numero) {
     let { inbox: inboxes, form_title } = payloads, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), bodyHtml = "";
     if (!content_node) {
       return console.error("Content node not found");
@@ -152,7 +152,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       create_table_entry_toggler()();
     };
     span_title.textContent = form_title;
-    span_entry_number.textContent = entry_id;
+    span_entry_number.textContent = numero;
     inboxes.forEach((_inboxes) => {
       let inSection = false;
       _inboxes.forEach((inbox) => {
@@ -195,7 +195,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         }, myPage_handler = new page_handler(null, queries);
         entry_toggler();
         myPage_handler.load_data().then((json_response) => {
-          display_entry(json_response.data, payloads.entry_id);
+          display_entry(json_response.data, payloads.entry_id, payloads.numero);
         });
       } else {
         console.error("No entry_id and form_id found");

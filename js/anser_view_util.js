@@ -1,9 +1,9 @@
 const { page_handler }  = require('./anser_utily.js');
 
-function result_handler(json_response){
+function result_handler(json_response,tbody){
 	let { entries, total } = json_response.data;
 
-	display_data(entries);
+	display_data(entries,tbody);
 }
 
 function filter_handler(page_handler){
@@ -41,9 +41,8 @@ function filter_handler(page_handler){
 	}
 }
 
-function display_data(entries){
-	let trs = "",
-	tbody = document.querySelector('tbody');
+function display_data(entries,tbody){
+	let trs = "";
 
 	if(tbody){
 		entries.forEach((entry)=>{

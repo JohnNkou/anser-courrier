@@ -13,8 +13,8 @@ var require_anser_utily = __commonJS((exports2) => {
     }
     return fetch(url, { method: "POST" });
   }
-  exports2.page_handler = function page_handler(navigationHandler, default_queries = {}) {
-    let nextPage = document.querySelector(".nextPage"), prevPage = document.querySelector(".previousPage"), loader = document.querySelector("#loader"), with_queries = default_queries;
+  exports2.page_handler = function page_handler(navigationHandler, body, default_queries = {}) {
+    let nextPage = body.querySelector(".nextPage"), prevPage = body.querySelector(".previousPage"), loader = document.querySelector("#loader"), with_queries = default_queries;
     this.page = 0;
     this.total_page = 0;
     this.limit = 15;
@@ -92,9 +92,9 @@ var require_anser_utily = __commonJS((exports2) => {
 // js/anser_view_util.js
 var require_anser_view_util = __commonJS((exports2) => {
   var { page_handler } = require_anser_utily();
-  function result_handler(json_response) {
+  function result_handler(json_response, tbody) {
     let { entries, total } = json_response.data;
-    display_data(entries);
+    display_data(entries, tbody);
   }
   function filter_handler(page_handler2) {
     let filter_root = document.querySelector(".status_filter"), links = filter_root.querySelectorAll("a");
@@ -121,8 +121,8 @@ var require_anser_view_util = __commonJS((exports2) => {
       }
     };
   }
-  function display_data(entries) {
-    let trs = "", tbody = document.querySelector("tbody");
+  function display_data(entries, tbody) {
+    let trs = "";
     if (tbody) {
       entries.forEach((entry) => {
         let id = entry.id;
@@ -318,8 +318,9 @@ var require_anser_view_util = __commonJS((exports2) => {
 // js/anser_view.js
 var { page_handler } = require_anser_utily();
 var { result_handler, filter_handler, entry_click_handler } = require_anser_view_util();
-var myPage_handler = new page_handler(result_handler);
 var search_form = document.querySelector(".search_block");
+var tbody = document.querySelector("tbody");
+var myPage_handler = new page_handler(result_handler, tbody);
 if (typeof _Page != "undefined" && _Page.view_id) {
   let queries = { id: _Page.view_id };
   if (_Page.secret) {
@@ -341,7 +342,7 @@ if (typeof _Page != "undefined" && _Page.view_id) {
           queries2[filter_name] = value;
         });
         myPage_handler.removeQueries(["filter_workflow_final_status"]);
-        myPage_handler.load_data(queries2, 0).then(result_handler).then(() => {
+        myPage_handler.load_data(queries2, 0).then((json_response) => result_handler(json_response, tbody)).then(() => {
           myPage_handler.addQueries(queries2);
         });
       }
@@ -349,7 +350,7 @@ if (typeof _Page != "undefined" && _Page.view_id) {
   } else {
     console.error("No filter on _page constant");
   }
-  myPage_handler.load_data().then(result_handler);
+  myPage_handler.load_data().then((json_response) => result_handler(json_response, tbody));
 } else {
   if (typeof _Page == "undefined") {
     alert("_Page is undefined");
