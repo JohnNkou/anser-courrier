@@ -169,7 +169,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             bodyHtml += "<div class='card'><p>" + inbox.label + "</p><p>" + inbox.value + "</p></div>";
             break;
           case "hidden":
-            bodyHtml += "<div class='card hidden'><input index='" + index + "' id='" + inbox.id || "" + "' type='hidden' name='" + inbox.name + "' value='" + inbox.value + "' /></div>";
+            bodyHtml += "<div class='card hidden'><input index='" + index + "' id='" + (inbox.id || "") + "' type='hidden' name='" + inbox.name + "' value='" + inbox.value + "' /></div>";
             break;
           case "button":
             bodyHtml += "<div class='card'><button value='" + inbox.value + "' index='" + inbox_index + "' class='" + inbox.class + "'>" + inbox.label + "</button></div>";
