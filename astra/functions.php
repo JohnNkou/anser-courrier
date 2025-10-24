@@ -580,6 +580,8 @@ function load_gravityflow_inbox_entry(){
     $passed_id = rgget("id");
     $form_id = $entry['form_id'];
 
+    error_log("MOCHINET");
+
     if(!$entry_id || !$passed_id){
         return wp_send_json_error("Should provide an entry_id and a passed_id");
     }
