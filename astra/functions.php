@@ -619,10 +619,9 @@ function load_gravityflow_inbox_entry(){
         $step = $current_step;
 
         if($step){error_log("Step is defined so cool");
+        error_log("STEP CLASS ".get_class($step));
             $feedback = $step->process_status_update($form,$entry);
             error_log("Feed after processing thing ".print_r($feedback));
-
-            var_dump($feedback);
 
             if($feedback){
                 error_log("FEED BAD IS HERE");
