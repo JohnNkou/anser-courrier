@@ -186,6 +186,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       }
     });
     content_node.onsubmit = (event) => {
+      event.preventDefault();
       let form = event.target, fData = new FormData(form), url = new URL(GravityAjax.ajax_url), searchParams = url.searchParams;
       searchParams.set("action", GravityAjax.flow_entry);
       searchParams.set("nonce", GravityAjax.flow_nonce);
