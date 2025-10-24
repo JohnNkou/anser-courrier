@@ -791,7 +791,7 @@ class Gravity_Flow_Entry_Detail {
 				</tbody>
 				<?php
 			} else {
-				error_log("FIELD ARE EDITABLE ".print_r($editable_fields,true));
+				//error_log("FIELD ARE EDITABLE ".print_r($editable_fields,true));
 				self::entry_editor( $form, $entry, $current_step, $display_empty_fields );
 			}
 
