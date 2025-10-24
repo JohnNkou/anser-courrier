@@ -620,7 +620,7 @@ function load_gravityflow_inbox_entry(){
 
         if($step){error_log("Step is defined so cool");
             $feedback = $step->process_status_update($form,$entry);
-            error_log("Feed after processing thing ".print_r($feedback));
+            error_log("Feed after processing thing ".print_r($feedback,true));
 
             if($feedback && !is_wp_error($feedback)){
                 error_log("Goind for to process_workflow");
@@ -636,7 +636,7 @@ function load_gravityflow_inbox_entry(){
             return wp_send_json_error(["message"=> $feedback]);
         } 
         elseif($feedback){
-            error_log("It's passed ".print_r($feedback));
+            error_log("It's passed ".print_r($feedback,true));
             $feedback = GFCommon::replace_variables($feedback, $form, $entry, false, true, true, 'html');
 
             if(substr($feedback, 0,3) !== '<p>'){
