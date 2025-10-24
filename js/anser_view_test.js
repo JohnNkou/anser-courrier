@@ -18,6 +18,25 @@ var require_anser_utily = __commonJS((exports2) => {
       loader.classList.toggle("hidden");
     }
   }
+  function display_pdfviewer(src) {
+    let pdfview_node = document.getElementById("pdfviewer"), iframe = pdfview_node && pdfview_node.querySelector("iframe");
+    if (!pdfview_node && !iframe) {
+      return Promise.reject(new Error("pdfview and iframe should be node element"));
+    }
+    pdfview_node.classList.remove("hidden");
+    iframe.src = src;
+    return new Promise((resolve, reject) => {
+      pdfview_node.onclick = function(event) {
+        event.preventDefault();
+        let target = event.target;
+        if (target.classList.contains("close")) {
+          pdfview_node.classList.add("hidden");
+          iframe.src = "";
+          resolve(true);
+        }
+      };
+    });
+  }
   function display_information_modal(text) {
     let div = document.querySelector(".informationModal"), text_node = div && div.querySelector(".text");
     if (!div || !text_node) {
@@ -109,6 +128,7 @@ var require_anser_utily = __commonJS((exports2) => {
   };
   exports2.display_information_modal = display_information_modal;
   exports2.toggle_loader = toggle_loader;
+  exports2.display_pdfviewer = display_pdfviewer;
 });
 
 // js/anser_view_util.js
