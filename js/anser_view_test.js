@@ -11,8 +11,31 @@ var require_anser_utily = __commonJS((exports2) => {
     }
     return fetch(url, { method: "GET" });
   }
+  function toggle_loader(text = "Chargement") {
+    var loader = document.querySelector("#loader"), text_node = loader.querySelector(".text");
+    if (loader) {
+      text_node.textContent = text;
+      loader.classList.toggle("hidden");
+    }
+  }
+  function display_information_modal(text) {
+    let div = document.querySelector(".informationModal"), text_node = div && div.querySelector(".text");
+    if (!div || !text_node) {
+      return Promise.reject("div with class informationModal and div with class text should be found");
+    }
+    text_node.innerHTML = text;
+    return new Promise((resolve, reject) => {
+      div.onclick = function(event) {
+        event.preventDefault();
+        let target = event.target;
+        if (target.classList.contains("close")) {
+          resolve(true);
+        }
+      };
+    });
+  }
   exports2.page_handler = function page_handler(navigationHandler, body, default_queries = {}) {
-    let nextPage = body.querySelector(".nextPage"), prevPage = body.querySelector(".previousPage"), loader = document.querySelector("#loader"), with_queries = default_queries;
+    let nextPage = body.querySelector(".nextPage"), prevPage = body.querySelector(".previousPage"), with_queries = default_queries;
     this.page = 0;
     this.total_page = 0;
     this.limit = 15;
@@ -81,10 +104,9 @@ var require_anser_utily = __commonJS((exports2) => {
         }
       }
     }
-    function toggle_loader() {
-      loader.classList.toggle("hidden");
-    }
   };
+  exports2.display_information_modal = display_information_modal;
+  exports2.toggle_loader = toggle_loader;
 });
 
 // js/anser_view_util.js
