@@ -856,13 +856,16 @@ function build_inbox_results($form,$entry,$current_step){
         $step_id = $current_step ? $current_step->get_id() : '';
 
         array_push($results,[
+            [
             "type"=>"hidden",
             "name"=>"gforms_save_entry",
             "value"=> "gforms_save_entry"
-        ], [
+            ],
+            [
             "type"=>"hidden",
             "name"=>"step_id",
             "value"=>$step_id
+            ]
         ]);
     }
 
