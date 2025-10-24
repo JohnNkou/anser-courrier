@@ -636,7 +636,7 @@ function handle_gravityflow_action($step){
                     "label"=> esc_html__('Approve','gravityflow'),
                     "action"=>[
                         [
-                            "set_id"=>"#gravityflow_approval_new_status_step",
+                            "set_id"=>"gravityflow_approval_new_status_step",
                             "to"=>"approved"
                         ]
                     ]
@@ -648,7 +648,7 @@ function handle_gravityflow_action($step){
                     "label"=> esc_html__('Reject','gravityflow'),
                     "action"=>[
                         [
-                            "set_id"=>"#gravityflow_approval_new_status_step",
+                            "set_id"=>"gravityflow_approval_new_status_step",
                             "to"=>"rejected"
                         ]
                     ]
@@ -681,11 +681,11 @@ function handle_gravityflow_action($step){
                     "disabled"=> true,
                     "action"=> [
                         [
-                            "set_id"=>"#action",
+                            "set_id"=>"action",
                             "to"=> "update"
                         ],
                         [
-                            "set_id"=>"#gravityflow_status_hidden",
+                            "set_id"=>"gravityflow_status_hidden",
                             "to"=>"in_progress"
                         ]
                     ]
@@ -695,11 +695,11 @@ function handle_gravityflow_action($step){
                     "disabled"=>"disabled",
                     "action"=>[
                         [
-                            "set_id"=>"#action",
+                            "set_id"=>"action",
                             "to"=>"update"
                         ],
                         [
-                            "set_id"=>"#gravityflow_status_hidden",
+                            "set_id"=>"gravityflow_status_hidden",
                             "to"=>"complete"
                         ]
                     ],
