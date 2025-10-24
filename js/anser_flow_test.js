@@ -198,7 +198,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     inboxes.forEach((_inboxes, index) => {
       let inSection = false;
       _inboxes.forEach((inbox, _index) => {
-        let inbox_index = index.toString() + "_" + _index;
+        let inbox_index = index.toString() + "_" + _index, atts = [];
         switch (inbox.type) {
           case "section":
             bodyHtml += "<section>";
@@ -217,6 +217,17 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             break;
           case "button":
             bodyHtml += "<div class='card'><button value='" + inbox.value + "' index='" + inbox_index + "' class='" + inbox.class + "' type='" + (inbox.buttonType || "") + "' >" + inbox.label + "</button></div>";
+            break;
+          case "radio":
+            atts.push("name='" + inbox.name + "'", "value='" + inbox.value + "'", "id='" + (inbox.id || "") + '"');
+            bodyHtml += "<div class='card'><label for='" + inbox.name + "'>" + inbox.label + "</label><input type='radio' " + atts.join(" ") + " /></div>";
+            break;
+          case "submit":
+            atts.push("name='" + inbox.name + "'", "value='" + inbox.value + "'", "index='" + inbox_index + "'");
+            if (inbox.id) {
+              atts.push("id='" + inbox.id + "'");
+            }
+            bodyHtml += "<div class='card'><button " + atts.join(" ") + " type='submit'>" + inbox.value + "</button></div>";
             break;
           default:
             console.error("Unknwon inbox type", inbox);
