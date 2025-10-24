@@ -730,7 +730,7 @@ function handle_gravityflow_action($step){
     if($action){
         array_unshift($action, [
             "type"=> "section",
-            "label"=> "Action"
+            "value"=> "Action"
         ]);
     }
 
