@@ -131,8 +131,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       entry_viewer.classList.toggle("hidden");
     };
   }
-  function display_entry(payloads, entry_id, numero) {
-    let { inbox: inboxes, form_title } = payloads, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), actionNodes = {}, bodyHtml = "";
+  function display_entry(payloads, entry_data) {
+    let inboxes = payloads.inbox, entry_id = entry_data.entry_id, numero = entry_data.numero, form_title = payloads.form_title, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), actionNodes = {}, bodyHtml = "";
     if (!content_node) {
       return console.error("Content node not found");
     }
@@ -172,7 +172,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             bodyHtml += "<div class='card hidden'><input index='" + inbox_index + "' id='" + (inbox.id || "") + "' type='hidden' name='" + inbox.name + "' value='" + inbox.value + "' /></div>";
             break;
           case "button":
-            bodyHtml += "<div class='card'><button value='" + inbox.value + "' index='" + inbox_index + "' class='" + inbox.class + "'>" + inbox.label + "</button></div>";
+            bodyHtml += "<div class='card'><button value='" + inbox.value + "' index='" + inbox_index + "' class='" + inbox.class + "' type='" + (inbox.buttonType || "") + "' >" + inbox.label + "</button></div>";
             break;
           default:
             console.error("Unknwon inbox type", inbox);
@@ -185,6 +185,24 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         bodyHtml += "</div></section>";
       }
     });
+    content_node.onsubmit = (event) => {
+      let form = event.target, fData = new FormData(form), url = new URL(GravityAjax.ajax_url), searchParams = url.searchParams;
+      searchParams.set("action", GravityAjax.flow_entry);
+      searchParams.set("nonce", GravityAjax.flow_nonce);
+      searchParams.set("id", entry_data.form_id);
+      searchParams.set("entry_id", entry_data.entry_id);
+      fetch(url, { method: "POST", body: fData }).then((response) => response.json()).then((json_response) => {
+        let { success, data } = json_response;
+        if (success) {
+          alert("Good");
+        } else {
+          alert("Bad");
+        }
+      }).catch((error) => {
+        alert("Une erreur est survenue");
+        console.error(error);
+      });
+    };
     content_node.onclick = (event) => {
       let target = event.target, index = target.getAttribute("index");
       if (index !== null) {
@@ -203,6 +221,9 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             id_node.value = action.to;
           }
         });
+        if (target.type == "submit") {
+          content_node.submit();
+        }
       }
     };
     content_node.innerHTML = bodyHtml;
@@ -248,7 +269,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         }, myPage_handler = new page_handler(null, table, queries);
         entry_toggler();
         myPage_handler.load_data().then((json_response) => {
-          display_entry(json_response.data, payloads.entry_id, payloads.numero);
+          display_entry(json_response.data, payloads);
         });
       } else {
         console.error("No entry_id and form_id found");
