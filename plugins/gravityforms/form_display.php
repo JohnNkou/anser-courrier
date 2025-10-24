@@ -4527,7 +4527,7 @@ class GFFormDisplay {
 			$field_content = '<div class="gfield-admin-wrapper">' . $field_content . '</div>' . ( $field->type !== 'submit' ? $admin_compact_view_menu : '' );
 		}
 
-		error_log_log("FIELD CONTENT $field_content");
+		error_log("FIELD CONTENT $field_content");
 		return $field_content;
 	}
 
