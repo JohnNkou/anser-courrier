@@ -615,8 +615,6 @@ function handle_gravityflow_action($step){
     if($can_update){
         $step_id = $step->get_id();
 
-        error_log("STEP IS ".print_r($step,true));
-
         if($step instanceof Gravity_Flow_Step_Approval){
             $action = [
                 [
