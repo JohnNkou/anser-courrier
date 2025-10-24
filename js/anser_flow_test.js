@@ -171,7 +171,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             bodyHtml += "<div class='card hidden'><input index='" + index + "' id='" + inbox.id + "' type='hidden' name='" + inbox.name + "' value='" + inbox.value + "' /></div>";
             break;
           case "button":
-            bodyHtml += "<div class='card'><button value='" + inbox.value + "' index='" + index + "' class='" + inbox.class + "'>" + inbox.value + "</button></div>";
+            bodyHtml += "<div class='card'><button value='" + inbox.value + "' index='" + index + "' class='" + inbox.class + "'>" + inbox.label + "</button></div>";
             break;
           default:
             console.error("Unknwon inbox type", inbox);
