@@ -206,7 +206,6 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     content_node.onclick = (event) => {
       let target = event.target, index = target.getAttribute("index");
       if (index !== null) {
-        event.preventDefault();
         let actionHandler = actionNodes[index];
         if (!actionHandler) {
           return console.error("Received click from an element with index " + index + " but with no actionHandler", actionNodes);
@@ -221,8 +220,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             id_node.value = action.to;
           }
         });
-        if (target.type == "submit") {
-          content_node.submit();
+        if (target.type != "submit") {
+          event.preventDefault();
         }
       }
     };
