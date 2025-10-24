@@ -588,17 +588,60 @@ function load_gravityflow_inbox_entry(){
         return wp_send_json_error("Entry form id with passed id differents");
     }
 
+    if(is_wp_error($entry)){
+        error_log("Entry is wp_error ".print_r($entry));
+        return wp_send_json_error(["message"=>$entry]);
+    }
+
     $form = GFAPI::get_form($form_id);
     $GFFlow = Gravity_Flow::get_instance();
     $current_step = $GFFlow->get_current_step($form,$entry);
-    $results = build_inbox_results($form,$entry,$current_step);
-    $workflow_info = get_workflow_info($current_step, $form, $entry);
-    $actions_data = handle_gravityflow_action($current_step);
 
-    array_push($results,$workflow_info);
-    array_push($results, $actions_data);
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+        $results = build_inbox_results($form,$entry,$current_step);
+        $workflow_info = get_workflow_info($current_step, $form, $entry);
+        $actions_data = handle_gravityflow_action($current_step);
 
-    return wp_send_json_success(["inbox"=> $results, "form_title"=> $form['title']]);
+        array_push($results,$workflow_info);
+        array_push($results, $actions_data);
+
+        return wp_send_json_success(["inbox"=> $results, "form_title"=> $form['title']]);   
+    }
+    else{
+        $process_entry_detail = apply_filters( 'gravityflow_inbox_entry_detail_pre_process', true, $form, $entry );
+        error_log("Processing entry detail ".print_r($process_entry_detail,true));
+
+        if ( ! $process_entry_detail || is_wp_error( $process_entry_detail ) ) {
+            error_log("Process entry detail is falsy or an instance of wp_error");
+            return wp_send_json_error(["message"=>"Les entrés ne peuvent pas etre traité"]);
+        }
+
+        $step = $current_step;
+
+        if($step){
+            $feedback = $step->process_status_update($form,$entry);
+
+            if($feedback && !is_wp_error($feedback)){
+                $GFFlow->process_workflow($form,$entry_id);
+            }
+        }
+
+        if(is_wp_error($feedback)){
+            return wp_send_json_error(["message"=> $feedback])
+        } 
+        elseif($feedback){
+            $feedback = GFCommon::replace_variables($feedback, $form, $entry, false, true, true, 'html');
+
+            if(substr($feedback, 0,3) !== '<p>'){
+                $feedback = sprintf('<p>%s</p>',$feedback);
+            }
+
+            return wp_send_json_success(["message"=> $feedback]);
+        }
+        else{
+            return wp_send_json_error(["message"=>"Nothing was done"]);
+        }
+    }
 }
 
 function handle_gravityflow_action($step){
