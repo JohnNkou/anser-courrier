@@ -618,12 +618,16 @@ function load_gravityflow_inbox_entry(){
 
         $step = $current_step;
 
-        if($step){
+        if($step){error_log("Step is defined so cool");
             $feedback = $step->process_status_update($form,$entry);
-
+            error_log("Feed after processing thing ".print_r($feedback));
             if($feedback && !is_wp_error($feedback)){
+                error_log("Goind for to process_workflow");
                 $GFFlow->process_workflow($form,$entry_id);
             }
+        }
+        else{
+            error_log("OUPS not step");
         }
 
         if(is_wp_error($feedback)){
