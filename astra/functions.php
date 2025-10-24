@@ -627,7 +627,7 @@ function load_gravityflow_inbox_entry(){
         }
 
         if(is_wp_error($feedback)){
-            return wp_send_json_error(["message"=> $feedback])
+            return wp_send_json_error(["message"=> $feedback]);
         } 
         elseif($feedback){
             $feedback = GFCommon::replace_variables($feedback, $form, $entry, false, true, true, 'html');
@@ -674,6 +674,7 @@ function handle_gravityflow_action($step){
                 ],
                 [
                     "type"=>"button",
+                    "buttonType"=>"submit",
                     "value"=>"approved",
                     "class"=>"btn-success",
                     "label"=> esc_html__('Approve','gravityflow'),
@@ -686,6 +687,7 @@ function handle_gravityflow_action($step){
                 ],
                 [
                     "type"=>"button",
+                    "buttonType"=>"submit",
                     "value"=>"rejected",
                     "class"=>"btn-failure",
                     "label"=> esc_html__('Reject','gravityflow'),
