@@ -619,7 +619,6 @@ function load_gravityflow_inbox_entry(){
         $step = $current_step;
 
         if($step){error_log("Step is defined so cool");
-        error_log("STEP CLASS ".get_class($step));
             $feedback = $step->process_status_update($form,$entry);
             error_log("Feed after processing thing ".print_r($feedback));
 
@@ -678,7 +677,7 @@ function handle_gravityflow_action($step){
                 [
                     "type"=>"hidden",
                     "id"=>"gravityflow_approval_new_status_step",
-                    "name"=> "gravityflow_approval_new_status_Step_".$step_id,
+                    "name"=> "gravityflow_approval_new_status_step_".$step_id,
                     "value"=>""
                 ],
                 [
