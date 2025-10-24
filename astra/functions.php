@@ -928,7 +928,7 @@ function build_inbox_results($form,$entry,$current_step){
 function load_gravityflow_inbox(){
     // The global $post must be set in order for the gravityflow class to pass the request and not return an empty string
     check_ajax_referer('gravityflow_inbox_nonce', 'security');
-    $form_ids = "94";
+    $form_ids = "14";
     $current_user = wp_get_current_user();
     $offset = isset($_REQUEST['offset'])? $_REQUEST['offset']: 0;
     $limit = isset($_REQUEST['limit'])? $_REQUEST['limit']: 10;
