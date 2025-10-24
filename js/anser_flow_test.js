@@ -151,9 +151,10 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     };
     span_title.textContent = form_title;
     span_entry_number.textContent = numero;
-    inboxes.forEach((_inboxes) => {
+    inboxes.forEach((_inboxes, index) => {
       let inSection = false;
-      _inboxes.forEach((inbox, index) => {
+      _inboxes.forEach((inbox, _index) => {
+        let inbox_index = "" + index + "_" + _index;
         switch (inbox.type) {
           case "section":
             bodyHtml += "<section>";
@@ -171,13 +172,13 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             bodyHtml += "<div class='card hidden'><input index='" + index + "' id='" + inbox.id + "' type='hidden' name='" + inbox.name + "' value='" + inbox.value + "' /></div>";
             break;
           case "button":
-            bodyHtml += "<div class='card'><button value='" + inbox.value + "' index='" + index + "' class='" + inbox.class + "'>" + inbox.label + "</button></div>";
+            bodyHtml += "<div class='card'><button value='" + inbox.value + "' index='" + inbox_index + "' class='" + inbox.class + "'>" + inbox.label + "</button></div>";
             break;
           default:
             console.error("Unknwon inbox type", inbox);
         }
         if (inbox.action) {
-          actionNodes[index] = inbox.action;
+          actionNodes[inbox_index] = inbox.action;
         }
       });
       if (inSection) {
