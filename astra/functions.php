@@ -859,7 +859,7 @@ function build_inbox_results($form,$entry,$current_step){
             [
             "type"=>"hidden",
             "name"=>"gforms_save_entry",
-            "value"=> "gforms_save_entry"
+            "value"=> wp_create_nonce("gforms_save_entry")
             ],
             [
             "type"=>"hidden",
