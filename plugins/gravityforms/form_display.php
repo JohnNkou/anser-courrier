@@ -4359,6 +4359,8 @@ class GFFormDisplay {
 
 		$input_type = GFFormsModel::get_input_type( $field );
 
+		error_log("INPUT TYPE IS $input_type");
+
 		$error_class        = $field->failed_validation ? 'gfield_error' : '';
 		$admin_only_class   = $field->visibility == 'administrative' ? 'field_admin_only' : ''; // maintain for backwards compat
 		$admin_hidden_class = ( $is_admin && $field->visibility == 'hidden' ) ? 'admin-hidden' : '';
@@ -4524,6 +4526,8 @@ class GFFormDisplay {
 		if( $is_form_editor ) {
 			$field_content = '<div class="gfield-admin-wrapper">' . $field_content . '</div>' . ( $field->type !== 'submit' ? $admin_compact_view_menu : '' );
 		}
+
+		error_log_log("FIELD CONTENT $field_content");
 		return $field_content;
 	}
 
