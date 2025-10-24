@@ -604,7 +604,6 @@ function handle_gravityflow_action($step){
     $action = null;
     $can_update = false;
 
-    error_log("MUSHIFA");
 
     foreach ($step->get_assignees() as $assignee) {
         if($assignee->is_current_user()){
@@ -615,6 +614,8 @@ function handle_gravityflow_action($step){
 
     if($can_update){
         $step_id = $step->get_id();
+
+        error_log("STEP IS ".print_r($step,true));
 
         if($step instanceof Gravity_Flow_Step_Approval){
             $action = [
