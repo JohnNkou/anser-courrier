@@ -728,16 +728,18 @@ function handle_gravityflow_action($step){
                     "type"=>"radio",
                     "id"=>"gravityflow_in_progress",
                     "name"=>"gravityflow_status",
+                    "checked"=> $default_status == 'in_progress',
                     "value"=> "in_progress",
                     "label"=> $in_progress_label
                 ],[
                     "type"=>"radio",
                     "id"=>"gravityflow_complete",
+                    "checked"=> $default_status == 'complete',
                     "name"=>"gravityflow_status",
                     "value"=>"complete",
                     "label"=> $complete_label
                 ]);
-                
+
             }
 
             if($step->default_status == 'submit_buttons'){
