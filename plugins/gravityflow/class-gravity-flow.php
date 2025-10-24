@@ -4832,20 +4832,20 @@ PRIMARY KEY  (id)
 
 				$feedback = $this->maybe_process_admin_action( $form, $entry );
 
-				error_log("Feedback is $feedback");
+				error_log("Feedback is ".print_r($feedback,true));
 
 				if ( empty( $feedback ) && $step ) {
 					error_log("Processing status update");
 
 					$feedback = $step->process_status_update( $form, $entry );
-					error_log("Feed back after calling process_status_update $feedback");
+					error_log("Feed back after calling process_status_update ".print_r($feedback,true));
 					if ( $feedback && ! is_wp_error( $feedback ) ) {
 						error_log("Processing status update after feedback not a wordpress error");
 						$this->process_workflow( $form, $entry_id );
 					}
 				}
 
-				if ( is_wp_error( $feedback ) ) { error_log("Received a feedback error $feedback ".print_r($feedback,true));
+				if ( is_wp_error( $feedback ) ) { error_log("Received a feedback error ".print_r($feedback,true));
 					$error_data = $feedback->get_error_data();
 					if ( ! empty( $error_data['form'] ) ) {
 						$form = $error_data['form'];
@@ -4856,7 +4856,7 @@ PRIMARY KEY  (id)
 					</div>
 					<?php
 
-				} elseif ( $feedback ) { error_log("Feed back is not an wordpress error so processing feedback");
+				} elseif ( $feedback ) { error_log("Feed back is not an wordpress error so processing feedback ".print_r($feedback,true));
 					GFCache::flush();
 
 					$entry = GFAPI::get_entry( $entry_id ); // Refresh entry.
@@ -4876,9 +4876,11 @@ PRIMARY KEY  (id)
 					$current_user_assignee_key = $this->get_current_user_assignee_key();
 					if ( $next_step && ( $next_step->is_assignee( $current_user_assignee_key ) || $args['check_permissions'] == false || $this->current_user_can_any( 'gravityflow_status_view_all' ) ) ) {
 						$step = $next_step->get_current_assignee_status() == 'complete' ? false : $next_step;
+						error_log("ASSIGNED STEP AFTER Checking user permission. Step is of class ".get_class($step));
 					} else {
 						$step = false;
 						$args['display_instructions'] = false;
+						error_log("Set step to false");
 					}
 					$args['check_permissions'] = false;
 				}
