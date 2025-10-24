@@ -222,8 +222,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         if (success) {
           let msg = message || "<h5>L'Operation a été effectué avec success</h5>";
           display_information_modal(msg).then(() => {
-            location.reload();
             toggle_loader("");
+            location.reload();
           }).catch((error) => {
             alert("Une erreur est survenue");
             console.error(error);
