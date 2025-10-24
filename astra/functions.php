@@ -720,6 +720,24 @@ function handle_gravityflow_action($step){
                     "value"=>"complete"
                 ]);
             }
+            else{
+                $in_progress_label = esc_html__('In progress', 'gravityflow');
+                $complete_label = esc_html__('Complete', 'gravityflow');
+
+                array_push($action,[
+                    "type"=>"radio",
+                    "id"=>"gravityflow_in_progress",
+                    "name"=>"gravityflow_status",
+                    "value"=> "in_progress",
+                    "label"=> $in_progress_label
+                ],[
+                    "type"=>"radio",
+                    "id"=>"gravityflow_complete",
+                    "name"=>"gravityflow_status",
+                    "value"=>"complete",
+                    "label"=> $complete_label
+                ]);
+            }
 
             if($step->default_status == 'submit_buttons'){
                 $save_process_button_text = esc_html('Save','gravityflow');
@@ -730,7 +748,7 @@ function handle_gravityflow_action($step){
                     "value"=> $save_process_button_text,
                     "id"=> "gravityflow_save_progress_button",
                     "name"=> "in_progress",
-                    "disabled"=> true,
+                    "disabled"=> false,
                     "action"=> [
                         [
                             "set_id"=>"action",
@@ -744,7 +762,7 @@ function handle_gravityflow_action($step){
                 ], [
                     "type"=> "submit",
                     "id"=>"gravityflow_submit_button",
-                    "disabled"=>"disabled",
+                    "disabled"=>false,
                     "action"=>[
                         [
                             "set_id"=>"action",
@@ -766,7 +784,7 @@ function handle_gravityflow_action($step){
                     "type"=>"submit",
                     "value"=> $button_text,
                     "name"=> "save",
-                    "disabled"=>"disabled",
+                    "disabled"=>false,
                     "id"=>"gravityflow_update_button",
                     "action"=>[
                         [
