@@ -627,7 +627,7 @@ function load_gravityflow_inbox_entry(){
         }
 
         if(is_wp_error($feedback)){
-            return;
+            error_log("SHUFFLE");
         } 
         elseif($feedback){
             $feedback = GFCommon::replace_variables($feedback, $form, $entry, false, true, true, 'html');
