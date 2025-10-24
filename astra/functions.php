@@ -737,6 +737,7 @@ function handle_gravityflow_action($step){
                     "value"=>"complete",
                     "label"=> $complete_label
                 ]);
+                
             }
 
             if($step->default_status == 'submit_buttons'){
