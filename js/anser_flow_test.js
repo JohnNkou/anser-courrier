@@ -24,11 +24,13 @@ var require_anser_utily = __commonJS((exports2) => {
       return Promise.reject("div with class informationModal and div with class text should be found");
     }
     text_node.innerHTML = text;
+    div.classList.remove("hidden");
     return new Promise((resolve, reject) => {
       div.onclick = function(event) {
         event.preventDefault();
         let target = event.target;
         if (target.classList.contains("close")) {
+          div.classList.add("hidden");
           resolve(true);
         }
       };
