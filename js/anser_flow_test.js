@@ -9,7 +9,7 @@ var require_anser_utily = __commonJS((exports2) => {
     for (let name in queries) {
       searchParams.set(name, queries[name]);
     }
-    return fetch(url, { method: "POST" });
+    return fetch(url, { method: "GET" });
   }
   exports2.page_handler = function page_handler(navigationHandler, body, default_queries = {}) {
     let nextPage = body.querySelector(".nextPage"), prevPage = body.querySelector(".previousPage"), loader = document.querySelector("#loader"), with_queries = default_queries;
