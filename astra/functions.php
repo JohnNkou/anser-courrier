@@ -596,8 +596,9 @@ function load_gravityflow_inbox_entry(){
     $actions_data = handle_gravityflow_action($current_step);
 
     array_push($results,$workflow_info);
+    array_push($results, $actions_data);
 
-    return wp_send_json_success(["inbox"=> $results, "form_title"=> $form['title'], "actions"=> $actions_data]);
+    return wp_send_json_success(["inbox"=> $results, "form_title"=> $form['title']]);
 }
 
 function handle_gravityflow_action($step){
@@ -614,8 +615,6 @@ function handle_gravityflow_action($step){
 
     if($can_update){
         $step_id = $step->get_id();
-
-        error_log("STEP IS ".print_r($step,true));
 
         if($step instanceof Gravity_Flow_Step_Approval){
             $action = [
@@ -726,6 +725,13 @@ function handle_gravityflow_action($step){
                 ]);
             }
         }
+    }
+
+    if($action){
+        array_unshift($action, [
+            "type"=> "section",
+            "label"=> "Action"
+        ]);
     }
 
     return $action;
@@ -844,6 +850,20 @@ function build_inbox_results($form,$entry,$current_step){
 
                 break;
         }
+    }
+
+    if(count($results)> 0){
+        $step_id = $current_step ? $current_step->get_id() : '';
+
+        array_push($results,[
+            "type"=>"hidden",
+            "name"=>"gforms_save_entry",
+            "value"=> "gforms_save_entry"
+        ], [
+            "type"=>"hidden",
+            "name"=>"step_id",
+            "value"=>$step_id
+        ]);
     }
 
     return $results;

@@ -132,7 +132,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     };
   }
   function display_entry(payloads, entry_id, numero) {
-    let { inbox: inboxes, form_title } = payloads, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), bodyHtml = "";
+    let { inbox: inboxes, form_title } = payloads, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), actionNodes = {}, bodyHtml = "";
     if (!content_node) {
       return console.error("Content node not found");
     }
@@ -153,7 +153,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     span_entry_number.textContent = numero;
     inboxes.forEach((_inboxes) => {
       let inSection = false;
-      _inboxes.forEach((inbox) => {
+      _inboxes.forEach((inbox, index) => {
         switch (inbox.type) {
           case "section":
             bodyHtml += "<section>";
@@ -167,14 +167,43 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           case "text":
             bodyHtml += "<div class='card'><p>" + inbox.label + "</p><p>" + inbox.value + "</p></div>";
             break;
+          case "hidden":
+            bodyHtml += "<div class='card hidden'><input index='" + index + "' id='" + inbox.id + "' type='hidden' name='" + inbox.name + "' value='" + inbox.value + "' /></div>";
+            break;
+          case "button":
+            bodyHtml += "<div class='card'><button value='" + inbox.value + "' index='" + index + "' class='" + inbox.class + "'>" + inbox.value + "</button></div>";
+            break;
           default:
             console.error("Unknwon inbox type", inbox);
+        }
+        if (inbox.action) {
+          actionNodes[index] = inbox.action;
         }
       });
       if (inSection) {
         bodyHtml += "</div></section>";
       }
     });
+    content_node.onclick = (event) => {
+      let target = event.target, index = target.getAttribute("index");
+      if (index !== null) {
+        event.preventDefault();
+        let actionHandler = actionNodes[index];
+        if (!actionHandler) {
+          return console.error("Received click from an element with index " + index + " but with no actionHandler", actionNodes);
+        }
+        actionHandler.forEach((action) => {
+          let id_node = document.getElementById(action.set_id);
+          if (!id_node) {
+            return console.error("No element with id", action.set_id, "found");
+          }
+          if (action.to) {
+            console.log("Seeting node with id", action.set_id, "to value", action.to);
+            id_node.value = action.to;
+          }
+        });
+      }
+    };
     content_node.innerHTML = bodyHtml;
   }
   function onglet_handler(contents) {
