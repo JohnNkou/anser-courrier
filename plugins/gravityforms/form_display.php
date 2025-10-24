@@ -1012,16 +1012,21 @@ class GFFormDisplay {
 		 */
 		$form_args = apply_filters( 'gform_form_args', compact( 'form_id', 'display_title', 'display_description', 'force_display', 'field_values', 'ajax', 'tabindex' ) );
 
+		error_log("FROM args is ".print_r($form_args,true));
+
 		// The submission_method property can be set in the gform_form_args filter to specify how the form should be submitted.
 		// Supported values are: self::SUBMISSION_METHOD_AJAX (for true ajax submission), self::SUBMISSION_METHOD_POSTBACK (for standard form submission) or self::SUBMISSION_METHOD_IFRAME (for the legacy iframe-based ajax submission ).
 		// It is optional, but if set, will override the $ajax property.
 		if ( isset( $form_args['submission_method'] ) ) {
 			$form_args['ajax'] = $form_args['submission_method'] == self::SUBMISSION_METHOD_IFRAME;
+			error_log("form_args['ajax'] is set. New form_args is ".print_r($form_args));
 		} elseif ( $form_args ) {
 			$form_args['submission_method'] = $form_args['ajax'] ? self::SUBMISSION_METHOD_IFRAME : self::SUBMISSION_METHOD_POSTBACK;
+			error_log("Submission method not set. So setting new value for submission method to ".$form_args['submission_method']);
 		}
 
 		if ( empty( $form_args['form_id'] ) ) {
+			error_log("form_args['form_id'] is empty. Returning");
 			return self::get_form_not_found_html( $form_id, $ajax );
 		}
 
@@ -1032,21 +1037,21 @@ class GFFormDisplay {
 		extract( $form_args );
 
 		//looking up form id by form name
-		if ( ! is_numeric( $form_id ) ) {
+		if ( ! is_numeric( $form_id ) ) { error_log("form_id is not numeric to searching form by name");
 			$form_title = $form_id;
 			$form_id    = GFFormsModel::get_form_id( $form_title );
-			if ( $form_id === 0 ) {
+			if ( $form_id === 0 ) { error_log("form_id couldn't be found by name. Returning");
 				return self::get_form_not_found_html( $form_title, $ajax );
 			}
 		}
 
 		$form = GFAPI::get_form( $form_id );
 
-		if ( ! $form ) {
+		if ( ! $form ) { error_log("Couldn't find the form with get_form(form_id). Returning");
 			return self::get_form_not_found_html( $form_id, $ajax );
 		}
 
-		if ( ! isset( self::$processed[ $form_id ] ) ) {
+		if ( ! isset( self::$processed[ $form_id ] ) ) { error_log("Setting self::\$processed[\$form_id] to 0");
 			self::$processed[ $form_id ] = 0;
 		}
 
@@ -1059,6 +1064,7 @@ class GFFormDisplay {
 		$action = wp_doing_ajax() ? remove_query_arg( 'gf_token', wp_get_referer() ) : remove_query_arg( 'gf_token' );
 
 		if ( rgpost( 'gform_send_resume_link' ) == $form_id ) {
+			error_log("gform_send_resume_link is equal to form_id");
 			$save_email_confirmation = self::handle_save_email_confirmation( $form, $ajax );
 			if ( is_wp_error( $save_email_confirmation ) ) { // Failed email validation
 				$resume_token               = rgpost( 'gform_resume_token' );
@@ -1087,7 +1093,10 @@ class GFFormDisplay {
 		//If form was submitted, read variables set during form submission procedure
 		$submission_info = isset( self::$submission[ $form_id ] ) ? self::$submission[ $form_id ] : false;
 
+		error_log("submission_info is ".print_r($submission_info,true));
+
 		if ( rgar( $submission_info, 'saved_for_later' ) == true ) {
+			error_log("submission_info saved_for_later is true. Returning");
 			$resume_token         = $submission_info['resume_token'];
 			$confirmation_message = rgar( $submission_info, 'confirmation_message' );
 
@@ -1096,6 +1105,7 @@ class GFFormDisplay {
 
 		$partial_entry = $submitted_values = $review_page_done = false;
 		if ( isset( $_GET['gf_token'] ) ) {
+			error_log("HAS gf_token");
 			$incomplete_submission_info = GFFormsModel::get_draft_submission_values( $_GET['gf_token'] );
 			if ( rgar( $incomplete_submission_info, 'form_id' ) == $form_id ) {
 				$submission_details_json                  = $incomplete_submission_info['submission'];
@@ -1121,11 +1131,12 @@ class GFFormDisplay {
 		}
 
 		if ( ! $review_page_done && $form !== false ) {
+			error_log("setting form to self::maybe_add_review_page");
 			$form = self::maybe_add_review_page( $form );
 		}
 
 		if ( ! is_array( $partial_entry ) ) {
-
+			error_log("partial_entry is not an array");
 			/**
 			 * A filter that allows disabling of the form view counter
 			 *
@@ -1234,6 +1245,7 @@ class GFFormDisplay {
 		$should_render_hidden = self::has_conditional_logic( $form ) && rgar( rgget( 'attributes' ), 'formPreview' ) !== 'true';
 
 		if ( empty( $confirmation_message ) ) {
+			error_log("Empty confirmation message");
 			$wrapper_css_class = GFCommon::get_browser_class() . ' gform_wrapper';
 
 			if ( ! $is_valid ) {
@@ -1395,7 +1407,7 @@ class GFFormDisplay {
 			$form_string .= "<{$tag} id='gform_fields_{$form_id}' class='" . GFCommon::get_ul_classes( $form ) . "'>";
 
 			if ( is_array( $form['fields'] ) ) {
-
+				error_log("form[field] is array");
 				// Add honeypot field if Honeypot is enabled.
 				$honeypot_handler = GFForms::get_service_container()->get( Gravity_Forms\Gravity_Forms\Honeypot\GF_Honeypot_Service_Provider::GF_HONEYPOT_HANDLER );
 				$form             = $honeypot_handler->maybe_add_honeypot_field( $form );
