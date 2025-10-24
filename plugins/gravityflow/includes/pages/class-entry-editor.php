@@ -123,7 +123,7 @@ class Gravity_Flow_Entry_Editor {
 		$this->_is_dynamic_conditional_logic_enabled = $this->is_dynamic_conditional_logic_enabled();
 		$this->_editable_fields                      = $step->get_editable_fields();
 
-		error_log("form-FIELDS ".print_r($form['fields']));
+		error_log("form-FIELDS ".print_r($form['fields'],true));
 	}
 
 
