@@ -1024,7 +1024,7 @@ function build_inbox_results($form,$entry,$current_step){
 
 function get_entry_form_value($form,$entry,$field){
     $value = RGFormsModel::get_lead_field_value($entry, $field);
-    $display_value = Gravity_Flow_Entry_Detail::get_display_value($value,$field,$entry,$form);
+    return Gravity_Flow_Entry_Detail::get_display_value($value,$field,$entry,$form);
 }
 
 
