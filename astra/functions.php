@@ -895,7 +895,8 @@ function build_inbox_editable_result($form,$entry,$current_step){
                 $choices = array_map(function($choice){
                     return [
                         "text"=> $choice['text'],
-                        "value"=> $choice['value']
+                        "value"=> $choice['value'],
+                        "id"=> isset($choice['id'])? $choice['id']:''
                     ];
 
                 }, $field->choices);
