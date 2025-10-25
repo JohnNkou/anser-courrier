@@ -1655,6 +1655,8 @@ class GFFormDisplay {
 		$fields = $page_number == 0 ? $form['fields'] : self::get_fields_by_page( $form, $page_number );
 
 		$markup = '';
+
+		error_log("GET IS ".print_r($_GET));
 		foreach ( $fields as $field ) {
 
 			$field->set_context_property( 'rendering_form', true );
