@@ -1012,7 +1012,7 @@ function handle_non_editable_field($form,$entry,$current_step,$field,$display_em
             $display_value = get_entry_form_value($form,$entry,$field);
             $label = Gravity_Flow_Entry_Detail::get_label($field, $entry);
              if($display_empty_fields || ! empty($display_value) || $display_value === '0'){
-                return ["label"=> $label, "value"=> $display_value, "type"=> "text" ];
+                return ["label"=> $label, "value"=> $display_value, "type"=> "text", "id"=> $field->id ];
             }
              break;
     }
