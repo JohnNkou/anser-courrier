@@ -950,6 +950,7 @@ function build_inbox_results($form,$entry,$current_step){
     }
 
     if(!empty($current_step->get_editable_fields())){
+        error_log("HAS NO EDITABLE FIELD");
         foreach ($form['fields'] as &$field) {
             if(count($results) > 0){
                 $current_array = &$results[$current_index];
