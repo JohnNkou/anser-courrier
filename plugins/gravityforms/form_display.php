@@ -4361,7 +4361,7 @@ class GFFormDisplay {
 
 		$input_type = GFFormsModel::get_input_type( $field );
 
-		error_log("INPUT TYPE IS $input_type. Field label ".$field->label.", field type ".$field->type);
+		error_log("INPUT TYPE IS $input_type");
 
 		$error_class        = $field->failed_validation ? 'gfield_error' : '';
 		$admin_only_class   = $field->visibility == 'administrative' ? 'field_admin_only' : ''; // maintain for backwards compat
