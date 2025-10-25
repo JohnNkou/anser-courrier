@@ -197,7 +197,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       field.rules.forEach((rule) => {
         let { fieldId, operator, value: ruleValue } = rule, field_location = field_ids[fieldId];
         if (field_location) {
-          let [inbox, _inbox] = field_location.split(","), _field = inboxes[inbox] && inbox_index[inbox][_inbox];
+          let [inbox, _inbox] = field_location.split(","), _field = inboxes[inbox] && inboxes[inbox][_inbox];
           if (_field) {
             let value = get_field_value(_field);
             if (value == ruleValue) {
@@ -238,7 +238,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       _inboxes.forEach((inbox, _index) => {
         try {
           field_ids[inbox.id] = index + "," + _index;
-          let inbox_index2 = index.toString() + "_" + _index, atts = [], value;
+          let inbox_index = index.toString() + "_" + _index, atts = [], value;
           if (inbox.rules) {
             inbox.rules.forEach((rule) => {
               dependents[rule.fieldId] = true;
@@ -265,10 +265,10 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               bodyHtml += "<div class='card'><p>" + inbox.label + "</p><p>" + inbox.value + "</p></div>";
               break;
             case "hidden":
-              bodyHtml += "<div class='card hidden'><input index='" + inbox_index2 + "' id='" + (inbox.id || "") + "' type='hidden' name='" + inbox.name + "' value='" + inbox.value + "' /></div>";
+              bodyHtml += "<div class='card hidden'><input index='" + inbox_index + "' id='" + (inbox.id || "") + "' type='hidden' name='" + inbox.name + "' value='" + inbox.value + "' /></div>";
               break;
             case "button":
-              bodyHtml += "<div class='card'><button value='" + inbox.value + "' index='" + inbox_index2 + "' class='" + inbox.class + "' type='" + (inbox.buttonType || "") + "' >" + inbox.label + "</button></div>";
+              bodyHtml += "<div class='card'><button value='" + inbox.value + "' index='" + inbox_index + "' class='" + inbox.class + "' type='" + (inbox.buttonType || "") + "' >" + inbox.label + "</button></div>";
               break;
             case "radio":
               atts.push("name='" + inbox.name + "'", "value='" + inbox.value + "'", "id='" + (inbox.id || "") + "'");
@@ -278,7 +278,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               bodyHtml += "<div class='card'><label for='" + inbox.name + "'>" + inbox.label + "</label><input type='radio' " + atts.join(" ") + " /></div>";
               break;
             case "submit":
-              atts.push("name='" + inbox.name + "'", "value='" + inbox.value + "'", "index='" + inbox_index2 + "'");
+              atts.push("name='" + inbox.name + "'", "value='" + inbox.value + "'", "index='" + inbox_index + "'");
               if (inbox.id) {
                 atts.push("id='" + inbox.id + "'");
               }
@@ -322,7 +322,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               console.error("Unknwon inbox type", inbox);
           }
           if (inbox.action) {
-            actionNodes[inbox_index2] = inbox.action;
+            actionNodes[inbox_index] = inbox.action;
           }
         } catch (error) {
           console.error("GREAT ERROR");
