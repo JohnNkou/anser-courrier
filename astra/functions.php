@@ -857,13 +857,17 @@ function get_workflow_info($current_step,$form, $entry){
 }
 
 function build_inbox_editable_result($form,$entry,$current_step){
+    $results = [];
     $fields = $form['fields'];
     $entry_editor = new Gravity_Flow_Entry_Editor( $form, $entry, $current_step, 0 );
 
     foreach($fields as $field){
         $field->set_context_property('rendering_form',true);
-        $dependees = GFFormDisplay::get_conditional_logic_fields($form,$field->id);
-        $label = $field->get_field_label(false,"");
+        if($entry_editor->is_editable_field($field)){
+            $value = GFFormDisplay::get_field($field,$value,$form);
+
+            error_log("IS EDITABLE FIELD "+ $field->label + " with value : "+$value);
+        }
     }
 }
 
@@ -879,6 +883,8 @@ function build_inbox_results($form,$entry,$current_step){
     error_log("EDITABLE FIELD ".print_r($current_step->get_editable_fields(),true));
 
     error_log('FIELDS '.print_r($form['fields'],true));
+
+    build_inbox_editable_result($form,$entry,$current_step);
 
     if(! $is_assignee){
         if($current_step){
