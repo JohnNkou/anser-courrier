@@ -378,7 +378,7 @@ class Gravity_Flow_API {
 		timer_start();
 
 		$search_criteria = self::get_inbox_search_criteria( $args );
-        error_log("SEARCH CRITERIA ".print_r($search_criteria,true));
+        
 		if ( ! empty( $search_criteria ) ) {
 			$form_ids = self::get_inbox_form_ids( $args, $search_criteria );
 			error_log("FORM IDS ".print_r($form_ids,true));
