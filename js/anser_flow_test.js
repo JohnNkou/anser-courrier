@@ -310,6 +310,9 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   bodyHtml += "<div class='card' " + atts.join(" ") + "><p>" + inbox.label + "</p><div>";
                   inbox.choices.forEach((choice) => {
                     let checked = value.indexOf(choice.value) ? "checked" : "", id = inbox.inputs.filter((input) => input.label == choice.value)["id"];
+                    console.log("input", inbox.inputs);
+                    console.log("choice", choice);
+                    console.log("id", id);
                     bodyHtml += "<p><label>" + choice.text + "</label><input type='checkbox' " + checked + " name='input_" + id + "' /></p>";
                   });
                   bodyHtml += "</div></div>";
