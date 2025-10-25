@@ -994,7 +994,6 @@ function handle_non_editable_field($form,$entry,$current_step,$field){
     switch (RGFormsModel::get_input_type( $field )) {
         case 'section':
             if(! Gravity_Flow_Entry_Detail::is_section_empty($field,$current_step,$form, $entry, $display_empty_fields)){
-                return 
                 return ["type"=>"section", "value"=> $field->label, "id"=>$field->id];
             }
             break;
