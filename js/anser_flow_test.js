@@ -200,8 +200,12 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           let [inbox, _inbox] = field_location.split(","), _field = inboxes[inbox] && inboxes[inbox][_inbox];
           if (_field) {
             let value = get_field_value(_field);
-            if (value == ruleValue) {
-              display = true;
+            if (value.push) {
+              if (value.indexOf(ruleValue) == -1) {
+                display = false;
+              }
+            } else if (value != ruleValue) {
+              display = false;
             }
             return;
           }
