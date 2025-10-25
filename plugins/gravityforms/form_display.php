@@ -4323,6 +4323,7 @@ class GFFormDisplay {
 				$save_button = apply_filters( "gform_savecontinue_link_{$form_id}", $save_button, $form );
 
 				$style            = self::is_page_active( $form_id, $field->pageNumber ) ? '' : "style='display:none;'";
+				error_log("THE STYLE IS ".$style);
 				$custom_class     = ! empty( $custom_class ) ? " {$custom_class}" : '';
 				$label_placement  = rgar( $form, 'labelPlacement', 'top_label' );
 				$tag              = GFCommon::is_legacy_markup_enabled( $form ) ? 'ul' : 'div';
