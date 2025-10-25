@@ -914,10 +914,20 @@ function build_inbox_editable_result($form,$entry,$current_step){
                 $result = [
                     "type"=>"edit",
                     "fieldType"=> $field->type,
+                    "label"=> $field->label,
                     "id"=> $field->id,
-                    "value"=> $value,
-                    "label"=> $field->label
+                    "placeholder"=> empty($field->description)? '': $field->description
                 ];
+
+                switch ($field->type) {
+                    case 'textarea':
+                    case 'text':
+                        $result['value'] = get_entry_form_value($form,$entry,$field);                        break;
+                    
+                    default:
+                        $result['value'] = $value;
+                        break;
+                }
             }
         }
         else{
