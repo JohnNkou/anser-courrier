@@ -878,7 +878,7 @@ function build_inbox_results($form,$entry,$current_step){
 
     error_log("EDITABLE FIELD ".print_r($current_step->get_editable_fields(),true));
 
-    error_log('FIELDS', print_r($form['fields'],true));
+    error_log('FIELDS '.print_r($form['fields'],true));
 
     if(! $is_assignee){
         if($current_step){
