@@ -888,7 +888,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
 
         if($entry_editor->is_editable_field($field)){
             $label = $field->label;
-            $value = GFFFormDisplay::get_field($field,"");
+            $value = GFFormDisplay::get_field($field,"");
 
             error_log("IS EDITABLE FIELD with id ". $field->id ." and label ". $field->label . " with value : ".$value);
 
@@ -903,10 +903,12 @@ function build_inbox_editable_result($form,$entry,$current_step){
 
         }
 
-        $result['rules'] = $rules;
-        $result['display'] = $display;
+        if(!empty($result)){
+            $result['rules'] = $rules;
+            $result['display'] = $display;
 
-        array_push($result);
+            array_push($result);
+        }
     }
 
     return $results;
@@ -950,7 +952,9 @@ function build_inbox_results($form,$entry,$current_step){
             $display_field = $current_step && $is_assignee ? Gravity_Flow_Entry_Detail::is_display_field($field,$current_step,$form,$entry,$is_product_field) : Gravity_Flow_Entry_Detail::is_display_field($field, $display_field_step, $form, $entry, $is_product_field);
             $field->gravityflow_is_display_field = $display_field;
 
-            $result = handle_non_editable_field($form,$entry,$current_step,$field);
+            if($field->type == 'section' || $display_field){
+                $result = handle_non_editable_field($form,$entry,$current_step,$field);
+            }
 
             if($field->type == 'section'){
                 if(empty($results[$current_index])){
@@ -958,7 +962,9 @@ function build_inbox_results($form,$entry,$current_step){
                 }
             }
 
-            array_push($current_array,$results);
+            if(!empty($result)){
+                array_push($current_array,$result);
+            }
         }
     }
     else{
@@ -998,20 +1004,12 @@ function handle_non_editable_field($form,$entry,$current_step,$field){
             }
             break;
         case 'html':
-            if($display_field){
-                $content = GFCommon::replace_variables($field->content, $form, $entry, false, true, false, 'html');
-                $content = do_shortcode($content);
-                 return ["type"=> "html", "value"=> $content, "id"=>$field->id];
-            }
+            $content = GFCommon::replace_variables($field->content, $form, $entry, false, true, false, 'html');
+            $content = do_shortcode($content);
+            return ["type"=> "html", "value"=> $content, "id"=>$field->id];
             break;
         default:
-            if ($is_product_field) {
-                $has_product_fields = true;
-            }
-             if(!$display_field){
-                continue;
-            }
-             $display_value = get_entry_form_value($form,$entry,$field);
+            $display_value = get_entry_form_value($form,$entry,$field);
             $label = Gravity_Flow_Entry_Detail::get_label($field, $entry);
              if($display_empty_fields || ! empty($display_value) || $display_value === '0'){
                 return ["label"=> $label, "value"=> $display_value, "type"=> "text" ];
