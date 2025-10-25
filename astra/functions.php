@@ -913,7 +913,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
             default:
                 array_push($current_array,[
                     "type"=>"edit",
-                    "display"=> "display",
+                    "display"=> $display,
                     "id"=> $field->id,
                     "value"=> $value,
                     "rules"=> $rules
