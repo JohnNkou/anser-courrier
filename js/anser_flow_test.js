@@ -251,6 +251,10 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                 atts.push("class='hidden " + build_dependent_classe(inbox.rules) + "'");
               }
               if (inbox.rules) {
+                console.log("SECTION WITH RULES", inbox.rules);
+                console.log("should_display_field", should_display_field(inbox, field_ids, inboxes));
+              }
+              if (inbox.rules) {
                 section_with_rules = true;
               }
               bodyHtml += "<section " + atts.join(" ") + ">";
@@ -262,9 +266,6 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               bodyHtml += "<div class='card'>" + inbox.value + "</div>";
               break;
             case "text":
-              if (inbox.rules) {
-                console.log("FIELD TEXT WITH RULES", inbox);
-              }
               bodyHtml += "<div class='card'><p>" + inbox.label + "</p><p>" + inbox.value + "</p></div>";
               break;
             case "hidden":
