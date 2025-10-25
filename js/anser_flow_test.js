@@ -262,6 +262,9 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               bodyHtml += "<div class='card'>" + inbox.value + "</div>";
               break;
             case "text":
+              if (inbox.rules) {
+                console.log("FIELD TEXT WITH RULES", inbox);
+              }
               bodyHtml += "<div class='card'><p>" + inbox.label + "</p><p>" + inbox.value + "</p></div>";
               break;
             case "hidden":
