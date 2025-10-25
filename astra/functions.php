@@ -857,6 +857,8 @@ function get_workflow_info($current_step,$form, $entry){
 }
 
 function build_inbox_editable_result($form,$entry,$current_step){
+    require_once ABSPATH . "/wp-content/plugins/gravityflow/includes/pages/class-entry-editor.php";
+    
     $results = [];
     $fields = $form['fields'];
     $entry_editor = new Gravity_Flow_Entry_Editor( $form, $entry, $current_step, 0 );
