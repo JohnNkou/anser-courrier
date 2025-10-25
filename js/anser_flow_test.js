@@ -301,13 +301,13 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               value = get_field_value(inbox);
               switch (inbox.fieldType) {
                 case "text":
-                  bodyHtml += "<div class='card' " + atts.join(" ") + "><p>" + inbox.label + "</p><p><input type='text' id='input_" + inbox.id + "' placeholder='" + (inbox.placeholder || "") + "' value='" + value + "' /></p></div>";
+                  bodyHtml += "<div " + atts.join(" ") + " class='card'><p>" + inbox.label + "</p><p><input type='text' id='input_" + inbox.id + "' placeholder='" + (inbox.placeholder || "") + "' value='" + value + "' /></p></div>";
                   break;
                 case "textarea":
-                  bodyHtml += "<div class='card' " + atts.join(" ") + "><p>" + inbox.label + "</p><p><textarea placeholder='" + (inbox.placeholder || "") + "'>" + value + "</textarea></p></div>";
+                  bodyHtml += "<div " + atts.join(" ") + " class='card'><p>" + inbox.label + "</p><p><textarea placeholder='" + (inbox.placeholder || "") + "'>" + value + "</textarea></p></div>";
                   break;
                 case "radio":
-                  bodyHtml += "<div class='card' " + atts.join(" ") + "><p>" + inbox.label + "</p><p>";
+                  bodyHtml += "<div " + atts.join(" ") + " class='card'><p>" + inbox.label + "</p><p>";
                   inbox.choices.forEach((choice) => {
                     let checked = choice.value == value ? "checked" : "";
                     bodyHtml += "<span><label>" + choice.text + "</label><input type='radio' " + checked + " value='" + choice.value + "' name='input_" + inbox.id + "' /></span>";
@@ -315,7 +315,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   bodyHtml += "</p></div>";
                   break;
                 case "checkbox":
-                  bodyHtml += "<div class='card' " + atts.join(" ") + "><p>" + inbox.label + "</p><div>";
+                  bodyHtml += "<div " + atts.join(" ") + " class='card'><p>" + inbox.label + "</p><div>";
                   inbox.choices.forEach((choice) => {
                     let checked = value.indexOf(choice.value) != -1 ? "checked" : "", id = inbox.inputs.filter((input) => {
                       console.log("input label", input.label);
@@ -328,7 +328,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   bodyHtml += "</div></div>";
                   break;
                 case "select":
-                  bodyHtml += "<div class='card' " + atts.join(" ") + "><p>" + inbox.label + "</p><select name='input_" + inbox.id + "'>";
+                  bodyHtml += "<div " + atts.join(" ") + " class='card'><p>" + inbox.label + "</p><select name='input_" + inbox.id + "'>";
                   inbox.choices.forEach((choice) => {
                     let selected = choice.value == value ? "selected" : "";
                     bodyHtml += "<option " + selected + " value='" + choice.value + "'>" + choice.text + "</option>";
