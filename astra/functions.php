@@ -929,6 +929,10 @@ function build_inbox_editable_result($form,$entry,$current_step){
                         break;
                 }
             }
+
+            if($field->type == 'section'){
+                $result['type'] = 'section';
+            }
         }
         else{
             $result = handle_non_editable_field($form,$entry,$current_step,$field);

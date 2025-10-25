@@ -175,8 +175,46 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       entry_viewer.classList.toggle("hidden");
     };
   }
+  function get_field_value(field) {
+    let value = field.leaf_value;
+    if (value) {
+      if (field.fieldType == "checkbox") {
+        let values = [];
+        for (let id in value) {
+          values.push(value[id]);
+        }
+        return values;
+      } else {
+        return value;
+      }
+    } else {
+      return "";
+    }
+  }
+  function should_display_field(field, field_ids, inboxes) {
+    let display = true;
+    if (field.rules) {
+      field.rules.forEach((rule) => {
+        let { fieldId, operator, value: ruleValue } = rule, field_location = field_ids[fieldId];
+        if (field_location) {
+          let [inbox, _inbox] = field_location.split(","), _field = inboxes[inbox] && inbox_index[inbox][_inbox];
+          if (_field) {
+            let value = get_field_value(_field);
+            if (value == ruleValue) {
+              display = true;
+            }
+            return;
+          }
+        }
+      });
+    }
+    return display;
+  }
+  function build_dependent_classe(rules) {
+    return rules.map((rule) => "dependent_" + rule.fieldId).join(" ");
+  }
   function display_entry(payloads, entry_data) {
-    let inboxes = payloads.inbox, entry_id = entry_data.entry_id, numero = entry_data.numero, form_title = payloads.form_title, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), actionNodes = {}, bodyHtml = "";
+    let inboxes = payloads.inbox, entry_id = entry_data.entry_id, numero = entry_data.numero, form_title = payloads.form_title, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), actionNodes = {}, bodyHtml = "", field_ids = {}, dependents = {};
     if (!content_node) {
       return console.error("Content node not found");
     }
@@ -196,12 +234,25 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     span_title.textContent = form_title;
     span_entry_number.textContent = numero;
     inboxes.forEach((_inboxes, index) => {
-      let inSection = false;
+      let inSection = false, section_with_rules = false;
       _inboxes.forEach((inbox, _index) => {
-        let inbox_index = index.toString() + "_" + _index, atts = [];
+        field_ids[inbox.id] = index + "," + _index;
+        let inbox_index2 = index.toString() + "_" + _index, atts = [], value;
+        if (inbox.rules) {
+          inbox.rules.forEach((rule) => {
+            dependents[rule.fieldId] = true;
+          });
+        }
         switch (inbox.type) {
           case "section":
-            bodyHtml += "<section>";
+            if (!should_display_field(inbox, field_ids, inboxes)) {
+              console.log("Hidding section", inbox.label);
+              atts.push("class='hidden " + build_dependent_classe(inbox.rules) + "'");
+            }
+            if (inbox.rules) {
+              section_with_rules = true;
+            }
+            bodyHtml += "<section " + atts.join(" ") + ">";
             bodyHtml += "<h5 class='title'>" + inbox.value + "</h5>";
             bodyHtml += "<div>";
             inSection = true;
@@ -213,10 +264,10 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             bodyHtml += "<div class='card'><p>" + inbox.label + "</p><p>" + inbox.value + "</p></div>";
             break;
           case "hidden":
-            bodyHtml += "<div class='card hidden'><input index='" + inbox_index + "' id='" + (inbox.id || "") + "' type='hidden' name='" + inbox.name + "' value='" + inbox.value + "' /></div>";
+            bodyHtml += "<div class='card hidden'><input index='" + inbox_index2 + "' id='" + (inbox.id || "") + "' type='hidden' name='" + inbox.name + "' value='" + inbox.value + "' /></div>";
             break;
           case "button":
-            bodyHtml += "<div class='card'><button value='" + inbox.value + "' index='" + inbox_index + "' class='" + inbox.class + "' type='" + (inbox.buttonType || "") + "' >" + inbox.label + "</button></div>";
+            bodyHtml += "<div class='card'><button value='" + inbox.value + "' index='" + inbox_index2 + "' class='" + inbox.class + "' type='" + (inbox.buttonType || "") + "' >" + inbox.label + "</button></div>";
             break;
           case "radio":
             atts.push("name='" + inbox.name + "'", "value='" + inbox.value + "'", "id='" + (inbox.id || "") + "'");
@@ -226,17 +277,51 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             bodyHtml += "<div class='card'><label for='" + inbox.name + "'>" + inbox.label + "</label><input type='radio' " + atts.join(" ") + " /></div>";
             break;
           case "submit":
-            atts.push("name='" + inbox.name + "'", "value='" + inbox.value + "'", "index='" + inbox_index + "'");
+            atts.push("name='" + inbox.name + "'", "value='" + inbox.value + "'", "index='" + inbox_index2 + "'");
             if (inbox.id) {
               atts.push("id='" + inbox.id + "'");
             }
             bodyHtml += "<div class='card'><button class='btn-success' " + atts.join(" ") + " type='submit'>" + inbox.value + "</button></div>";
             break;
+          case "edit":
+            if (!section_with_rules) {
+              if (!should_display_field(inbox, field_ids, inboxes)) {
+                atts.push("class='hidden card " + build_dependent_classe(inbox.rules) + "'");
+              }
+            }
+            value = get_field_value(inbox);
+            switch (inbox.fieldType) {
+              case "text":
+                bodyHtml += "<div class='card' " + atts.join(" ") + "><p>" + inbox.label + "</p><p><input type='text' id='input_" + inbox.id + "' placeholder='" + (inbox.placeholder || "") + "' value='" + value + "' /></p></div>";
+                break;
+              case "textarea":
+                bodyHtml += "<div class='card' " + atts.join(" ") + "><p>" + inbox.label + "</p><p><textarea placeholder='" + (inbox.placeholder || "") + "'>" + value + "</textarea></p></div>";
+                break;
+              case "radio":
+                bodyHtml += "<div class='card' " + atts.join(" ") + "><p>" + inbox.label + "</p><p>";
+                inbox.choices.forEach((choice) => {
+                  let checked = choice.value == value ? "checked" : "";
+                  bodyHtml += "<span><label>" + choice.text + "</label><input type='radio' " + checked + " value='" + choice.value + "' name='input_" + inbox.id + "' /></span>";
+                });
+                bodyHtml += "</p></div>";
+                break;
+              case "select":
+                bodyHtml += "<div class='card' " + atts.join(" ") + "><p>" + inbox.label + "</p><select name='input_" + inbox.id + "'>";
+                inbox.choices.forEach((choice) => {
+                  let selected = choice.value == value ? "selected" : "";
+                  bodyHtml += "<option " + selected + " value='" + choice.value + "'>" + choice.text + "</option>";
+                });
+                bodyHtml += "</select></div>";
+                break;
+              default:
+                console.error("unknwon inbox fieldType", inbox);
+            }
+            break;
           default:
             console.error("Unknwon inbox type", inbox);
         }
         if (inbox.action) {
-          actionNodes[inbox_index] = inbox.action;
+          actionNodes[inbox_index2] = inbox.action;
         }
       });
       if (inSection) {
