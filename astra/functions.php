@@ -916,7 +916,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
                     "display"=> $display,
                     "id"=> $field->id,
                     "label"=> $field->label
-                    "value"=> get_entry_form_value($entry,$field),
+                    "value"=> get_entry_form_value($form,$entry,$field),
                     "rules"=> $rules
                 ]);
                 break;
@@ -987,7 +987,7 @@ function build_inbox_results($form,$entry,$current_step){
                         continue;
                     }
 
-                    $display_value = get_entry_form_value($entry,$field);
+                    $display_value = get_entry_form_value($form,$entry,$field);
                     $label = Gravity_Flow_Entry_Detail::get_label($field, $entry);
 
                     if($display_empty_fields || ! empty($display_value) || $display_value === '0'){
@@ -1022,7 +1022,7 @@ function build_inbox_results($form,$entry,$current_step){
     return $results;
 }
 
-function get_entry_form_value($entry,$field){
+function get_entry_form_value($form,$entry,$field){
     $value = RGFormsModel::get_lead_field_value($entry, $field);
     $display_value = Gravity_Flow_Entry_Detail::get_display_value($value,$field,$entry,$form);
 }
