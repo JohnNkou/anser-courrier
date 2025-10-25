@@ -1674,8 +1674,6 @@ class GFFormDisplay {
 				$field_value = GFFormsModel::get_field_value( $field, $field_values );
 			}
 
-			error_log("FIELD LABEL ".$field->label." HAS VALUE $field_value");
-
 			$markup .= self::get_field( $field, $field_value, false, $form, $field_values, $page_number );
 
 			$markup .= self::get_row_spacer( $field, $form );
