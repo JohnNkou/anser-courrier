@@ -892,12 +892,19 @@ function build_inbox_editable_result($form,$entry,$current_step){
             $value = GFFormDisplay::get_field($field,"");
 
             if(!empty($field->choices) || !empty($field->inputs)){
+                $choices = array_map(function($choice){
+                    return [
+                        "text"=> $choice['text'],
+                        "value"=> $choice['value']
+                    ];
+
+                }, $field->choices);
                 $result = [
                     "type"=>"edit",
                     "id"=> $field->id,
                     "label"=> $field->label,
                     "value"=> get_entry_form_value($form,$entry,$field),
-                    "choices"=> $field->choices,
+                    "choices"=> $choices,
                     "inputs"=> $field->inputs
                 ];
             }
