@@ -879,8 +879,6 @@ function build_inbox_editable_result($form,$entry,$current_step){
             $display = false;
         }
 
-        $value = GFFormDisplay::get_field($field,$value,$form);
-
         if($entry_editor->is_editable_field($field)){
 
             error_log("IS EDITABLE FIELD with id ". $field->id ." and label ". $field->label . " with value : ".$value);
@@ -913,9 +911,12 @@ function build_inbox_editable_result($form,$entry,$current_step){
             default:
                 array_push($current_array,[
                     "type"=>"edit",
+                    "fieldType"=> $field->type,
+                    "choices"=> $field->choices,
+                    "value"
                     "display"=> $display,
                     "id"=> $field->id,
-                    "value"=> $value,
+                    "value"=> get_entry_form_value($entry,$field),
                     "rules"=> $rules
                 ]);
                 break;
@@ -986,8 +987,7 @@ function build_inbox_results($form,$entry,$current_step){
                         continue;
                     }
 
-                    $value = RGFormsModel::get_lead_field_value($entry, $field);
-                    $display_value = Gravity_Flow_Entry_Detail::get_display_value($value,$field,$entry,$form);
+                    $display_value = get_entry_form_value($entry,$field);
                     $label = Gravity_Flow_Entry_Detail::get_label($field, $entry);
 
                     if($display_empty_fields || ! empty($display_value) || $display_value === '0'){
@@ -1020,6 +1020,11 @@ function build_inbox_results($form,$entry,$current_step){
     }
 
     return $results;
+}
+
+function get_entry_form_value($entry,$field){
+    $value = RGFormsModel::get_lead_field_value($entry, $field);
+    $display_value = Gravity_Flow_Entry_Detail::get_display_value($value,$field,$entry,$form);
 }
 
 
