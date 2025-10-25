@@ -895,8 +895,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
                 $choices = array_map(function($choice){
                     return [
                         "text"=> $choice['text'],
-                        "value"=> $choice['value'],
-                        "id"=> isset($choice['id'])? $choice['id']:''
+                        "value"=> $choice['value']
                     ];
 
                 }, $field->choices);
@@ -906,6 +905,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
                     "id"=> $field->id,
                     "label"=> $field->label,
                     "value"=> get_entry_form_value($form,$entry,$field),
+                    "leaf_value"=> RGFormsModel::get_lead_field_value($entry, $field),
                     "choices"=> $choices,
                     "inputs"=> $field->inputs
                 ];
