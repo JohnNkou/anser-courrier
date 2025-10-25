@@ -1412,6 +1412,8 @@ class GFFormDisplay {
 				$honeypot_handler = GFForms::get_service_container()->get( Gravity_Forms\Gravity_Forms\Honeypot\GF_Honeypot_Service_Provider::GF_HONEYPOT_HANDLER );
 				$form             = $honeypot_handler->maybe_add_honeypot_field( $form );
 
+				error_log("SUBMITTED VALUES ".print_r($submitted_values,true));
+
 				$form_string .= self::get_fields( $form, $field_values, $submitted_values );
 			}
 			$form_string .= "</{$tag}>";
