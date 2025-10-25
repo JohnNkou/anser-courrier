@@ -314,7 +314,10 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                       console.log("choice value", choice.value);
                       console.log("result", input.label == choice.value);
                       return input.label == choice.value;
-                    })["id"];
+                    })[0]["id"];
+                    console.log("value", value);
+                    console.log("choice value", choice.value);
+                    console.log("In", value.indexOf(choice.value));
                     bodyHtml += "<p><label>" + choice.text + "</label><input type='checkbox' " + checked + " name='input_" + id + "' /></p>";
                   });
                   bodyHtml += "</div></div>";
