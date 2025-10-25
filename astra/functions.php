@@ -858,7 +858,7 @@ function get_workflow_info($current_step,$form, $entry){
 
 function build_inbox_editable_result($form,$entry,$current_step){
     require_once ABSPATH . "/wp-content/plugins/gravityflow/includes/pages/class-entry-editor.php";
-    
+
     $results = [];
     $fields = $form['fields'];
     $entry_editor = new Gravity_Flow_Entry_Editor( $form, $entry, $current_step, 0 );
@@ -881,10 +881,6 @@ function build_inbox_results($form,$entry,$current_step){
     $display_empty_fields = false;
     $is_assignee = $current_step ? $current_step->is_user_assignee() : false;
     $complete_step = gravity_flow()->get_workflow_complete_step($form['id'], $entry);
-
-    error_log("EDITABLE FIELD ".print_r($current_step->get_editable_fields(),true));
-
-    error_log('FIELDS '.print_r($form['fields'],true));
 
     build_inbox_editable_result($form,$entry,$current_step);
 
