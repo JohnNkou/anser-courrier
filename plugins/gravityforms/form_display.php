@@ -1656,7 +1656,7 @@ class GFFormDisplay {
 
 		$markup = '';
 
-		error_log("GET IS ".print_r($_GET));
+		error_log("GET IS ".print_r($_GET,true));
 		foreach ( $fields as $field ) {
 
 			$field->set_context_property( 'rendering_form', true );
