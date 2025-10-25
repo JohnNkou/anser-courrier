@@ -901,15 +901,13 @@ function build_inbox_editable_result($form,$entry,$current_step){
         else{
             $result = handle_non_editable_field($form,$entry,$current_step,$field);
 
-            error_log("RESULT IS ".print_r($result,true));
-
         }
 
         if(!empty($result)){
             $result['rules'] = $rules;
             $result['display'] = $display;
 
-            array_push($result);
+            array_push($current_array,$result);
         }
     }
 
