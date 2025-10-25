@@ -868,7 +868,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
         if($entry_editor->is_editable_field($field)){
             $value = GFFormDisplay::get_field($field,$value,$form);
 
-            error_log("IS EDITABLE FIELD "+ $field->label + " with value : "+$value);
+            error_log("IS EDITABLE FIELD with id ". $field->id ." and label ". $field->label . " with value : "+$value);
         }
     }
 }
