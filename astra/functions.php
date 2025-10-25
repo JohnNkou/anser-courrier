@@ -882,6 +882,8 @@ function build_inbox_results($form,$entry,$current_step){
     $is_assignee = $current_step ? $current_step->is_user_assignee() : false;
     $complete_step = gravity_flow()->get_workflow_complete_step($form['id'], $entry);
 
+    error_log("EDITABLE FIELD ".print_r($current_step->get_editable_fields(),true));
+
     build_inbox_editable_result($form,$entry,$current_step);
 
     if(! $is_assignee){
