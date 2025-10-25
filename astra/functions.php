@@ -856,6 +856,17 @@ function get_workflow_info($current_step,$form, $entry){
     return $results;
 }
 
+function build_inbox_editable_result($form,$entry,$current_step){
+    $fields = $form['fields'];
+    $entry_editor = new Gravity_Flow_Entry_Editor( $form, $entry, $current_step, 0 );
+
+    foreach($fields as $field){
+        $field->set_context_property('rendering_form',true);
+        $dependees = GFFormDisplay::get_conditional_logic_fields($form,$field->id);
+        $label = $field->get_field_label(false,"");
+    }
+}
+
 function build_inbox_results($form,$entry,$current_step){
     require_once ABSPATH . "/wp-content/plugins/gravityflow/includes/pages/class-entry-detail.php";
 
@@ -866,6 +877,8 @@ function build_inbox_results($form,$entry,$current_step){
     $complete_step = gravity_flow()->get_workflow_complete_step($form['id'], $entry);
 
     error_log("EDITABLE FIELD ".print_r($current_step->get_editable_fields(),true));
+
+    error_log('FIELDS', print_r($form['fields'],true));
 
     if(! $is_assignee){
         if($current_step){
