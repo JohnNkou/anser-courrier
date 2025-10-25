@@ -897,6 +897,7 @@ class Gravity_Flow_Entry_Editor {
 		}
 
 		if ( $this->is_hidden_field( $field ) ) {
+			error_log("THE HIDDEN FIELD OF ELLONOY");
 			if ( $field->type == 'html' ) {
 				if ( ! ( $this->step->display_fields_mode == 'all_fields' ) ) {
 					$content = '';

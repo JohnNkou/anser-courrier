@@ -890,8 +890,6 @@ function build_inbox_editable_result($form,$entry,$current_step){
             $label = $field->label;
             $value = GFFormDisplay::get_field($field,"");
 
-            error_log("IS EDITABLE FIELD with id ". $field->id ." and label ". $field->label . " with value : ".$value);
-
             $result = [
                 "type"=>"edit",
                 "id"=> $field->id,
@@ -923,8 +921,6 @@ function build_inbox_results($form,$entry,$current_step){
     $is_assignee = $current_step ? $current_step->is_user_assignee() : false;
     $complete_step = gravity_flow()->get_workflow_complete_step($form['id'], $entry);
     $editable_fields = $current_step->get_editable_fields();
-
-    error_log("EDITABLE FIELD ".print_r($editable_fields,true));
 
     if(! $is_assignee){
         if($current_step){
