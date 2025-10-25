@@ -1412,6 +1412,8 @@ class GFFormDisplay {
 				$honeypot_handler = GFForms::get_service_container()->get( Gravity_Forms\Gravity_Forms\Honeypot\GF_Honeypot_Service_Provider::GF_HONEYPOT_HANDLER );
 				$form             = $honeypot_handler->maybe_add_honeypot_field( $form );
 
+				error_log("SUBMITTED VALUES ".print_r($submitted_values));
+
 				$form_string .= self::get_fields( $form, $field_values, $submitted_values );
 			}
 			$form_string .= "</{$tag}>";
@@ -4511,11 +4513,8 @@ class GFFormDisplay {
 
 		if ( $input_type == 'adminonly_hidden' ) {
 			$field_content = ! $is_admin ? '{FIELD}' : sprintf( "%s<label class='gfield_label gform-field-label' >%s</label>{FIELD}", $admin_buttons, esc_html( $field_label ) );
-			error_log("BEFORE FIELD CONTENT $field_content");
 		} else {
 			$field_content = $field->get_field_content( $value, $force_frontend_label, $form );
-
-			error_log("AFTER GET_FIELD_CONTENT $field_content");
 		}
 
 		$value = $field->get_value_default_if_empty( $value );
