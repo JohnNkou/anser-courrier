@@ -768,10 +768,16 @@ class Gravity_Flow_Entry_Editor {
 	 */
 	public function is_display_field( $field, $is_init = false ) {
 		if ( in_array( $field->id, $this->_display_fields ) ) {
+			if($field->id == 83){
+				error_log("FIELD IN ARRAY _display_fields returning true");
+			}
 			return true;
 		}
 
 		if ( ! $is_init ) {
+			if($field->id == 83){
+				error_log("Returning false becuase is_init is false");
+			}
 			return false;
 		}
 
@@ -779,6 +785,10 @@ class Gravity_Flow_Entry_Editor {
 
 		if ( $display_field ) {
 			$this->_display_fields[] = $field->id;
+		}
+
+		if ($field->id == 83) {
+			error_log("RETURNING display_field which is ".$display_field);
 		}
 
 		return $display_field;
@@ -792,6 +802,10 @@ class Gravity_Flow_Entry_Editor {
 	 * @return bool
 	 */
 	public function is_editable_field( $field ) {
+
+		if($field->id == 83){
+			error_log("IS EDITABLE FIED ".Gravity_Flow_Common::is_editable_field( $field, $this->step ));
+		}
 		return Gravity_Flow_Common::is_editable_field( $field, $this->step );
 	}
 
@@ -803,6 +817,10 @@ class Gravity_Flow_Entry_Editor {
 	 * @return bool
 	 */
 	public function is_hidden_field( $field ) {
+
+		if($field->id == 83){
+			error_log("_non_editable_field_content ".isset($this->_non_editable_field_content[ $field->id ] ));
+		}
 
 		return ! $this->is_editable_field( $field ) && ! $this->is_display_field( $field ) && isset( $this->_non_editable_field_content[ $field->id ] );
 	}
@@ -897,7 +915,6 @@ class Gravity_Flow_Entry_Editor {
 		}
 
 		if ( $this->is_hidden_field( $field ) ) {
-			error_log("THE HIDDEN FIELD OF ELLONOY label".$field->label. " with id ".$field->id);
 			if ( $field->type == 'html' ) {
 				if ( ! ( $this->step->display_fields_mode == 'all_fields' ) ) {
 					$content = '';

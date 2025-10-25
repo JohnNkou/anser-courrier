@@ -880,6 +880,10 @@ function build_inbox_editable_result($form,$entry,$current_step){
             $display = false;
         }
 
+        if($field->id == 83){
+            error_log("DEBUGGIN THINGS");
+        }
+
         if($field->type == 'section'){
             if(!empty($current_array)){
                 $results[++$current_index] = [];
