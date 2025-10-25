@@ -879,48 +879,34 @@ function build_inbox_editable_result($form,$entry,$current_step){
             $display = false;
         }
 
+        if($field->type == 'section'){
+            if(!empty($current_array)){
+                $results[++$current_index] = [];
+                $current_array = &$results[$current_index];
+            }
+        }
+
         if($entry_editor->is_editable_field($field)){
+            $label = $field->label;
+            $value = GFFFormDisplay::get_field($field,"");
 
             error_log("IS EDITABLE FIELD with id ". $field->id ." and label ". $field->label . " with value : ".$value);
+
+            $result = [
+                "type"=>"edit",
+                "id"=> $field->id,
+                "value"=> $value,
+            ];
+        }
+        else{
+            $result = handle_non_editable_field($form,$entry,$current_step,$field);
+
         }
 
-        switch ($field->type) {
-            case 'section':
-                if(!empty($current_array)){
-                    $results[++$current_index] = [];
-                    $current_array = &$results[$current_index];
-                }
+        $result['rules'] = $rules;
+        $result['display'] = $display;
 
-                array_push($current_array,[
-                    "type"=>"section",
-                    "display"=> $display,
-                    "id"=> $field->id,
-                    "value"=> $field->label
-                ]);
-                break;
-            case 'html':
-                $html = GFCommon::replace_variables($field->content, $form, $entry, false, true, false, 'html');
-                $html = do_shortcode($html);
-
-                array_push($current_array,[
-                    "type"=> "html",
-                    "value"=> $html,
-                    "id"=> $field->id
-                ]);
-                break;
-            default:
-                array_push($current_array,[
-                    "type"=>"edit",
-                    "fieldType"=> $field->type,
-                    "choices"=> $field->choices,
-                    "display"=> $display,
-                    "id"=> $field->id,
-                    "label"=> $field->label,
-                    "value"=> get_entry_form_value($form,$entry,$field),
-                    "rules"=> $rules
-                ]);
-                break;
-        }
+        array_push($result);
     }
 
     return $results;
@@ -964,38 +950,15 @@ function build_inbox_results($form,$entry,$current_step){
             $display_field = $current_step && $is_assignee ? Gravity_Flow_Entry_Detail::is_display_field($field,$current_step,$form,$entry,$is_product_field) : Gravity_Flow_Entry_Detail::is_display_field($field, $display_field_step, $form, $entry, $is_product_field);
             $field->gravityflow_is_display_field = $display_field;
 
-            switch (RGFormsModel::get_input_type( $field )) {
-                case 'section':
-                    if(! Gravity_Flow_Entry_Detail::is_section_empty($field,$current_step,$form, $entry, $display_empty_fields)){
-                        $results[++$current_index] = [["type"=>"section", "value"=> $field->label]];
-                    }
-                    break;
-                case 'html':
-                    if($display_field){
-                        $content = GFCommon::replace_variables($field->content, $form, $entry, false, true, false, 'html');
-                        $content = do_shortcode($content);
+            $result = handle_non_editable_field($form,$entry,$current_step,$field);
 
-                        array_push($current_array,["type"=> "html", $value=> $content]);
-                    }
-                    break;
-                default:
-                    if ($is_product_field) {
-                        $has_product_fields = true;
-                    }
-
-                    if(!$display_field){
-                        continue;
-                    }
-
-                    $display_value = get_entry_form_value($form,$entry,$field);
-                    $label = Gravity_Flow_Entry_Detail::get_label($field, $entry);
-
-                    if($display_empty_fields || ! empty($display_value) || $display_value === '0'){
-                        array_push($current_array, ["label"=> $label, "value"=> $display_value, "type"=> "text" ]);
-                    }
-
-                    break;
+            if($field->type == 'section'){
+                if(empty($results[$current_index])){
+                    $results[++$current_index] = [];
+                }
             }
+
+            array_push($current_array,$results);
         }
     }
     else{
@@ -1025,6 +988,37 @@ function build_inbox_results($form,$entry,$current_step){
 function get_entry_form_value($form,$entry,$field){
     $value = RGFormsModel::get_lead_field_value($entry, $field);
     return Gravity_Flow_Entry_Detail::get_display_value($value,$field,$entry,$form);
+}
+
+function handle_non_editable_field($form,$entry,$current_step,$field){
+    switch (RGFormsModel::get_input_type( $field )) {
+        case 'section':
+            if(! Gravity_Flow_Entry_Detail::is_section_empty($field,$current_step,$form, $entry, $display_empty_fields)){
+                return 
+                return ["type"=>"section", "value"=> $field->label, "id"=>$field->id];
+            }
+            break;
+        case 'html':
+            if($display_field){
+                $content = GFCommon::replace_variables($field->content, $form, $entry, false, true, false, 'html');
+                $content = do_shortcode($content);
+                 return ["type"=> "html", "value"=> $content, "id"=>$field->id];
+            }
+            break;
+        default:
+            if ($is_product_field) {
+                $has_product_fields = true;
+            }
+             if(!$display_field){
+                continue;
+            }
+             $display_value = get_entry_form_value($form,$entry,$field);
+            $label = Gravity_Flow_Entry_Detail::get_label($field, $entry);
+             if($display_empty_fields || ! empty($display_value) || $display_value === '0'){
+                return ["label"=> $label, "value"=> $display_value, "type"=> "text" ];
+            }
+             break;
+    }
 }
 
 
