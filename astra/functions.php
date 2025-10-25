@@ -876,6 +876,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
         }
 
         if($entry_editor->is_hidden_field($field)){
+            error_log("SHOUHSOU");
             $display = false;
         }
 
