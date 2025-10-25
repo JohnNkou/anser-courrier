@@ -913,6 +913,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
             else{
                 $result = [
                     "type"=>"edit",
+                    "fieldType"=> $field->type,
                     "id"=> $field->id,
                     "value"=> $value,
                     "label"=> $field->label
