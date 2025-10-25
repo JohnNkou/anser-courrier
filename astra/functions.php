@@ -898,7 +898,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
                     "value"=> get_entry_form_value($form,$entry,$field),
                     "choices"=> $field->choices,
                     "inputs"=> $field->inputs
-                ]
+                ];
             }
             else{
                 $result = [
