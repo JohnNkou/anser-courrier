@@ -880,10 +880,6 @@ function build_inbox_editable_result($form,$entry,$current_step){
             $display = false;
         }
 
-        if($field->id == 83){
-            error_log("DEBUGGIN THINGS");
-        }
-
         if($field->type == 'section'){
             if(!empty($current_array)){
                 $results[++$current_index] = [];
@@ -895,11 +891,22 @@ function build_inbox_editable_result($form,$entry,$current_step){
             $label = $field->label;
             $value = GFFormDisplay::get_field($field,"");
 
-            $result = [
-                "type"=>"edit",
-                "id"=> $field->id,
-                "value"=> $value,
-            ];
+            if(!empty($field->choices) || !empty($field->inputs)){
+                $result = [
+                    "type"=>"edit",
+                    "id"=> $field->id,
+                    "value"=> get_entry_form_value($form,$entry,$field),
+                    "choices"=> $field->choices,
+                    "inputs"=> $field->inputs
+                ]
+            }
+            else{
+                $result = [
+                    "type"=>"edit",
+                    "id"=> $field->id,
+                    "value"=> $value,
+                ];
+            }
         }
         else{
             $result = handle_non_editable_field($form,$entry,$current_step,$field);
