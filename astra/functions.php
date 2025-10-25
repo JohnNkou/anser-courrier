@@ -996,7 +996,7 @@ function get_entry_form_value($form,$entry,$field){
     return Gravity_Flow_Entry_Detail::get_display_value($value,$field,$entry,$form);
 }
 
-function handle_non_editable_field($form,$entry,$current_step,$field){
+function handle_non_editable_field($form,$entry,$current_step,$field,$display_empty_fields=false){
     switch (RGFormsModel::get_input_type( $field )) {
         case 'section':
             if(! Gravity_Flow_Entry_Detail::is_section_empty($field,$current_step,$form, $entry, $display_empty_fields)){
