@@ -859,18 +859,70 @@ function get_workflow_info($current_step,$form, $entry){
 function build_inbox_editable_result($form,$entry,$current_step){
     require_once ABSPATH . "/wp-content/plugins/gravityflow/includes/pages/class-entry-editor.php";
 
-    $results = [];
+    $results = [[]];
+    $current_index = 0;
     $fields = $form['fields'];
     $entry_editor = new Gravity_Flow_Entry_Editor( $form, $entry, $current_step, 0 );
 
     foreach($fields as $field){
         $field->set_context_property('rendering_form',true);
+        $display = true;
+        $rules = false;
+        $value = "";
+        $current_array = &$results[$current_index];
+
+        if(!empty($field->conditionalLogic)){
+            $rules = $field->conditionalLogic['rules'];
+        }
+
+        if($entry_editor->is_hidden_field($field)){
+            $display = false;
+        }
+
+        $value = GFFormDisplay::get_field($field,$value,$form);
+
         if($entry_editor->is_editable_field($field)){
-            $value = GFFormDisplay::get_field($field,$value,$form);
 
             error_log("IS EDITABLE FIELD with id ". $field->id ." and label ". $field->label . " with value : ".$value);
         }
+
+        switch ($field->type) {
+            case 'section':
+                if(!empty($current_array)){
+                    $results[++$current_index] = [];
+                    $current_array = &$results[$current_index];
+                }
+
+                array_push($current_array,[
+                    "type"=>"section",
+                    "display"=> $display,
+                    "id"=> $field->id,
+                    "value"=> $field->label
+                ]);
+                break;
+            case 'html':
+                $html = GFCommon::replace_variables($field->content, $form, $entry, false, true, false, 'html');
+                $html = do_shortcode($html);
+
+                array_push($current_array,[
+                    "type"=> "html",
+                    "value"=> $html,
+                    "id"=> $field->id
+                ]);
+                break;
+            default:
+                array_push($current_array,[
+                    "type"=>"edit",
+                    "display"=> "display",
+                    "id"=> $field->id,
+                    "value"=> $value,
+                    "rules"=> $rules
+                ]);
+                break;
+        }
     }
+
+    return $results;
 }
 
 function build_inbox_results($form,$entry,$current_step){
@@ -883,8 +935,6 @@ function build_inbox_results($form,$entry,$current_step){
     $complete_step = gravity_flow()->get_workflow_complete_step($form['id'], $entry);
 
     error_log("EDITABLE FIELD ".print_r($current_step->get_editable_fields(),true));
-
-    build_inbox_editable_result($form,$entry,$current_step);
 
     if(! $is_assignee){
         if($current_step){
@@ -899,51 +949,56 @@ function build_inbox_results($form,$entry,$current_step){
         }
     }
 
-    foreach ($form['fields'] as &$field) {
-        if(count($results) > 0){
-            $current_array = &$results[$current_index];
+    if(!empty($current_step->get_editable_fields())){
+        foreach ($form['fields'] as &$field) {
+            if(count($results) > 0){
+                $current_array = &$results[$current_index];
+            }
+            else{
+                $current_array = &$results;
+            }
+            $is_product_field = GFCommon::is_product_field($field->type);
+
+            $display_field = $current_step && $is_assignee ? Gravity_Flow_Entry_Detail::is_display_field($field,$current_step,$form,$entry,$is_product_field) : Gravity_Flow_Entry_Detail::is_display_field($field, $display_field_step, $form, $entry, $is_product_field);
+            $field->gravityflow_is_display_field = $display_field;
+
+            switch (RGFormsModel::get_input_type( $field )) {
+                case 'section':
+                    if(! Gravity_Flow_Entry_Detail::is_section_empty($field,$current_step,$form, $entry, $display_empty_fields)){
+                        $results[++$current_index] = [["type"=>"section", "value"=> $field->label]];
+                    }
+                    break;
+                case 'html':
+                    if($display_field){
+                        $content = GFCommon::replace_variables($field->content, $form, $entry, false, true, false, 'html');
+                        $content = do_shortcode($content);
+
+                        array_push($current_array,["type"=> "html", $value=> $content]);
+                    }
+                    break;
+                default:
+                    if ($is_product_field) {
+                        $has_product_fields = true;
+                    }
+
+                    if(!$display_field){
+                        continue;
+                    }
+
+                    $value = RGFormsModel::get_lead_field_value($entry, $field);
+                    $display_value = Gravity_Flow_Entry_Detail::get_display_value($value,$field,$entry,$form);
+                    $label = Gravity_Flow_Entry_Detail::get_label($field, $entry);
+
+                    if($display_empty_fields || ! empty($display_value) || $display_value === '0'){
+                        array_push($current_array, ["label"=> $label, "value"=> $display_value, "type"=> "text" ]);
+                    }
+
+                    break;
+            }
         }
-        else{
-            $current_array = &$results;
-        }
-        $is_product_field = GFCommon::is_product_field($field->type);
-
-        $display_field = $current_step && $is_assignee ? Gravity_Flow_Entry_Detail::is_display_field($field,$current_step,$form,$entry,$is_product_field) : Gravity_Flow_Entry_Detail::is_display_field($field, $display_field_step, $form, $entry, $is_product_field);
-        $field->gravityflow_is_display_field = $display_field;
-
-        switch (RGFormsModel::get_input_type( $field )) {
-            case 'section':
-                if(! Gravity_Flow_Entry_Detail::is_section_empty($field,$current_step,$form, $entry, $display_empty_fields)){
-                    $results[++$current_index] = [["type"=>"section", "value"=> $field->label]];
-                }
-                break;
-            case 'html':
-                if($display_field){
-                    $content = GFCommon::replace_variables($field->content, $form, $entry, false, true, false, 'html');
-                    $content = do_shortcode($content);
-
-                    array_push($current_array,["type"=> "html", $value=> $content]);
-                }
-                break;
-            default:
-                if ($is_product_field) {
-                    $has_product_fields = true;
-                }
-
-                if(!$display_field){
-                    continue;
-                }
-
-                $value = RGFormsModel::get_lead_field_value($entry, $field);
-                $display_value = Gravity_Flow_Entry_Detail::get_display_value($value,$field,$entry,$form);
-                $label = Gravity_Flow_Entry_Detail::get_label($field, $entry);
-
-                if($display_empty_fields || ! empty($display_value) || $display_value === '0'){
-                    array_push($current_array, ["label"=> $label, "value"=> $display_value, "type"=> "text" ]);
-                }
-
-                break;
-        }
+    }
+    else{
+        $results = build_inbox_editable_result($form,$entry,$current_step);
     }
 
     if(count($results)> 0){
