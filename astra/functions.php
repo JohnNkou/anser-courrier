@@ -902,6 +902,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
                 }, $field->choices);
                 $result = [
                     "type"=>"edit",
+                    "fieldType"=> $field->type,
                     "id"=> $field->id,
                     "label"=> $field->label,
                     "value"=> get_entry_form_value($form,$entry,$field),
