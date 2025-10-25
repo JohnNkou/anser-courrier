@@ -1012,8 +1012,6 @@ class GFFormDisplay {
 		 */
 		$form_args = apply_filters( 'gform_form_args', compact( 'form_id', 'display_title', 'display_description', 'force_display', 'field_values', 'ajax', 'tabindex' ) );
 
-		error_log("FROM args is ".print_r($form_args,true));
-
 		// The submission_method property can be set in the gform_form_args filter to specify how the form should be submitted.
 		// Supported values are: self::SUBMISSION_METHOD_AJAX (for true ajax submission), self::SUBMISSION_METHOD_POSTBACK (for standard form submission) or self::SUBMISSION_METHOD_IFRAME (for the legacy iframe-based ajax submission ).
 		// It is optional, but if set, will override the $ajax property.
