@@ -304,9 +304,11 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           inputAtts.append("name", "input_" + inbox.id);
           inputAtts.append("value", inbox.value || "");
           if (inbox.rules) {
-            if (!section_with_rules && !should_display_field(inbox, field_ids, inboxes)) {
-              atts.append("class", "hidden");
+            if (!section_with_rules) {
               atts.append("class", build_dependent_classe(inbox.rules));
+              if (!should_display_field(inbox, field_ids, inboxes)) {
+                atts.append("class", "hidden");
+              }
             }
             inbox.rules.forEach((rule) => {
               dependents[rule.fieldId] = true;
@@ -316,7 +318,6 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             case "section":
               if (!should_display_field(inbox, field_ids, inboxes)) {
                 atts.append("class", "hidden");
-                atts.append("class", build_dependent_classe(inbox.rules));
               }
               if (inbox.rules) {
                 section_with_rules = true;
