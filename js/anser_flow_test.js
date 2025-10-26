@@ -78,8 +78,8 @@ var require_anser_utily = __commonJS((exports2) => {
     } else {
       console.error("NAVIGATION ELEMENT WERE NOT FOUND");
     }
-    function toggle_disable(value2) {
-      nextPage.disabled = prevPage.disabled = value2;
+    function toggle_disable(value) {
+      nextPage.disabled = prevPage.disabled = value;
     }
     this.addQueries = (queries) => {
       with_queries = { ...with_queries, ...queries };
@@ -135,33 +135,33 @@ var require_anser_utily = __commonJS((exports2) => {
 var require_lib = __commonJS((exports2) => {
   function Attributes() {
     let attributes = {};
-    this.append = (name, value2) => {
-      if (value2 != null) {
+    this.append = (name, value) => {
+      if (value != null) {
         let array = attributes[name];
         if (!array) {
           array = attributes[name] = [];
         }
-        if (array.indexOf(value2) == -1) {
-          array.push(value2);
+        if (array.indexOf(value) == -1) {
+          array.push(value);
         }
       } else {
         console.error("VALUE PASSED TO APPEND IS UNDEFINED", arguments);
       }
     };
-    this.set = (name, value2) => {
-      if (value2 != null) {
-        attributes[name] = [value2];
+    this.set = (name, value) => {
+      if (value != null) {
+        attributes[name] = [value];
       } else {
         console.error("VALUE PASSED TO SET IS UNDEFINED", arguments);
       }
     };
-    this.remove = (name, value2) => {
-      if (value2 == undefined) {
+    this.remove = (name, value) => {
+      if (value == undefined) {
         delete attributes[name];
       } else {
         let array = attributes[name];
         if (array) {
-          let index = array.indexOf(value2);
+          let index = array.indexOf(value);
           if (index != -1) {
             array.splice(index, 1);
           }
@@ -225,16 +225,16 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     };
   }
   function get_field_value(field) {
-    let value2 = field.leaf_value;
-    if (value2) {
+    let value = field.leaf_value;
+    if (value) {
       if (field.fieldType == "checkbox") {
         let values = [];
-        for (let id in value2) {
-          values.push(value2[id]);
+        for (let id in value) {
+          values.push(value[id]);
         }
         return values;
       } else {
-        return value2;
+        return value;
       }
     } else {
       return "";
@@ -248,12 +248,12 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         if (field_location) {
           let [inbox, _inbox] = field_location.split(","), _field = inboxes[inbox] && inboxes[inbox][_inbox];
           if (_field) {
-            let value2 = get_field_value(_field);
-            if (value2.push) {
-              if (value2.indexOf(ruleValue) == -1) {
+            let value = get_field_value(_field);
+            if (value.push) {
+              if (value.indexOf(ruleValue) == -1) {
                 display = false;
               }
-            } else if (value2 != ruleValue) {
+            } else if (value != ruleValue) {
               display = false;
             }
             return;
@@ -291,8 +291,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       _inboxes.forEach((inbox, _index) => {
         try {
           field_ids[inbox.id] = index + "," + _index;
-          let inbox_index = index.toString() + "_" + _index, atts = new Attributes, inputAtts = new Attributes;
-          value;
+          let inbox_index = index.toString() + "_" + _index, atts = new Attributes, inputAtts = new Attributes, value;
           inputAtts.append("id", inbox.id);
           inputAtts.append("name", inbox.name);
           inputAtts.append("value", inbox.value || "");
@@ -565,14 +564,14 @@ var require_anser_view_util = __commonJS((exports2) => {
     }
     filter_root.onclick = function(event) {
       event.preventDefault();
-      let target = event.target, value2 = target.getAttribute("data-value");
+      let target = event.target, value = target.getAttribute("data-value");
       if (target.tagName.toLowerCase() == "a") {
         if (!target.classList.contains("active")) {
           reset_link_style();
           target.classList.add("active");
-          if (value2) {
+          if (value) {
             page_handler2.removeQueries([..._Page.filters, "term"]);
-            page_handler2.addQueries({ filter_workflow_final_status: value2, mode: "all" });
+            page_handler2.addQueries({ filter_workflow_final_status: value, mode: "all" });
           } else {
             page_handler2.removeQueries(["filter_workflow_final_status"]);
           }
@@ -591,13 +590,13 @@ var require_anser_view_util = __commonJS((exports2) => {
           if (name == "id") {
             continue;
           }
-          let value2 = entry[name];
+          let value = entry[name];
           trs += "<td>";
-          if (value2.indexOf) {
-            if (value2.indexOf("http") == -1) {
+          if (value.indexOf) {
+            if (value.indexOf("http") == -1) {
               if (name == "État") {
                 let className = "p-1 rounded text-white shadow-md";
-                switch (value2) {
+                switch (value) {
                   case "pending":
                     className += " bg-blue-500";
                     break;
@@ -607,21 +606,21 @@ var require_anser_view_util = __commonJS((exports2) => {
                   default:
                     className += " bg-green-500";
                 }
-                trs += "<span class='" + className + "'> " + value2 + "</span>";
+                trs += "<span class='" + className + "'> " + value + "</span>";
               } else {
-                trs += value2;
+                trs += value;
               }
             } else {
-              let values = JSON.parse(value2);
-              values.forEach((value3) => {
-                trs += "<a href='" + value3 + "'>";
-                let name2 = value3.slice(value3.lastIndexOf("/") + 1);
+              let values = JSON.parse(value);
+              values.forEach((value2) => {
+                trs += "<a href='" + value2 + "'>";
+                let name2 = value2.slice(value2.lastIndexOf("/") + 1);
                 trs += name2;
                 trs += "</a>";
               });
             }
           } else {
-            trs += value2.toString();
+            trs += value.toString();
           }
           trs += "</td>";
         }
@@ -673,7 +672,7 @@ var require_anser_view_util = __commonJS((exports2) => {
       }
     };
     for (let entry_name in entry) {
-      let value2 = entry[entry_name], current_slot;
+      let value = entry[entry_name], current_slot;
       if (is_information(entry_name)) {
         current_slot = informations;
       } else if (is_header(entry_name)) {
@@ -686,10 +685,10 @@ var require_anser_view_util = __commonJS((exports2) => {
         current_slot = autres;
       }
       current_slot.push("<div><p>" + entry_name + "</p>");
-      if (value2.push || Object.prototype.toString.call(value2) == Object.prototype.toString.call({})) {
+      if (value.push || Object.prototype.toString.call(value) == Object.prototype.toString.call({})) {
         current_slot.push("<p>");
-        if (value2.push) {
-          value2.forEach((v) => {
+        if (value.push) {
+          value.forEach((v) => {
             if (v.indexOf("http") != -1) {
               v = build_link(v);
               current_slot.push(v);
@@ -698,11 +697,11 @@ var require_anser_view_util = __commonJS((exports2) => {
             }
           });
         } else {
-          for (let name in value2) {
-            let _value = value2[name];
+          for (let name in value) {
+            let _value = value[name];
             if (_value) {
               if (_value.indexOf("http") != -1) {
-                _value = build_link(value2);
+                _value = build_link(value);
               }
               current_slot.push("<span>" + _value + "</span>");
             }
@@ -710,7 +709,7 @@ var require_anser_view_util = __commonJS((exports2) => {
         }
         current_slot.push("</p>");
       } else {
-        current_slot.push("<p>" + value2 + "</p>");
+        current_slot.push("<p>" + value + "</p>");
       }
       current_slot.push("</div>");
     }
