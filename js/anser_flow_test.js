@@ -317,6 +317,10 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             inbox.rules.forEach((rule) => {
               dependents[rule.fieldId] = true;
             });
+          } else {
+            if (inbox.display == false) {
+              atts.append("hidden");
+            }
           }
           switch (inbox.type) {
             case "section":
