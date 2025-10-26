@@ -388,7 +388,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   atts.append("class", "card");
                   bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p><div>";
                   inbox.choices.forEach((choice) => {
-                    let checked = value.indexOf(choice.value), id = inbox.inputs.filter((input) => {
+                    let checked = value.indexOf(choice.value) != -1, id = inbox.inputs.filter((input) => {
                       return input.label == choice.value;
                     })[0]["id"];
                     if (checked) {
