@@ -319,7 +319,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             });
           } else {
             if (inbox.display == false) {
-              atts.append("hidden");
+              atts.append("class", "hidden");
             }
           }
           switch (inbox.type) {
