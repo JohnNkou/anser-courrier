@@ -1,7 +1,7 @@
 function Attributes(){
 	let attributes = {};
 
-	this.append = (name,value)=>{
+	this.append = function(name,value){
 		if(value != undefined){
 			let array = attributes[name];
 
@@ -14,20 +14,20 @@ function Attributes(){
 			}
 		}
 		else{
-			console.error("VALUE PASSED TO APPEND IS UNDEFINED",arguments);
+			console.warn("VALUE PASSED TO APPEND IS UNDEFINED",arguments);
 		}
 	}
 
-	this.set = (name,value)=>{
+	this.set = function(name,value){
 		if(value != undefined){
 			attributes[name] = [value];
 		}
 		else{
-			console.error("VALUE PASSED TO SET IS UNDEFINED",arguments);
+			console.warn("VALUE PASSED TO SET IS UNDEFINED",arguments);
 		}
 	}
 
-	this.remove = (name,value)=>{
+	this.remove = function(name,value){
 		if(value == undefined){
 			delete attributes[name];
 		}

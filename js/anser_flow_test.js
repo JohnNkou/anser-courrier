@@ -135,7 +135,7 @@ var require_anser_utily = __commonJS((exports2) => {
 var require_lib = __commonJS((exports2) => {
   function Attributes() {
     let attributes = {};
-    this.append = (name, value) => {
+    this.append = function(name, value) {
       if (value != null) {
         let array = attributes[name];
         if (!array) {
@@ -145,17 +145,17 @@ var require_lib = __commonJS((exports2) => {
           array.push(value);
         }
       } else {
-        console.error("VALUE PASSED TO APPEND IS UNDEFINED", arguments);
+        console.warn("VALUE PASSED TO APPEND IS UNDEFINED", arguments);
       }
     };
-    this.set = (name, value) => {
+    this.set = function(name, value) {
       if (value != null) {
         attributes[name] = [value];
       } else {
-        console.error("VALUE PASSED TO SET IS UNDEFINED", arguments);
+        console.warn("VALUE PASSED TO SET IS UNDEFINED", arguments);
       }
     };
-    this.remove = (name, value) => {
+    this.remove = function(name, value) {
       if (value == undefined) {
         delete attributes[name];
       } else {
