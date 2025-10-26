@@ -78,8 +78,8 @@ var require_anser_utily = __commonJS((exports2) => {
     } else {
       console.error("NAVIGATION ELEMENT WERE NOT FOUND");
     }
-    function toggle_disable(value) {
-      nextPage.disabled = prevPage.disabled = value;
+    function toggle_disable(value2) {
+      nextPage.disabled = prevPage.disabled = value2;
     }
     this.addQueries = (queries) => {
       with_queries = { ...with_queries, ...queries };
@@ -131,9 +131,58 @@ var require_anser_utily = __commonJS((exports2) => {
   exports2.display_pdfviewer = display_pdfviewer;
 });
 
+// js/lib.js
+var require_lib = __commonJS((exports2) => {
+  function Attributes() {
+    let attributes = {};
+    this.append = (name, value2) => {
+      if (value2 != null) {
+        let array = attributes[name];
+        if (!array) {
+          array = attributes[name] = [];
+        }
+        if (array.indexOf(value2) == -1) {
+          array.push(value2);
+        }
+      } else {
+        console.error("VALUE PASSED TO APPEND IS UNDEFINED", arguments);
+      }
+    };
+    this.set = (name, value2) => {
+      if (value2 != null) {
+        attributes[name] = [value2];
+      } else {
+        console.error("VALUE PASSED TO SET IS UNDEFINED", arguments);
+      }
+    };
+    this.remove = (name, value2) => {
+      if (value2 == undefined) {
+        delete attributes[name];
+      } else {
+        let array = attributes[name];
+        if (array) {
+          let index = array.indexOf(value2);
+          if (index != -1) {
+            array.splice(index, 1);
+          }
+        }
+      }
+    };
+    this.toString = function() {
+      let atts = [];
+      for (let name in attributes) {
+        atts.push(name.toString() + "='" + attributes[name].join(" ") + "'");
+      }
+      return atts.join(" ");
+    };
+  }
+  exports2.Attributes = Attributes;
+});
+
 // js/anser_flow_utils.js
 var require_anser_flow_utils = __commonJS((exports2) => {
   var { page_handler, display_information_modal, toggle_loader, display_pdfviewer } = require_anser_utily();
+  var { Attributes } = require_lib();
   function result_handler(json_response, table) {
     let { entries, field_values } = json_response.data;
     build_elements(table, entries);
@@ -176,16 +225,16 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     };
   }
   function get_field_value(field) {
-    let value = field.leaf_value;
-    if (value) {
+    let value2 = field.leaf_value;
+    if (value2) {
       if (field.fieldType == "checkbox") {
         let values = [];
-        for (let id in value) {
-          values.push(value[id]);
+        for (let id in value2) {
+          values.push(value2[id]);
         }
         return values;
       } else {
-        return value;
+        return value2;
       }
     } else {
       return "";
@@ -199,12 +248,12 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         if (field_location) {
           let [inbox, _inbox] = field_location.split(","), _field = inboxes[inbox] && inboxes[inbox][_inbox];
           if (_field) {
-            let value = get_field_value(_field);
-            if (value.push) {
-              if (value.indexOf(ruleValue) == -1) {
+            let value2 = get_field_value(_field);
+            if (value2.push) {
+              if (value2.indexOf(ruleValue) == -1) {
                 display = false;
               }
-            } else if (value != ruleValue) {
+            } else if (value2 != ruleValue) {
               display = false;
             }
             return;
@@ -242,96 +291,126 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       _inboxes.forEach((inbox, _index) => {
         try {
           field_ids[inbox.id] = index + "," + _index;
-          let inbox_index = index.toString() + "_" + _index, atts = [], value;
+          let inbox_index = index.toString() + "_" + _index, atts = new Attributes, inputAtts = new Attributes;
+          value;
+          inputAtts.append("id", inbox.id);
+          inputAtts.append("name", inbox.name);
+          inputAtts.append("value", inbox.value || "");
           if (inbox.rules) {
-            inbox.rules.forEach((rule) => {
-              dependents[rule.fieldId] = true;
-            });
+            if (!section_with_rules && !should_display_field(inbox, field_ids, inboxes)) {
+              atts.append("class", "hidden");
+              atts.append("class", build_dependent_classe(inbox.rules));
+            }
           }
           switch (inbox.type) {
             case "section":
               if (!should_display_field(inbox, field_ids, inboxes)) {
-                console.log("Hidding section", inbox.label);
-                atts.push("class='hidden " + build_dependent_classe(inbox.rules) + "'");
-              }
-              if (inbox.rules) {
-                console.log("SECTION WITH RULES", inbox.rules);
-                console.log("should_display_field", should_display_field(inbox, field_ids, inboxes));
+                atts.append("class", "hidden");
+                atts.append("class", build_dependent_classe(inbox.rules));
               }
               if (inbox.rules) {
                 section_with_rules = true;
               }
-              bodyHtml += "<section " + atts.join(" ") + ">";
+              bodyHtml += "<section " + atts.toString() + ">";
               bodyHtml += "<h5 class='title'>" + inbox.value + "</h5>";
               bodyHtml += "<div>";
               inSection = true;
               break;
             case "html":
-              bodyHtml += "<div class='card'>" + inbox.value + "</div>";
+              atts.append("class", "card");
+              bodyHtml += "<div " + atts.toString() + ">" + inbox.value + "</div>";
               break;
             case "text":
-              bodyHtml += "<div class='card'><p>" + inbox.label + "</p><p>" + inbox.value + "</p></div>";
+              atts.append("class", "card");
+              bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p><p>" + inbox.value + "</p></div>";
               break;
             case "hidden":
-              bodyHtml += "<div class='card hidden'><input index='" + inbox_index + "' id='" + (inbox.id || "") + "' type='hidden' name='" + inbox.name + "' value='" + inbox.value + "' /></div>";
+              atts.append("class", "hidden");
+              inputAtts.set("index", inbox_index);
+              inputAtts.set("type", "hidden");
+              bodyHtml += "<div " + atts.toString() + "><input " + inputAtts.toString() + " /></div>";
               break;
             case "button":
-              bodyHtml += "<div class='card'><button value='" + inbox.value + "' index='" + inbox_index + "' class='" + inbox.class + "' type='" + (inbox.buttonType || "") + "' >" + inbox.label + "</button></div>";
+              atts.append("class", "card");
+              inputAtts.set("index", inbox_index);
+              inputAtts.set("type", inbox.buttonType);
+              inputAtts.append("class", inbox.class);
+              bodyHtml += "<div " + atts.toString() + "><button " + inputAtts.toString() + ">" + inbox.label + "</button></div>";
               break;
             case "radio":
-              atts.push("name='" + inbox.name + "'", "value='" + inbox.value + "'", "id='" + (inbox.id || "") + "'");
+              atts.push("class", "card");
               if (inbox.checked) {
-                atts.push("checked='checked'");
+                inputAtts.set("checked", "checked");
               }
-              bodyHtml += "<div class='card'><label for='" + inbox.name + "'>" + inbox.label + "</label><input type='radio' " + atts.join(" ") + " /></div>";
+              inputAtts.set("type", "radio");
+              bodyHtml += "<div " + atts.toString() + "><label for='" + inbox.name + "'>" + inbox.label + "</label><input " + inputAtts.toString() + " /></div>";
               break;
             case "submit":
-              atts.push("name='" + inbox.name + "'", "value='" + inbox.value + "'", "index='" + inbox_index + "'");
-              if (inbox.id) {
-                atts.push("id='" + inbox.id + "'");
-              }
-              bodyHtml += "<div class='card'><button class='btn-success' " + atts.join(" ") + " type='submit'>" + inbox.value + "</button></div>";
+              atts.append("class", "card");
+              inputAtts.set("index", inbox_index);
+              inputAtts.append("class", "btn-success");
+              inputAtts.set("type", "submit");
+              bodyHtml += "<div " + atts.toString() + "><button " + inputAtts.toString() + ">" + inbox.value + "</button></div>";
               break;
             case "edit":
-              if (!section_with_rules) {
-                if (!should_display_field(inbox, field_ids, inboxes)) {
-                  atts.push("class='hidden card " + build_dependent_classe(inbox.rules) + "'");
-                }
-              }
               value = get_field_value(inbox);
+              inputAtts.set("id", "input_" + inbox.id);
+              inputAtts.set("value", value);
+              inputAtts.set("placeholder", inbox.placeholder);
               switch (inbox.fieldType) {
                 case "text":
-                  bodyHtml += "<div " + atts.join(" ") + " class='card'><p>" + inbox.label + "</p><p><input type='text' id='input_" + inbox.id + "' placeholder='" + (inbox.placeholder || "") + "' value='" + value + "' /></p></div>";
+                  atts.append("class", "card");
+                  inputAtts.set("type", "text");
+                  inputAtts.set("placeholder", inbox.placeholder);
+                  bodyHtml += "<div " + atts.toString() + " ><p>" + inbox.label + "</p><p><input " + inputAtts.toString() + " /></p></div>";
                   break;
                 case "textarea":
-                  bodyHtml += "<div " + atts.join(" ") + " class='card'><p>" + inbox.label + "</p><p><textarea placeholder='" + (inbox.placeholder || "") + "'>" + value + "</textarea></p></div>";
+                  atts.append("class", "card");
+                  inputAtts.remove("value");
+                  bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p><p><textarea " + inputAtts.toString() + ">" + value + "</textarea></p></div>";
                   break;
                 case "radio":
-                  bodyHtml += "<div " + atts.join(" ") + " class='card'><p>" + inbox.label + "</p><p>";
+                  atts.append("class", "card");
+                  bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p><p>";
                   inbox.choices.forEach((choice) => {
-                    let checked = choice.value == value ? "checked" : "";
-                    bodyHtml += "<span><label>" + choice.text + "</label><input type='radio' " + checked + " value='" + choice.value + "' name='input_" + inbox.id + "' /></span>";
+                    if (choice.value == value) {
+                      inputAtts.set("checked", "checked");
+                    }
+                    inputAtts.set("type", "radio");
+                    inputAtts.set("value", choice.value);
+                    bodyHtml += "<span><label>" + choice.text + "</label><input " + inputAtts.toString() + " /></span>";
                   });
                   bodyHtml += "</p></div>";
                   break;
                 case "checkbox":
-                  bodyHtml += "<div " + atts.join(" ") + " class='card'><p>" + inbox.label + "</p><div>";
+                  atts.append("class", "card");
+                  bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p><div>";
                   inbox.choices.forEach((choice) => {
-                    let checked = value.indexOf(choice.value) != -1 ? "checked" : "", id = inbox.inputs.filter((input) => {
-                      console.log("input label", input.label);
-                      console.log("choice value", choice.value);
-                      console.log("result", input.label == choice.value);
+                    let checked = value.indexOf(choice.value), id = inbox.inputs.filter((input) => {
                       return input.label == choice.value;
                     })[0]["id"];
-                    bodyHtml += "<p><label>" + choice.text + "</label><input type='checkbox' " + checked + " name='input_" + id + "' /></p>";
+                    if (checked) {
+                      inputAtts.set("checked", "checked");
+                    }
+                    inputAtts.set("name", "input_" + id);
+                    inputAtts.set("value", choice.value);
+                    inputAtts.set("type", "checkbox");
+                    bodyHtml += "<p><label>" + choice.text + "</label><input " + inputAtts.toString() + " /></p>";
                   });
                   bodyHtml += "</div></div>";
                   break;
                 case "select":
-                  bodyHtml += "<div " + atts.join(" ") + " class='card'><p>" + inbox.label + "</p><select name='input_" + inbox.id + "'>";
+                  atts.append("class", "card");
+                  inputAtts.remove("value");
+                  inputAtts.remove("placeholder");
+                  bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p><select " + inputAtts.toString() + ">";
                   inbox.choices.forEach((choice) => {
-                    let selected = choice.value == value ? "selected" : "";
-                    bodyHtml += "<option " + selected + " value='" + choice.value + "'>" + choice.text + "</option>";
+                    let selected = choice.value == value, atts2 = new Attributes;
+                    if (selected) {
+                      atts2.set("selected", "selected");
+                    }
+                    atts2.set("value", choice.value);
+                    bodyHtml += "<option " + atts2.toString() + ">" + choice.text + "</option>";
                   });
                   bodyHtml += "</select></div>";
                   break;
@@ -486,14 +565,14 @@ var require_anser_view_util = __commonJS((exports2) => {
     }
     filter_root.onclick = function(event) {
       event.preventDefault();
-      let target = event.target, value = target.getAttribute("data-value");
+      let target = event.target, value2 = target.getAttribute("data-value");
       if (target.tagName.toLowerCase() == "a") {
         if (!target.classList.contains("active")) {
           reset_link_style();
           target.classList.add("active");
-          if (value) {
+          if (value2) {
             page_handler2.removeQueries([..._Page.filters, "term"]);
-            page_handler2.addQueries({ filter_workflow_final_status: value, mode: "all" });
+            page_handler2.addQueries({ filter_workflow_final_status: value2, mode: "all" });
           } else {
             page_handler2.removeQueries(["filter_workflow_final_status"]);
           }
@@ -512,13 +591,13 @@ var require_anser_view_util = __commonJS((exports2) => {
           if (name == "id") {
             continue;
           }
-          let value = entry[name];
+          let value2 = entry[name];
           trs += "<td>";
-          if (value.indexOf) {
-            if (value.indexOf("http") == -1) {
+          if (value2.indexOf) {
+            if (value2.indexOf("http") == -1) {
               if (name == "État") {
                 let className = "p-1 rounded text-white shadow-md";
-                switch (value) {
+                switch (value2) {
                   case "pending":
                     className += " bg-blue-500";
                     break;
@@ -528,21 +607,21 @@ var require_anser_view_util = __commonJS((exports2) => {
                   default:
                     className += " bg-green-500";
                 }
-                trs += "<span class='" + className + "'> " + value + "</span>";
+                trs += "<span class='" + className + "'> " + value2 + "</span>";
               } else {
-                trs += value;
+                trs += value2;
               }
             } else {
-              let values = JSON.parse(value);
-              values.forEach((value2) => {
-                trs += "<a href='" + value2 + "'>";
-                let name2 = value2.slice(value2.lastIndexOf("/") + 1);
+              let values = JSON.parse(value2);
+              values.forEach((value3) => {
+                trs += "<a href='" + value3 + "'>";
+                let name2 = value3.slice(value3.lastIndexOf("/") + 1);
                 trs += name2;
                 trs += "</a>";
               });
             }
           } else {
-            trs += value.toString();
+            trs += value2.toString();
           }
           trs += "</td>";
         }
@@ -594,7 +673,7 @@ var require_anser_view_util = __commonJS((exports2) => {
       }
     };
     for (let entry_name in entry) {
-      let value = entry[entry_name], current_slot;
+      let value2 = entry[entry_name], current_slot;
       if (is_information(entry_name)) {
         current_slot = informations;
       } else if (is_header(entry_name)) {
@@ -607,10 +686,10 @@ var require_anser_view_util = __commonJS((exports2) => {
         current_slot = autres;
       }
       current_slot.push("<div><p>" + entry_name + "</p>");
-      if (value.push || Object.prototype.toString.call(value) == Object.prototype.toString.call({})) {
+      if (value2.push || Object.prototype.toString.call(value2) == Object.prototype.toString.call({})) {
         current_slot.push("<p>");
-        if (value.push) {
-          value.forEach((v) => {
+        if (value2.push) {
+          value2.forEach((v) => {
             if (v.indexOf("http") != -1) {
               v = build_link(v);
               current_slot.push(v);
@@ -619,11 +698,11 @@ var require_anser_view_util = __commonJS((exports2) => {
             }
           });
         } else {
-          for (let name in value) {
-            let _value = value[name];
+          for (let name in value2) {
+            let _value = value2[name];
             if (_value) {
               if (_value.indexOf("http") != -1) {
-                _value = build_link(value);
+                _value = build_link(value2);
               }
               current_slot.push("<span>" + _value + "</span>");
             }
@@ -631,7 +710,7 @@ var require_anser_view_util = __commonJS((exports2) => {
         }
         current_slot.push("</p>");
       } else {
-        current_slot.push("<p>" + value + "</p>");
+        current_slot.push("<p>" + value2 + "</p>");
       }
       current_slot.push("</div>");
     }
