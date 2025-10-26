@@ -481,6 +481,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         if (dependents[id]) {
           let classes = build_dependent_classe([{ fieldId: id }]), deps = document.querySelectorAll("." + classes);
           console.log("Element has", deps.length, "dependents");
+          console.log("classe are", classes);
         }
       }
     };
