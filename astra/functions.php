@@ -935,7 +935,11 @@ function build_inbox_editable_result($form,$entry,$current_step){
             }
         }
         else{
-            $result = handle_non_editable_field($form,$entry,$current_step,$field);
+            $result = handle_non_editable_field($form,$entry,$current_step,$field,true);
+
+            if($field->visibility == 'hidden'){
+                $display = false;
+            }
 
             if(empty($result)){
                 error_log("FIELD NOT RETURNED ".print_r($field,true));
