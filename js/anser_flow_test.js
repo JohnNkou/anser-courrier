@@ -254,12 +254,14 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                 console.warn("CAN DISPLAY FIELD", field.label, "BECAUSE RULE DON'T SATISFY");
                 console.warn("rule", field.rules);
                 console.log("_field", _field);
+                console.log("VALUE", value);
                 display = false;
               }
             } else if (value != ruleValue) {
               console.warn("CAN DISPLAY FIELD", field.label, "BECAUSE RULE DON'T SATISFY");
               console.warn("rule", field.rules);
               console.log("_field", _field);
+              console.log("VALUE", value);
               display = false;
             }
             return;
