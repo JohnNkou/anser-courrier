@@ -340,7 +340,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               bodyHtml += "<div " + atts.toString() + "><button " + inputAtts.toString() + ">" + inbox.label + "</button></div>";
               break;
             case "radio":
-              atts.push("class", "card");
+              atts.append("class", "card");
               if (inbox.checked) {
                 inputAtts.set("checked", "checked");
               }
