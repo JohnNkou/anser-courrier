@@ -266,6 +266,10 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             }
             return;
           }
+        } else {
+          console.error("FIELD in fieldId not found", fieldId);
+          display = false;
+          return;
         }
       });
     }
