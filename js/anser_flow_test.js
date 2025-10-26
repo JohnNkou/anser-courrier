@@ -251,6 +251,9 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             let value = get_field_value(_field);
             if (value.push) {
               if (value.indexOf(ruleValue) == -1) {
+                console.warn("CAN DISPLAY FIELD", field.label, "BECAUSE RULE DON'T SATISFY");
+                console.warn("rule", field.rules);
+                console.log("_field", _field);
                 display = false;
               }
             } else if (value != ruleValue) {
