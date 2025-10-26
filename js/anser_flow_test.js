@@ -479,7 +479,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       let target = event.target, id = target.getAttribute("id");
       if (id) {
         if (dependents[id]) {
-          console.log("Received change from element that has dependt", target);
+          let classes = build_dependent_classe([{ fieldId: id }]), deps = document.querySelectorAll("." + classes);
+          console.log("Element has", deps.length, "dependents");
         }
       }
     };
