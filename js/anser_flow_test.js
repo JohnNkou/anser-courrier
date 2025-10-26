@@ -300,14 +300,17 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         try {
           field_ids[inbox.id] = index + "," + _index;
           let inbox_index = index.toString() + "_" + _index, atts = new Attributes, inputAtts = new Attributes, value;
-          inputAtts.append("id", inbox.id);
-          inputAtts.append("name", inbox.name);
+          inputAtts.set("id", inbox.id);
+          inputAtts.append("name", "input_" + inbox.id);
           inputAtts.append("value", inbox.value || "");
           if (inbox.rules) {
             if (!section_with_rules && !should_display_field(inbox, field_ids, inboxes)) {
               atts.append("class", "hidden");
               atts.append("class", build_dependent_classe(inbox.rules));
             }
+            inbox.rules.forEach((rule) => {
+              dependents[rule.fieldId] = true;
+            });
           }
           switch (inbox.type) {
             case "section":
@@ -361,7 +364,6 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               break;
             case "edit":
               value = get_field_value(inbox);
-              inputAtts.set("id", "input_" + inbox.id);
               inputAtts.set("value", value);
               inputAtts.set("placeholder", inbox.placeholder);
               switch (inbox.fieldType) {
@@ -472,6 +474,14 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       }).finally(() => {
         toggle_loader();
       });
+    };
+    content_node.onchange = (event) => {
+      let target = event.target, id = target.getAttribute("id");
+      if (id) {
+        if (dependents[id]) {
+          console.log("Received change from element that has dependt", target);
+        }
+      }
     };
     content_node.onclick = (event) => {
       let target = event.target, index = target.getAttribute("index");
