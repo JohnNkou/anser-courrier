@@ -225,7 +225,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     };
   }
   function get_field_value(field) {
-    let value = field.leaf_value;
+    let value = field.leaf_value || field.value;
     if (value) {
       if (field.fieldType == "checkbox") {
         let values = [];
