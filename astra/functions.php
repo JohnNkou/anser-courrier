@@ -652,6 +652,7 @@ function load_gravityflow_inbox_entry(){
                         "message"=> $field->validation_message
                     ];
                 },$invalid_field);
+                $invalid_field = array_values($invalid_field);
 
                 return wp_send_json_error(["invalid_field"=> $invalid_field]);
             }
