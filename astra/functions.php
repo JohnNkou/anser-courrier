@@ -1040,7 +1040,8 @@ function build_inbox_results($form,$entry,$current_step){
         array_push($results,[
             [
                 "type"=>"hidden",
-                "name"=> "is_submit_".$form['id']
+                "name"=> "is_submit_".$form['id'],
+                "value"=> '1'
             ]
         ]);
     }
