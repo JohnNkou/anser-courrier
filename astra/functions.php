@@ -943,10 +943,6 @@ function build_inbox_editable_result($form,$entry,$current_step){
                 $display = false;
             }
 
-            if(empty($result)){
-                error_log("FIELD NOT RETURNED ".print_r($field,true));
-            }
-
         }
 
         if(!empty($result)){
