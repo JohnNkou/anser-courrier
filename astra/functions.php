@@ -1034,6 +1034,8 @@ function build_inbox_results($form,$entry,$current_step){
 
                 if(!empty($result)){
                     error_log("FIELD label ".$field->label." with id ".$field->id);
+                }
+                else{
                     continue;
                 }
 
