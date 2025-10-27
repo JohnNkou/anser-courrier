@@ -4292,7 +4292,7 @@ class GFFormDisplay {
 		$form_id         = (int) rgar( $form, 'id' );
 
 		if($field->id == 83){
-			error_log("DIFFICULT FIED ".print_r($field));
+			error_log("DIFFICULT FIED ".print_r($field,true));
 		}
 
 		if ( $field->type == 'page' ) {
