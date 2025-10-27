@@ -236,10 +236,6 @@ class Gravity_Flow_Entry_Editor {
 		 * @var GF_Field $field
 		 */
 		foreach ( $form['fields'] as $field ) {
-			if($field->id == 196){
-				error_log("BEFORE PRE_RENDER ".print_r($field,true));
-			}
-
 			if ( $field->type == 'section' ) {
 				// Unneeded section fields will be removed via filter_gform_field_container().
 				$field->adminOnly = false;
@@ -290,10 +286,6 @@ class Gravity_Flow_Entry_Editor {
 				$field            = new GF_Field_Text( $field );
 				$field->type      = 'text';
 				$field->inputType = 'text';
-			}
-
-			if($field->id == 196){
-				error_log("IN PRE_RENDER ".print_r($field,true));
 			}
 
 			$fields[] = $field;
@@ -776,16 +768,10 @@ class Gravity_Flow_Entry_Editor {
 	 */
 	public function is_display_field( $field, $is_init = false ) {
 		if ( in_array( $field->id, $this->_display_fields ) ) {
-			if($field->id == 83){
-				error_log("FIELD IN ARRAY _display_fields returning true");
-			}
 			return true;
 		}
 
 		if ( ! $is_init ) {
-			if($field->id == 83){
-				error_log("Returning false becuase is_init is false");
-			}
 			return false;
 		}
 
@@ -793,10 +779,6 @@ class Gravity_Flow_Entry_Editor {
 
 		if ( $display_field ) {
 			$this->_display_fields[] = $field->id;
-		}
-
-		if ($field->id == 83) {
-			error_log("RETURNING display_field which is ".$display_field);
 		}
 
 		return $display_field;
@@ -810,10 +792,6 @@ class Gravity_Flow_Entry_Editor {
 	 * @return bool
 	 */
 	public function is_editable_field( $field ) {
-
-		if($field->id == 83){
-			error_log("IS EDITABLE FIED ".Gravity_Flow_Common::is_editable_field( $field, $this->step ));
-		}
 		return Gravity_Flow_Common::is_editable_field( $field, $this->step );
 	}
 
