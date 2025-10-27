@@ -4455,7 +4455,7 @@ class GFFormDisplay {
 		);
 
 		if($field->id == 68){
-			error_log("FIELD MARKUP 1 $field_markup");
+			error_log("FIELD MARKUP 1 $field_container");
 		}
 
 
