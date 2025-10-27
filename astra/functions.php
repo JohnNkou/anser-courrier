@@ -1046,7 +1046,7 @@ function build_inbox_results($form,$entry,$current_step){
 
             if(!empty($result)){
                 array_push($current_array,$result);
-                sprintf("NEW PUSH WITH field-id %s with label %s %s . ARRAY IS %s", $field->id,$field->label,print_r($current_array,true), print_r($result,true));
+                error_log(sprintf("NEW PUSH WITH field-id %s with label %s %s . ARRAY IS %s", $field->id,$field->label,print_r($current_array,true), print_r($result,true)));
             }
         }
     }
