@@ -331,7 +331,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                 section_with_rules = true;
               }
               bodyHtml += "<section " + atts.toString() + ">";
-              bodyHtml += "<h5 class='title'>" + inbox.value + "</h5>";
+              bodyHtml += "<h5 class='title'>" + inbox.label + "</h5>";
               bodyHtml += "<div>";
               inSection = true;
               break;

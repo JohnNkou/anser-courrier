@@ -889,7 +889,15 @@ function build_inbox_editable_result($form,$entry,$current_step){
 
         if($entry_editor->is_editable_field($field)){
             $label = $field->label;
-            $value = GFFormDisplay::get_field($field,"");
+            $result = [
+                "type"=>"edit", 
+                "id"=> $field->id,
+                "fieldType"=> $field->type, 
+                "label"=> $field->label, 
+                "value"=> get_entry_form_value($form,$entry,$field), 
+                "leaf_value"=> get_entry_form_value($form,$entry,$field,true), 
+                "inputs"=> $field->inputs
+            ];
 
             if(!empty($field->choices) || !empty($field->inputs)){
                 $choices = array_map(function($choice){
@@ -899,35 +907,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
                     ];
 
                 }, $field->choices);
-                $result = [
-                    "type"=>"edit",
-                    "fieldType"=> $field->type,
-                    "id"=> $field->id,
-                    "label"=> $field->label,
-                    "value"=> get_entry_form_value($form,$entry,$field),
-                    "leaf_value"=> RGFormsModel::get_lead_field_value($entry, $field),
-                    "choices"=> $choices,
-                    "inputs"=> $field->inputs
-                ];
-            }
-            else{
-                $result = [
-                    "type"=>"edit",
-                    "fieldType"=> $field->type,
-                    "label"=> $field->label,
-                    "id"=> $field->id,
-                    "placeholder"=> empty($field->description)? '': $field->description
-                ];
-
-                switch ($field->type) {
-                    case 'textarea':
-                    case 'text':
-                        $result['value'] = get_entry_form_value($form,$entry,$field);                        break;
-                    
-                    default:
-                        $result['value'] = $value;
-                        break;
-                }
+                $result['choice'] = $choices;
             }
 
             if($field->type == 'section'){
@@ -935,7 +915,29 @@ function build_inbox_editable_result($form,$entry,$current_step){
             }
         }
         else{
-            $result = handle_non_editable_field($form,$entry,$current_step,$field,true);
+            $result = [
+                "type"=> $field->type,
+                "value"=> get_entry_form_value($form,$entry,$field),
+                "label"=> $field->label
+                "id"=> $field->id
+            ];
+
+            switch ($field->type) {
+                case 'page':
+                    $result = null;
+                    break;
+                case 'html':
+                    $content = GFCommon::replace_variables($field->content, $form, $entry, false, true, false, 'html');
+                    $content = do_shortcode($content);
+                    $result['value'] = $content;
+                    break;
+                case 'section':
+                    break;
+                default:
+                    $result['type'] = 'text';
+                    break;
+            }
+            //$result = handle_non_editable_field($form,$entry,$current_step,$field,true);
 
             if($field->visibility == 'hidden'){
                 $display = false;
@@ -1033,30 +1035,49 @@ function build_inbox_results($form,$entry,$current_step){
     return $results;
 }
 
-function get_entry_form_value($form,$entry,$field){
+function get_entry_form_value($form,$entry,$field,$justLeaf = false){
     $value = RGFormsModel::get_lead_field_value($entry, $field);
+
+    if($justLeaf){
+        return $value;
+    }
     return Gravity_Flow_Entry_Detail::get_display_value($value,$field,$entry,$form);
 }
 
 function handle_non_editable_field($form,$entry,$current_step,$field,$display_empty_fields=false){
+    $result = [
+        "type"=> $field->type,
+        "label"=> $field->label,
+        "id"=> $field->id
+    ];
+
     switch (RGFormsModel::get_input_type( $field )) {
         case 'section':
             if(! Gravity_Flow_Entry_Detail::is_section_empty($field,$current_step,$form, $entry, $display_empty_fields)){
-                return ["type"=>"section", "value"=> $field->label, "id"=>$field->id];
+                return $result;
+            }
+            else{
+                return null;
             }
             break;
         case 'html':
             $content = GFCommon::replace_variables($field->content, $form, $entry, false, true, false, 'html');
             $content = do_shortcode($content);
-            return ["type"=> "html", "value"=> $content, "id"=>$field->id];
+            $result['value'] = $content;
+            return $result;
             break;
         default:
             $display_value = get_entry_form_value($form,$entry,$field);
             $label = Gravity_Flow_Entry_Detail::get_label($field, $entry);
              if($display_empty_fields || ! empty($display_value) || $display_value === '0'){
-                return ["label"=> $label, "value"=> $display_value, "type"=> "text", "id"=> $field->id ];
+                $result['value'] = $display_value;
+                $result['label'] = $display_value;
+                return $result;
             }
-             break;
+            
+            return null;
+
+            break;
     }
 }
 
