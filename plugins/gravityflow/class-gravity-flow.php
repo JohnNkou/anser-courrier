@@ -4837,7 +4837,7 @@ PRIMARY KEY  (id)
 				if ( empty( $feedback ) && $step ) {
 					error_log("Processing status update");
 					error_log("CLASS OF STEP ".get_class($step));
-					
+
 					$feedback = $step->process_status_update( $form, $entry );
 
 					if($feedback){
@@ -4850,7 +4850,7 @@ PRIMARY KEY  (id)
 					}
 				}
 
-				if ( is_wp_error( $feedback ) ) { error_log("Received a feedback error ".print_r($feedback,true));
+				if ( is_wp_error( $feedback ) ) { error_log("Received a feedback error ");
 					$error_data = $feedback->get_error_data();
 					if ( ! empty( $error_data['form'] ) ) {
 						$form = $error_data['form'];
