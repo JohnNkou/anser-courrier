@@ -1032,6 +1032,7 @@ function build_inbox_results($form,$entry,$current_step){
         [
             "type"=>    "hidden",
             "name"=>    "action",
+            "id"=>      "action",
             "value"=>   ""
         ],
         [
