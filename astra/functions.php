@@ -1030,8 +1030,11 @@ function build_inbox_results($form,$entry,$current_step){
             $field->gravityflow_is_display_field = $display_field;
 
             if($field->type == 'section' || $display_field){
-                error_log("FIELD label ".$field->label." with id ".$field->id);
                 $result = handle_non_editable_field($form,$entry,$current_step,$field);
+
+                if(!empty($result)){
+                    error_log("FIELD label ".$field->label." with id ".$field->id);
+                }
 
                 if($field->type == 'section'){
                     if(!empty($results[$current_index])){
