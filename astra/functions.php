@@ -761,7 +761,7 @@ function handle_gravityflow_action($step){
                     "disabled"=> false,
                     "action"=> [
                         [
-                            "set_id"=>"_action",
+                            "set_id"=>"action",
                             "to"=> "update"
                         ],
                         [
@@ -775,7 +775,7 @@ function handle_gravityflow_action($step){
                     "disabled"=>false,
                     "action"=>[
                         [
-                            "set_id"=>"_action",
+                            "set_id"=>"action",
                             "to"=>"update"
                         ],
                         [
@@ -798,7 +798,7 @@ function handle_gravityflow_action($step){
                     "id"=>"gravityflow_update_button",
                     "action"=>[
                         [
-                            "set_id"=> "_action",
+                            "set_id"=> "action",
                             "to"=>"update"
                         ]
                     ]
