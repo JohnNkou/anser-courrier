@@ -1194,7 +1194,7 @@ class GFFormDisplay {
 
 		// Running $form through the gform_pre_render filter.
 		$form = self::gform_pre_render( $form, 'form_display', $ajax, $field_values );
-		form_changed($form,"hidden","2");
+		form_changed($form,196,"hidden","2");
 		if ( empty( $form ) ) {
 			return self::get_form_not_found_html( $form_id, $ajax );
 		}
