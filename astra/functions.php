@@ -1028,7 +1028,7 @@ function build_inbox_results($form,$entry,$current_step){
         ]);
     }
 
-    array_unshift($results,
+    array_unshift($results,[
         [
             "type"=>    "hidden",
             "name"=>    "action",
@@ -1039,6 +1039,7 @@ function build_inbox_results($form,$entry,$current_step){
             "name"=>    "save",
             "value"=>   "Update"
         ]
+    ]
     );
 
     return $results;
