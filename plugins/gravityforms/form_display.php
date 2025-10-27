@@ -1048,7 +1048,7 @@ class GFFormDisplay {
 		function form_changed($form,$visibility,$label){
 			foreach ($form['fields'] as $field) {
 				if($field->visibility != $visibility){
-					error_log("FIELD CHANGE IN $label");
+					error_log("FIELD CHANGE IN $label ".print_r($field,true));
 					return;
 				}
 			}
@@ -1066,6 +1066,8 @@ class GFFormDisplay {
 
 		$form['page_instance'] = self::$processed[ $form_id ];
 		self::$processed[ $form_id ]++;
+
+		form_changed($form,"hidden","0");
 
 		// Setting form style and theme
 		$form = self::set_form_styles( $form, $style_settings, $form_theme );
