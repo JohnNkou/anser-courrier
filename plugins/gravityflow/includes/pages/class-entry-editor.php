@@ -237,7 +237,7 @@ class Gravity_Flow_Entry_Editor {
 		 */
 		foreach ( $form['fields'] as $field ) {
 			if($field->id == 196){
-				error_log("BEFORE PRE_RENDER ".print_r($field));
+				error_log("BEFORE PRE_RENDER ".print_r($field,true));
 			}
 
 			if ( $field->type == 'section' ) {
