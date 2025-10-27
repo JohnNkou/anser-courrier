@@ -626,9 +626,11 @@ function load_gravityflow_inbox_entry(){
         $step = $current_step;
 
         if($step){error_log("Step is defined so cool");
-            error_log("CLASS OF STEP IS ".get_class($step));
             $feedback = $step->process_status_update($form,$entry);
-            error_log("Feed after processing thing ".print_r($feedback,true));
+
+            if($feedback){
+                error_log("Received feedback after calling ".substr(print_r($feedback,true), 0,200));
+            }
 
             if($feedback && !is_wp_error($feedback)){
                 error_log("Goind for to process_workflow");
@@ -1034,6 +1036,13 @@ function build_inbox_results($form,$entry,$current_step){
     }
     else{
         $results = build_inbox_editable_result($form,$entry,$current_step);
+
+        array_push($results,[
+            [
+                "type"=>"hidden",
+                "name"=> "is_submit_".$form['id']
+            ]
+        ]);
     }
 
     if(count($results)> 0){
