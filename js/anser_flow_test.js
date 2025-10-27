@@ -333,6 +333,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           }
           if (inbox.required) {
             required[inbox.id] = true;
+            inputAtts.set("required", "true");
           }
           if (inbox.rules) {
             if (!section_with_rules) {
