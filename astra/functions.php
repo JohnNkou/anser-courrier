@@ -627,7 +627,7 @@ function load_gravityflow_inbox_entry(){
 
         if($step){error_log("Step is defined so cool");
             $feedback = $step->process_status_update($form,$entry);
-            error_log("Feed after processing thing ");
+            error_log("Feed after processing thing ".print_r($feedback,true));
 
             if($feedback && !is_wp_error($feedback)){
                 error_log("Goind for to process_workflow");
