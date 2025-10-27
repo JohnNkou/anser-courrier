@@ -198,7 +198,7 @@ trait Editable_Fields {
 
 			// Upload valid temp single files.
 			$this->maybe_upload_files( $form, $files );
-
+			error_log("RETURNING VP CLACK");
 			return $valid;
 		}
 

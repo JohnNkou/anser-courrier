@@ -1809,10 +1809,6 @@ abstract class Gravity_Flow_Step extends stdClass {
 		$processed = $this->maybe_process_status_update( $form, $entry );
 		$this->maybe_process_post_fields( $form, $entry['post_id'] );
 
-		if($processed){
-			error_log("IT CAME FROM PROCESSED");
-		}
-
 		return $processed;
 	}
 
