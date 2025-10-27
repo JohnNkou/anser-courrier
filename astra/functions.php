@@ -884,12 +884,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
             $rules = $field->conditionalLogic['rules'];
         }
 
-        if($field->id == 196){
-            error_log("THE FIELD O ".print_r($field,true));
-        }
-
         if($entry_editor->is_hidden_field($field)){
-            error_log("SHOUHSOU");
             $display = false;
         }
 
@@ -914,7 +909,8 @@ function build_inbox_editable_result($form,$entry,$current_step){
             $result = [
                 "type"=>"edit", 
                 "id"=> $field->id,
-                "fieldType"=> $field->type, 
+                "fieldType"=> $field->type,
+                "required"=> $field->isRequired == 1, 
                 "label"=> $field->label, 
                 "value"=> $_value, 
                 "leaf_value"=> $_leaf_value, 
