@@ -644,7 +644,7 @@ function load_gravityflow_inbox_entry(){
         if(is_wp_error($feedback)){
             if(isset($feedback->error_data['validation_result'])){
                 $invalid_field = array_filter($feedback->error_data['validation_result']['form']['fields'],function($field){
-                    return $field->failed_validation
+                    return $field->failed_validation;
                 });
                 $invalid_field = array_map($invalid_field, function($field){
                     return [
