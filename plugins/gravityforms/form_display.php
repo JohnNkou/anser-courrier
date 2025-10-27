@@ -1044,7 +1044,7 @@ class GFFormDisplay {
 		}
 
 		$form = GFAPI::get_form( $form_id );
-		error_log("ORIGINAL FORM ".print_r($form));
+		error_log("ORIGINAL FORM ".print_r($form,true));
 		if ( ! $form ) { error_log("Couldn't find the form with get_form(form_id). Returning");
 			return self::get_form_not_found_html( $form_id, $ajax );
 		}
