@@ -4454,6 +4454,10 @@ class GFFormDisplay {
 			$form
 		);
 
+		if($field->id == 68){
+			error_log("FIELD MARKUP 1 $field_markup");
+		}
+
 
 		/**
 		 * Modify the markup used for the field container.
@@ -4474,7 +4478,7 @@ class GFFormDisplay {
 		$field_markup = str_replace( '{FIELD_CONTENT}', $field_content, $field_container );
 
 		if($field->id == 68){
-			error_log("FIELD MARKU $field_markup");
+			error_log("FIELD MARKUP 2 $field_markup");
 		}
 
 		return $field_markup;
