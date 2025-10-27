@@ -1044,12 +1044,9 @@ function build_inbox_results($form,$entry,$current_step){
                 }
             }
 
-            if($field->id == 19){
-                error_log("PROBLEMES ".print_r($results,true));
-            }
-
             if(!empty($result)){
                 array_push($current_array,$result);
+                error_log("NEW PUSH with field-id ". $field->id .print_r($current_array));
             }
         }
     }
