@@ -399,9 +399,6 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               value = get_field_value(inbox);
               inputAtts.set("value", value);
               inputAtts.set("placeholder", inbox.placeholder);
-              if (inbox.required) {
-                inputAtts.set("required", "true");
-              }
               switch (inbox.fieldType) {
                 case "text":
                 case "product":
