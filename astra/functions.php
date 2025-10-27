@@ -1033,12 +1033,12 @@ function build_inbox_results($form,$entry,$current_step){
     }
 
     array_unshift($results,[
-        [
+        /*[
             "type"=>    "hidden",
             "name"=>    "action",
             "id"=>      "action",
             "value"=>   ""
-        ],
+        ],*/
         [
             "type"=>    "hidden",
             "name"=>    "save",
