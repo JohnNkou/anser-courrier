@@ -4359,6 +4359,10 @@ class GFFormDisplay {
 
 		$id = $field->id;
 
+		if($id == 196){
+			error_log("THE FIELD ".print_r($field,true));
+		}
+
 		$input_type = GFFormsModel::get_input_type( $field );
 
 		$error_class        = $field->failed_validation ? 'gfield_error' : '';
