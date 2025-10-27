@@ -1022,12 +1022,8 @@ function build_inbox_results($form,$entry,$current_step){
     if(empty($editable_fields)){
         error_log("LOOTING NON EDITABLE FIELD");
         foreach ($form['fields'] as &$field) {
-            if(count($results) > 0){
-                $current_array = &$results[$current_index];
-            }
-            else{
-                $current_array = &$results;
-            }
+            $current_array = &$results[$current_index];
+
             $is_product_field = GFCommon::is_product_field($field->type);
 
             $display_field = $current_step && $is_assignee ? Gravity_Flow_Entry_Detail::is_display_field($field,$current_step,$form,$entry,$is_product_field) : Gravity_Flow_Entry_Detail::is_display_field($field, $display_field_step, $form, $entry, $is_product_field);
@@ -1035,12 +1031,12 @@ function build_inbox_results($form,$entry,$current_step){
 
             if($field->type == 'section' || $display_field){
                 $result = handle_non_editable_field($form,$entry,$current_step,$field);
-            }
 
-            if($field->type == 'section'){
-                if(!empty($results[$current_index])){
-                    $results[++$current_index] = [];
-                    $current_array = &$results[$current_index];
+                if($field->type == 'section'){
+                    if(!empty($results[$current_index])){
+                        $results[++$current_index] = [];
+                        $current_array = &$results[$current_index];
+                    }
                 }
             }
 
