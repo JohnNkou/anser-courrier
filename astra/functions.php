@@ -1040,6 +1040,7 @@ function build_inbox_results($form,$entry,$current_step){
             if($field->type == 'section'){
                 if(!empty($results[$current_index])){
                     $results[++$current_index] = [];
+                    $current_array = &$results[$current_index];
                 }
             }
 
