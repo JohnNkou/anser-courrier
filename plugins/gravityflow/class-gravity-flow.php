@@ -4836,9 +4836,14 @@ PRIMARY KEY  (id)
 
 				if ( empty( $feedback ) && $step ) {
 					error_log("Processing status update");
-
+					error_log("CLASS OF STEP ".get_class($step));
+					
 					$feedback = $step->process_status_update( $form, $entry );
-					error_log("Feed back after calling process_status_update ".json_encode($feedback));
+
+					if($feedback){
+						error_log("Received feedback after calling process_status_update");
+					}
+
 					if ( $feedback && ! is_wp_error( $feedback ) ) {
 						error_log("Processing status update after feedback not a wordpress error");
 						$this->process_workflow( $form, $entry_id );
