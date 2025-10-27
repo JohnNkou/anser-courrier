@@ -331,6 +331,9 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           if (inbox.name) {
             inputAtts.set("name", inbox.name);
           }
+          if (inbox.required) {
+            required[inbox.id] = true;
+          }
           if (inbox.rules) {
             if (!section_with_rules) {
               atts.append("class", build_dependent_classe(inbox.rules));
