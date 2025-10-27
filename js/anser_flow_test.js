@@ -516,11 +516,18 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             console.error(error);
           });
         } else {
-          let msg = message || "<h5>L'operation n'a pas pu etre effectué</h5>";
-          display_information_modal(msg).catch((error) => {
-            alert("Une erreur est survenue");
-            console.error(error);
-          });
+          if (data.invalid_field) {
+            display_information_modal("<h5>Veuillez vous assurez que tous les champs sont correctement rempli. Certain champs sont invalide</h5>").catch((error) => {
+              alert("Une erreur est survenue");
+              console.error(error);
+            });
+          } else {
+            let msg = message || "<h5>L'operation n'a pas pu etre effectué</h5>";
+            display_information_modal(msg).catch((error) => {
+              alert("Une erreur est survenue");
+              console.error(error);
+            });
+          }
         }
       }).catch((error) => {
         alert("Une erreur est survenue");
