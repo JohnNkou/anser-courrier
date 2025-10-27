@@ -396,6 +396,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   inbox.choices.forEach((choice) => {
                     if (choice.value == value) {
                       inputAtts.set("checked", "checked");
+                    } else {
+                      inputAtts.remove("checked");
                     }
                     inputAtts.set("type", "radio");
                     inputAtts.set("value", choice.value);
@@ -412,6 +414,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                     })[0]["id"];
                     if (checked) {
                       inputAtts.set("checked", "checked");
+                    } else {
+                      inputAtts.remove("checked");
                     }
                     inputAtts.set("name", "input_" + id);
                     inputAtts.set("value", choice.value);
