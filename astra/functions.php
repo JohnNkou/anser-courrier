@@ -646,12 +646,12 @@ function load_gravityflow_inbox_entry(){
                 $invalid_field = array_filter($feedback->error_data['validation_result']['form']['fields'],function($field){
                     return $field->failed_validation;
                 });
-                $invalid_field = array_map($invalid_field, function($field){
+                $invalid_field = array_map(function($field){
                     return [
                         "id"=> $field->id,
                         "message"=> $field->validation_message
                     ];
-                });
+                },$invalid_field);
 
                 return wp_send_json_error(["invalid_field"=> $invalid_field]);
             }
