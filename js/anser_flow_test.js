@@ -281,8 +281,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
   function build_dependent_classe(rules) {
     return rules.map((rule) => "dependent_" + rule.fieldId).join(" ");
   }
-  function get_field_by_location(_location, inboxes) {
-    let indexes = _location.split(","), field = indexes.length == 2 && inboxes[indexes[0]][indexes[1]];
+  function get_field_by_location(location2, inboxes) {
+    let indexes = location2.split(","), field = indexes.length == 2 && inboxes[indexes[0]][indexes[1]];
     return field;
   }
   function check_validity({ form, field_ids, inboxes, required }) {
@@ -539,7 +539,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         }
         let field_location = field_ids[id];
         if (field_location) {
-          let field = get_field_by_location(location, inboxes);
+          let field = get_field_by_location(field_location, inboxes);
           if (field) {
             field.leaf_value = target.value;
           }
