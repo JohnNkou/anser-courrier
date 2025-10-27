@@ -294,6 +294,10 @@ class Gravity_Flow_Step_User_Input extends Gravity_Flow_Step {
 			}
 		}
 
+		if($feedback){
+			error_log("FEEDBACK CAME FROM PROCESS_ASSIGNEE_STATUS");
+		}
+
 		$this->maybe_adjust_assignment( $previous_assignees );
 
 		if ( ! $feedback ) {
