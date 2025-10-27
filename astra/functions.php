@@ -1025,6 +1025,7 @@ function build_inbox_results($form,$entry,$current_step){
             $current_array = &$results[$current_index];
 
             $is_product_field = GFCommon::is_product_field($field->type);
+            $result = null;
 
             $display_field = $current_step && $is_assignee ? Gravity_Flow_Entry_Detail::is_display_field($field,$current_step,$form,$entry,$is_product_field) : Gravity_Flow_Entry_Detail::is_display_field($field, $display_field_step, $form, $entry, $is_product_field);
             $field->gravityflow_is_display_field = $display_field;
@@ -1034,9 +1035,6 @@ function build_inbox_results($form,$entry,$current_step){
 
                 if(!empty($result)){
                     error_log("FIELD label ".$field->label." with id ".$field->id);
-                }
-                else{
-                    continue;
                 }
 
                 if($field->type == 'section' && $result){
