@@ -60,6 +60,9 @@ img:is([sizes="auto" i], [sizes^="auto," i]) {
     color:black;
     padding:1em;
 }
+.error-field{
+    color: red;
+}
 .status_filter a:hover{
     border-bottom:0.3em solid black;
 }
