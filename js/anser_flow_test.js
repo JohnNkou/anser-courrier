@@ -249,7 +249,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       field.rules.forEach((rule) => {
         let { fieldId, operator, value: ruleValue } = rule, field_location = field_ids[fieldId];
         if (field_location) {
-          let [inbox, _inbox] = field_location.split(","), _field = inboxes[inbox] && inboxes[inbox][_inbox];
+          let _field = get_field_by_location(field_location, inboxes);
           if (_field) {
             let value = get_field_value(_field);
             if (value.push) {
@@ -281,8 +281,26 @@ var require_anser_flow_utils = __commonJS((exports2) => {
   function build_dependent_classe(rules) {
     return rules.map((rule) => "dependent_" + rule.fieldId).join(" ");
   }
+  function get_field_by_location(location2, inboxes) {
+    let indexes = location2.split(","), field = indexes.length == 2 && inboxes[indexes[0]][indexes[1]];
+    return field;
+  }
+  function check_validity({ form, field_ids, inboxes, required }) {
+    for (let fieldId in required) {
+      let field_location = field_ids[fieldId], field = get_field_by_location(field_location, inboxes), field_value;
+      if (field) {
+        field_value = form.get("input_" + fieldId);
+        if (should_display_field(field, field_ids, inboxes)) {
+          if (!field_value) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
+  }
   function display_entry(payloads, entry_data) {
-    let inboxes = payloads.inbox, entry_id = entry_data.entry_id, numero = entry_data.numero, form_title = payloads.form_title, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), actionNodes = {}, bodyHtml = "", field_ids = {}, dependents = {};
+    let inboxes = payloads.inbox, entry_id = entry_data.entry_id, numero = entry_data.numero, form_title = payloads.form_title, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), actionNodes = {}, bodyHtml = "", field_ids = {}, dependents = {}, required = {};
     if (!content_node) {
       return console.error("Content node not found");
     }
@@ -468,6 +486,18 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     content_node.onsubmit = (event) => {
       event.preventDefault();
       let form = event.target, fData = new FormData(form), url = new URL(GravityAjax.ajax_url), searchParams = url.searchParams;
+      if (!check_validity({ form: fData, required, field_ids, inboxes })) {
+        console.warn("Form is not valid");
+        if (form.checkValidity) {
+          form.checkValidity();
+          return form.reportValidity();
+        } else {
+          display_information_modal("Veuillez completez les champs requis du formulaire").catch((error) => {
+            console.error("Error whie", error);
+          });
+        }
+        return;
+      }
       searchParams.set("action", GravityAjax.flow_entry);
       searchParams.set("nonce", GravityAjax.flow_nonce);
       searchParams.set("id", entry_data.form_id);
@@ -505,6 +535,13 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           let classes = build_dependent_classe([{ fieldId: id }]), deps = document.querySelectorAll("." + classes), length = deps.length;
           while (length--) {
             deps[length].classList.toggle("hidden");
+          }
+        }
+        let field_location = field_ids[id];
+        if (field_location) {
+          let field = get_field_by_location(location, inboxes);
+          if (field) {
+            field.leaf_value = target.value;
           }
         }
       }
