@@ -959,7 +959,18 @@ function build_inbox_editable_result($form,$entry,$current_step){
 function build_inbox_results($form,$entry,$current_step){
     require_once ABSPATH . "/wp-content/plugins/gravityflow/includes/pages/class-entry-detail.php";
 
-    $results = [[]];
+    $results = [
+        [
+            "type"=>    "hidden",
+            "name"=>    "action",
+            "value"=>   ""
+        ],
+        [
+            "type"=>    "hidden",
+            "name"=>    "save",
+            "value"=>   "Update"
+        ]
+    ];
     $current_index = 0;
     $display_empty_fields = false;
     $is_assignee = $current_step ? $current_step->is_user_assignee() : false;
