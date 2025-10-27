@@ -803,7 +803,7 @@ function handle_gravityflow_action($step){
     if($action){
         array_unshift($action, [
             "type"=> "section",
-            "value"=> "Action"
+            "label"=> "Action"
         ]);
     }
 
@@ -833,7 +833,7 @@ function get_workflow_info($current_step,$form, $entry){
 
         array_push($results,[
             "type"=>"section",
-            "value"=>"Workflow"
+            "label"=>"Workflow"
         ], [
             "type"=> "text",
             "label"=> "Envoyée par",
