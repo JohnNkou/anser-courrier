@@ -608,6 +608,7 @@ function load_gravityflow_inbox_entry(){
         return wp_send_json_success(["inbox"=> $results, "form_title"=> $form['title']]);   
     }
     else{
+        error_log("MUFASA");
         $process_entry_detail = apply_filters( 'gravityflow_inbox_entry_detail_pre_process', true, $form, $entry );
         error_log("Processing entry detail ".print_r($process_entry_detail,true));
 
