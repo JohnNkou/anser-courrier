@@ -791,7 +791,7 @@ function handle_gravityflow_action($step){
                     "id"=>"gravityflow_update_button",
                     "action"=>[
                         [
-                            "set_id"=> "#action",
+                            "set_id"=> "action",
                             "to"=>"update"
                         ]
                     ]
