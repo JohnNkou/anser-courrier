@@ -597,6 +597,8 @@ function load_gravityflow_inbox_entry(){
     $GFFlow = Gravity_Flow::get_instance();
     $current_step = $GFFlow->get_current_step($form,$entry);
 
+    error_log("ZONAL SHIFT");
+
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $results = build_inbox_results($form,$entry,$current_step);
         $workflow_info = get_workflow_info($current_step, $form, $entry);
