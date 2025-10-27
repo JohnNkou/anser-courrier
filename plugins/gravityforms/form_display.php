@@ -1045,9 +1045,9 @@ class GFFormDisplay {
 
 		$form = GFAPI::get_form( $form_id );
 
-		function form_changed($form,$visibility,$label){
+		function form_changed($form,$id,$visibility,$label){
 			foreach ($form['fields'] as $field) {
-				if($field->visibility != $visibility){
+				if($field->id == $id && $field->visibility != $visibility){
 					error_log("FIELD CHANGE IN $label ".print_r($field,true));
 					return;
 				}
@@ -1056,7 +1056,7 @@ class GFFormDisplay {
 			error_log("FIELD HAS NOT CHHANGED");
 		}
 
-		form_changed($form,"hidden","0");
+		form_changed($form,196,"hidden","0");
 
 		if ( ! $form ) { error_log("Couldn't find the form with get_form(form_id). Returning");
 			return self::get_form_not_found_html( $form_id, $ajax );
@@ -1071,7 +1071,7 @@ class GFFormDisplay {
 
 		// Setting form style and theme
 		$form = self::set_form_styles( $form, $style_settings, $form_theme );
-
+		form_changed($form,196,"hidden","1");
 		$action = wp_doing_ajax() ? remove_query_arg( 'gf_token', wp_get_referer() ) : remove_query_arg( 'gf_token' );
 
 		if ( rgpost( 'gform_send_resume_link' ) == $form_id ) {
