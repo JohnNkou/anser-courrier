@@ -907,7 +907,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
                     ];
 
                 }, $field->choices);
-                $result['choice'] = $choices;
+                $result['choices'] = $choices;
             }
 
             if($field->type == 'section'){
