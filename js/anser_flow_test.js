@@ -431,7 +431,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   atts.append("class", "card");
                   inputAtts.remove("value");
                   inputAtts.remove("placeholder");
-                  bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p><select " + inputAtts.toString() + ">";
+                  bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p><select " + inputAtts.toString() + "><option>Selectionner</option>";
                   inbox.choices.forEach((choice) => {
                     let selected = choice.value == value, atts2 = new Attributes;
                     if (selected) {
