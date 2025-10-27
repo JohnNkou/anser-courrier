@@ -236,6 +236,10 @@ class Gravity_Flow_Entry_Editor {
 		 * @var GF_Field $field
 		 */
 		foreach ( $form['fields'] as $field ) {
+			if($field->id == 196){
+				error_log("BEFORE PRE_RENDER ".print_r($field));
+			}
+
 			if ( $field->type == 'section' ) {
 				// Unneeded section fields will be removed via filter_gform_field_container().
 				$field->adminOnly = false;
