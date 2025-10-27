@@ -4291,6 +4291,10 @@ class GFFormDisplay {
 		$custom_class    = $is_admin ? esc_attr( $field->cssClass ) : esc_attr( self::convert_legacy_class( $form, $field->cssClass ) );
 		$form_id         = (int) rgar( $form, 'id' );
 
+		if($field->id == 68){
+			error_log("MUFASA ".print_r($field,true));
+		}
+
 		if ( $field->type == 'page' ) {
 			if ( $is_entry_detail ) {
 				return; //ignore page breaks in the entry detail page
@@ -4468,10 +4472,6 @@ class GFFormDisplay {
 		}
 
 		$field_markup = str_replace( '{FIELD_CONTENT}', $field_content, $field_container );
-
-		if($field->id == 68){
-			error_log("FIELD MARKUP ".print_r($field_markup));
-		}
 
 		return $field_markup;
 	}
