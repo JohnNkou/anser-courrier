@@ -299,6 +299,16 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     }
     return true;
   }
+  function purge_error_nodes(nodes) {
+    let length = nodes.length;
+    while (length--) {
+      let node = nodes[length];
+      node.textContent = "";
+      if (!node.classList.contains("hidden")) {
+        node.classList.add("hidden");
+      }
+    }
+  }
   function display_entry(payloads, entry_data) {
     let inboxes = payloads.inbox, entry_id = entry_data.entry_id, numero = entry_data.numero, form_title = payloads.form_title, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), actionNodes = {}, bodyHtml = "", field_ids = {}, dependents = {}, required = {};
     if (!content_node) {
@@ -324,10 +334,13 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       _inboxes.forEach((inbox, _index) => {
         try {
           field_ids[inbox.id] = index + "," + _index;
-          let inbox_index = index.toString() + "_" + _index, atts = new Attributes, inputAtts = new Attributes, value;
+          let inbox_index = index.toString() + "_" + _index, atts = new Attributes, inputAtts = new Attributes, failedAtts = new Attributes, value;
           inputAtts.set("id", inbox.id);
           inputAtts.append("name", "input_" + inbox.id);
           inputAtts.append("value", inbox.value || "");
+          failedAtts.append("class", "hidden");
+          failedAtts.append("class", "error-field");
+          failedAtts.append("class", "invalid-" + inbox.id);
           if (inbox.name) {
             inputAtts.set("name", inbox.name);
           }
@@ -409,12 +422,12 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   atts.append("class", "card");
                   inputAtts.set("type", "text");
                   inputAtts.set("placeholder", inbox.placeholder);
-                  bodyHtml += "<div " + atts.toString() + " ><p>" + inbox.label + "</p><p><input " + inputAtts.toString() + " /></p></div>";
+                  bodyHtml += "<div " + atts.toString() + " ><p>" + inbox.label + "</p><p><input " + inputAtts.toString() + " /></p><div " + failedAtts.toString() + "></div></div>";
                   break;
                 case "textarea":
                   atts.append("class", "card");
                   inputAtts.remove("value");
-                  bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p><p><textarea " + inputAtts.toString() + ">" + value + "</textarea></p></div>";
+                  bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p><p><textarea " + inputAtts.toString() + ">" + value + "</textarea></p><div " + failedAtts.toString() + "></div></div>";
                   break;
                 case "radio":
                   atts.append("class", "card");
@@ -429,7 +442,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                     inputAtts.set("value", choice.value);
                     bodyHtml += "<span><label>" + choice.text + "</label><input " + inputAtts.toString() + " /></span>";
                   });
-                  bodyHtml += "</p></div>";
+                  bodyHtml += "</p><div " + failedAtts.toString() + "></div></div>";
                   break;
                 case "checkbox":
                   atts.append("class", "card");
@@ -448,7 +461,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                     inputAtts.set("type", "checkbox");
                     bodyHtml += "<p><label>" + choice.text + "</label><input " + inputAtts.toString() + " /></p>";
                   });
-                  bodyHtml += "</div></div>";
+                  bodyHtml += "</div><div " + failedAtts.toString() + "></div></div>";
                   break;
                 case "select":
                   atts.append("class", "card");
@@ -463,7 +476,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                     atts2.set("value", choice.value);
                     bodyHtml += "<option " + atts2.toString() + ">" + choice.text + "</option>";
                   });
-                  bodyHtml += "</select></div>";
+                  bodyHtml += "</select><div " + failedAtts.toString() + "></div></div>";
                   break;
                 default:
                   console.error("unknwon inbox fieldType", inbox);
@@ -486,7 +499,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     });
     content_node.onsubmit = (event) => {
       event.preventDefault();
-      let form = event.target, fData = new FormData(form), url = new URL(GravityAjax.ajax_url), searchParams = url.searchParams;
+      let form = event.target, fData = new FormData(form), url = new URL(GravityAjax.ajax_url), searchParams = url.searchParams, error_fields = document.querySelectorAll(".error-field");
+      purge_error_nodes(error_fields);
       if (!check_validity({ form: fData, required, field_ids, inboxes })) {
         console.warn("Form is not valid");
         if (form.checkValidity) {
@@ -517,6 +531,15 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           });
         } else {
           if (data.invalid_field) {
+            data.invalid_field.forEach((invalid) => {
+              let error_node = document.querySelector(".invalid-" + invalid.id);
+              if (error_node) {
+                error_node.textContent = invalid.message;
+                error_node.classList.remove("hidden");
+              } else {
+                console.error("NO ERROR NODE FOUND FOR FIELD", invalid);
+              }
+            });
             display_information_modal("<h5>Veuillez vous assurez que tous les champs sont correctement rempli. Certain champs sont invalide</h5>").catch((error) => {
               alert("Une erreur est survenue");
               console.error(error);
