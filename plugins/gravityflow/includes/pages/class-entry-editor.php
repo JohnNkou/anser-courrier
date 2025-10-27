@@ -288,6 +288,10 @@ class Gravity_Flow_Entry_Editor {
 				$field->inputType = 'text';
 			}
 
+			if($field->id == 196){
+				error_log("IN PRE_RENDER ".print_r($field,true));
+			}
+
 			$fields[] = $field;
 		}
 
