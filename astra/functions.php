@@ -1046,7 +1046,7 @@ function build_inbox_results($form,$entry,$current_step){
 
             if(!empty($result)){
                 array_push($current_array,$result);
-                error_log("NEW PUSH with field-id ". $field->id .print_r($current_array));
+                error_log("NEW PUSH with field-id ". $field->id .print_r($current_array,true));
             }
         }
     }
