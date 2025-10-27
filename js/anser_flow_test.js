@@ -177,12 +177,15 @@ var require_lib = __commonJS((exports2) => {
     };
   }
   exports2.Attributes = Attributes;
+  exports2.is_object = function($data) {
+    return Object.prototype.toString.call($data) == Object.prototype.toString.call({});
+  };
 });
 
 // js/anser_flow_utils.js
 var require_anser_flow_utils = __commonJS((exports2) => {
   var { page_handler, display_information_modal, toggle_loader, display_pdfviewer } = require_anser_utily();
-  var { Attributes } = require_lib();
+  var { Attributes, is_object } = require_lib();
   function result_handler(json_response, table) {
     let { entries, field_values } = json_response.data;
     build_elements(table, entries);
@@ -227,7 +230,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
   function get_field_value(field) {
     let value = field.leaf_value || field.value;
     if (value) {
-      if (field.fieldType == "checkbox") {
+      if (is_object(value)) {
         let values = [];
         for (let id in value) {
           values.push(value[id]);

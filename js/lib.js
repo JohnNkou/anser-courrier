@@ -56,3 +56,6 @@ function Attributes(){
 }
 
 exports.Attributes = Attributes;
+exports.is_object = function($data){
+	return Object.prototype.toString.call($data) == Object.prototype.toString.call({})
+}
