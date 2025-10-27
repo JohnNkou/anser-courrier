@@ -1658,10 +1658,6 @@ class GFFormDisplay {
 		error_log("GET IS ".print_r($_GET,true));
 		foreach ( $fields as $field ) {
 
-			if($field->id == 68){
-				error_log("FIELD-O ".print_r($field,true));
-			}
-
 			$field->set_context_property( 'rendering_form', true );
 			$field->conditionalLogicFields = self::get_conditional_logic_fields( $form, $field->id );
 
@@ -4472,6 +4468,10 @@ class GFFormDisplay {
 		}
 
 		$field_markup = str_replace( '{FIELD_CONTENT}', $field_content, $field_container );
+
+		if($field->id == 68){
+			error_log("FIELD MARKUP ".print_r($field_markup));
+		}
 
 		return $field_markup;
 	}
