@@ -916,7 +916,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
                 "id"=> $field->id,
                 "fieldType"=> $field->type, 
                 "label"=> $field->label, 
-                "value"=> _$value, 
+                "value"=> $_value, 
                 "leaf_value"=> $_leaf_value, 
                 "inputs"=> $field->inputs
             ];
