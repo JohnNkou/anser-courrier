@@ -114,6 +114,7 @@ class GFFormDisplay {
 
 		//don't validate when going to previous page or saving for later
 		if ( ! $saving_for_later && ( empty( $target_page ) || $target_page >= $page_number ) ) {
+			error_log("VALIDATING VALUES");
 			$is_valid = self::validate( $form, $field_values, $page_number, $failed_validation_page );
 		}
 
@@ -2404,6 +2405,7 @@ class GFFormDisplay {
 	public static function validate( &$form, $field_values, $page_number = 0, &$failed_validation_page = 0 ) {
 		$form_id = absint( rgar( $form, 'id' ) );
 		GFCommon::log_debug( __METHOD__ . "(): Starting for form #{$form_id}." );
+		error_log("FALIDATING THE MESSAGE");
 
 		$gform_pre_validation_args = array( 'gform_pre_validation', $form_id );
 		if ( gf_has_filter( $gform_pre_validation_args ) ) {
