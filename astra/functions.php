@@ -1036,12 +1036,16 @@ function build_inbox_results($form,$entry,$current_step){
                     error_log("FIELD label ".$field->label." with id ".$field->id);
                 }
 
-                if($field->type == 'section'){
+                if($field->type == 'section' && $result){
                     if(!empty($results[$current_index])){
                         $results[++$current_index] = [];
                         $current_array = &$results[$current_index];
                     }
                 }
+            }
+
+            if($field->id == 187){
+                error_log("PROBLEMES ".print_r($result,true));
             }
 
             if(!empty($result)){
