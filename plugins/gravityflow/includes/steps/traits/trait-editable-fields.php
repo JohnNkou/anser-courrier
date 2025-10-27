@@ -178,7 +178,9 @@ trait Editable_Fields {
 	 * @return bool|string|WP_Error
 	 */
 	public function process_status_update( $form, $entry ) {
+		error_log("HE IS GETTING CALLED");
 		if ( ! isset( $_POST['gforms_save_entry'] ) || rgpost( 'step_id' ) != $this->get_id() || ! check_admin_referer( 'gforms_save_entry', 'gforms_save_entry' ) ) {
+			error_log("RETURNING");
 			return false;
 		}
 
@@ -198,7 +200,7 @@ trait Editable_Fields {
 
 			// Upload valid temp single files.
 			$this->maybe_upload_files( $form, $files );
-			error_log("RETURNING VP CLACK");
+
 			return $valid;
 		}
 
