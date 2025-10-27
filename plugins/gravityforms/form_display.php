@@ -1405,7 +1405,7 @@ class GFFormDisplay {
 			$form_string .= "<{$tag} id='gform_fields_{$form_id}' class='" . GFCommon::get_ul_classes( $form ) . "'>";
 
 			if ( is_array( $form['fields'] ) ) {
-				error_log("form[field] is array ", print_r($form['fields'],true));
+				error_log("form[field] is array ". print_r($form['fields'],true));
 				// Add honeypot field if Honeypot is enabled.
 				$honeypot_handler = GFForms::get_service_container()->get( Gravity_Forms\Gravity_Forms\Honeypot\GF_Honeypot_Service_Provider::GF_HONEYPOT_HANDLER );
 				$form             = $honeypot_handler->maybe_add_honeypot_field( $form );
@@ -1658,10 +1658,6 @@ class GFFormDisplay {
 
 		error_log("GET IS ".print_r($_GET,true));
 		foreach ( $fields as $field ) {
-
-			if($field->id == 196){
-				error_log("SMUTH ".print_r($field,true));
-			}
 
 			$field->set_context_property( 'rendering_form', true );
 			$field->conditionalLogicFields = self::get_conditional_logic_fields( $form, $field->id );
