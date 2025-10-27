@@ -894,6 +894,13 @@ function build_inbox_editable_result($form,$entry,$current_step){
         }
 
         if($field->type == 'section'){
+            $section_fields = $entry_editor->get_section_fields($field->id);
+
+            if ( $entry_editor->section_fields_hidden( $section_fields )
+                 || ( $entry_editor->is_section_hidden( $field, $section_fields ) && empty( $field->conditionalLogic ) )
+            ) {
+                continue;
+            }
             if(!empty($current_array)){
                 $results[++$current_index] = [];
                 $current_array = &$results[$current_index];

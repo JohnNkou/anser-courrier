@@ -896,7 +896,6 @@ class Gravity_Flow_Entry_Editor {
 			if ( $this->section_fields_hidden( $section_fields )
 			     || ( $this->is_section_hidden( $field, $section_fields ) && empty( $field->conditionalLogic ) ) // Section fields with conditional logic must be added to the form so fields inside the section can be hidden or displayed dynamically.
 			) {
-				error_log("SECTION MUST BE HIDDEN ".$field->id);
 				return '';
 			}
 		}
