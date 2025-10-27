@@ -910,7 +910,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
         if($entry_editor->is_editable_field($field)){
             $label = $field->label;
             $_value = get_entry_form_value($form,$entry,$field);
-            $_leaf_value = ($value) ? get_entry_form_value($form,$entry,$field,true) : $value;
+            $_leaf_value = (!empty($_value)) ? get_entry_form_value($form,$entry,$field,true) : $value;
             $result = [
                 "type"=>"edit", 
                 "id"=> $field->id,
@@ -938,7 +938,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
         }
         else{
             $_value = get_entry_form_value($form,$entry,$field);
-            $_leaf_value = ($_value)? get_entry_form_value($form,$entry,$field,true) : $_value;
+            $_leaf_value = (!empty($_value))? get_entry_form_value($form,$entry,$field,true) : $_value;
 
             $result = [
                 "type"=> $field->type,
