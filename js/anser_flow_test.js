@@ -383,6 +383,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               inputAtts.set("placeholder", inbox.placeholder);
               switch (inbox.fieldType) {
                 case "text":
+                case "product":
                   atts.append("class", "card");
                   inputAtts.set("type", "text");
                   inputAtts.set("placeholder", inbox.placeholder);
