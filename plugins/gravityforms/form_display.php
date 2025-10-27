@@ -4361,6 +4361,8 @@ class GFFormDisplay {
 
 		if($id == 196){
 			error_log("THE FIELD ".print_r($field,true));
+			throw new Exception("Error Processing Request", 1);
+			
 		}
 
 		$input_type = GFFormsModel::get_input_type( $field );
