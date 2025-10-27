@@ -575,6 +575,7 @@ function load_gravityview(){
 
 
 function load_gravityflow_inbox_entry(){
+    error_log("SHIFT OF THOUSAND");
     $entry_id = $_GET['entry_id'] ?: null;
     $entry = GFAPI::get_entry($entry_id);
     $passed_id = rgget("id");
