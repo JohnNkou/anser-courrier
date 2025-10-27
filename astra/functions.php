@@ -868,8 +868,12 @@ function build_inbox_editable_result($form,$entry,$current_step){
 
     $results = [[]];
     $current_index = 0;
-    $fields = $form['fields'];
     $entry_editor = new Gravity_Flow_Entry_Editor( $form, $entry, $current_step, 0 );
+    $entry_editor->add_hooks();
+
+    $form = GFFormDisplay::gform_pre_render($form,'form_display', )
+
+    $fields = $form['fields'];
 
     foreach($fields as $field){
         $field->set_context_property('rendering_form',true);
@@ -963,6 +967,8 @@ function build_inbox_editable_result($form,$entry,$current_step){
             array_push($current_array,$result);
         }
     }
+
+    $entry_editor->remove_hooks();
 
     return $results;
 }
