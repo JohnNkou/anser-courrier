@@ -79,11 +79,14 @@ var require_anser_utily = __commonJS((exports2) => {
     };
   }
   exports2.page_handler = function page_handler(navigationHandler, body, default_queries = {}) {
-    let nextPage = body.querySelector(".nextPage"), prevPage = body.querySelector(".previousPage"), with_queries = default_queries;
+    let nextPage = body.querySelector(".nextPage"), prevPage = body.querySelector(".previousPage"), with_queries = default_queries, navigation_waiters = [];
     this.page = 0;
     this.total_page = 0;
     this.total = 0;
     this.limit = 15;
+    this.onNavigation = function(fn) {
+      navigation_waiters.push(fn);
+    };
     if (nextPage && prevPage) {
       nextPage.addEventListener("click", (event) => {
         this.goTo(this.page + 1).then((json_response) => {
@@ -115,8 +118,12 @@ var require_anser_utily = __commonJS((exports2) => {
     };
     this.goTo = (newPage) => {
       toggle_disable(true);
-      return this.load_data(with_queries, newPage * this.limit).then((json_response) => {
+      let offset = newPage * this.limit;
+      return this.load_data(with_queries, offset).then((json_response) => {
         this.page = newPage;
+        navigation_waiters.forEach((fn) => {
+          fn(offset);
+        });
         console.log("THE NEW PAGE IS", this.page);
         display_nativation_handler(newPage, this.total_page);
         return json_response;

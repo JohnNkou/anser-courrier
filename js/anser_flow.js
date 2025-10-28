@@ -5,6 +5,7 @@ table = document.querySelector('.main-table'),
 second_table = document.querySelector('.second-table'),
 tbody = table.querySelector('tbody'),
 counts = document.querySelectorAll('.onglets .count'),
+navigationHelper = document.querySelector('.navigationHelper p'),
 myPage_handler = new page_handler((json_response)=>result_handler(json_response,table),table),
 myPage_handler_2 = new page_handler((json_response)=> result_handler_2(json_response,second_table),second_table);
 
@@ -16,6 +17,8 @@ if(typeof _Page != "undefined"){
     myPage_handler.load_data().then((json_response)=> result_handler(json_response,table)).then(()=>{
         if(counts.length){
             counts[0].textContent = myPage_handler.total;
+
+            navigationHandler.textContent = "1-"+ myPage_handler.limit + " de "+ myPage_handler.total;
         }
         else{
             console.error("NO COUNTS NODE FOUND");
@@ -26,6 +29,17 @@ if(typeof _Page != "undefined"){
             counts[1].textContent = myPage_handler_2.total;
         }
     });
+
+    myPage_handler.onNavigation((offset)=>{
+        offset = offset + 1;
+
+        navigationHandler.textContent = offset + "-" + myPage_handler.limit + " de "+ myPage_handler.total;
+    });
+    myPage_handler_2.onNavigation((offset)=>{
+        offset = offset + 1;
+
+        navigationHandler.textContent = offset + "-" + myPage_handler_2.limit + " de "+ myPage_handler_2.total;
+    })
 
     entry_click_handler(table);
     entry_click_handler_2(second_table);

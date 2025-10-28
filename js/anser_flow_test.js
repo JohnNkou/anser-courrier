@@ -78,24 +78,27 @@ var require_anser_utily = __commonJS((exports2) => {
       button.click();
     };
   }
-  exports2.page_handler = function page_handler(navigationHandler, body, default_queries = {}) {
-    let nextPage = body.querySelector(".nextPage"), prevPage = body.querySelector(".previousPage"), with_queries = default_queries;
+  exports2.page_handler = function page_handler(navigationHandler2, body, default_queries = {}) {
+    let nextPage = body.querySelector(".nextPage"), prevPage = body.querySelector(".previousPage"), with_queries = default_queries, navigation_waiters = [];
     this.page = 0;
     this.total_page = 0;
     this.total = 0;
     this.limit = 15;
+    this.onNavigation = function(fn) {
+      navigation_waiters.push(fn);
+    };
     if (nextPage && prevPage) {
       nextPage.addEventListener("click", (event) => {
         this.goTo(this.page + 1).then((json_response) => {
-          if (navigationHandler) {
-            navigationHandler(json_response);
+          if (navigationHandler2) {
+            navigationHandler2(json_response);
           }
         });
       });
       prevPage.addEventListener("click", (event) => {
         this.goTo(this.page - 1).then((json_response) => {
-          if (navigationHandler) {
-            navigationHandler(json_response);
+          if (navigationHandler2) {
+            navigationHandler2(json_response);
           }
         });
       });
@@ -115,8 +118,12 @@ var require_anser_utily = __commonJS((exports2) => {
     };
     this.goTo = (newPage) => {
       toggle_disable(true);
-      return this.load_data(with_queries, newPage * this.limit).then((json_response) => {
+      let offset = newPage * this.limit;
+      return this.load_data(with_queries, offset).then((json_response) => {
         this.page = newPage;
+        navigation_waiters.forEach((fn) => {
+          fn(offset);
+        });
         console.log("THE NEW PAGE IS", this.page);
         display_nativation_handler(newPage, this.total_page);
         return json_response;
@@ -137,7 +144,7 @@ var require_anser_utily = __commonJS((exports2) => {
       });
     };
     function display_nativation_handler(page, total) {
-      if (navigationHandler) {
+      if (navigationHandler2) {
         if (page == 0) {
           prevPage.classList.add("hidden");
         } else {
@@ -1091,6 +1098,7 @@ var table = document.querySelector(".main-table");
 var second_table = document.querySelector(".second-table");
 var tbody = table.querySelector("tbody");
 var counts = document.querySelectorAll(".onglets .count");
+var navigationHelper = document.querySelector(".navigationHelper p");
 var myPage_handler = new page_handler((json_response) => result_handler(json_response, table), table);
 var myPage_handler_2 = new page_handler((json_response) => result_handler_2(json_response, second_table), second_table);
 var search_form = document.querySelector(".search_block");
@@ -1100,6 +1108,7 @@ if (typeof _Page != "undefined") {
   myPage_handler.load_data().then((json_response) => result_handler(json_response, table)).then(() => {
     if (counts.length) {
       counts[0].textContent = myPage_handler.total;
+      navigationHandler.textContent = "1-" + myPage_handler.limit + " de " + myPage_handler.total;
     } else {
       console.error("NO COUNTS NODE FOUND");
     }
@@ -1108,6 +1117,14 @@ if (typeof _Page != "undefined") {
     if (counts.length) {
       counts[1].textContent = myPage_handler_2.total;
     }
+  });
+  myPage_handler.onNavigation((offset) => {
+    offset = offset + 1;
+    navigationHandler.textContent = offset + "-" + myPage_handler.limit + " de " + myPage_handler.total;
+  });
+  myPage_handler_2.onNavigation((offset) => {
+    offset = offset + 1;
+    navigationHandler.textContent = offset + "-" + myPage_handler_2.limit + " de " + myPage_handler_2.total;
   });
   entry_click_handler(table);
   entry_click_handler_2(second_table);
