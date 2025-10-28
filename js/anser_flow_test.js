@@ -236,6 +236,17 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     let { entries, field_values } = json_response.data;
     build_elements(table, entries);
   }
+  function file_viewer_handler(node) {
+    node.addEventListener("click", (event) => {
+      let target = event.target;
+      if (target.href && /\.(pdf|jpg|jpeg|png|gif)/.test(target.href)) {
+        display_pdfviewer(target.href).catch((error) => {
+          console.error(error);
+          alert("Une erreur est survenue lors de l'affichage du pdf");
+        });
+      }
+    });
+  }
   function build_elements(table, entries) {
     var html = "", tbody = table.querySelector("tbody");
     if (tbody) {
@@ -801,12 +812,6 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         if (target.type != "submit") {
           event.preventDefault();
         }
-      } else if (target.href && /\.(pdf|jpeg|png|gif)/.test(target.href)) {
-        event.preventDefault();
-        display_pdfviewer(target.href).catch((error) => {
-          console.error(error);
-          alert("Une erreur est survenue lors de l'affichage du pdf");
-        });
       }
     };
     content_node.innerHTML = bodyHtml;
@@ -860,6 +865,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       }
     });
   }
+  exports2.file_viewer_handler = file_viewer_handler;
   exports2.result_handler = result_handler;
   exports2.entry_click_handler = entry_click_handler;
   exports2.onglet_handler = onglet_handler;
@@ -1093,7 +1099,7 @@ var require_anser_view_util = __commonJS((exports2) => {
 
 // js/anser_flow.js
 var { page_handler } = require_anser_utily();
-var { result_handler, entry_click_handler, onglet_handler } = require_anser_flow_utils();
+var { result_handler, entry_click_handler, onglet_handler, file_viewer_handler } = require_anser_flow_utils();
 var { result_handler: result_handler_2, entry_click_handler: entry_click_handler_2 } = require_anser_view_util();
 var table = document.querySelector(".main-table");
 var second_table = document.querySelector(".second-table");
@@ -1130,6 +1136,7 @@ if (typeof _Page != "undefined") {
   entry_click_handler(table);
   entry_click_handler_2(second_table);
   onglet_handler([table, second_table]);
+  file_viewer_handler(document.body);
   search_form.addEventListener("submit", (event) => {
     event.preventDefault();
     let form = event.target, input = form.elements.s;
