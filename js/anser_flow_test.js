@@ -181,8 +181,15 @@ var require_lib = __commonJS((exports2) => {
       t += Math.floor(65535 * Math.random()).toString(32);
     return t;
   }
+  function generateUniqueID() {
+    return "xxxxxxxx".replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c == "x" ? r : r & 3 | 8;
+      return v.toString(16);
+    });
+  }
   exports2.Attributes = Attributes;
   exports2.guid = guid;
+  exports2.generateUniqueID = generateUniqueID;
   exports2.is_object = function($data) {
     return Object.prototype.toString.call($data) == Object.prototype.toString.call({});
   };
@@ -191,7 +198,7 @@ var require_lib = __commonJS((exports2) => {
 // js/anser_flow_utils.js
 var require_anser_flow_utils = __commonJS((exports2) => {
   var { page_handler, display_information_modal, toggle_loader, display_pdfviewer } = require_anser_utily();
-  var { Attributes, is_object, guid } = require_lib();
+  var { Attributes, is_object, guid, generateUniqueID } = require_lib();
   function result_handler(json_response, table) {
     let { entries, field_values } = json_response.data;
     build_elements(table, entries);
@@ -267,6 +274,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         if (file.name.lastIndexOf(".") != -1) {
           name += file.name.slice(file.name.lastIndexOf("."));
         }
+        form.append("gform_unique_id", generateUniqueID());
         form.append("original_filename", file.name);
         form.append("file", file);
         xhr.send(form);
