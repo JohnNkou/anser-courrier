@@ -63,6 +63,7 @@ function guid(){
 }
 
 exports.Attributes = Attributes;
+exports.guid = guid;
 exports.is_object = function($data){
 	return Object.prototype.toString.call($data) == Object.prototype.toString.call({})
 }

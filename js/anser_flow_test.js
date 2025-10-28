@@ -176,7 +176,13 @@ var require_lib = __commonJS((exports2) => {
       return atts.join(" ");
     };
   }
+  function guid() {
+    for (var t = new Date().getTime().toString(32), i = 0;i < 5; i++)
+      t += Math.floor(65535 * Math.random()).toString(32);
+    return t;
+  }
   exports2.Attributes = Attributes;
+  exports2.guid = guid;
   exports2.is_object = function($data) {
     return Object.prototype.toString.call($data) == Object.prototype.toString.call({});
   };
