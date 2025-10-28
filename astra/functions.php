@@ -880,7 +880,9 @@ function get_workflow_info($current_step,$form, $entry){
 }
 
 function get_upload_data_settings($html){
-    preg_match("/data-settings=(['\"][^'\"]+['\"])/", $html, $matches);
+    preg_match("/data-settings=(['\"][^'\"]+?['\"])/", $html, $matches);
+
+    error_log("MATCH IS ".print_r($matches,true));
 
     if(count($matches) > 1){
         return json_decode(htmlspecialchars_decode($matches[1]));
@@ -964,7 +966,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
                     $data_settings = get_upload_data_settings($field_container);
 
                     if($data_settings){
-                        $results['data-settings'] = $data_settings;
+                        $result['data-settings'] = $data_settings;
                     }
                     else{
                         error_log(sprintf("Coudln't retrieve data-settings from field with label %s and id %s with html %s", $field->label, $field->id, $field_container));
