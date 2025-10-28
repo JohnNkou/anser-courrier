@@ -25,7 +25,7 @@ var require_anser_utily = __commonJS((exports2) => {
     }
     pdfview_node.classList.remove("hidden");
     iframe.src = src;
-    return new Promise((resolve, reject2) => {
+    return new Promise((resolve, reject) => {
       pdfview_node.onclick = function(event) {
         event.preventDefault();
         let target = event.target;
@@ -44,7 +44,7 @@ var require_anser_utily = __commonJS((exports2) => {
     }
     text_node.innerHTML = text;
     div.classList.remove("hidden");
-    return new Promise((resolve, reject2) => {
+    return new Promise((resolve, reject) => {
       div.onclick = function(event) {
         event.preventDefault();
         let target = event.target;
@@ -219,73 +219,24 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       console.error("TBODY NOT FOUND");
     }
   }
-  function handle_file_upload(input, field_ids, inboxes) {
-    let files = input.files, id = input.getAttribute("id"), evolution_div = document.querySelector(".file_detail_" + id);
-    if (id) {
-      return new Promise((resolve, reject2) => {
-        for (let i = 0, file = files[i];i < files.length; i++) {
-          let form = new FormData, name = "o_" + guid(), field = get_field_by_location(field_ids[id], inboxes), settings = field["data-settings"], xhr = new XMLHttpRequest, p = document.createElement("p"), span = document.createElement("span"), span_2 = document.createElement("span");
-          span_2.classList.add("percent");
-          span.textContent = file.name;
-          p.appendChild(span);
-          p.appendChild(span_2);
-          evolution_div.append(p);
-          if (!field) {
-            console.warn("No field found for id");
-            continue;
-          }
-          xhr.open("POST", settings["url"], true);
-          xhr.upload.onprogress = (event) => {
-            if (event.lengthComputable) {
-              let { total, loaded } = event, percent = Math.ceil(loaded / total * 100) + "%";
-              if (span_2.textContent == percent) {
-                span_2.textContent = "Traitement...";
-              } else {
-                span_2.textContent = percent;
-              }
-            }
-          };
-          xhr.onload = function(event) {
-            let text = xhr.response || xhr.responseText;
-            try {
-              text = JSON.parse(text);
-              if (text.status) {
-                span_2.textContent = "";
-                if (text.status.toLowerCase() == "ok") {
-                  return resolve(text);
-                }
-                resolve(text);
-              } else {
-                evolution_div.removeChild(p);
-                console.error("Odd response returned from the server", text);
-                resolve();
-              }
-            } catch (error) {
-              console.warn("Error parsing text ", error);
-              reject2(error);
-            }
-            evolution_div.removeChild(p);
-          };
-          xhr.onerror = function(event) {
-            alert("Une erreur est survenue lors de la transmission du fichier " + file.name);
-            reject2(event.error);
-          };
-          if (file.name.lastIndexOf(".") != -1) {
-            name += file.name.slice(file.name.lastIndexOf("."));
-          }
-          form.append("name", name);
-          for (let input_name in settings["multipart_params"]) {
-            form.append(input_name, settings["multipart_params"][input_name]);
-          }
-          form.append("gform_unique_id", generateUniqueID());
-          form.append("original_filename", file.name);
-          form.append("file", file);
-          xhr.send(form);
-        }
-      });
-    } else {
-      reject(new Error("Input field doesn't have an id"));
+  function update_file_to_send(input, file_to_sends) {
+    let files2 = input.files, id = input.getAttribute("id"), evolution_div = document.querySelector(".file_detail_" + id);
+    if (!id) {
+      console.warn("No id find for file input");
     }
+    for (let i = 0, file = files2[i];i < files2.length; i++) {
+      let p = document.createElement("p"), span = document.createElement("span"), span_2 = document.createElement("span");
+      span_2.classList.add("percent");
+      span.textContent = file.name;
+      p.appendChild(span);
+      p.appendChild(span_2);
+      evolution_div.append(p);
+      if (!file_to_sends[id]) {
+        file_to_sends[id] = [];
+      }
+      file_to_sends[id].push(file);
+    }
+    console.log("new file_to_sends", file_to_sends);
   }
   function get_entry_ids(node, repeat) {
     if (repeat && node) {
@@ -391,7 +342,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     }
   }
   function display_entry(payloads, entry_data) {
-    let inboxes = payloads.inbox, entry_id = entry_data.entry_id, numero = entry_data.numero, form_title = payloads.form_title, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), actionNodes = {}, bodyHtml = "", field_ids = {}, dependents = {}, required = {}, uploads = {};
+    let inboxes = payloads.inbox, entry_id = entry_data.entry_id, numero = entry_data.numero, form_title = payloads.form_title, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), actionNodes = {}, bodyHtml = "", field_ids = {}, dependents = {}, required = {}, uploads = {}, file_to_sends = {};
     if (!content_node) {
       return console.error("Content node not found");
     }
@@ -666,41 +617,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               field.leaf_value = target.value;
             } else {
               if (target.files.length) {
-                handle_file_upload(target, field_ids, inboxes).then((payload) => {
-                  if (payload) {
-                    switch (payload.status) {
-                      case "ok":
-                        if (payload.status == "ok") {
-                          let _id = "input_" + id, meta_datas = uploads[_id];
-                          if (!meta_datas) {
-                            meta_datas = uploads[_id] = [];
-                          }
-                          meta_datas.push(payload.data);
-                          console.log("uploads updagte", uploads);
-                        } else {
-                          alert("Le fichier n'as pas pu etre transmis avec succès");
-                        }
-                        break;
-                      case "error":
-                        if (payload.error) {
-                          if (payload.error.message) {
-                            alert(payload.error.message);
-                            break;
-                          }
-                        }
-                      default:
-                        alert("Les fichier n'ont pas pu etres transmis avec succèes");
-                        console.error("BAD PAYLOAD", payload);
-                        break;
-                    }
-                  } else {
-                    console.log("Received empty payload");
-                    alert("Le fichier n'a pas pu correctement être traité");
-                  }
-                }).catch((error) => {
-                  alert("Une erreur est survenue lors de la transmission des fichiers");
-                  console.error(error);
-                });
+                update_file_to_send(target, file_to_sends);
               } else {
                 console.error("Input length is empty", field.label);
               }
