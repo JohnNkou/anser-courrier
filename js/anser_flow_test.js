@@ -260,13 +260,15 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         xhr.onerror = function(event) {
           alert("Une erreur est survenue lors de la transmission du fichier " + file.name);
         };
+        form.append("name", name);
         for (let input_name in settings["multipart_params"]) {
           form.append(input_name, settings["multipart_params"][input_name]);
         }
         if (file.name.lastIndexOf(".") != -1) {
           name += file.name.slice(file.name.lastIndexOf("."));
         }
-        form.append(name, file);
+        form.append("original_filename", file.name);
+        form.append("file", file);
         xhr.send(form);
       }
     } else {
