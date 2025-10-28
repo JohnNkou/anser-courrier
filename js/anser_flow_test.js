@@ -792,7 +792,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         if (target.type != "submit") {
           event.preventDefault();
         }
-      } else if (target.href && target.href.toLowerCase().indexOf(".pdf") != -1) {
+      } else if (target.href && /\.(pdf|jpeg|png|gif)/.test(target.href)) {
         event.preventDefault();
         display_pdfviewer(target.href).catch((error) => {
           console.error(error);
