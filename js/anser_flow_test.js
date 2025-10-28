@@ -652,12 +652,12 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         }
         return;
       }
-      let up = new uploader;
+      let up = new uploader, p;
       up.show();
       up.updatePercent("0%");
       up.updateText("Transmission des fichiers");
       if (Object.keys(file_to_sends).length) {
-        handle_file_upload(file_to_sends, field_ids, inboxes, up.updatePercent).then((_uploads) => {
+        p = handle_file_upload(file_to_sends, field_ids, inboxes, up.updatePercent).then((_uploads) => {
           let failed = _uploads.filter((upload) => {
             return !upload || !upload.text || !upload.text.status || upload.text.status != "ok";
           });
@@ -671,12 +671,15 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           upload_form = true;
         }).catch((error) => {
           console.error(error);
-        }).finally(() => {
-          if (upload_form) {
-            console.log("I can upload the form");
-          }
         });
+      } else {
+        p = Promise.resolve(true);
       }
+      p.finally(() => {
+        if (upload_form) {
+          console.log("CAN UPLOAD FORMULAIRE");
+        }
+      });
     };
     content_node.onchange = (event) => {
       let target = event.target, id = target.getAttribute("id");
