@@ -879,6 +879,16 @@ function get_workflow_info($current_step,$form, $entry){
     return $results;
 }
 
+function get_upload_data_settings($html){
+    preg_match("/data-settings=(['\"][^'\"]+['\"])/", $html, $matches);
+
+    if(count($matches) > 1){
+        return json_decode(htmlspecialchars_decode($matches[1]));
+    }
+
+    return null;
+}
+
 function build_inbox_editable_result($form,$entry,$current_step){
     require_once ABSPATH . "/wp-content/plugins/gravityflow/includes/pages/class-entry-editor.php";
 
@@ -946,6 +956,24 @@ function build_inbox_editable_result($form,$entry,$current_step){
 
             if($field->type == 'section'){
                 $result['type'] = 'section';
+            }
+            if($field->type == 'fileupload'){
+                $field_container = GFFormDisplay::get_field($field);
+
+                if($field_container){
+                    $data_settings = get_upload_data_settings($field_container);
+
+                    if($data_settings){
+                        $results['data-settings'] = $data_settings;
+                    }
+                    else{
+                        error_log(sprintf("Coudln't retrieve data-settings from field with label %s and id %s with html %s", $field->label, $field->id, $field_container));
+                    }
+                }
+                else{
+                    error_log(sprintf("Coudln't retrieve field container html from field with label %s and id %s", $field->label, $field->id));
+                }
+
             }
         }
         else{
