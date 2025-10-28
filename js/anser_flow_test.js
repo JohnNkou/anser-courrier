@@ -210,7 +210,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     let files = input.files, id = input.getAttribute("id"), evolution_div = document.querySelector(".file_detail_" + id);
     if (id) {
       for (let _id in files) {
-        let form = new FormData, file = files[id], name = "o_" + guid, field = get_field_by_location(field_ids[id]), settings = field["data-settings"], xhr = new XMLHttpRequest, p = document.createElement("p"), span = document.createElement("span"), span_2 = document.createElement("span");
+        let form = new FormData, file = files[id], name = "o_" + guid, field = get_field_by_location(field_ids[id], inboxes), settings = field["data-settings"], xhr = new XMLHttpRequest, p = document.createElement("p"), span = document.createElement("span"), span_2 = document.createElement("span");
         span_2.classList.add("percent");
         p.appendChild(span);
         p.appendChild(span_2);
