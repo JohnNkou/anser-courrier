@@ -412,8 +412,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
   function build_dependent_classe(rules) {
     return rules.map((rule) => "dependent_" + rule.fieldId).join(" ");
   }
-  function get_field_by_location(location, inboxes) {
-    let indexes = location.split(","), field = indexes.length == 2 && inboxes[indexes[0]][indexes[1]];
+  function get_field_by_location(location2, inboxes) {
+    let indexes = location2.split(","), field = indexes.length == 2 && inboxes[indexes[0]][indexes[1]];
     return field;
   }
   function check_validity({ form, field_ids, inboxes, required }) {
@@ -660,8 +660,13 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       if (Object.keys(file_to_sends).length) {
         p = handle_file_upload(file_to_sends, field_ids, inboxes, up.updatePercent).then((_uploads) => {
           let failed = Object.keys(_uploads).reduce((x, y) => {
-            let upload = _uploads[y];
-            x.push(...upload.filter((text) => !text || text.status != "ok"));
+            let upload = _uploads[y], bad_uploads = upload.filter((text) => !text || text.status != "ok");
+            if (bad_uploads.length) {
+              x.push(...bad_uploads);
+            } else {
+              let id = "input_" + y, data = upload.map((u) => u.data);
+              fData.append(id, JSON.stringify(data));
+            }
             return x;
           }, []);
           if (failed.length) {
@@ -670,7 +675,6 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               console.error(error);
             });
           }
-          up.updateText("Traitement du formulaire").updatePercent("");
           upload_form = true;
         }).catch((error) => {
           console.error(error);
@@ -680,7 +684,52 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       }
       p.finally(() => {
         if (upload_form) {
-          console.log("CAN UPLOAD FORMULAIRE");
+          up.updateText("Traitement du formulaire").updatePercent("");
+          searchParams.set("action", GravityAjax.flow_entry);
+          searchParams.set("nonce", GravityAjax.flow_nonce);
+          searchParams.set("id", entry_data.form_id);
+          searchParams.set("entry_id", entry_data.entry_id);
+          fetch(url, { method: "POST", body: fData }).then((response) => response.json()).then((json_response) => {
+            up.close();
+            let { success, data } = json_response, message = data && data.message;
+            if (success) {
+              let msg = message || "<h5>L'Operation a été effectué avec success</h5>";
+              display_information_modal(msg).then(() => {
+                toggle_loader("");
+                location.reload();
+              }).catch((error) => {
+                alert("Une erreur est survenue");
+                console.error(error);
+              });
+            } else {
+              if (data.invalid_field) {
+                data.invalid_field.forEach((invalid) => {
+                  let error_node = document.querySelector(".invalid-" + invalid.id);
+                  if (error_node) {
+                    error_node.textContent = invalid.message;
+                    error_node.classList.remove("hidden");
+                  } else {
+                    console.error("NO ERROR NODE FOUND FOR FIELD", invalid);
+                  }
+                });
+                display_information_modal("<h5>Veuillez vous assurez que tous les champs sont correctement rempli. Certain champs sont invalide</h5>").catch((error) => {
+                  alert("Une erreur est survenue");
+                  console.error(error);
+                });
+              } else {
+                let msg = message || "<h5>L'operation n'a pas pu etre effectué</h5>";
+                display_information_modal(msg).catch((error) => {
+                  alert("Une erreur est survenue");
+                  console.error(error);
+                });
+              }
+            }
+          }).catch((error) => {
+            up.close();
+            alert("Une erreur est survenue");
+            console.error(error);
+            display_information_modal("Une erreur est survenue lors du traitement du formulaire");
+          });
         }
       });
     };
