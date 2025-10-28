@@ -969,7 +969,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
                         $result['data-settings'] = $data_settings;
                     }
                     else{
-                        error_log(sprintf("Coudln't retrieve data-settings from field with label %s and id %s with html %s", $field->label, $field->id, $field_container));
+                        error_log(sprintf("Coudln't retrieve data-settings from field with label %s and id %s with html %s and result %s", $field->label, $field->id, $field_container, $data_settings));
                     }
                 }
                 else{
