@@ -296,10 +296,10 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               let text = xhr.response || xhr.responseText;
               try {
                 text = JSON.parse(text);
-                uploads[id].push({ id, text });
+                uploads[id].push(text);
                 console.log("Success for id", id);
               } catch (error) {
-                uploads[id].push({ id, text: { status: "error", error: { message: "Erreur lors du parsing" } } });
+                uploads[id].push({ status: "error", error: { message: "Erreur lors du parsing" } });
                 console.warn("Error parsing text ", error);
               }
               if (not_uploaded <= 0) {
@@ -309,7 +309,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             xhr.onerror = function(event) {
               alert("Une erreur est survenue lors de la transmission du fichier " + file.name);
               not_uploaded--;
-              uploads[id].push({ id, text: { status: "error", error: { message: "Error while uploading data" } } });
+              uploads[id].push({ status: "error", messgae: "une erreur est survenue" });
               if (not_uploaded <= 0) {
                 resolve(uploads);
               }
@@ -659,9 +659,11 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       up.updateText("Transmission des fichiers");
       if (Object.keys(file_to_sends).length) {
         p = handle_file_upload(file_to_sends, field_ids, inboxes, up.updatePercent).then((_uploads) => {
-          let failed = _uploads.filter((upload) => {
-            return !upload || !upload.text || !upload.text.status || upload.text.status != "ok";
-          });
+          let failed = Object.keys(_uploads).reduce((x, y) => {
+            let upload = _uploads[y];
+            x.push(...upload.filter((text) => !text || text.status != "ok"));
+            return x;
+          }, []);
           if (failed.length) {
             up.close();
             return display_information_modal("Le transmission de certain fichiers ont echoué").catch((error) => {
