@@ -301,7 +301,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                 uploads.push({ id, text: { status: "error", error: { message: "Erreur lors du parsing" } } });
                 console.warn("Error parsing text ", error);
               }
-              if (not_uploaded < 0) {
+              if (not_uploaded <= 0) {
                 resolve(uploads);
               }
             };
@@ -309,7 +309,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               alert("Une erreur est survenue lors de la transmission du fichier " + file.name);
               not_uploaded--;
               uploads.push({ id, text: { status: "error", error: { message: "Error while uploading data" } } });
-              if (not_uploaded < 0) {
+              if (not_uploaded <= 0) {
                 resolve(uploads);
               }
             };
