@@ -222,8 +222,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
   function handle_file_upload(input, field_ids, inboxes) {
     let files = input.files, id = input.getAttribute("id"), evolution_div = document.querySelector(".file_detail_" + id);
     if (id) {
-      for (let _id in files) {
-        let form = new FormData, file = files[_id], name = "o_" + guid(), field = get_field_by_location(field_ids[id], inboxes), settings = field["data-settings"], xhr = new XMLHttpRequest, p = document.createElement("p"), span = document.createElement("span"), span_2 = document.createElement("span");
+      for (let i = 0, file = files[i];i < files.length; i++) {
+        let form = new FormData, file2 = files[_id], name = "o_" + guid(), field = get_field_by_location(field_ids[id], inboxes), settings = field["data-settings"], xhr = new XMLHttpRequest, p = document.createElement("p"), span = document.createElement("span"), span_2 = document.createElement("span");
         span_2.classList.add("percent");
         p.appendChild(span);
         p.appendChild(span_2);
@@ -249,7 +249,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             text = JSON.parse(text);
             if (text.status) {
               if (text.status == "ok") {
-                console.log("File", file.name, "uploading correctly");
+                console.log("File", file2.name, "uploading correctly");
                 if (!field.uploads) {
                   field.uploads = [];
                 }
@@ -265,18 +265,18 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           span_2.textContent = "";
         };
         xhr.onerror = function(event) {
-          alert("Une erreur est survenue lors de la transmission du fichier " + file.name);
+          alert("Une erreur est survenue lors de la transmission du fichier " + file2.name);
         };
-        if (file.name.lastIndexOf(".") != -1) {
-          name += file.name.slice(file.name.lastIndexOf("."));
+        if (file2.name.lastIndexOf(".") != -1) {
+          name += file2.name.slice(file2.name.lastIndexOf("."));
         }
         form.append("name", name);
         for (let input_name in settings["multipart_params"]) {
           form.append(input_name, settings["multipart_params"][input_name]);
         }
         form.append("gform_unique_id", generateUniqueID());
-        form.append("original_filename", file.name);
-        form.append("file", file);
+        form.append("original_filename", file2.name);
+        form.append("file", file2);
         xhr.send(form);
       }
     } else {
