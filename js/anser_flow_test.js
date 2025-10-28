@@ -185,7 +185,7 @@ var require_lib = __commonJS((exports2) => {
 // js/anser_flow_utils.js
 var require_anser_flow_utils = __commonJS((exports2) => {
   var { page_handler, display_information_modal, toggle_loader, display_pdfviewer } = require_anser_utily();
-  var { Attributes, is_object } = require_lib();
+  var { Attributes, is_object, guid } = require_lib();
   function result_handler(json_response, table) {
     let { entries, field_values } = json_response.data;
     build_elements(table, entries);
@@ -204,6 +204,62 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       tbody.innerHTML = html;
     } else {
       console.error("TBODY NOT FOUND");
+    }
+  }
+  function handle_file_upload(input, field_ids, inboxes) {
+    let files = input.files, id = input.getAttribute("id"), evolution_div = document.querySelector(".file_detail_" + id);
+    if (id) {
+      for (let _id in files) {
+        let form = new FormData, file = files[id], name = "o_" + guid, field = get_field_by_location(field_ids[id]), settings = field["data-settings"], xhr = new XMLHttpRequest, p = document.createElement("p"), span = document.createElement("span"), span_2 = document.createElement("span");
+        span_2.classList.add("percent");
+        p.appendChild(span);
+        p.appendChild(span_2);
+        evolution_div.append(p);
+        if (!field) {
+          console.warn("No field found for id");
+          continue;
+        }
+        xhr.open(settings["url"], "POST", true);
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable) {
+            let { total, loaded } = event, percent = Math.ceil(loaded / total * 100) + "%";
+            span_2.textContent = percent;
+          }
+        };
+        xhr.onload = function(event) {
+          let text = xhr.response || xhr.responseText;
+          try {
+            text = JSON.parse(text);
+            if (text.status) {
+              if (text.status == "ok") {
+                console.log("File", file.name, "uploading correctly");
+                if (!field.uploads) {
+                  field.uploads = [];
+                }
+                field.uploads.push([text.data]);
+              }
+            } else {
+              console.error("Odd response returned from the server", text);
+              alert("Fichier non transmis");
+            }
+          } catch (error) {
+            console.warn("Error parsing text ", error);
+          }
+          span_2.textContent = "";
+        };
+        xhr.onerror = function(event) {
+          alert("Une erreur est survenue lors de la transmission du fichier " + file.name);
+        };
+        for (let input_name in settings["multipart_params"]) {
+          form.append(input_name, settings["multipart_params"][input_name]);
+        }
+        if (file.name.lastIndexOf(".") != -1) {
+          name += file.name.slice(file.name.lastIndexOf("."));
+        }
+        form.append(name, file);
+      }
+    } else {
+      console.warn("Input field doesn't have an id");
     }
   }
   function get_entry_ids(node, repeat) {
@@ -478,6 +534,15 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   });
                   bodyHtml += "</select><div " + failedAtts.toString() + "></div></div>";
                   break;
+                case "fileupload":
+                  atts.append("class", "card");
+                  inputAtts.remove("value");
+                  inputAtts.remove("placeholder");
+                  inputAtts.set("type", "file");
+                  bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p>";
+                  bodyHtml += "<div><div><input " + inputAtts.toString() + " /></div><div>" + inbox.value + "</div><div class='file_detail_" + inbox.id + "'></div></div>";
+                  bodyHtml += "</div>";
+                  break;
                 default:
                   console.error("unknwon inbox fieldType", inbox);
               }
@@ -572,7 +637,15 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         if (field_location) {
           let field = get_field_by_location(field_location, inboxes);
           if (field) {
-            field.leaf_value = target.value;
+            if (field.fieldType != "fileupload") {
+              field.leaf_value = target.value;
+            } else {
+              if (target.files.length) {
+                handle_file_upload(target, field_ids, inboxes);
+              } else {
+                console.error("Input length is empty", field.label);
+              }
+            }
           }
         }
       }
