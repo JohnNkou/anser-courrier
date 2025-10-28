@@ -11,6 +11,18 @@ var require_anser_utily = __commonJS((exports2) => {
     }
     return fetch(url, { method: "GET" });
   }
+  function file_viewer_handler(node) {
+    node.addEventListener("click", (event) => {
+      let target = event.target;
+      if (target.href && /\.(pdf|jpg|jpeg|png|gif)/.test(target.href)) {
+        event.preventDefault();
+        display_pdfviewer(target.href).catch((error) => {
+          console.error(error);
+          alert("Une erreur est survenue lors de l'affichage du pdf");
+        });
+      }
+    });
+  }
   function toggle_loader(text = "Chargement") {
     var loader = document.querySelector("#loader"), text_node = loader.querySelector(".text");
     if (loader) {
@@ -158,6 +170,7 @@ var require_anser_utily = __commonJS((exports2) => {
       }
     }
   };
+  exports2.file_viewer_handler = file_viewer_handler;
   exports2.display_information_modal = display_information_modal;
   exports2.toggle_loader = toggle_loader;
   exports2.display_pdfviewer = display_pdfviewer;
@@ -235,17 +248,6 @@ var require_anser_flow_utils = __commonJS((exports2) => {
   function result_handler(json_response, table) {
     let { entries, field_values } = json_response.data;
     build_elements(table, entries);
-  }
-  function file_viewer_handler(node) {
-    node.addEventListener("click", (event) => {
-      let target = event.target;
-      if (target.href && /\.(pdf|jpg|jpeg|png|gif)/.test(target.href)) {
-        display_pdfviewer(target.href).catch((error) => {
-          console.error(error);
-          alert("Une erreur est survenue lors de l'affichage du pdf");
-        });
-      }
-    });
   }
   function build_elements(table, entries) {
     var html = "", tbody = table.querySelector("tbody");
@@ -865,7 +867,6 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       }
     });
   }
-  exports2.file_viewer_handler = file_viewer_handler;
   exports2.result_handler = result_handler;
   exports2.entry_click_handler = entry_click_handler;
   exports2.onglet_handler = onglet_handler;
@@ -1098,8 +1099,8 @@ var require_anser_view_util = __commonJS((exports2) => {
 });
 
 // js/anser_flow.js
-var { page_handler } = require_anser_utily();
-var { result_handler, entry_click_handler, onglet_handler, file_viewer_handler } = require_anser_flow_utils();
+var { page_handler, file_viewer_handler } = require_anser_utily();
+var { result_handler, entry_click_handler, onglet_handler } = require_anser_flow_utils();
 var { result_handler: result_handler_2, entry_click_handler: entry_click_handler_2 } = require_anser_view_util();
 var table = document.querySelector(".main-table");
 var second_table = document.querySelector(".second-table");
