@@ -122,7 +122,7 @@ var require_anser_utily = __commonJS((exports2) => {
       return this.load_data(with_queries, offset).then((json_response) => {
         this.page = newPage;
         navigation_waiters.forEach((fn) => {
-          fn(offset);
+          fn(offset, offset + this.limit);
         });
         console.log("THE NEW PAGE IS", this.page);
         display_nativation_handler(newPage, this.total_page);

@@ -30,15 +30,15 @@ if(typeof _Page != "undefined"){
         }
     });
 
-    myPage_handler.onNavigation((offset)=>{
-        offset = offset + 1;
+    myPage_handler.onNavigation((offset, new_limit)=>{
+        offset =  offset + 1;
 
-        navigationHelper.textContent = offset + "-" + myPage_handler.limit + " de "+ myPage_handler.total;
+        navigationHelper.textContent = offset + "-" + new_limit + " de "+ myPage_handler.total;
     });
-    myPage_handler_2.onNavigation((offset)=>{
+    myPage_handler_2.onNavigation((offset, new_limit)=>{
         offset = offset + 1;
 
-        navigationHelper.textContent = offset + "-" + myPage_handler_2.limit + " de "+ myPage_handler_2.total;
+        navigationHelper.textContent = offset + "-" + new_limit + " de "+ myPage_handler_2.total;
     })
 
     entry_click_handler(table);

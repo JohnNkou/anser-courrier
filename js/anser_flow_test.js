@@ -122,7 +122,7 @@ var require_anser_utily = __commonJS((exports2) => {
       return this.load_data(with_queries, offset).then((json_response) => {
         this.page = newPage;
         navigation_waiters.forEach((fn) => {
-          fn(offset);
+          fn(offset, offset + this.limit);
         });
         console.log("THE NEW PAGE IS", this.page);
         display_nativation_handler(newPage, this.total_page);
@@ -1118,13 +1118,13 @@ if (typeof _Page != "undefined") {
       counts[1].textContent = myPage_handler_2.total;
     }
   });
-  myPage_handler.onNavigation((offset) => {
+  myPage_handler.onNavigation((offset, new_limit) => {
     offset = offset + 1;
-    navigationHelper.textContent = offset + "-" + myPage_handler.limit + " de " + myPage_handler.total;
+    navigationHelper.textContent = offset + "-" + new_limit + " de " + myPage_handler.total;
   });
-  myPage_handler_2.onNavigation((offset) => {
+  myPage_handler_2.onNavigation((offset, new_limit) => {
     offset = offset + 1;
-    navigationHelper.textContent = offset + "-" + myPage_handler_2.limit + " de " + myPage_handler_2.total;
+    navigationHelper.textContent = offset + "-" + new_limit + " de " + myPage_handler_2.total;
   });
   entry_click_handler(table);
   entry_click_handler_2(second_table);
