@@ -661,6 +661,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           return !upload || !upload.text || !upload.text.status || !upload.text.status != "ok";
         });
         if (failed.length) {
+          up.close();
           return display_information_modal("Le transmission de certain fichiers ont echoué").catch((error) => {
             console.error(error);
           });
