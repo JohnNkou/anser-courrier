@@ -658,7 +658,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       up.updateText("Transmission des fichiers");
       handle_file_upload(file_to_sends, field_ids, inboxes, up.updatePercent).then((_uploads) => {
         let failed = _uploads.filter((upload) => {
-          return !upload || !upload.text || !upload.text.status || !upload.text.status != "ok";
+          return !upload || !upload.text || !upload.text.status || upload.text.status != "ok";
         });
         if (failed.length) {
           up.close();
