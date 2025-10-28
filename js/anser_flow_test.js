@@ -283,11 +283,11 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                 if (!received_data) {
                   waiting_progress--;
                   totalBytes += total;
-                  totalLoaded += loaded;
                   received_data = true;
-                  if (!waiting_progress) {
-                    updatePercent(Math.ceil(totalLoaded / totalBytes * 100) + "%");
-                  }
+                }
+                totalLoaded += loaded;
+                if (!waiting_progress) {
+                  updatePercent(Math.ceil(totalLoaded / totalBytes * 100) + "%");
                 }
               }
             };
