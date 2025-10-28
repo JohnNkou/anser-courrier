@@ -244,11 +244,11 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     }
   }
   function update_file_to_send(input, file_to_sends) {
-    let files2 = input.files, id = input.getAttribute("id"), evolution_div = document.querySelector(".file_detail_" + id);
+    let files = input.files, id = input.getAttribute("id"), evolution_div = document.querySelector(".file_detail_" + id);
     if (!id) {
       console.warn("No id find for file input");
     }
-    for (let i = 0, file = files2[i];i < files2.length; i++) {
+    for (let i = 0, file = files[i];i < files.length; i++) {
       let p = document.createElement("p"), span = document.createElement("span"), span_2 = document.createElement("span");
       span_2.classList.add("percent");
       span.textContent = file.name;
@@ -266,7 +266,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     let totalBytes = 0, totalLoaded = 0, not_uploaded = 0, waiting_progress = null, uploads = [];
     return new Promise((resolve, reject) => {
       for (let id in file_to_sends) {
-        if (id) {
+        let files = file_to_sends[id];
+        if (files.length) {
           for (let i = 0, file = files[i];i < files.length; i++) {
             let form = new FormData, name = "o_" + guid(), field = get_field_by_location(field_ids[id], inboxes), settings = field["data-settings"], received_data = false;
             if (!field) {
