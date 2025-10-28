@@ -908,11 +908,15 @@ function build_inbox_editable_result($form,$entry,$current_step){
         $field->set_context_property('rendering_form',true);
         $display = true;
         $rules = false;
+        $actionType = null;
+        $logicType = null;
         $value = "";
         $current_array = &$results[$current_index];
 
         if(!empty($field->conditionalLogic)){
             $rules = $field->conditionalLogic['rules'];
+            $actionType = $field->conditionalLogic['actionType'];
+            $logicType = $field->conditionalLogic['logicType'];
         }
 
         if($entry_editor->is_hidden_field($field)){
@@ -1023,6 +1027,8 @@ function build_inbox_editable_result($form,$entry,$current_step){
         if(!empty($result)){
             $result['rules'] = $rules;
             $result['display'] = $display;
+            $result['actionType'] = $actionType;
+            $result['logicType'] = $logicType;
 
             array_push($current_array,$result);
         }
