@@ -4293,7 +4293,7 @@ class GFFormDisplay {
 		$custom_class    = $is_admin ? esc_attr( $field->cssClass ) : esc_attr( self::convert_legacy_class( $form, $field->cssClass ) );
 		$form_id         = (int) rgar( $form, 'id' );
 
-		if($field->id == 83){
+		if($field->id == 26){
 			error_log("DIFFICULT FIED ".print_r($field,true));
 		}
 
