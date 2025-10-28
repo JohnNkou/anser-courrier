@@ -655,9 +655,9 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       }
       let up = new uploader, p;
       up.show();
-      up.updatePercent("0%");
-      up.updateText("Transmission des fichiers");
       if (Object.keys(file_to_sends).length) {
+        up.updatePercent("0%");
+        up.updateText("Transmission des fichiers");
         p = handle_file_upload(file_to_sends, field_ids, inboxes, up.updatePercent).then((_uploads) => {
           let failed = Object.keys(_uploads).reduce((x, y) => {
             let upload = _uploads[y], bad_uploads = upload.filter((text) => !text || text.status != "ok");
@@ -682,6 +682,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           console.error(error);
         });
       } else {
+        upload_form = true;
         p = Promise.resolve(true);
       }
       p.finally(() => {
