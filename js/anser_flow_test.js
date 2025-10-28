@@ -269,7 +269,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         let files = file_to_sends[id];
         if (files.length) {
           for (let i = 0, file = files[i];i < files.length; i++) {
-            let form = new FormData, name = "o_" + guid(), field = get_field_by_location(field_ids[id], inboxes), settings = field["data-settings"], received_data = false;
+            let form = new FormData, name = "o_" + guid(), field = get_field_by_location(field_ids[id], inboxes), settings = field["data-settings"], received_data = false, xhr = new XMLHttpRequest;
             if (!field) {
               console.warn("No field found for id");
               continue;
