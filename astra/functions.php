@@ -885,6 +885,8 @@ function get_upload_data_settings($html){
     error_log("MATCH IS ".print_r($matches,true));
 
     if(count($matches) > 1){
+        $j = htmlspecialchars_decode($matches[1]);
+        error_log("JOLIADED $j");
         return json_decode(htmlspecialchars_decode($matches[1]));
     }
 
