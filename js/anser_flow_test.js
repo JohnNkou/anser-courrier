@@ -250,8 +250,13 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             try {
               text = JSON.parse(text);
               if (text.status) {
+                span_2.textContent = "";
+                if (text.status.toLowerCase() == "ok") {
+                  return resolve(text);
+                }
                 resolve(text);
               } else {
+                evolution_div.removeChild(p);
                 console.error("Odd response returned from the server", text);
                 resolve();
               }
@@ -259,7 +264,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               console.warn("Error parsing text ", error);
               reject2(error);
             }
-            span_2.textContent = "";
+            evolution_div.removeChild(p);
           };
           xhr.onerror = function(event) {
             alert("Une erreur est survenue lors de la transmission du fichier " + file.name);
@@ -660,15 +665,30 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               if (target.files.length) {
                 handle_file_upload(target, field_ids, inboxes).then((payload) => {
                   if (payload) {
-                    if (payload.status == "ok") {
-                      let _id = "input_" + id, meta_datas = uploads[_id];
-                      if (!meta_datas) {
-                        meta_datas = uploads[_id] = [];
-                      }
-                      meta_datas.push(payload.data);
-                      console.log("uploads updagte", uploads);
-                    } else {
-                      alert("Le fichier n'as pas pu etre transmis avec succès");
+                    switch (payload.status) {
+                      case "ok":
+                        if (payload.status == "ok") {
+                          let _id = "input_" + id, meta_datas = uploads[_id];
+                          if (!meta_datas) {
+                            meta_datas = uploads[_id] = [];
+                          }
+                          meta_datas.push(payload.data);
+                          console.log("uploads updagte", uploads);
+                        } else {
+                          alert("Le fichier n'as pas pu etre transmis avec succès");
+                        }
+                        break;
+                      case "error":
+                        if (payload.error) {
+                          if (payload.error.message) {
+                            alert(payload.error.message);
+                            break;
+                          }
+                        }
+                      default:
+                        alert("Les fichier n'ont pas pu etres transmis avec succèes");
+                        console.error("BAD PAYLOAD", payload);
+                        break;
                     }
                   } else {
                     console.log("Received empty payload");
