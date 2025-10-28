@@ -375,7 +375,6 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     }
   }
   function should_display_field(field, field_ids, inboxes) {
-    let display = true;
     if (field.rules) {
       let method = "every";
       if (field.logicType != "all") {
@@ -385,9 +384,11 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         return field.actionType == "show";
       }
       return field.actionType == "hide";
+    } else {
+      return true;
     }
     function ruleChecker(rule) {
-      let { fieldId, operator, value: ruleValue } = rule, field_location = field_ids[fieldId], validated2 = true;
+      let { fieldId, operator, value: ruleValue } = rule, field_location = field_ids[fieldId], validated = true;
       if (field_location) {
         let _field = get_field_by_location(field_location, inboxes);
         if (_field) {
@@ -398,26 +399,25 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               console.warn("rule", field.rules);
               console.log("_field", _field);
               console.log("VALUE", value);
-              validated2 = false;
+              validated = false;
             }
           } else if (value != ruleValue) {
             console.warn("CAN DISPLAY FIELD", field.label, "BECAUSE RULE DON'T SATISFY");
             console.warn("rule", field.rules);
             console.log("_field", _field);
             console.log("VALUE", value);
-            validated2 = false;
+            validated = false;
           }
         } else {
           console.error("Couldn't find dependent field", field_location);
-          validated2 = false;
+          validated = false;
         }
       } else {
         console.error("FIELD in fieldId not found", fieldId);
-        validated2 = false;
+        validated = false;
       }
+      return validated;
     }
-    return validated;
-    return display;
   }
   function build_dependent_classe(rules) {
     return rules.map((rule) => "dependent_" + rule.fieldId).join(" ");
