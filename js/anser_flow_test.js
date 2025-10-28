@@ -55,6 +55,29 @@ var require_anser_utily = __commonJS((exports2) => {
       };
     });
   }
+  function uploader() {
+    let node = document.getElementById("uploader"), text = node.querySelector(".text"), percent = node.querySelector(".percent"), button = node.querySelector("button");
+    button.onclick = () => {
+      text.textContent = "";
+      percent.textContent = "";
+      node.classList.add("hidden");
+    };
+    this.show = (node2) => {
+      node2.classList.remove("hidden");
+      return this;
+    };
+    this.updateText = (new_text) => {
+      text.textContent = new_text;
+      return this;
+    };
+    this.updatePercent = (percent2) => {
+      percent2.textContent = percent2;
+      return this;
+    };
+    this.close = () => {
+      button.click();
+    };
+  }
   exports2.page_handler = function page_handler(navigationHandler, body, default_queries = {}) {
     let nextPage = body.querySelector(".nextPage"), prevPage = body.querySelector(".previousPage"), with_queries = default_queries;
     this.page = 0;
@@ -129,6 +152,7 @@ var require_anser_utily = __commonJS((exports2) => {
   exports2.display_information_modal = display_information_modal;
   exports2.toggle_loader = toggle_loader;
   exports2.display_pdfviewer = display_pdfviewer;
+  exports2.uploader = uploader;
 });
 
 // js/lib.js
