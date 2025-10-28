@@ -70,8 +70,8 @@ var require_anser_utily = __commonJS((exports2) => {
       text.textContent = new_text;
       return this;
     };
-    this.updatePercent = (percent2) => {
-      percent2.textContent = percent2;
+    this.updatePercent = (_percent) => {
+      percent.textContent = _percent + "%";
       return this;
     };
     this.close = () => {
