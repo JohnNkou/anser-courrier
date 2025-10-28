@@ -62,8 +62,8 @@ var require_anser_utily = __commonJS((exports2) => {
       percent.textContent = "";
       node.classList.add("hidden");
     };
-    this.show = (node2) => {
-      node2.classList.remove("hidden");
+    this.show = () => {
+      node.classList.remove("hidden");
       return this;
     };
     this.updateText = (new_text) => {

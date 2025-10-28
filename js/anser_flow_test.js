@@ -62,8 +62,8 @@ var require_anser_utily = __commonJS((exports2) => {
       percent.textContent = "";
       node.classList.add("hidden");
     };
-    this.show = (node2) => {
-      node2.classList.remove("hidden");
+    this.show = () => {
+      node.classList.remove("hidden");
       return this;
     };
     this.updateText = (new_text) => {
@@ -261,6 +261,79 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       file_to_sends[id].push(file);
     }
     console.log("new file_to_sends", file_to_sends);
+  }
+  function handle_file_upload(file_to_sends, field_ids, inboxes, updatePercent) {
+    let totalBytes = 0, totalLoaded = 0, not_uploaded = 0, waiting_progress = null, uploads = [];
+    return new Promise((resolve, reject) => {
+      for (let id in file_to_sends) {
+        if (id) {
+          for (let i = 0, file = files[i];i < files.length; i++) {
+            let form = new FormData, name = "o_" + guid(), field = get_field_by_location(field_ids[id], inboxes), settings = field["data-settings"], received_data = false;
+            if (!field) {
+              console.warn("No field found for id");
+              continue;
+            }
+            not_uploaded++;
+            xhr.open("POST", settings["url"], true);
+            xhr.upload.onprogress = (event) => {
+              let { total, loaded } = event;
+              if (event.lengthComputable) {
+                if (!received_data) {
+                  waiting_progress--;
+                  totalBytes += total;
+                  totalLoaded += loaded;
+                  received_data = true;
+                  if (!waiting_progress) {
+                    updatePercent(Math.ceil(totalLoaded / totalBytes * 100));
+                  }
+                }
+              }
+            };
+            xhr.onload = function(event) {
+              not_uploaded--;
+              let text = xhr.response || xhr.responseText;
+              try {
+                text = JSON.parse(text);
+                uploads.push({ id, text });
+                console.log("Success for id", id);
+              } catch (error) {
+                uploads.push({ id, text: { status: "error", error: { message: "Erreur lors du parsing" } } });
+                console.warn("Error parsing text ", error);
+              }
+              if (not_uploaded < 0) {
+                resolve(uploads);
+              }
+            };
+            xhr.onerror = function(event) {
+              alert("Une erreur est survenue lors de la transmission du fichier " + file.name);
+              not_uploaded--;
+              uploads.push({ id, text: { status: "error", error: { message: "Error while uploading data" } } });
+              if (not_uploaded < 0) {
+                resolve(uploads);
+              }
+            };
+            if (file.name.lastIndexOf(".") != -1) {
+              name += file.name.slice(file.name.lastIndexOf("."));
+            }
+            form.append("name", name);
+            for (let input_name in settings["multipart_params"]) {
+              form.append(input_name, settings["multipart_params"][input_name]);
+            }
+            form.append("gform_unique_id", generateUniqueID());
+            form.append("original_filename", file.name);
+            form.append("file", file);
+            xhr.send(form);
+            if (waiting_progress === null) {
+              waiting_progress = 1;
+            } else {
+              waiting_progress++;
+            }
+          }
+        } else {
+          reject(new Error("Input field doesn't have an id"));
+        }
+      }
+    });
   }
   function get_entry_ids(node, repeat) {
     if (repeat && node) {
@@ -582,6 +655,19 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       up.show();
       up.updatePercent("0%");
       up.updateText("Transmission des fichiers");
+      handle_file_upload(file_to_sends, field_ids, inboxes, up.updatePercent).then((_uploads) => {
+        let failed = _uploads.filter((upload) => {
+          return !upload || !upload.text || !upload.text.status || !upload.text.status != "ok";
+        });
+        if (failed.length) {
+          return display_information_modal("Le transmission de certain fichiers ont echoué").catch((error) => {
+            console.error(error);
+          });
+        }
+        up.updateText("Traitement du formulaire").updatePercent("");
+      }).catch((error) => {
+        console.error(error);
+      });
     };
     content_node.onchange = (event) => {
       let target = event.target, id = target.getAttribute("id");
