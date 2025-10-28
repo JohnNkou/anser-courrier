@@ -18,7 +18,7 @@ if(typeof _Page != "undefined"){
         if(counts.length){
             counts[0].textContent = myPage_handler.total;
 
-            navigationHandler.textContent = "1-"+ myPage_handler.limit + " de "+ myPage_handler.total;
+            navigationHelper.textContent = "1-"+ myPage_handler.limit + " de "+ myPage_handler.total;
         }
         else{
             console.error("NO COUNTS NODE FOUND");
@@ -33,12 +33,12 @@ if(typeof _Page != "undefined"){
     myPage_handler.onNavigation((offset)=>{
         offset = offset + 1;
 
-        navigationHandler.textContent = offset + "-" + myPage_handler.limit + " de "+ myPage_handler.total;
+        navigationHelper.textContent = offset + "-" + myPage_handler.limit + " de "+ myPage_handler.total;
     });
     myPage_handler_2.onNavigation((offset)=>{
         offset = offset + 1;
 
-        navigationHandler.textContent = offset + "-" + myPage_handler_2.limit + " de "+ myPage_handler_2.total;
+        navigationHelper.textContent = offset + "-" + myPage_handler_2.limit + " de "+ myPage_handler_2.total;
     })
 
     entry_click_handler(table);

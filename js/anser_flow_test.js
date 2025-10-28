@@ -78,7 +78,7 @@ var require_anser_utily = __commonJS((exports2) => {
       button.click();
     };
   }
-  exports2.page_handler = function page_handler(navigationHandler2, body, default_queries = {}) {
+  exports2.page_handler = function page_handler(navigationHandler, body, default_queries = {}) {
     let nextPage = body.querySelector(".nextPage"), prevPage = body.querySelector(".previousPage"), with_queries = default_queries, navigation_waiters = [];
     this.page = 0;
     this.total_page = 0;
@@ -90,15 +90,15 @@ var require_anser_utily = __commonJS((exports2) => {
     if (nextPage && prevPage) {
       nextPage.addEventListener("click", (event) => {
         this.goTo(this.page + 1).then((json_response) => {
-          if (navigationHandler2) {
-            navigationHandler2(json_response);
+          if (navigationHandler) {
+            navigationHandler(json_response);
           }
         });
       });
       prevPage.addEventListener("click", (event) => {
         this.goTo(this.page - 1).then((json_response) => {
-          if (navigationHandler2) {
-            navigationHandler2(json_response);
+          if (navigationHandler) {
+            navigationHandler(json_response);
           }
         });
       });
@@ -144,7 +144,7 @@ var require_anser_utily = __commonJS((exports2) => {
       });
     };
     function display_nativation_handler(page, total) {
-      if (navigationHandler2) {
+      if (navigationHandler) {
         if (page == 0) {
           prevPage.classList.add("hidden");
         } else {
@@ -1108,7 +1108,7 @@ if (typeof _Page != "undefined") {
   myPage_handler.load_data().then((json_response) => result_handler(json_response, table)).then(() => {
     if (counts.length) {
       counts[0].textContent = myPage_handler.total;
-      navigationHandler.textContent = "1-" + myPage_handler.limit + " de " + myPage_handler.total;
+      navigationHelper.textContent = "1-" + myPage_handler.limit + " de " + myPage_handler.total;
     } else {
       console.error("NO COUNTS NODE FOUND");
     }
@@ -1120,11 +1120,11 @@ if (typeof _Page != "undefined") {
   });
   myPage_handler.onNavigation((offset) => {
     offset = offset + 1;
-    navigationHandler.textContent = offset + "-" + myPage_handler.limit + " de " + myPage_handler.total;
+    navigationHelper.textContent = offset + "-" + myPage_handler.limit + " de " + myPage_handler.total;
   });
   myPage_handler_2.onNavigation((offset) => {
     offset = offset + 1;
-    navigationHandler.textContent = offset + "-" + myPage_handler_2.limit + " de " + myPage_handler_2.total;
+    navigationHelper.textContent = offset + "-" + myPage_handler_2.limit + " de " + myPage_handler_2.total;
   });
   entry_click_handler(table);
   entry_click_handler_2(second_table);
