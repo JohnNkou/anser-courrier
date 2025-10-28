@@ -197,7 +197,7 @@ var require_lib = __commonJS((exports2) => {
 
 // js/anser_flow_utils.js
 var require_anser_flow_utils = __commonJS((exports2) => {
-  var { page_handler, display_information_modal, toggle_loader, display_pdfviewer } = require_anser_utily();
+  var { page_handler, display_information_modal, toggle_loader, display_pdfviewer, uploader } = require_anser_utily();
   var { Attributes, is_object, guid, generateUniqueID } = require_lib();
   function result_handler(json_response, table) {
     let { entries, field_values } = json_response.data;
@@ -313,8 +313,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
   function build_dependent_classe(rules) {
     return rules.map((rule) => "dependent_" + rule.fieldId).join(" ");
   }
-  function get_field_by_location(location2, inboxes) {
-    let indexes = location2.split(","), field = indexes.length == 2 && inboxes[indexes[0]][indexes[1]];
+  function get_field_by_location(location, inboxes) {
+    let indexes = location.split(","), field = indexes.length == 2 && inboxes[indexes[0]][indexes[1]];
     return field;
   }
   function check_validity({ form, field_ids, inboxes, required }) {
@@ -554,51 +554,10 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         }
         return;
       }
-      searchParams.set("action", GravityAjax.flow_entry);
-      searchParams.set("nonce", GravityAjax.flow_nonce);
-      searchParams.set("id", entry_data.form_id);
-      searchParams.set("entry_id", entry_data.entry_id);
-      toggle_loader("Traitement");
-      fetch(url, { method: "POST", body: fData }).then((response) => response.json()).then((json_response) => {
-        let { success, data } = json_response, message = data && data.message;
-        if (success) {
-          let msg = message || "<h5>L'Operation a été effectué avec success</h5>";
-          display_information_modal(msg).then(() => {
-            toggle_loader("");
-            location.reload();
-          }).catch((error) => {
-            alert("Une erreur est survenue");
-            console.error(error);
-          });
-        } else {
-          if (data.invalid_field) {
-            data.invalid_field.forEach((invalid) => {
-              let error_node = document.querySelector(".invalid-" + invalid.id);
-              if (error_node) {
-                error_node.textContent = invalid.message;
-                error_node.classList.remove("hidden");
-              } else {
-                console.error("NO ERROR NODE FOUND FOR FIELD", invalid);
-              }
-            });
-            display_information_modal("<h5>Veuillez vous assurez que tous les champs sont correctement rempli. Certain champs sont invalide</h5>").catch((error) => {
-              alert("Une erreur est survenue");
-              console.error(error);
-            });
-          } else {
-            let msg = message || "<h5>L'operation n'a pas pu etre effectué</h5>";
-            display_information_modal(msg).catch((error) => {
-              alert("Une erreur est survenue");
-              console.error(error);
-            });
-          }
-        }
-      }).catch((error) => {
-        alert("Une erreur est survenue");
-        console.error(error);
-      }).finally(() => {
-        toggle_loader();
-      });
+      let up = new uploader;
+      up.show();
+      up.updatePercent("0%");
+      up.updateText("Transmission des fichiers");
     };
     content_node.onchange = (event) => {
       let target = event.target, id = target.getAttribute("id");
