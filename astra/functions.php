@@ -948,6 +948,10 @@ function build_inbox_editable_result($form,$entry,$current_step){
                 "inputs"=> $field->inputs
             ];
 
+            if($field->id == 78){
+                error_log(sprintf("FIELD TENDU %s with value %s and leaf_value %s", print_r($field,true), $_value, $_leaf_value));
+            }
+
             if(!empty($field->choices) || !empty($field->inputs)){
                 $choices = array_map(function($choice){
                     return [
