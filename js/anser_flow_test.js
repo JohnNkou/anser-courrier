@@ -223,7 +223,11 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         xhr.upload.onprogress = (event) => {
           if (event.lengthComputable) {
             let { total, loaded } = event, percent = Math.ceil(loaded / total * 100) + "%";
-            span_2.textContent = percent;
+            if (span_2.textContent == percent) {
+              span_2.textContent = "Traitement...";
+            } else {
+              span_2.textContent = percent;
+            }
           }
         };
         xhr.onload = function(event) {
