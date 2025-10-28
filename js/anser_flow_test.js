@@ -219,7 +219,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           console.warn("No field found for id");
           continue;
         }
-        xhr.open(settings["url"], "POST", true);
+        xhr.open("POST", settings["url"], true);
         xhr.upload.onprogress = (event) => {
           if (event.lengthComputable) {
             let { total, loaded } = event, percent = Math.ceil(loaded / total * 100) + "%";
@@ -257,6 +257,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           name += file.name.slice(file.name.lastIndexOf("."));
         }
         form.append(name, file);
+        xhr.send(form);
       }
     } else {
       console.warn("Input field doesn't have an id");
