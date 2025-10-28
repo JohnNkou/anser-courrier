@@ -664,8 +664,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             if (bad_uploads.length) {
               x.push(...bad_uploads);
             } else {
-              let id = "input_" + y, data = upload.map((u) => u.data);
-              fData.append(id, JSON.stringify(data));
+              _uploads["input_" + y] = upload.map((x2) => x2.data);
+              delete _uploads[y];
             }
             return x;
           }, []);
@@ -675,6 +675,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               console.error(error);
             });
           }
+          fData.append("gform_uploaded_files", JSON.stringify(_uploads));
           upload_form = true;
         }).catch((error) => {
           console.error(error);
