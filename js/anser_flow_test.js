@@ -673,8 +673,11 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                     } else {
                       alert("Le fichier n'as pas pu etre transmis avec succès");
                     }
+                  } else {
+                    console.log("Received empty payload");
+                    alert("Le fichier n'a pas pu correctement être traité");
                   }
-                }).catc((error) => {
+                }).catch((error) => {
                   alert("Une erreur est survenue lors de la transmission des fichiers");
                   console.error(error);
                 });
