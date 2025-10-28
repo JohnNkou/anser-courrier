@@ -377,36 +377,46 @@ var require_anser_flow_utils = __commonJS((exports2) => {
   function should_display_field(field, field_ids, inboxes) {
     let display = true;
     if (field.rules) {
-      field.rules.forEach((rule) => {
-        let { fieldId, operator, value: ruleValue } = rule, field_location = field_ids[fieldId];
-        if (field_location) {
-          let _field = get_field_by_location(field_location, inboxes);
-          if (_field) {
-            let value = get_field_value(_field);
-            if (value.push) {
-              if (value.indexOf(ruleValue) == -1) {
-                console.warn("CAN DISPLAY FIELD", field.label, "BECAUSE RULE DON'T SATISFY");
-                console.warn("rule", field.rules);
-                console.log("_field", _field);
-                console.log("VALUE", value);
-                display = false;
-              }
-            } else if (value != ruleValue) {
+      let method = "every";
+      if (field.logicType != "all") {
+        method = "some";
+      }
+      if (field.rules[method](ruleChecker)) {
+        return field.actionType == "show";
+      }
+      return field.actionType == "hide";
+    }
+    function ruleChecker(rule) {
+      let { fieldId, operator, value: ruleValue } = rule, field_location = field_ids[fieldId], validated2 = true;
+      if (field_location) {
+        let _field = get_field_by_location(field_location, inboxes);
+        if (_field) {
+          let value = get_field_value(_field);
+          if (value.push) {
+            if (value.indexOf(ruleValue) == -1) {
               console.warn("CAN DISPLAY FIELD", field.label, "BECAUSE RULE DON'T SATISFY");
               console.warn("rule", field.rules);
               console.log("_field", _field);
               console.log("VALUE", value);
-              display = false;
+              validated2 = false;
             }
-            return;
+          } else if (value != ruleValue) {
+            console.warn("CAN DISPLAY FIELD", field.label, "BECAUSE RULE DON'T SATISFY");
+            console.warn("rule", field.rules);
+            console.log("_field", _field);
+            console.log("VALUE", value);
+            validated2 = false;
           }
         } else {
-          console.error("FIELD in fieldId not found", fieldId);
-          display = false;
-          return;
+          console.error("Couldn't find dependent field", field_location);
+          validated2 = false;
         }
-      });
+      } else {
+        console.error("FIELD in fieldId not found", fieldId);
+        validated2 = false;
+      }
     }
+    return validated;
     return display;
   }
   function build_dependent_classe(rules) {
