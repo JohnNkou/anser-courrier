@@ -263,10 +263,11 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     console.log("new file_to_sends", file_to_sends);
   }
   function handle_file_upload(file_to_sends, field_ids, inboxes, updatePercent) {
-    let totalBytes = 0, totalLoaded = 0, not_uploaded = 0, waiting_progress = null, uploads = [];
+    let totalBytes = 0, totalLoaded = 0, not_uploaded = 0, waiting_progress = null, uploads = {};
     return new Promise((resolve, reject) => {
       for (let id in file_to_sends) {
         let files = file_to_sends[id];
+        uploads[id] = [];
         if (files.length) {
           for (let i = 0, file = files[i];i < files.length; i++) {
             let form = new FormData, name = "o_" + guid(), field = get_field_by_location(field_ids[id], inboxes), settings = field["data-settings"], received_data = false, xhr = new XMLHttpRequest;
@@ -295,10 +296,10 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               let text = xhr.response || xhr.responseText;
               try {
                 text = JSON.parse(text);
-                uploads.push({ id, text });
+                uploads[id].push({ id, text });
                 console.log("Success for id", id);
               } catch (error) {
-                uploads.push({ id, text: { status: "error", error: { message: "Erreur lors du parsing" } } });
+                uploads[id].push({ id, text: { status: "error", error: { message: "Erreur lors du parsing" } } });
                 console.warn("Error parsing text ", error);
               }
               if (not_uploaded <= 0) {
@@ -308,7 +309,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             xhr.onerror = function(event) {
               alert("Une erreur est survenue lors de la transmission du fichier " + file.name);
               not_uploaded--;
-              uploads.push({ id, text: { status: "error", error: { message: "Error while uploading data" } } });
+              uploads[id].push({ id, text: { status: "error", error: { message: "Error while uploading data" } } });
               if (not_uploaded <= 0) {
                 resolve(uploads);
               }
