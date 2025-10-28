@@ -638,7 +638,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     });
     content_node.onsubmit = (event) => {
       event.preventDefault();
-      let form = event.target, fData = new FormData(form), url = new URL(GravityAjax.ajax_url), searchParams = url.searchParams, error_fields = document.querySelectorAll(".error-field");
+      let form = event.target, fData = new FormData(form), url = new URL(GravityAjax.ajax_url), searchParams = url.searchParams, error_fields = document.querySelectorAll(".error-field"), upload_form = false;
       purge_error_nodes(error_fields);
       if (!check_validity({ form: fData, required, field_ids, inboxes })) {
         console.warn("Form is not valid");
@@ -656,20 +656,27 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       up.show();
       up.updatePercent("0%");
       up.updateText("Transmission des fichiers");
-      handle_file_upload(file_to_sends, field_ids, inboxes, up.updatePercent).then((_uploads) => {
-        let failed = _uploads.filter((upload) => {
-          return !upload || !upload.text || !upload.text.status || upload.text.status != "ok";
-        });
-        if (failed.length) {
-          up.close();
-          return display_information_modal("Le transmission de certain fichiers ont echoué").catch((error) => {
-            console.error(error);
+      if (Object.keys(file_to_sends).length) {
+        handle_file_upload(file_to_sends, field_ids, inboxes, up.updatePercent).then((_uploads) => {
+          let failed = _uploads.filter((upload) => {
+            return !upload || !upload.text || !upload.text.status || upload.text.status != "ok";
           });
-        }
-        up.updateText("Traitement du formulaire").updatePercent("");
-      }).catch((error) => {
-        console.error(error);
-      });
+          if (failed.length) {
+            up.close();
+            return display_information_modal("Le transmission de certain fichiers ont echoué").catch((error) => {
+              console.error(error);
+            });
+          }
+          up.updateText("Traitement du formulaire").updatePercent("");
+          upload_form = true;
+        }).catch((error) => {
+          console.error(error);
+        }).finally(() => {
+          if (upload_form) {
+            console.log("I can upload the form");
+          }
+        });
+      }
     };
     content_node.onchange = (event) => {
       let target = event.target, id = target.getAttribute("id");
