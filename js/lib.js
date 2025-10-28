@@ -48,7 +48,7 @@ function Attributes(){
 		let atts = [];
 
 		for(let name in attributes){
-			atts.push(name.toString() + "='" + (attributes[name].join(" ").replace("'","\'")) + "'");
+			atts.push(name.toString() + '="' + (attributes[name].join(" ")) + '"');
 		}
 
 		return atts.join(" ");
