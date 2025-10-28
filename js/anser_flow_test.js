@@ -816,6 +816,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     onglets.addEventListener("click", (event) => {
       event.preventDefault();
       let target = event.target, index = target.getAttribute("index");
+      console.log("SHIFFI");
       if (index != null) {
         if (!target.classList.contains("active")) {
           contents.forEach((content, _index) => {
