@@ -82,6 +82,7 @@ var require_anser_utily = __commonJS((exports2) => {
     let nextPage = body.querySelector(".nextPage"), prevPage = body.querySelector(".previousPage"), with_queries = default_queries;
     this.page = 0;
     this.total_page = 0;
+    this.total = 0;
     this.limit = 15;
     if (nextPage && prevPage) {
       nextPage.addEventListener("click", (event) => {
@@ -127,6 +128,7 @@ var require_anser_utily = __commonJS((exports2) => {
       toggle_loader();
       return Anser_loader(offset, limit, { ...with_queries, ...queries }).then((response) => response.json()).then((response) => {
         this.total_page = Math.ceil(response.data.total / this.limit);
+        this.total = response.data.total;
         this.page = offset;
         display_nativation_handler(offset, this.total_page);
         return response;

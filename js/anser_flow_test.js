@@ -82,6 +82,7 @@ var require_anser_utily = __commonJS((exports2) => {
     let nextPage = body.querySelector(".nextPage"), prevPage = body.querySelector(".previousPage"), with_queries = default_queries;
     this.page = 0;
     this.total_page = 0;
+    this.total = 0;
     this.limit = 15;
     if (nextPage && prevPage) {
       nextPage.addEventListener("click", (event) => {
@@ -127,6 +128,7 @@ var require_anser_utily = __commonJS((exports2) => {
       toggle_loader();
       return Anser_loader(offset, limit, { ...with_queries, ...queries }).then((response) => response.json()).then((response) => {
         this.total_page = Math.ceil(response.data.total / this.limit);
+        this.total = response.data.total;
         this.page = offset;
         display_nativation_handler(offset, this.total_page);
         return response;
@@ -1088,14 +1090,25 @@ var { result_handler: result_handler_2, entry_click_handler: entry_click_handler
 var table = document.querySelector(".main-table");
 var second_table = document.querySelector(".second-table");
 var tbody = table.querySelector("tbody");
+var counts = document.querySelectorAll(".onglets .count");
 var myPage_handler = new page_handler((json_response) => result_handler(json_response, table), table);
 var myPage_handler_2 = new page_handler((json_response) => result_handler_2(json_response, second_table), second_table);
 var search_form = document.querySelector(".search_block");
 if (typeof _Page != "undefined") {
   myPage_handler.addQueries({ action: GravityAjax.flow_action, security: GravityAjax.flow_nonce });
   myPage_handler_2.addQueries({ id: _Page.view_id, secret: _Page.secret, action: GravityAjax.view_action, security: GravityAjax.view_nonce });
-  myPage_handler.load_data().then((json_response) => result_handler(json_response, table));
-  myPage_handler_2.load_data().then((json_response) => result_handler_2(json_response, second_table));
+  myPage_handler.load_data().then((json_response) => result_handler(json_response, table)).then(() => {
+    if (counts.length) {
+      counts[0].textContent = myPage_handler.total;
+    } else {
+      console.error("NO COUNTS NODE FOUND");
+    }
+  });
+  myPage_handler_2.load_data().then((json_response) => result_handler_2(json_response, second_table)).then(() => {
+    if (counts.length) {
+      counts[1].textContent = myPage_handler_2.total;
+    }
+  });
   entry_click_handler(table);
   entry_click_handler_2(second_table);
   onglet_handler([table, second_table]);
