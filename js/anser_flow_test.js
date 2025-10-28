@@ -195,7 +195,7 @@ var require_lib = __commonJS((exports2) => {
     this.toString = function() {
       let atts = [];
       for (let name in attributes) {
-        atts.push(name.toString() + "='" + attributes[name].join(" ") + "'");
+        atts.push(name.toString() + "='" + attributes[name].join(" ").replace("'", "'") + "'");
       }
       return atts.join(" ");
     };
