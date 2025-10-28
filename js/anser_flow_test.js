@@ -285,7 +285,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   totalBytes += total;
                   received_data = true;
                 }
-                totalLoaded += loaded;
+                totalLoaded += total - loaded;
                 if (!waiting_progress) {
                   updatePercent(Math.ceil(totalLoaded / totalBytes * 100) + "%");
                 }
@@ -665,6 +665,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               x.push(...bad_uploads);
             } else {
               _uploads["input_" + y] = upload.map((x2) => x2.data);
+              fData.set("input_" + y, JSON.stringify([]));
               delete _uploads[y];
             }
             return x;
