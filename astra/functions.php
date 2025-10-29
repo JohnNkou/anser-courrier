@@ -1363,23 +1363,11 @@ function build_search_criteria($include_date=true){
 }
 
 function set_search_criteria($term,$fields){
-    add_filter("gravityflow_inbox_search_criteria",function ($search_criteria,$args) use ($term,$fields) {
-        $field_filters = [];
-        foreach ($fields as $field){
-            array_push($field_filters,["key"=> $field, "operator"=> "contains", "value"=> $term]);   
-        }
-        
-        $search_criteria['mode'] = "any";
-        $search_criteria['field_filters'] = $field_filters;
-        
-        return $search_criteria;
-    },10,2);
-    
     $search_criteria = build_search_criteria();
     $field_filters = [];
     
     foreach ($fields as $field){
-        array_push($field_filters,["key"=> $field, "operator"=> "is", "value"=> $term]);
+        array_push($field_filters,["key"=> $field, "operator"=> "contains", "value"=> $term]);
     }
     $field_filters['mode'] = "any";
     $search_criteria['field_filters'] = $field_filters;
