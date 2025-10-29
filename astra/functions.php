@@ -1363,7 +1363,7 @@ function build_search_criteria($include_date=true){
 }
 
 function set_search_criteria($term,$fields){
-    $search_criteria = build_search_criteria();
+    $search_criteria = build_search_criteria(false);
     $field_filters = [];
     
     foreach ($fields as $field){
