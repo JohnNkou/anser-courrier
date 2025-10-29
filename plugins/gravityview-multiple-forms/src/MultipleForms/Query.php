@@ -122,11 +122,7 @@ class Query extends GF_Query {
 	public function __construct( $form_ids = null, $search_criteria = null, $sorting = null, $paging = null ) {
 		if ( ! is_null( $search_criteria ) || ! is_null( $form_ids ) || ! empty( $sorting ) || ! empty( $paging ) ) {
 			flogs("CONSTRUCT MULTI QUERY SEARCH_CRITERIA %s", print_r($search_criteria,true));
-
-			if(!empty($search_criteria['field_filters'])){
-				throw new Exception("Error Processing Request", 1);
-				
-			}
+			
 			$this->parse( $form_ids, $search_criteria, $sorting, $paging );
 		}
 	}
