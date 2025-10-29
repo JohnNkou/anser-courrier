@@ -555,7 +555,7 @@ function load_gravityview(){
             flogs("FILTER IS %s",print_r($filters,true));
             
             add_filter('gravityview_search_criteria', function($criteria,...$other){
-                flogs("OTHERS %s", print_r($other));
+                flogs("OTHERS %s", print_r($other,true));
                 return $criteria;
 
             });
