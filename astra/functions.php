@@ -1206,6 +1206,7 @@ function handle_non_editable_field($form,$entry,$current_step,$field,$display_em
 
 function load_gravityflow_inbox(){
     // The global $post must be set in order for the gravityflow class to pass the request and not return an empty string
+    flogs("COOL");
     check_ajax_referer('gravityflow_inbox_nonce', 'security');
     $form_ids = "94,22,17,14,75,16,2,3,5,7,8,12,11,21,4,64,74,84,96,84";
     $current_user = wp_get_current_user();
