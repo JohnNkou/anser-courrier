@@ -1715,6 +1715,8 @@ class GravityView_Widget_Search extends \GV\Widget {
 
 			$updated_field = $this->get_search_filter_details( $updated_field, $context, $widget_args );
 			error_log("UPDATED FIELDS ".json_encode($updated_field));
+			throw new Exception("Error Processing Request", 1);
+			
 			switch ( $field['field'] ) {
 
 				case 'search_all':
