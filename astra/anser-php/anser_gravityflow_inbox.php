@@ -60,19 +60,20 @@ class Anser_GravityFlow_Inbox{
 		if(!$onglets){
 			$onglets = ["Principal"];
 		}
+		else{
+			$onglets = explode(",",$onglets);
+		}
 	?>
 		<div id='tools'>
 	<?php
 		if($onglets){
-			if($view_id){
-				$onglets = explode(",", $onglets);
-				foreach ($onglets as $index=> $onglet) {
-					$active = $index == 0 ? 'active':'';
-					echo "<a index='$index' class='relative $active'>$onglet<span class='count'></span></a>";
-				}
+			if(!$view_id){
+				$onglets = [$onglets[0]];
 			}
-			else{
-				error_log("ONGLET GIVEN BUT NO VIEW_ID GIVEN");
+
+			foreach ($onglets as $index=> $onglet) {
+				$active = $index == 0 ? 'active':'';
+				echo "<a index='$index' class='relative $active'>$onglet<span class='count'></span></a>";
 			}
 		}
 	?>
