@@ -120,7 +120,7 @@ class View_Renderer extends Renderer
 
  	protected function loader(){ ?>
  		<div id="loader" class="flex hidden">
-            <h1 class="animate-ping">CHARGEMENT</h1>
+            <h1 class="animate-ping text"></h1>
         </div>
  	<?php }
 
