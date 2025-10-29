@@ -326,7 +326,7 @@ if ( class_exists( 'GFForms' ) ) {
 			add_filter( 'add_menu_classes', array( $this, 'show_inbox_count' ), 10 );
 
 			// Integrations - GravityView.
-			require_once dirname( __FILE__ ) . '/includes/integrations/gravityview-hooks.php';
+			require_once ABSPATH . '/wp-content/plugins/gravityflow/includes/integrations/gravityview-hooks.php';
 		}
 
 		/**
