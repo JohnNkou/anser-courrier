@@ -13,7 +13,7 @@ class Anser_GravityFlow_Inbox{
 			throw new Exception("No form_ids found in arguments", 1);
 		}
 
-		$this->form_ids = $form_ids.explode(",", $form_ids);
+		$this->form_ids = $form_ids;
 	}
 
 	public function render(){
@@ -70,7 +70,7 @@ class Anser_GravityFlow_Inbox{
 	<?php
 	}
 
-	private function table(){
+	private function tables(){
 	?>
 		<div class='main-table'>
 			<table>
