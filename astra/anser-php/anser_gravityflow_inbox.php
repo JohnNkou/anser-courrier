@@ -7,6 +7,8 @@ class Anser_GravityFlow_Inbox{
 	public function __construct($args){
 		$form_ids = $args['form_ids'] ?? null;
 
+		flogs("ARGS %s",print_r($args,true));
+
 		if(!$form_ids){
 			throw new Exception("No form_ids found in arguments", 1);
 		}
