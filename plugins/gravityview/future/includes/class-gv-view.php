@@ -1130,6 +1130,7 @@ class View implements \ArrayAccess {
 			 * Apply multisort.
 			 */
 			if ( ! empty( $has_multisort ) && ! $has_random ) {
+				error_log("HAS NOT MULTISORT OR RANDOM");
 				// Clear ordering that was set when initializing the query since we're going to set it from scratch.
 				( function () {
 					$this->order = [];
@@ -1478,6 +1479,8 @@ class View implements \ArrayAccess {
 			$result = $this->run_db_query( $query );
 
 			list ( $db_entries, $query ) = $result;
+
+			flogs("DB ENTRIES IS %s",print_r($db_entries,true));
 
 			/**
 			 * Map from Gravity Forms entries arrays to an Entry_Collection.
