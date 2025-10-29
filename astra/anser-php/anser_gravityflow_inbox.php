@@ -149,6 +149,7 @@ class Anser_GravityFlow_Inbox{
 
 	private function register_scripts(){
 		wp_enqueue_script('gravityflow-inbox-ajax', '/js/anser_flow_test.js',[], null, true);
+		wp_enqueue_script('tailwindcss','https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4');
 		wp_localize_script('gravityflow-inbox-ajax',JS_AJAX_NAME, [
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'flow_action' => GRAVITYFLOW_AJAX_ENDPOINT,
