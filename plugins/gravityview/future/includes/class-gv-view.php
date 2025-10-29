@@ -1110,7 +1110,7 @@ class View implements \ArrayAccess {
 		if ( gravityview()->plugin->supports( Plugin::FEATURE_GFQUERY ) ) {
 			$query_class = $this->get_query_class(); error_log("SUPPORTING GFQUERY $query_class");
 			flogs("Query class is $query_class");
-			flogs("PARAMETER BEFORE QUERY %s",$parameters);
+			flogs("PARAMETER BEFORE QUERY %s",print_r($parameters,true));
 			/** @type \GF_Query $query */
 			$query = new $query_class( $this->form->ID, $parameters['search_criteria'], Utils::get( $parameters, 'sorting' ) );
 
