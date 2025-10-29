@@ -130,7 +130,7 @@ class Anser_GravityFlow_Inbox{
 	private function init_js(){
 		$args = $this->args;
 		$form_ids = json_encode($this->form_ids);
-		$filters = json_encode($args['filters']);
+		$filters = json_encode($args['field_ids']);
 		$view_id = $args['view_id'] ?? null;
 		$secret = $args['secret'] ?? null;
 
