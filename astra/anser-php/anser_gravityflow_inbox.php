@@ -64,18 +64,20 @@ class Anser_GravityFlow_Inbox{
 		}
 	?>
 		<div id='tools'>
-	<?php
-		if($onglets){
-			if(!$view_id){
-				$onglets = [$onglets[0]];
-			}
+			<div class="onglets">
+				<?php
+					if($onglets){
+						if(!$view_id){
+							$onglets = [$onglets[0]];
+						}
 
-			foreach ($onglets as $index=> $onglet) {
-				$active = $index == 0 ? 'active':'';
-				echo "<a index='$index' class='relative $active'>$onglet<span class='count'></span></a>";
-			}
-		}
-	?>
+						foreach ($onglets as $index=> $onglet) {
+							$active = $index == 0 ? 'active':'';
+							echo "<a index='$index' class='relative $active'>$onglet<span class='count'></span></a>";
+						}
+					}
+				?>
+			</div>
 		<div class='navigationHelper'>
 			<p></p>
 		</div>
