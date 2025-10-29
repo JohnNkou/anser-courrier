@@ -185,7 +185,7 @@ var require_anser_view_util = __commonJS((exports2) => {
     let { entries, total } = json_response.data;
     display_data(entries, table);
   }
-  function filter_handler(page_handler2) {
+  function filter_handler(page_handler2, table) {
     let filter_root = document.querySelector(".status_filter"), links = filter_root.querySelectorAll("a");
     function reset_link_style() {
       links.forEach((link) => {
@@ -205,7 +205,7 @@ var require_anser_view_util = __commonJS((exports2) => {
           } else {
             page_handler2.removeQueries(["filter_workflow_final_status"]);
           }
-          page_handler2.load_data({}, 0).then(result_handler);
+          page_handler2.load_data({}, 0).then((json_response) => result_handler(json_response, table));
         }
       }
     };
@@ -418,7 +418,7 @@ if (typeof _Page == "undefined" || !_Page.view_id) {
   if (_Page.secret) {
     queries.secret = _Page.secret;
   }
-  filter_handler(myPage_handler);
+  filter_handler(myPage_handler, table);
   file_viewer_handler(tbody);
   entry_click_handler(table);
   myPage_handler.addQueries(queries);

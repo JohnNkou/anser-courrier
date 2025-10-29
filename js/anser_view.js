@@ -15,7 +15,7 @@ else{
 		queries.secret = _Page.secret;
 	}
 
-	filter_handler(myPage_handler);
+	filter_handler(myPage_handler, table);
 	file_viewer_handler(tbody);
 	entry_click_handler(table);
 

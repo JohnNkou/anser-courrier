@@ -6,7 +6,7 @@ function result_handler(json_response,table){
 	display_data(entries,table);
 }
 
-function filter_handler(page_handler){
+function filter_handler(page_handler,table){
 	let filter_root = document.querySelector('.status_filter'),
 	links = filter_root.querySelectorAll('a');
 
@@ -35,7 +35,7 @@ function filter_handler(page_handler){
 					page_handler.removeQueries(["filter_workflow_final_status"]);
 				}
 
-				page_handler.load_data({},0).then(result_handler);
+				page_handler.load_data({},0).then((json_response)=> result_handler(json_response,table));
 			}
 		}
 	}
