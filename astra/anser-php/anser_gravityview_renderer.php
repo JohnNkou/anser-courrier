@@ -97,8 +97,13 @@ class View_Renderer extends Renderer
     				<tr>
     				<?php
     				$length = count($fields_array);
+    				$seen = false;
 
     				foreach ($fields_array as $key=> $field) {
+    					if(!$seen){
+    						flogs("DEBUGGIN FIELD ".print_r($field));
+    						$seen = true;
+    					}
     					$label = $field->custom_label ?: $field->label;
     					$class = ($key == 0 || $key == ($length-1))? "rounded": "";
     					echo "<th class='$class'>$label</th>";
