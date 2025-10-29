@@ -1,0 +1,183 @@
+body #main {
+    background-color: transparent;
+}
+ #my-content * {
+    margin: 0;
+    padding: 0;
+}
+ #my-content header {
+    display: flex;
+    margin-bottom: 1.5em;
+    align-items: center;
+}
+ #my-content header form {
+    margin-left: auto;
+}
+ #my-content header form input {
+    width: auto;
+}
+ #my-content header form button {
+    padding: 0.5em;
+}
+ #my-content .onglets a {
+    display: inline-block;
+    width: 8em;
+    color: inherit;
+}
+ #my-content .onglets .active {
+    border-bottom: 0.2em solid green;
+}
+ #my-content table {
+    border: none;
+    background-color: #3f51b50f;
+    font-size: 0.9em;
+}
+ #my-content td {
+    padding-bottom: 0.3em;
+    padding-left: 0.3em;
+}
+ #my-content td .creator {
+    font-weight: bold;
+}
+ #my-content td .numero {
+    font-size: 0.8em;
+}
+ 
+ #my-content td .step-status {
+    font-size: 0.8em;
+    background-color: #FF9800;
+    padding: 0.3em;
+    color: white;
+    font-weight: bold;
+}
+ #my-content .second-table td, #my-content .second-table th {
+    padding: 0.5em;
+    font-size: 1em;
+}
+ #my-content .entry-detail {
+    margin-top: 1em;
+    position:relative;
+}
+ #my-content .informationModal{
+    position:fixed;
+    left:0;
+    width:100%;
+    height:100%;
+    top:0;
+    background-color:#0000006b;
+    z-index:10;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+ #my-content .informationModal > div{
+    background-color:white;
+    min-width:20em;
+    padding:1em;
+    text-align:center;
+}
+ #my-content .informationModal button{
+    padding:0.5em;
+    margin-top:2em;
+}
+ #my-content .entry-detail header {
+    align-items: center;
+    gap: 2em;
+    padding-left: 1em;
+}
+ .entry-detail section > div {
+    display: flex;
+    gap: 1.5em;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+ #my-content .entry-detail .card {
+    padding: 0.3em;
+    background-color: white;
+}
+ #my-content .entry-detail section {
+    padding-bottom: 1em;
+}
+ #my-content .entry-detail section > div {
+    padding-left: 1em;
+    padding_bottom: 1em;
+}
+ #my-content .count{
+    font-size:0.7em;
+    background-color:#263c86;
+    border-radius:3em 3em 3em 3em;
+    padding:0.3em;
+    color:white;
+    position:absolute;
+    right:0;
+    font-weight:bold;
+}
+ #my-content .entry-detail section .title {
+    background-color: #091a5a;
+    color: white;
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+}
+ #my-content .btn-success, #my-content .btn-failure, #my-content .btn-info {
+    padding: 0.5em;
+    color: white;
+}
+ #my-content .btn-success {
+    background-color: green;
+}
+ #my-content .btn-failure {
+    background-color: red;
+}
+ #my-content .btn-info{
+    background-color: #091a5a;
+}
+ #pdfviewer{
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    z-index:20;
+    position:fixed;
+    background-color:#000000d4;
+    text-align:center;
+}
+#pdfviewer iframe{
+    margin-left:1%;
+    margin-top:1%;
+    width:98%;
+    height:98%;
+}
+#pdfviewer button{
+    right:0;
+    top:0;
+    position:absolute;
+    margin-top:1em;
+    padding:0.5em;
+}
+ #uploader{
+    position:fixed;
+    background-color:#000000d4;
+    z-index:20;
+    width:100%;
+    height:100%;
+    left: 0;
+    top: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align:center;
+}
+ #my-content #tools{
+    display:flex;
+    align-items:center;
+}
+ #tools .navigationHelper{
+    margin-left:auto;
+    font-size:0.8em;
+}
+ #uploader div *{
+    color:white;
+}
+ .card *:first-child {
+    font-weight: bold;
+}
