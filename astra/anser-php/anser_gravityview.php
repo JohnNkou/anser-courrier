@@ -309,7 +309,7 @@
 				}
 				error_log("Choose laned ");
 				$renderer = new ANSER\GV\View_Renderer();
-				return self::_return( $renderer->render( $view, $request ) );
+				return $renderer->render( $view, $request );
 			}
 		}
 	}
