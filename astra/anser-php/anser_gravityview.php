@@ -2,10 +2,8 @@
 	/**
 	 * 
 	 */
-	class Anser_GravityView extends \GV\Shortcode
+	class Anser_GravityView extends \GV\Shortcodes/gravityview
 	{
-
-		public static $current_view;
 
 		public static function shortcode($passed_atts, $content = null){
 			$request = gravityview()->request;error_log("Request ".json_encode($request));
