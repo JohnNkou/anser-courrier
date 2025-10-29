@@ -121,6 +121,7 @@ class Query extends GF_Query {
 	 */
 	public function __construct( $form_ids = null, $search_criteria = null, $sorting = null, $paging = null ) {
 		if ( ! is_null( $search_criteria ) || ! is_null( $form_ids ) || ! empty( $sorting ) || ! empty( $paging ) ) {
+			flogs("CONSTRUCT MULTI QUERY SEARCH_CRITERIA %s", print_r($search_criteria,true));
 			$this->parse( $form_ids, $search_criteria, $sorting, $paging );
 		}
 	}
@@ -225,8 +226,6 @@ class Query extends GF_Query {
 		$properties_condition = null;
 		$filters_condition    = null;
 		$filters              = [];
-
-		flogs("MULTI QUERY SEARCH-CRITERIA %s", print_r($search_criteria,true));
 
 		if ( isset( $search_criteria['status'] ) ) {
 			$property_conditions[] = new GF_Query_Condition(
