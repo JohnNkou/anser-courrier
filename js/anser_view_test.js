@@ -16,7 +16,7 @@ var require_anser_utily = __commonJS((exports2) => {
       let target = event.target;
       if (target.href && /\.(pdf|jpg|jpeg|png|gif)/.test(target.href)) {
         event.preventDefault();
-        event.stopPropagation();
+        event.stopImmediatePropagation();
         display_pdfviewer(target.href).catch((error) => {
           console.error(error);
           alert("Une erreur est survenue lors de l'affichage du pdf");
