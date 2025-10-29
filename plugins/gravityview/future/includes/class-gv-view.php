@@ -1089,7 +1089,7 @@ class View implements \ArrayAccess {
 		
 		$page = Utils::get( $parameters['paging'], 'current_page' ) ?
 			: ( ( ( $parameters['paging']['offset'] - $this->settings->get( 'offset' ) ) / \GV\Utils::get( $parameters, 'paging/page_size', 25 ) ) + 1 );
-
+			flogs("PARAMETERS %s",print_r($parameters,true));
 		/**
 		 * Cleanup duplicate field_filter parameters to simplify the query.
 		 */
@@ -1101,6 +1101,7 @@ class View implements \ArrayAccess {
 				$unique_field_filters[] = $filter;
 			}
 		}
+
 		$parameters['search_criteria']['field_filters'] = $unique_field_filters;
 		
 		if ( ! empty( $parameters['search_criteria']['field_filters'] ) ) {
