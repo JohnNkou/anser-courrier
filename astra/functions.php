@@ -349,7 +349,7 @@ add_shortcode("anser_gravityview", array('Anser_Gravityview','shortcode'));
 $gravityflow_ajax_endpoint = GRAVITYFLOW_AJAX_ENDPOINT;
 $gravityview_ajax_endpoint = GRAVITYVIEW_AJAX_ENDPOINT;
 $gravityview_entry_ajax_endpoint = GRAVITYVIEW_ENTRY_AJAX_ENDPOINT;
-$gravityflow_entry_ajx_endpoint = GRAVITYFLOW_ENTRY_AJAX_ENDPOINT;
+$gravityflow_entry_ajax_endpoint = GRAVITYFLOW_ENTRY_AJAX_ENDPOINT;
 
 add_action("wp_ajax_$gravityflow_ajax_endpoint", $gravityflow_ajax_endpoint);
 add_action("wp_ajax_$gravityview_ajax_endpoint",$gravityview_ajax_endpoint);
