@@ -5,7 +5,7 @@
 
 	class Anser_GravityView_Extender extends \GV\Shortcode{
 		public function parse_and_sanitize_atts($passed_atts){
-			return $this->parse_and_sanitize_atts($passed_atts);
+			return parent::parse_and_sanitize_atts($passed_atts);
 		}
 	}
 
