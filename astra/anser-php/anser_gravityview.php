@@ -4,12 +4,12 @@
 	 */
 
 	class Anser_GravityView_Extender extends \GV\Shortcodes\gravityview{
-		public function parse_and_sanitize_atts($passed_atts){
-			return parent::parse_and_sanitize_atts($passed_atts);
+		public function _parse_and_sanitize_atts($passed_atts){
+			return $this->parse_and_sanitize_atts($passed_atts);
 		}
 	}
 
-	class Anser_GravityView extends Anser_GravityView_Extender
+	class Anser_GravityView extends \GV\Shortcodes\gravityview
 	{
 
 		public $name = 'anser_gravityview';
@@ -129,7 +129,7 @@
 				$view->widgets = new \GV\Widget_Collection();
 			}
 
-			$atts = $shortcode->parse_and_sanitize_atts( $atts );
+			$atts = $shortcode->_parse_and_sanitize_atts( $atts );
 			error_log("Sanitized atts ".json_encode($atts));
 			/**
 			 * Assign all `shortcode_atts` settings to the View so they can be used by layouts and extensions.
