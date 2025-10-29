@@ -553,6 +553,8 @@ function load_gravityview(){
             $view->settings->update([
                 'search_criteria'=> set_search_criteria($term,$filters)
             ]); 
+
+            flogs("Updated search_critera to %s",print_r($view->settings->get('search_criteria')));
         }
         else{
             http_response_code(400);
