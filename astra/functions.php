@@ -342,7 +342,9 @@ add_action("wp_head", function(){
 // Custom Ajax Endpoint for experimentation with ajax loading of Gravityflow
 
 require_once ABSPATH ."anser-php/constant.php";
+require_once ABSPATH ."anser-php/utils.php";
 require_once ABSPATH ."anser-php/anser_gravityview.php";
+require_once ABSPATH ."anser-php/anser_gravityview_renderer.php";
 
 add_shortcode("anser_gravityview", array('Anser_Gravityview','shortcode'));
 
