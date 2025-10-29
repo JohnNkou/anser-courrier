@@ -552,9 +552,9 @@ function load_gravityview(){
         if($filters){
             $filters = json_decode(stripslashes($filters));
 
-            add_filter('gravityview_search_criteria', function($criteria,$form_id,$view){
+            add_filter('gravityview_search_criteria', function($criteria,$form_id,$view) use ($term,$filters){
                 $criteria['search_criteria'] = set_search_criteria($term,$filters);
-                
+
                 return $criteria;
 
             },10,3);
