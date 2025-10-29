@@ -136,7 +136,7 @@ class Anser_GravityFlow_Inbox{
 
 		?>
 		<script>
-			var _Page = { view_id:<?php echo $view_id ?>, secret:<?php echo $secret ?> , filters:<?php echo $filters ?>, form_ids:<?php echo $form_ids ?> }
+			var _Page = { view_id:'<?php echo $view_id ?>', secret:'<?php echo $secret ?>' , filters:<?php echo $filters ?>, form_ids:<?php echo $form_ids ?> }
 		</script>
 
 		<?php
