@@ -558,7 +558,7 @@ function load_gravityview(){
                 flogs("OTHERS %s", print_r($other));
                 return $criteria;
 
-            })
+            });
         }
         else{
             http_response_code(400);
