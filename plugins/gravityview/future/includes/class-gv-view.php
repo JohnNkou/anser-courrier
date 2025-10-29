@@ -1044,8 +1044,6 @@ class View implements \ArrayAccess {
 		}
 
 		$parameters = $this->settings->as_atts();
-
-		flogs("PARAMETERS %s",print_r($parameters,true));
 		/**
 		 * Remove multiple sorting before calling legacy filters.
 		 * This allows us to fake it till we make it.
