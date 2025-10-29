@@ -1059,7 +1059,7 @@ class GravityView_frontend {
 		 */
 		$search_criteria['status'] = apply_filters( 'gravityview_status', 'active', $args );
 
-		flogs("AFTER ALL %s",print_r($search_criteria));
+		flogs("AFTER ALL %s",print_r($search_criteria,true));
 
 		return $search_criteria;
 	}
