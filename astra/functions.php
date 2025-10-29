@@ -345,8 +345,14 @@ require_once ABSPATH ."anser-php/constant.php";
 require_once ABSPATH ."anser-php/utils.php";
 require_once ABSPATH ."anser-php/anser_gravityview.php";
 require_once ABSPATH ."anser-php/anser_gravityview_renderer.php";
+require_once ABSPATH ."anser-php/anser_gravityflow.php";
+require_once ABSPATH ."anser-php/anser_gravityflow_inbox.php";
 
 add_shortcode("anser_gravityview", array('Anser_Gravityview','shortcode'));
+
+$anser_gf = Anser_GravityFlow::get_instance();
+
+add_shortcode('anser_gravityflow', array($anser_gf, 'shortcode'));
 
 $gravityflow_ajax_endpoint = GRAVITYFLOW_AJAX_ENDPOINT;
 $gravityview_ajax_endpoint = GRAVITYVIEW_AJAX_ENDPOINT;
