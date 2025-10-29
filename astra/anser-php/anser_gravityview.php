@@ -2,7 +2,7 @@
 	/**
 	 * 
 	 */
-	class Anser_GravityView extends \GV\Shortcodes/gravityview
+	class Anser_GravityView extends \GV\Shortcodes\gravityview
 	{
 
 		public static function shortcode($passed_atts, $content = null){
