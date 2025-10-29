@@ -134,6 +134,10 @@ class View_Renderer extends Renderer
                 <div class="classMan"></div>
             </div>
 		</div>
+		<div id='pdfviewer' class='hidden'>
+            <iframe src=''></iframe>
+            <button class='close'>Fermer</button>
+        </div>
  	<?php }
 
  	protected function init_js(){
