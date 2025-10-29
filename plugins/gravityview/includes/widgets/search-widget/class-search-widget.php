@@ -965,6 +965,8 @@ class GravityView_Widget_Search extends \GV\Widget {
 
 		$query_class = $view->get_query_class();
 
+		flogs("IN SEARCH WIDGE SEARCH_CRITERIA %s",print_r($search_criteria,true));
+
 		if ( empty( $search_criteria['field_filters'] ) ) {
 			return;
 		}
