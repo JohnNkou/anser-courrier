@@ -595,7 +595,6 @@ function load_gravityview(){
             $id = $entry->ID;
         }
         $an['id'] = $id;
-        $an['form_id'] = $field->form_id;
         array_push($results, $an);
     }
 
