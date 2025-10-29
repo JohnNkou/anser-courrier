@@ -1137,7 +1137,7 @@ if (typeof _Page != "undefined") {
   });
   entry_click_handler(table);
   second_table && entry_click_handler_2(second_table);
-  onglet_handler([table, second_table]);
+  second_table && onglet_handler([table, second_table]);
   file_viewer_handler(document.body);
   search_form.addEventListener("submit", (event) => {
     event.preventDefault();
