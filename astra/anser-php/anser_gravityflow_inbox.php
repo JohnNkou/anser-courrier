@@ -5,7 +5,7 @@ class Anser_GravityFlow_Inbox{
 	public $title;
 
 	public function __construct($args){
-		$form_ids = $args['form'] ?? null;
+		$form_ids = $args['form_id'] ?? null;
 
 		flogs("ARGS %s",print_r($args,true));
 
