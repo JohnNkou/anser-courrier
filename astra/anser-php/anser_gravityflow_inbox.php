@@ -49,6 +49,10 @@ class Anser_GravityFlow_Inbox{
 	private function tools(){
 		$onglets = $this->args['onglets'] ?? null;
 		$view_id = $this->args['view_id'] ?? null;
+
+		if(!$onglets){
+			$onglets = ["Principal"];
+		}
 	?>
 		<div id='tools'>
 	<?php
