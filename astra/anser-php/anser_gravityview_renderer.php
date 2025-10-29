@@ -75,7 +75,7 @@ namespace ANSER\GV;
  				$value = $filter['value'];
  				$label = $filter['label'];
 
- 				echo "<a class="$class" data-value="$value">$label</a>";
+ 				echo "<a class='$class' data-value='$value'>$label</a>";
  			}
  		?>
  		</div>
