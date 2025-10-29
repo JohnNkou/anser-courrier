@@ -429,11 +429,9 @@ if (typeof _Page == "undefined" || !_Page.view_id) {
       if (value.length) {
         queries2 = {
           term: value,
-          mode: "any"
+          mode: "any",
+          filters: JSON.stringify(_Page.filters)
         };
-        _Page.filters.forEach((filter_name) => {
-          queries2[filter_name] = value;
-        });
         myPage_handler.removeQueries(["filter_workflow_final_status"]);
         myPage_handler.load_data(queries2, 0).then((json_response) => result_handler(json_response, table)).then(() => {
           myPage_handler.addQueries(queries2);
