@@ -56,7 +56,7 @@ class View_Renderer extends Renderer
  	}
 
  	protected function header(){
- 		$title = $this->view->title;
+ 		$title = $this->view->get_post()->post_title;
  		?>
  		<header>
     		<div>
