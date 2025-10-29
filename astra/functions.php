@@ -341,16 +341,21 @@ add_action("wp_head", function(){
 
 // Custom Ajax Endpoint for experimentation with ajax loading of Gravityflow
 
-$gravityflow_ajax_endpoint = 'load_gravityflow_inbox';
-$gravityview_ajax_endpoint = 'load_gravityview';
-$gravityview_entry_view_endpoint = 'load_gravityview_entry';
-$gravityflow_inbox_entry_ajax_endpoint = 'load_gravityflow_inbox_entry';
+require_once ABSPATH ."anser-php/constant.php";
+require_once ABSPATH ."anser-php/anser_gravityview.php";
+
+add_shortcode("anser_gravityview", array('Anser_Gravityview','shortcode'));
+
+$gravityflow_ajax_endpoint = GRAVITYFLOW_AJAX_ENDPOINT;
+$gravityview_ajax_endpoint = GRAVITYVIEW_AJAX_ENDPOINT;
+$gravityview_entry_ajax_endpoint = GRAVITYVIEW_ENTRY_AJAX_ENDPOINT;
+$gravityflow_entry_ajx_endpoint = GRAVITYFLOW_ENTRY_AJAX_ENDPOINT;
 
 add_action("wp_ajax_$gravityflow_ajax_endpoint", $gravityflow_ajax_endpoint);
 add_action("wp_ajax_$gravityview_ajax_endpoint",$gravityview_ajax_endpoint);
-add_action("wp_ajax_$gravityflow_inbox_entry_ajax_endpoint","load_gravityflow_inbox_entry");
-add_action("wp_ajax_$gravityview_entry_view_endpoint", $gravityview_entry_view_endpoint);
-add_action("wp_enqueue_scripts", function(){
+add_action("wp_ajax_$gravityflow_entry_ajax_endpoint","load_gravityflow_inbox_entry");
+add_action("wp_ajax_$gravityview_entry_ajax_endpoint", $gravityview_entry_ajax_endpoint);
+/*add_action("wp_enqueue_scripts", function(){
     global $gravityflow_ajax_endpoint, $gravityview_ajax_endpoint, $gravityview_entry_view_endpoint,$gravityflow_inbox_entry_ajax_endpoint;
 
     if(is_page(['boite-de-reception-4','mes-courrier-v2','mes-factures-v2'])){
@@ -381,7 +386,7 @@ add_action("wp_enqueue_scripts", function(){
             'view_entry' => $gravityview_entry_view_endpoint
         ]);
     }
-});
+});*/
 
 class Extender extends \GV\Shortcode{
     public function get_view($atts){
