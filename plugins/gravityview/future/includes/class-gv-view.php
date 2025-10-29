@@ -1044,6 +1044,8 @@ class View implements \ArrayAccess {
 		}
 
 		$parameters = $this->settings->as_atts();
+
+		flogs("PARAMETERS %s",print_r($parameters,true));
 		/**
 		 * Remove multiple sorting before calling legacy filters.
 		 * This allows us to fake it till we make it.
@@ -1089,7 +1091,6 @@ class View implements \ArrayAccess {
 		
 		$page = Utils::get( $parameters['paging'], 'current_page' ) ?
 			: ( ( ( $parameters['paging']['offset'] - $this->settings->get( 'offset' ) ) / \GV\Utils::get( $parameters, 'paging/page_size', 25 ) ) + 1 );
-			flogs("PARAMETERS %s",print_r($parameters,true));
 		/**
 		 * Cleanup duplicate field_filter parameters to simplify the query.
 		 */
