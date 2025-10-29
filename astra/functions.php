@@ -543,8 +543,23 @@ function load_gravityview(){
     $request = gravityview()->request;
     $limit = isset($_GET['limit'])? (int)$_GET['limit'] : 25;
     $offset = isset($_GET['offset'])? (int)$_GET['offset'] : 0;
+    $term = $_GET['term'] ?: null;
+    $filters = $_GET['filters'] ?: null;
     $id = $_GET['id'];
     $view = get_view($id);
+
+    if($term){
+        if($filters){
+            $view->settings->update([
+                'search_criteria'=> set_search_criteria($term,$filters)
+            ]); 
+        }
+        else{
+            http_response_code(400);
+            return wp_send_json_error("Missing filters");
+        }
+    }
+    
     $view->settings->update([
         "page_size"=> $limit,
         "offset"=> $offset
