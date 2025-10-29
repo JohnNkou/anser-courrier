@@ -101,7 +101,7 @@ class View_Renderer extends Renderer
 
     				foreach ($fields_array as $key=> $field) {
     					if(!$seen){
-    						flogs("DEBUGGIN FIELD ".print_r($field));
+    						flogs("DEBUGGIN FIELD ".print_r($field,true));
     						$seen = true;
     					}
     					$label = $field->custom_label ?: $field->label;
