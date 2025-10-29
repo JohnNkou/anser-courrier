@@ -2,7 +2,14 @@
 	/**
 	 * 
 	 */
-	class Anser_GravityView extends \GV\Shortcodes\gravityview
+
+	class Anser_GravityView_Extender extends \GV\Shortcode{
+		public function parse_and_sanitize_atts($passed_atts){
+			return parent::greet($passed_atts);
+		}
+	}
+
+	class Anser_GravityView extends Anser_GravityView_Extender
 	{
 
 		public $name = 'anser_gravityview';
