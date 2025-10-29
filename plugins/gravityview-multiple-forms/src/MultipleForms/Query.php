@@ -703,7 +703,7 @@ class Query extends GF_Query {
 	 *
 	 * @return array The resulting entries.
 	 */
-	public function get() { error_log("CALLED GET ON MULTI QUERY");
+	public function get() {
 		global $wpdb;
 
 		$entries = [];

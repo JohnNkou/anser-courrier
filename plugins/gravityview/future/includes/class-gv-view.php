@@ -1102,8 +1102,6 @@ class View implements \ArrayAccess {
 		}
 
 		$parameters['search_criteria']['field_filters'] = $unique_field_filters;
-
-		flogs('PARAMETERS %s',print_r($parameters,true));
 		
 		if ( ! empty( $parameters['search_criteria']['field_filters'] ) ) {
 			gravityview()->log->notice( 'search_criteria/field_filters is not empty, third-party code may be using legacy search_criteria filters.' );
@@ -1112,6 +1110,7 @@ class View implements \ArrayAccess {
 		if ( gravityview()->plugin->supports( Plugin::FEATURE_GFQUERY ) ) {
 			$query_class = $this->get_query_class(); error_log("SUPPORTING GFQUERY $query_class");
 			flogs("Query class is $query_class");
+			flogs("PARAMETER BEFORE QUERY %s",$parameters);
 			/** @type \GF_Query $query */
 			$query = new $query_class( $this->form->ID, $parameters['search_criteria'], Utils::get( $parameters, 'sorting' ) );
 
