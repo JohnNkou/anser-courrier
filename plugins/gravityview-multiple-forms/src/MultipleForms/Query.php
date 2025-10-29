@@ -226,6 +226,8 @@ class Query extends GF_Query {
 		$filters_condition    = null;
 		$filters              = [];
 
+		flogs("MULTI QUERY SEARCH-CRITERIA %s", print_r($search_criteria,true));
+
 		if ( isset( $search_criteria['status'] ) ) {
 			$property_conditions[] = new GF_Query_Condition(
 				new GF_Query_Column( 'status' ),
