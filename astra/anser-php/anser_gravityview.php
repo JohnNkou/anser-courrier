@@ -9,7 +9,7 @@
 		}
 	}
 
-	class Anser_GravityView extends \GV\Shortcodes\gravityview
+	class Anser_GravityView extends Anser_GravityView_Extender
 	{
 
 		public $name = 'anser_gravityview';
