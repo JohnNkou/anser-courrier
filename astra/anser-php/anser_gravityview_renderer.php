@@ -99,7 +99,7 @@ class View_Renderer extends Renderer
     				$length = count($fields_array);
 
     				foreach ($fields_array as $key=> $field) {
-    					$label = $field->label;
+    					$label = $field->custom_label ?: $field->label;
     					$class = ($key == 0 || $key == ($length-1))? "rounded": "";
     					echo "<th class='$class'>$label</th>";
     				}
