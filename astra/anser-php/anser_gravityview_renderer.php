@@ -63,7 +63,7 @@ class View_Renderer extends Renderer
     			<h1 class='inline'><?php echo $title ?></h1>
     		</div>
     		<form class='flex justify-end items-center gap-1 search_block'>
-    			<input type="text" class="" name="s" placeholder="="Recherche><button type='submit'>Rechercher</button>
+    			<input type="text" class="" name="s" placeholder=""Recherche><button type='submit'>Rechercher</button>
     		</form>
     	</header>
  		<?php

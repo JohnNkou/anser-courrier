@@ -5,6 +5,16 @@
 img:is([sizes="auto" i], [sizes^="auto," i]) {
     contain-intrinsic-size: 3000px 1500px
 }
+header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header *:first-child{
+    margin-right: auto;
+}
+
 #main thead, #main button{
     background-color:#091a5a;
     color:white;
