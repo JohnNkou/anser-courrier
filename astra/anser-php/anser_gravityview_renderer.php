@@ -158,7 +158,8 @@ class View_Renderer extends Renderer
  	}
 
  	protected function register_styles(){
- 		wp_enqueue_style('custom_globe','/css/global.css');
+ 		wp_enqueue_style('custom_global','/css/global.css');
+ 		wp_enqueue_style('custom_modal','/css/modal.css');
  	}
 
  	protected function register_scripts(){
