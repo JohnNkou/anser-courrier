@@ -16,8 +16,8 @@ else{
 	}
 
 	filter_handler(myPage_handler);
+	file_viewer_handler(tbody);
 	entry_click_handler(table);
-	file_viewer_handler(document.body);
 
 	myPage_handler.addQueries(queries);
 

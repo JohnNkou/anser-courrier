@@ -419,8 +419,8 @@ if (typeof _Page == "undefined" || !_Page.view_id) {
     queries.secret = _Page.secret;
   }
   filter_handler(myPage_handler);
+  file_viewer_handler(tbody);
   entry_click_handler(table);
-  file_viewer_handler(document.body);
   myPage_handler.addQueries(queries);
   if (_Page.filters) {
     search_form.addEventListener("submit", (event) => {
