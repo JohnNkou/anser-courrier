@@ -90,6 +90,8 @@ class View_Renderer extends Renderer
  		$fields = $view->fields->by_position( 'directory_table-columns' );
     	$fields_array = $fields->by_visible($view)->all();
 
+    	flogs("view is %s",print_r($view,true));
+
     	?>
     	<div class='mt-4 main-table'>
     		<table class='border-collapse border border-black text-left'>
@@ -134,6 +136,7 @@ class View_Renderer extends Renderer
  	<?php }
 
  	protected function init_js(){
+ 		$view = $this->view;
  		$filters = $this->view->settings->get('filters');
  		$secret = $this->view->settings->get('secret');
  		$id = $view->ID;
