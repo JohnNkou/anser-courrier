@@ -553,7 +553,7 @@ function load_gravityview(){
             $filters = json_decode(stripslashes($filters));
 
             add_filter('gravityview_search_criteria', function($criteria,$form_id,$view) use ($term,$filters){
-                $criteria['search_criteria'] = set_search_criteria($term,$filters);
+                $criteria['search_criteria'] = set_search_criteria($term,[1]);
 
                 return $criteria;
 
@@ -1367,7 +1367,7 @@ function set_search_criteria($term,$fields){
     $field_filters = [];
     
     foreach ($fields as $field){
-        array_push($field_filters,["key"=> $field, "operator"=> "contains", "value"=> $term]);
+        array_push($field_filters,["key"=> null, "operator"=> "contains", "value"=> $term]);
     }
     $field_filters['mode'] = "any";
     $search_criteria['field_filters'] = $field_filters;
