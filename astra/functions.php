@@ -550,7 +550,7 @@ function load_gravityview(){
 
     if($term){
         if($filters){
-            flogs("Filter is %s",print_r($filters,true));
+            $filters = json_decode($filters);
             $view->settings->update([
                 'search_criteria'=> set_search_criteria($term,$filters)
             ]); 
