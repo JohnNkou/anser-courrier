@@ -152,7 +152,7 @@ class Anser_GravityFlow_Inbox{
 		wp_localize_script('gravityflow-inbox-ajax',JS_AJAX_NAME, [
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'flow_action' => GRAVITYFLOW_AJAX_ENDPOINT,
-			'flow_entry' => GRAVITYFLOW_ENTRY_AJAX_NAME,
+			'flow_entry' => GRAVITYFLOW_ENTRY_AJAX_ENDPOINT,
 			'flow_nonce' => wp_create_nonce(GRAVITYFLOW_NONCE_NAME),
 			'view_action' => GRAVITYVIEW_AJAX_ENDPOINT,
 			'view_nonce' => wp_create_nonce(GRAVITYVIEW_NONCE_NAME)
