@@ -6,6 +6,7 @@ class Anser_GravityFlow_Inbox{
 
 	public function __construct($args){
 		$form_ids = $args['form_id'] ?? null;
+		$title = $args['title'] ?? null;
 
 		flogs("ARGS %s",print_r($args,true));
 
@@ -13,7 +14,12 @@ class Anser_GravityFlow_Inbox{
 			throw new Exception("No form_ids found in arguments", 1);
 		}
 
+		if(!$title){
+			$title = "Boite de reception";
+		}
+
 		$this->form_ids = $form_ids;
+		$this->title = $title;
 	}
 
 	public function render(){
