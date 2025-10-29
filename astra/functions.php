@@ -551,7 +551,7 @@ function load_gravityview(){
     if($term){
         if($filters){
             flogs("RAW FILTER %s",$filters);
-            $filters = json_decode($filters);
+            $filters = json_decode(stripslashes($filters));
             flogs("FILTER IS %s",print_r($filters,true));
             $view->settings->update([
                 'search_criteria'=> set_search_criteria($term,$filters)
