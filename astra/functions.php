@@ -553,9 +553,8 @@ function load_gravityview(){
             $filters = json_decode(stripslashes($filters));
 
             add_filter('gravityview_search_criteria', function($criteria,$form_id,$view){
-                flogs("criteria %s", print_r($criteria,true));
-                flogs("form_id %s", print_r($form_id,true));
-                flogs("view %s", print_r($view,true));
+                $criteria['search_criteria'] = set_search_criteria($term,$filters);
+                
                 return $criteria;
 
             },10,3);
