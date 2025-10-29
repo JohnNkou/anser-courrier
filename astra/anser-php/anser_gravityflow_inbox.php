@@ -14,10 +14,6 @@ class Anser_GravityFlow_Inbox{
 			throw new Exception("No form_ids found in arguments", 1);
 		}
 
-		if(!$title){
-			$title = "Boite de reception";
-		}
-
 		$this->form_ids = $form_ids;
 		$this->title = $title;
 	}
@@ -41,7 +37,10 @@ class Anser_GravityFlow_Inbox{
 
 	private function header(){
 		$title = $this->$title;
-		error_log("TITLE $title");
+		
+		if(!$title){
+			$title = "Boite de reception";
+		}
 	?>
 		<header>
 			<h1><?php echo $title ?></h1>
