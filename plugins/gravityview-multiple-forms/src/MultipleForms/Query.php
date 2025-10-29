@@ -839,7 +839,7 @@ class Query extends GF_Query {
 		GFCommon::log_debug( __METHOD__ . '(): sql => ' . $sql );
 
 		$this->timer_start();
-		$results          = $wpdb->get_results( $sql, ARRAY_N );
+		$results          = $wpdb->get_results( $sql, ARRAY_N ); flogs("SQL IS %s",$sql);
 		$this->queries [] = [ $this->timer_stop(), $sql ];
 
 		if ( is_null( $results ) ) {
