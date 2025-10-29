@@ -41,6 +41,7 @@ class Anser_GravityFlow_Inbox{
 
 	private function header(){
 		$title = $this->$title;
+		error_log("TITLE $title");
 	?>
 		<header>
 			<h1><?php echo $title ?></h1>
