@@ -1074,8 +1074,8 @@ var require_anser_view_util = __commonJS((exports2) => {
           let queries = {
             view_id: _Page.view_id,
             entry_id,
-            action: GravityAjax.view_entry,
-            nonce: GravityAjax.view_nonce
+            action: GravityAjax.view_entry_action,
+            nonce: GravityAjax.view_entry_nonce
           }, myPage_handler;
           if (_Page.secret) {
             queries.secret = _Page.secret;
