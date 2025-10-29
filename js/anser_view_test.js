@@ -200,7 +200,7 @@ var require_anser_view_util = __commonJS((exports2) => {
           reset_link_style();
           target.classList.add("active");
           if (value) {
-            page_handler2.removeQueries([..._Page.filters, "term"]);
+            page_handler2.removeQueries([..._Page.filters, "gv_search"]);
             page_handler2.addQueries({ filter_workflow_final_status: value, mode: "all" });
           } else {
             page_handler2.removeQueries(["filter_workflow_final_status"]);
