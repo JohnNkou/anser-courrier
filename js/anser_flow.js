@@ -12,7 +12,11 @@ myPage_handler_2 = second_table && new page_handler((json_response)=> result_han
 var search_form = document.querySelector('.search_block');
 
 if(typeof _Page != "undefined"){
-    myPage_handler.addQueries({ action: GravityAjax.flow_action, security:GravityAjax.flow_nonce });
+    if(!_Page.form_ids){
+        throw Error("No form_ids found in _Page");
+    }
+
+    myPage_handler.addQueries({ form_ids: _Page.form_ids, action: GravityAjax.flow_action, security:GravityAjax.flow_nonce });
     second_table && myPage_handler_2.addQueries({ id: _Page.view_id, secret: _Page.secret, action: GravityAjax.view_action, security:GravityAjax.view_nonce });
     myPage_handler.load_data().then((json_response)=> result_handler(json_response,table)).then(()=>{
         if(counts.length){
