@@ -258,8 +258,8 @@ if ( class_exists( 'GFForms' ) ) {
 		 * Adds hooks which need to be included before the init hook is triggered.
 		 */
 		public function pre_init() {
-			require_once( dirname( __FILE__ ) . '/includes/pages/class-inbox.php' );
-			require_once( dirname( __FILE__ ) . '/includes/pages/class-reports.php' );
+			require_once( ABSPATH . 'botrage/wp-contents/plugins/gravityflow/includes/pages/class-inbox.php' );
+			require_once( ABSPATH . 'botrage/wp-contents/plugins/gravityflow/includes/pages/class-reports.php' );
 
 			add_filter( 'gform_entry_meta_pre_render_feed_settings', array( $this, 'filter_conditional_logic_entry_meta' ), 1, 3 );
 			add_filter( 'gform_export_form', array( $this, 'filter_gform_export_form' ) );
