@@ -1,7 +1,7 @@
 <?php 
 namespace ANSER\GV;
 
-use GV\Renderer
+use GV\Renderer;
 
 /**
   * 
