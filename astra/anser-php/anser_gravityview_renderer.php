@@ -151,7 +151,7 @@ class View_Renderer extends Renderer
 
  	?>
  		<script>
- 			var _Page = { view_id:<?php echo $id ?>, filters:<?php echo $filters ?>, secret:"<?php echo $secret ?>" };
+ 			var _Page = { view_id:<?php echo $id ?>, filters:<?php echo json_encode($filters) ?>, secret:"<?php echo $secret ?>" };
  			var _localized_name = "<? echo JS_AJAX_NAME ?>";
 
  			if(!_Page.filters || !_Page.filters.length){
