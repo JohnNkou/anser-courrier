@@ -556,6 +556,7 @@ function load_gravityview(){
         }
         else{
             http_response_code(400);
+            flogs("EMPTY FILTERS %s",print_r($_GET));
             return wp_send_json_error("Missing filters");
         }
     }
