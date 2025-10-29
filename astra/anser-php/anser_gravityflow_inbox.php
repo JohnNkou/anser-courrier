@@ -145,6 +145,7 @@ class Anser_GravityFlow_Inbox{
 	private function register_styles(){
 		wp_enqueue_style('custom_globe','/css/global.css');
 		wp_enqueue_style('custom_modal', '/css/modal.css');
+		wp_enqueue_style('custom_flow', '/css/flow.css');
 	}
 
 	private function register_scripts(){
