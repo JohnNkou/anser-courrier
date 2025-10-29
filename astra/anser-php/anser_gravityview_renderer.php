@@ -4,7 +4,7 @@ namespace ANSER\GV;
 /**
   * 
   */
- class View_Renderer extends GV\Renderer
+ class View_Renderer extends \GV\Renderer
  {
  	private $view;
  	private $entries;
