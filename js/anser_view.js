@@ -1,4 +1,4 @@
-const { page_handler } = require('./anser_utily.js'),
+const { page_handler, file_viewer_handler } = require('./anser_utily.js'),
 { result_handler, filter_handler, entry_click_handler } = require('./anser_view_util.js'),
 search_form = document.querySelector('.search_block'),
 table = document.querySelector('.main-table'),
@@ -17,6 +17,7 @@ else{
 
 	filter_handler(myPage_handler);
 	entry_click_handler(table);
+	file_viewer_handler(document.body);
 
 	myPage_handler.addQueries(queries);
 

@@ -404,7 +404,7 @@ var require_anser_view_util = __commonJS((exports2) => {
 });
 
 // js/anser_view.js
-var { page_handler } = require_anser_utily();
+var { page_handler, file_viewer_handler } = require_anser_utily();
 var { result_handler, filter_handler, entry_click_handler } = require_anser_view_util();
 var search_form = document.querySelector(".search_block");
 var table = document.querySelector(".main-table");
@@ -419,6 +419,7 @@ if (typeof _Page == "undefined" || !_Page.view_id) {
   }
   filter_handler(myPage_handler);
   entry_click_handler(table);
+  file_viewer_handler(document.body);
   myPage_handler.addQueries(queries);
   if (_Page.filters) {
     search_form.addEventListener("submit", (event) => {
