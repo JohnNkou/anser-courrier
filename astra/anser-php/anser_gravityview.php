@@ -8,6 +8,7 @@
 		public static function shortcode($atts, $content = null){
 			$request = gravityview()->request;error_log("Request ".json_encode($request));
 			error_log("Request class ".get_class($request));
+			$shortcode = new Anser_GravityView();
 
 			if ( $request->is_admin() ) {
 				return '';
@@ -30,10 +31,10 @@
 			}
 
 			$atts['view_id'] = $view_id;
-			$view            = $this->get_view_by_atts( $atts );
+			$view            = $shortcode->get_view_by_atts( $atts );
 
 			if ( is_wp_error( $view ) ) {
-				return $this->handle_error( $view );
+				return $shortcode->handle_error( $view );
 			}
 
 			if ( ! $view ) {
@@ -111,7 +112,7 @@
 				$view->widgets = new \GV\Widget_Collection();
 			}
 
-			$atts = $this->parse_and_sanitize_atts( $atts );
+			$atts = $shortcode->parse_and_sanitize_atts( $atts );
 			error_log("Sanitized atts ".json_encode($atts));
 			/**
 			 * Assign all `shortcode_atts` settings to the View so they can be used by layouts and extensions.
@@ -176,7 +177,7 @@
 			 */
 			if ( $atts['detail'] ) { error_log("Returning after details");
 				$entries = $view->get_entries( $request );
-				return self::_return( $this->detail( $view, $entries, $atts ) );
+				return self::_return( $shortcode->detail( $view, $entries, $atts ) );
 
 				/**
 				 * Editing a single entry.
