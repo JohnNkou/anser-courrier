@@ -551,9 +551,11 @@ function load_gravityview(){
     if($term){
         if($filters){
             $filters = json_decode(stripslashes($filters));
-            
-            add_filter('gravityview_search_criteria', function($criteria,...$other){
-                flogs("OTHERS %s", print_r($other,true));
+
+            add_filter('gravityview_search_criteria', function($criteria,$form_id,$view){
+                flogs("criteria %s", print_r($criteria,true));
+                flogs("form_id %s", print_r($form_id));
+                flogs("view %s", print_r($view));
                 return $criteria;
 
             });
