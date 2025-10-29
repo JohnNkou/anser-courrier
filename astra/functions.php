@@ -553,11 +553,12 @@ function load_gravityview(){
             flogs("RAW FILTER %s",$filters);
             $filters = json_decode(stripslashes($filters));
             flogs("FILTER IS %s",print_r($filters,true));
-            $view->settings->update([
-                'search_criteria'=> set_search_criteria($term,$filters)
-            ]); 
+            
+            add_filter('gravityview_search_criteria', function($criteria,...$other){
+                flogs("OTHERS %s", print_r($other));
+                return $criteria;
 
-            flogs("Updated search_critera to %s",print_r($view->settings->get('search_criteria'),true));
+            })
         }
         else{
             http_response_code(400);
