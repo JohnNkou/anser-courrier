@@ -6,7 +6,8 @@ use GV\Renderer;
 /**
   * 
   */
- class View_Renderer extends Renderer
+
+class View_Renderer extends Renderer
  {
  	private $view;
  	private $entries;
