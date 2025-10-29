@@ -106,6 +106,9 @@ class View_Renderer extends Renderer
     				?>
     				</tr>
     			</thead>
+    			<tbody>
+    				
+    			</tbody>
     		</table>
     		<div class="flex justify-center gap-2 navigation">
                 <button class="p-0 bg-danger hidden previousPage">&lt;</button>
