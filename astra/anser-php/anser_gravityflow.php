@@ -203,7 +203,7 @@ if ( class_exists( 'GFForms' ) ) {
 		public static function get_instance() {
 			if ( self::$_instance == null ) {
 				$container           = self::gflow_initialize_services();
-				$instance            = new Gravity_Flow();
+				$instance            = new Anser_GravityFlow();
 				$instance->container = $container;
 
 				self::$_instance = $instance;
