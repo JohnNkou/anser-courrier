@@ -13,6 +13,11 @@
 			if ( $request->is_admin() ) {
 				return '';
 			}
+
+			if(isset($passed_atts['filters'])){
+				$passed_atts['filters'] = explode(",", $passed_atts['filters']);
+			}
+
 			error_log("Passed attrs ".json_encode($passed_atts));
 			$atts = wp_parse_args(
 				$passed_atts,
@@ -24,6 +29,7 @@
 				)
 			);
 			error_log("Attrs ".json_encode($atts));
+
 			if ( ! $view_id = $atts['id'] ? : $atts['view_id'] ) {
 				if ( $atts['detail'] && $view = $request->is_view() ) {
 					$view_id = $view->ID;
@@ -86,7 +92,7 @@
 			 */
 			do_action( 'gravityview/shortcode/before-processing', $view, $post );
 
-			self::$current_view = $view;
+			$shortcode::$current_view = $view;
 			gravityview()->views->set( $view );
 
 			/**
