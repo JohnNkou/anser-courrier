@@ -1367,9 +1367,9 @@ function set_search_criteria($term,$fields){
     $field_filters = [];
     
     foreach ($fields as $field){
-        array_push($field_filters,["key"=> null, "operator"=> "contains", "value"=> $term, "form_id"=> 95]);
+        array_push($field_filters,["key"=> null, "operator"=> "contains", "value"=> $term]);
     }
-    $field_filters['mode'] = "any";
+    $field_filters['mode'] = "all";
     $search_criteria['field_filters'] = $field_filters;
     
     return $search_criteria;
