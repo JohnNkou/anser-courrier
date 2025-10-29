@@ -103,14 +103,14 @@ var require_anser_utily = __commonJS((exports2) => {
       nextPage.addEventListener("click", (event) => {
         this.goTo(this.page + 1).then((json_response) => {
           if (navigationHandler) {
-            navigationHandler(json_response);
+            navigationHandler(json_response, body);
           }
         });
       });
       prevPage.addEventListener("click", (event) => {
         this.goTo(this.page - 1).then((json_response) => {
           if (navigationHandler) {
-            navigationHandler(json_response);
+            navigationHandler(json_response, body);
           }
         });
       });
