@@ -428,9 +428,8 @@ if (typeof _Page == "undefined" || !_Page.view_id) {
       let input = search_form.elements.s, value = input.value, queries2;
       if (value.length) {
         queries2 = {
-          term: value,
-          mode: "any",
-          filters: JSON.stringify(_Page.filters)
+          gv_search: value,
+          mode: "all"
         };
         myPage_handler.removeQueries(["filter_workflow_final_status"]);
         myPage_handler.load_data(queries2, 0).then((json_response) => result_handler(json_response, table)).then(() => {

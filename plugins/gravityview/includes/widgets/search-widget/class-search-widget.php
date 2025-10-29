@@ -684,8 +684,6 @@ class GravityView_Widget_Search extends \GV\Widget {
 		// Make sure array key is set up
 		$search_criteria['field_filters'] = \GV\Utils::get( $search_criteria, 'field_filters', array() );
 
-		flogs("IS THIS IT %s",print_r($search_criteria,true));
-
 		$searchable_fields        = $this->get_view_searchable_fields( $view );
 		$searchable_field_objects = $this->get_view_searchable_fields( $view, true );
 		

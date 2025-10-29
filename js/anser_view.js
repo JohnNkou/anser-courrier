@@ -31,9 +31,8 @@ else{
 
 			if(value.length){
 				queries = {
-					term:value,
-					mode:'any',
-					filters: JSON.stringify(_Page.filters)
+					gv_search:value,
+					mode:'all'
 				};
 
 				myPage_handler.removeQueries(['filter_workflow_final_status']);
