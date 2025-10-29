@@ -1111,7 +1111,7 @@ class View implements \ArrayAccess {
 
 		if ( gravityview()->plugin->supports( Plugin::FEATURE_GFQUERY ) ) {
 			$query_class = $this->get_query_class(); error_log("SUPPORTING GFQUERY $query_class");
-
+			flogs("Query class is $query_class");
 			/** @type \GF_Query $query */
 			$query = new $query_class( $this->form->ID, $parameters['search_criteria'], Utils::get( $parameters, 'sorting' ) );
 
@@ -1509,6 +1509,7 @@ class View implements \ArrayAccess {
 				}
 			);
 		} else {
+			flogs("NOT USING GF_QUERY");
 			$entries = $this->form->entries
 				->filter( \GV\GF_Entry_Filter::from_search_criteria( $parameters['search_criteria'] ) )
 				->offset( $this->settings->get( 'offset' ) )
