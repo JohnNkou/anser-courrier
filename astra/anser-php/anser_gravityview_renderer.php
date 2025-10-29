@@ -105,8 +105,7 @@ class View_Renderer extends Renderer
     						$seen = true;
     					}
     					$label = $field->custom_label ?: $field->label;
-    					$class = ($key == 0 || $key == ($length-1))? "rounded": "";
-    					echo "<th class='$class'>$label</th>";
+    					echo "<th >$label</th>";
     				}
     				?>
     				</tr>

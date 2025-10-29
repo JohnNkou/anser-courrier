@@ -39,6 +39,12 @@ header *:first-child{
 #main tr{
     cursor: pointer;
 }
+thead tr:first-child{
+    border-radius: 1em 0em 0em 1em;
+}
+thead tr:last-child{
+    border-radius: 0em 1em 1em 0em;
+}
 #main tr + tr td{
     border-top:1px solid silver;
 }
