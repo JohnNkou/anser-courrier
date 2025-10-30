@@ -350,11 +350,9 @@ require_once ABSPATH ."anser-php/anser_gravityflow_inbox.php";
 
 add_shortcode("anser_gravityview", array('Anser_Gravityview','shortcode'));
 
-error_log("WP_HEAD HAS BEEN CALLED 1 ".did_action("gravityflow_enqueue_admin_scripts"));
-
 $anser_gf = Anser_GravityFlow::get_instance();
 
-error_log("WP_HEAD HAS BEEN CALLED 2 ".did_action("gravityflow_enqueue_admin_scripts"));
+wp_enqueue_style('custom_globe','/css/global.css');
 
 add_shortcode('anser_gravityflow', array($anser_gf, 'shortcode'));
 
