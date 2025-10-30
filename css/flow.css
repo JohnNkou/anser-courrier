@@ -94,6 +94,9 @@ body #main {
  #my-content .entry-detail .card {
     padding: 0.3em;
     background-color: white;
+    display:flex;
+    flex-direction: column;
+    box-shadow: none;
 }
  #my-content .entry-detail section {
     padding-bottom: 1em;
