@@ -348,6 +348,8 @@ require_once ABSPATH ."anser-php/anser_gravityview_renderer.php";
 require_once ABSPATH ."anser-php/anser_gravityflow.php";
 require_once ABSPATH ."anser-php/anser_gravityflow_inbox.php";
 
+wp_enqueue_style('custom_globe','/css/global.css');
+
 add_shortcode("anser_gravityview", array('Anser_Gravityview','shortcode'));
 
 $anser_gf = Anser_GravityFlow::get_instance();
