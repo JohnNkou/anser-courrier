@@ -105,6 +105,10 @@ body #main {
     padding-left: 1em;
     padding_bottom: 1em;
 }
+#my-content textarea{
+   width:35em;
+   height:13em;
+}
  #my-content .count{
     font-size:0.7em;
     background-color:#263c86;
