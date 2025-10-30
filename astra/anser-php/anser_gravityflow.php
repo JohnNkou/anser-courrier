@@ -5624,6 +5624,8 @@ PRIMARY KEY  (id)
 			if ( get_post_type() != 'page' ) {
 				return '';
 			}
+
+			wp_enqueue_style('custom_globe','/css/global.css');
             
 			$a = $this->get_shortcode_atts( $atts );
 
