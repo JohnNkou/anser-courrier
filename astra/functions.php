@@ -352,9 +352,9 @@ add_shortcode("anser_gravityview", array('Anser_Gravityview','shortcode'));
 
 $anser_gf = Anser_GravityFlow::get_instance();
 
-wp_enqueue_style('custom_globe','/css/global.css');
-
 add_shortcode('anser_gravityflow', array($anser_gf, 'shortcode'));
+
+wp_enqueue_style('custom_globe','/css/global.css');
 
 $gravityflow_ajax_endpoint = GRAVITYFLOW_AJAX_ENDPOINT;
 $gravityview_ajax_endpoint = GRAVITYVIEW_AJAX_ENDPOINT;
