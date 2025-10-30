@@ -22,7 +22,7 @@ class Anser_GravityFlow_Inbox{
 		$this->register_styles();
 		$this->register_scripts();
 	?>
-		<div id='my-content' class='shadow-md'>
+		<div id='my-content' class='shadow-md mufasa'>
 	<?php
 		$this->header();
 		$this->tools();
