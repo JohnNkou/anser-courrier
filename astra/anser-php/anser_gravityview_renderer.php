@@ -161,13 +161,7 @@ class View_Renderer extends Renderer
  	<?php	
  	}
 
- 	protected function register_styles(){
- 		wp_enqueue_style('custom_global','/css/global.css');
- 		wp_enqueue_style('custom_modal','/css/modal.css');
- 	}
-
  	protected function register_scripts(){
- 		wp_enqueue_script('tailwindcss','https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4');
  		wp_enqueue_script('gravityview-ajax','/js/anser_view_test.js',[], null, true);
         wp_localize_script('gravityview-ajax',JS_AJAX_NAME, [
         	'ajax_url' => admin_url('admin-ajax.php'),

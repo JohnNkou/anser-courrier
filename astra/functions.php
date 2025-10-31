@@ -351,6 +351,7 @@ add_action('wp_enqueue_scripts',function(){
     if($has_view_short || $has_flow_short){
         wp_enqueue_style('custom/global', '/css/global.css');
         wp_enqueue_style('custom/modal','/css/modal.css');
+        wp_enqueue_script('tailwindcss','https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4');
     }
 });
 
