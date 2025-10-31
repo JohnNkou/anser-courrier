@@ -1157,7 +1157,16 @@ if (typeof _Page != "undefined") {
     let form = event.target, input = form.elements.s;
     if (input.value.length) {
       let limit = myPage_handler.limit, queries = { term: input.value };
-      myPage_handler.load_data(queries, 0, limit).then((json_response) => result_handler(json_response, table));
+      myPage_handler.load_data(queries, 0, limit).then((json_response) => result_handler(json_response, table)).then(() => {
+        if (counts.length) {
+          counts[0].textContent = myPage_handler.total;
+          navigationHelper.textContent = "1-" + myPage_handler.limit + " de " + myPage_handler.total;
+        } else {
+          console.error("NO COUNTS NODE FOUND");
+        }
+      }).catch((error) => {
+        console.error("ERROR", error);
+      });
     } else {
       console.warn("Nothing to search for");
     }

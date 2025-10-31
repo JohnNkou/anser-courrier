@@ -61,7 +61,18 @@ if(typeof _Page != "undefined"){
             let limit = myPage_handler.limit,
             queries = { term: input.value }
 
-            myPage_handler.load_data(queries,0,limit).then((json_response)=> result_handler(json_response,table));
+            myPage_handler.load_data(queries,0,limit).then((json_response)=> result_handler(json_response,table)).then(()=>{
+                if(counts.length){
+                    counts[0].textContent = myPage_handler.total;
+
+                    navigationHelper.textContent = "1-"+ myPage_handler.limit + " de "+ myPage_handler.total;
+                }
+                else{
+                    console.error("NO COUNTS NODE FOUND");
+                }
+            }).catch((error)=>{
+                console.error('ERROR',error);
+            });
             //this.load_data(0,this.limit,input.value).then(result_handler);
         }
         else{
