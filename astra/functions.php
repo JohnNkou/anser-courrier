@@ -290,49 +290,6 @@ function sh_gravityflow_inbox_search_criteria( $search_criteria, $args ) {
 
 }, 10, 1 );*/
 
-// ** Custom
-add_filter("gform_field_filters", function($filters, $form){
-    return [
-        [
-            "key" => "",
-            "text" => "Champs",
-            "operators" => []
-        ],
-        [
-            "key" => 68,
-            "text" => "Entry IDR",
-            "preventMultiple"=> false,
-            "operators" => ['is', 'isnot', '>', '<', 'contains']
-        ],
-        [
-            "key" => 1,
-            "text" => "Numéro courrier",
-            "preventMultiple"=> false,
-            "operators" => ['is', 'isnot', '>', '<', 'contains']
-        ],
-        [
-            "key" => 2,
-            "text" => "Référence du courrier",
-            "preventMultiple"=> false,
-            "operators" => ['is', 'isnot', '>', '<', 'contains']
-        ],
-        [
-            "key" => 3,
-            "text" => "Expéditeur",
-            "preventMultiple"=> false,
-            "operators" => ['is', 'isnot', '>', '<', 'contains']
-        ],
-        [
-            "key" => 45,
-            "text" => "Objet",
-            "preventMultiple"=> false,
-            "operators" => ['is', 'isnot', '>', '<', 'contains']
-        ],
-    ];
-    
-    return $filters;
-},10, 2);
-
 // Custom Ajax Endpoint for experimentation with ajax loading of Gravityflow
 
 require_once ABSPATH ."anser-php/constant.php";
