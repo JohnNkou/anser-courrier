@@ -158,9 +158,10 @@ class GravityView_Plugin_Hooks_Gravity_Forms_Chained_Selects extends GravityView
 			return;
 		}
 
+		throw new Exception("Error Processing Request", 1);
+
 		// Adds the gform hooks required by Chained Selects. See gforms_hooks.js.
 		if ( empty( GFFormDisplay::$hooks_js_printed ) ) {
-			throw new Exception("Error Processing Request", 1);
 			
 			echo GFCommon::get_hooks_javascript_code();
 		}
