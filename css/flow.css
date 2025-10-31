@@ -98,6 +98,9 @@ body #main {
     flex-direction: column;
     box-shadow: none;
 }
+.hidden{
+   display: none;
+}
 #my-content .entry-detail section {
     padding-bottom: 1em;
 }
