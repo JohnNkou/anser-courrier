@@ -5711,6 +5711,8 @@ PRIMARY KEY  (id)
 			 * @param array  $atts    The original shortcode attributes.
 			 * @param string $content The content inside the shortcode block.
 			 */
+
+			flogs("HTML IS %s",$html);
 			$html = apply_filters( 'gravityflow_shortcode_' . $a['page'], $html, $atts, $content );
 
 			return $html;
