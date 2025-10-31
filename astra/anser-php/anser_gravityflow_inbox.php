@@ -34,8 +34,11 @@ class Anser_GravityFlow_Inbox{
 	?>
 		</div>
 	<?php
+		$html = ob_get_clean();
 
-		return ob_get_clean();
+		flogs("THE HTML IS COMMONLY %s",$html);
+
+		return $html;
 	}
 
 	private function header(){
