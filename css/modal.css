@@ -49,14 +49,14 @@
  .classMan p, .classMan span{
     cursor:default;
 }
- .card{
+.modal .card{
     background-color:white;
     display:grid;
     grid-template-columns: 1fr 1fr;
     box-shadow:0px 0px 3px #0000001a;
     border-radius:1em 1em 1em 1em;
 }
-.card p:first-child{
+.modal .card p:first-child{
     font-weight:bold;
 }
  .modal .close {
