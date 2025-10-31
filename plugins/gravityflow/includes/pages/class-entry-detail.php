@@ -60,7 +60,7 @@ class Gravity_Flow_Entry_Detail {
 
 			self::maybe_display_back_link( $args );
 			self::maybe_show_header( $form, $args );
-			flogs("STEP BEFORE STUFF %s",$current_step);
+			
 			$permission_granted = $check_view_entry_permissions ? self::is_permission_granted( $entry, $form, $current_step ) : true;
 
 			/**
