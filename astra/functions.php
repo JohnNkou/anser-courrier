@@ -354,6 +354,7 @@ add_action('wp_enqueue_scripts',function(){
         wp_enqueue_script('tailwindcss','https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4');
 
         add_shortcode("anser_gravityflow",function($passed_attrs){
+            flogs("Je suis là");
             return "<h4>Non je ne suis pas interese</h4>";
         });
     }
