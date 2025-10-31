@@ -352,6 +352,10 @@ add_action('wp_enqueue_scripts',function(){
         wp_enqueue_style('custom/global', '/css/global.css');
         wp_enqueue_style('custom/modal','/css/modal.css');
         wp_enqueue_script('tailwindcss','https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4');
+
+        add_shortcode("anser_gravityflow",function($passed_attrs){
+            return "<h4>Non je ne suis pas interese</h4>";
+        });
     }
 });
 
@@ -360,16 +364,6 @@ add_shortcode("anser_gravityview", array('Anser_Gravityview','shortcode'));
 //$anser_gf = Anser_GravityFlow::get_instance();
 
 //add_shortcode('anser_gravityflow', array($anser_gf, 'shortcode'));
-
-add_shortcode("anser_gravityflow",function($passed_atts){
-    wp_enqueue_style('custom_global','/css/global.css');
-
-    ob_start();
-
-    echo "<h1>LE TEST DU JOUR</h1>";
-
-    return ob_get_clean();
-});
 
 $gravityflow_ajax_endpoint = GRAVITYFLOW_AJAX_ENDPOINT;
 $gravityview_ajax_endpoint = GRAVITYVIEW_AJAX_ENDPOINT;
