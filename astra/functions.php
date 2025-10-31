@@ -348,6 +348,16 @@ add_shortcode("anser_gravityview", array('Anser_Gravityview','shortcode'));
 
 //add_shortcode('anser_gravityflow', array($anser_gf, 'shortcode'));
 
+add_shortcode("anser_gravityflow",function($passed_atts){
+    wp_enqueue_style('custom_global','/css/global.css');
+
+    ob_start();
+
+    echo "<h1>LE TEST DU JOUR</h1>";
+
+    return ob_get_clean();
+});
+
 $gravityflow_ajax_endpoint = GRAVITYFLOW_AJAX_ENDPOINT;
 $gravityview_ajax_endpoint = GRAVITYVIEW_AJAX_ENDPOINT;
 $gravityview_entry_ajax_endpoint = GRAVITYVIEW_ENTRY_AJAX_ENDPOINT;
