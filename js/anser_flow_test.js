@@ -865,7 +865,9 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             display_entry(json_response.data, payloads);
           } else {
             let msg = json_response.data && json_response.data.msg || "La recherche de l'entrée n'a pas pu être effectuée";
-            return display_information_modal(msg);
+            return display_information_modal(msg).finally(() => {
+              entry_toggler();
+            });
           }
         }).catch((error) => {
           let msg = error.message || "Une erreur est survenue";
