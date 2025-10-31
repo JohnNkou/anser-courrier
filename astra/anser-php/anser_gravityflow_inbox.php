@@ -19,6 +19,7 @@ class Anser_GravityFlow_Inbox{
 	}
 
 	public function render(){
+		ob_start();
 		$this->register_styles();
 		$this->register_scripts();
 	?>
@@ -33,6 +34,8 @@ class Anser_GravityFlow_Inbox{
 	?>
 		</div>
 	<?php
+
+		return ob_get_clean();
 	}
 
 	private function header(){
@@ -156,14 +159,11 @@ class Anser_GravityFlow_Inbox{
 	}
 
 	private function register_styles(){
-		wp_enqueue_style('custom_globe','/css/global.css');
-		wp_enqueue_style('custom_modal', '/css/modal.css');
 		wp_enqueue_style('custom_flow', '/css/flow.css');
 	}
 
 	private function register_scripts(){
 		wp_enqueue_script('gravityflow-inbox-ajax', '/js/anser_flow_test.js',[], '1.2', true);
-		wp_enqueue_script('tailwindcss','https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4',[],null,false);
 		wp_localize_script('gravityflow-inbox-ajax',JS_AJAX_NAME, [
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'flow_action' => GRAVITYFLOW_AJAX_ENDPOINT,
