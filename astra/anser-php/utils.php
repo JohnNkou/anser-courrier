@@ -524,6 +524,9 @@ function build_inbox_editable_result($form,$entry,$current_step){
     if(!Gravity_Flow_Entry_Detail::is_permission_granted($entry,$form,$current_step)){
     	flogs("NO PERMISSION GRANTED PALL");
     }
+    else{
+    	flogs("PERSMISSION GRANTED");
+    }
 
     $results = [[]];
     $current_index = 0;
