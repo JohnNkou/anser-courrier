@@ -861,7 +861,15 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         }, myPage_handler = new page_handler(null, table, queries);
         entry_toggler();
         myPage_handler.load_data().then((json_response) => {
-          display_entry(json_response.data, payloads);
+          if (json_response.success) {
+            display_entry(json_response.data, payloads);
+          } else {
+            let msg = json_response.data && json_response.data.msg || "La recherche de l'entrée n'a pas pu être effectuée";
+            return display_information_modal(msg);
+          }
+        }).catch((error) => {
+          let msg = error.message || "Une erreur est survenue";
+          display_information_modal(msg);
         });
       } else {
         console.error("No entry_id and form_id found");
