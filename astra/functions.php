@@ -342,6 +342,18 @@ require_once ABSPATH ."anser-php/anser_gravityview_renderer.php";
 require_once ABSPATH ."anser-php/anser_gravityflow.php";
 require_once ABSPATH ."anser-php/anser_gravityflow_inbox.php";
 
+add_action('wp_enqueue_scripts',function(){
+    global $post;
+
+    $has_view_short = has_shortcode($post->post_content,'anser_gravityview');
+    $has_flow_short = has_shortcode($post->post_content,'anser_gravityflow');
+
+    if($has_view_short || $has_flow_short){
+        wp_enqueue_style('custom/global', '/css/global.css');
+        wp_enqueue_style('custom/modal','/css/modal.css');
+    }
+});
+
 add_shortcode("anser_gravityview", array('Anser_Gravityview','shortcode'));
 
 //$anser_gf = Anser_GravityFlow::get_instance();

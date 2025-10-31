@@ -6155,9 +6155,6 @@ Content-Type: text/html;
 	public static function get_hooks_javascript_code() {
 		require_once self::get_base_path() . '/form_display.php';
 
-		throw new Exception("Error Processing Request", 1);
-		
-
 		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || isset( $_GET['gform_debug'] ) ? '' : '.min';
 
 		GFFormDisplay::$hooks_js_printed = true;
