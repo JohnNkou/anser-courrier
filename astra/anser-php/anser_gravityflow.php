@@ -5827,8 +5827,6 @@ PRIMARY KEY  (id)
 		 * @return string
 		 */
 		public function get_shortcode_inbox_page( $a ) {
-			wp_enqueue_script( 'gravityflow_entry_detail' );
-			wp_enqueue_script( 'gravityflow_status_list' );
 			$args = array(
 				'form_id'          => $a['form'],
 				'entry_id'         => $a['entry_id'],

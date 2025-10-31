@@ -19,7 +19,6 @@ class Anser_GravityFlow_Inbox{
 	}
 
 	public function render(){
-		ob_start();
 		$this->register_styles();
 		$this->register_scripts();
 	?>
@@ -34,11 +33,6 @@ class Anser_GravityFlow_Inbox{
 	?>
 		</div>
 	<?php
-		$html = ob_get_clean();
-
-		flogs("THE HTML IS COMMONLY %s",$html);
-
-		return $html;
 	}
 
 	private function header(){
