@@ -332,12 +332,6 @@ add_filter("gform_field_filters", function($filters, $form){
     
     return $filters;
 },10, 2);
-// Insertion of the anser-worker serviceWorker
-add_action("wp_head", function(){
-   ?>
-        <script src='/anser_install_worker.js'></script>
-   <?php
-});
 
 // Custom Ajax Endpoint for experimentation with ajax loading of Gravityflow
 
