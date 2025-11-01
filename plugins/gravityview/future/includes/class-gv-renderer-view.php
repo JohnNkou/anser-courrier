@@ -207,6 +207,7 @@ class View_Renderer extends Renderer {
 		);
 
 		ob_start();
+		echo "<h1>MAMAN ET PAPA</h1>";
 		$template->render();
 
 		remove_action( 'gravityview/template/after', $view_id_output );

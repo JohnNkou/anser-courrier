@@ -964,8 +964,6 @@ class GravityView_Widget_Search extends \GV\Widget {
 
 		$query_class = $view->get_query_class();
 
-		flogs("IN SEARCH WIDGE SEARCH_CRITERIA %s",print_r($search_criteria,true));
-
 		if ( empty( $search_criteria['field_filters'] ) ) {
 			return;
 		}
@@ -1708,7 +1706,6 @@ class GravityView_Widget_Search extends \GV\Widget {
 			gravityview()->log->debug( 'No search fields configured for widget:', array( 'data' => $widget_args ) );
 			return;
 		}
-		error_log("WIDGET ARGS ".json_encode($widget_args));
 		// prepare fields
 		foreach ( $search_fields as $k => $field ) {
 			error_log("FIELD ".json_encode($field));
