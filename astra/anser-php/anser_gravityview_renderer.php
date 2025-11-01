@@ -26,7 +26,8 @@ class View_Renderer extends Renderer
     public $search_widgets;
  	
  	public function render($view,$request){
- 		$entries = $view->get_entries($request);
+        $this->view = $view;
+ 		$this->entries = $view->get_entries($request);
 
         if($view->widgets->count() > 0){
             $widgets = $view->widgets->by_position("header_top*")->all();
@@ -37,8 +38,6 @@ class View_Renderer extends Renderer
         })[0] ?? null;
         $search_criteria = $search_widget ? $this->build_search_criteria($search_widget,$view) : null;
 
-        $this->view = $view;
- 		$this->entries = $entries;
         $this->search_widget = $search_widget;
         $this->search_criteria = $search_criteria;
  		$this->register_scripts();
