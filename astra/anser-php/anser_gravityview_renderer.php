@@ -53,6 +53,8 @@ class View_Renderer extends Renderer
         foreach ( $search_fields as $k => $field ) {
             $updated_field = $field;
 
+            flogs("WIDGET FIELD %s",print_r($field,true));
+
             $updated_field = $this->get_search_filter_details( $updated_field, $context, $widget_args );
             
             switch ( $field['field'] ) {
