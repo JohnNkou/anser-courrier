@@ -21,11 +21,15 @@ class View_Renderer extends Renderer
 
  	public $gravityview_ajax_endpoint = 'load_gravityview';
  	public $gravityview_entry_view_endpoint = 'load_gravityview_entry';
+    public $search_widgets;
  	
  	public function render($view,$request){
  		$entries = $view->get_entries($request);
  		$this->view = $view;
  		$this->entries = $entries;
+        $this->search_widgets = $this->build_search_widget($view->widgets->by_position("header_top"));
+
+        flogs("SEARCH WIDGET IS %s",$this->search_widgets);
 
  		$this->register_scripts();
  		$this->register_styles();
@@ -36,6 +40,161 @@ class View_Renderer extends Renderer
 
     	return ob_get_clean();
  	}
+
+    private function build_search_widget($widget_args,$content = '', $context = ''){
+        $gravityview_view = GravityView_View::getInstance();
+
+        if ( empty( $gravityview_view ) ) {
+            gravityview()->log->debug( '$gravityview_view not instantiated yet.' );
+            return;
+        }
+
+        $view = \GV\View::by_id( $gravityview_view->view_id );
+
+        // get configured search fields
+        $search_fields = ! empty( $widget_args['search_fields'] ) ? json_decode( $widget_args['search_fields'], true ) : '';
+        if ( empty( $search_fields ) || ! is_array( $search_fields ) ) {
+            gravityview()->log->debug( 'No search fields configured for widget:', array( 'data' => $widget_args ) );
+            return;
+        }
+        // prepare fields
+        foreach ( $search_fields as $k => $field ) {
+            $updated_field = $field;
+
+            $updated_field = $this->get_search_filter_details( $updated_field, $context, $widget_args );
+            
+            switch ( $field['field'] ) {
+
+                case 'search_all':
+                    $updated_field['key']   = 'search_all';
+                    $updated_field['input'] = 'search_all';
+                    $updated_field['value'] = $this->rgget_or_rgpost( 'gv_search' );
+                    break;
+
+                case 'entry_date':
+                    $updated_field['key']   = 'entry_date';
+                    $updated_field['input'] = 'entry_date';
+                    $updated_field['value'] = array(
+                        'start' => $this->rgget_or_rgpost( 'gv_start' ),
+                        'end'   => $this->rgget_or_rgpost( 'gv_end' ),
+                    );
+                    break;
+
+                case 'entry_id':
+                    $updated_field['key']   = 'entry_id';
+                    $updated_field['input'] = 'entry_id';
+                    $updated_field['value'] = $this->rgget_or_rgpost( 'gv_id' );
+                    break;
+
+                case 'created_by':
+                    $updated_field['key']   = 'created_by';
+                    $updated_field['name']  = 'gv_by';
+                    $updated_field['value'] = $this->rgget_or_rgpost( 'gv_by' );
+                    break;
+
+                case 'is_approved':
+                    $updated_field['key']     = 'is_approved';
+                    $updated_field['value']   = $this->rgget_or_rgpost( 'filter_is_approved' );
+                    $updated_field['choices'] = self::get_is_approved_choices();
+                    break;
+
+                case 'is_read':
+                    $updated_field['key']     = 'is_read';
+                    $updated_field['value']   = $this->rgget_or_rgpost( 'filter_is_read' );
+                    $updated_field['choices'] = array(
+                        array(
+                            'text'  => __( 'Unread', 'gk-gravityview' ),
+                            'value' => 0,
+                        ),
+                        array(
+                            'text'  => __( 'Read', 'gk-gravityview' ),
+                            'value' => 1,
+                        ),
+                    );
+                    break;
+            }
+
+            $search_fields[ $k ] = $updated_field;
+        }
+
+        return [
+            "search_fields"=> apply_filters( 'gravityview_widget_search_filters', $search_fields, $this, $widget_args, $context ),
+            "search_mode"=> ! empty( $widget_args['search_mode'] ) ? $widget_args['search_mode'] : 'any'
+        ];
+    }
+
+    private function get_search_filter_details( $field, $context, $widget_args ) {
+
+        $gravityview_view = GravityView_View::getInstance();
+
+        $form = $gravityview_view->getForm();
+
+        // for advanced field ids (eg, first name / last name )
+        $name = 'filter_' . str_replace( '.', '_', $field['field'] );
+
+        // get searched value from $_GET/$_POST (string or array)
+        $value = $this->rgget_or_rgpost( $name );
+
+        // get form field details
+        $form_field = gravityview_get_field( $form, $field['field'] );
+
+        $form_field_type = \GV\Utils::get( $form_field, 'type' );
+
+        $filter = array(
+            'key'   => \GV\Utils::get( $field, 'field' ),
+            'name'  => $name,
+            'label' => self::get_field_label( $field, $form_field ),
+            'input' => \GV\Utils::get( $field, 'input' ),
+            'value' => $value,
+            'type'  => $form_field_type,
+        );
+
+        // collect choices
+        if ( 'post_category' === $form_field_type && ! empty( $form_field['displayAllCategories'] ) && empty( $form_field['choices'] ) ) {
+            $filter['choices'] = gravityview_get_terms_choices();
+        } elseif ( ! empty( $form_field['choices'] ) ) {
+            $filter['choices'] = $form_field['choices'];
+        }
+
+        if ( 'date_range' === $field['input'] && empty( $value ) ) {
+            $filter['value'] = array(
+                'start' => '',
+                'end'   => '',
+            );
+        }
+
+        if ( 'number_range' === $field['input'] && empty( $value ) ) {
+            $filter['value'] = array(
+                'min' => '',
+                'max' => '',
+            );
+        }
+
+        if ( 'created_by' === $field['field'] ) {
+            $filter['choices'] = self::get_created_by_choices( ( isset( $context->view ) ? $context->view : null ) );
+            $filter['type']    = 'created_by';
+        }
+
+        if( 'payment_status' === $field['field'] ) {
+            $filter['type']    = 'entry_meta';
+            $filter['choices'] = GFCommon::get_entry_payment_statuses_as_choices();
+        }
+
+        if ( 'payment_status' === $field['field'] ) {
+            $filter['type']    = 'entry_meta';
+            $filter['choices'] = GFCommon::get_entry_payment_statuses_as_choices();
+        }
+
+        /**
+         * Filter the output filter details for the Search widget.
+         *
+         * @since 2.5
+         * @param array $filter The filter details
+         * @param array $field The search field configuration
+         * @param \GV\Context The context
+         */
+        return apply_filters( 'gravityview/search/filter_details', $filter, $field, $context );
+    }
 
  	protected function build(){
  		wp_enqueue_script('tailwindcss','https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4');
