@@ -27,18 +27,38 @@ else{
 
 			let input = search_form.elements.s,
 			value = input.value,
+			search_mode = input.getAttribute('data-search-mode'),
+			search_fields = input.getAttribute('data-search-fields'),
 			queries;
 
 			if(value.length){
-				queries = {
-					gv_search:value,
-					mode:'all'
-				};
+				if(search_fields && search_mode){
+					queries = { mode: search_mode };
 
-				myPage_handler.removeQueries(['filter_workflow_final_status']);
-				myPage_handler.load_data(queries,0).then((json_response)=> result_handler(json_response,table)).then(()=>{
-					myPage_handler.addQueries(queries);
-				});
+					search_fields = search_fields.split(' ');
+
+					if(search_fields.length){
+						if(search_fields.indexOf('search_all') != -1){
+							queries['gv_search'] = value;
+						}
+						else{
+							search_fields.forEach((key)=>{
+								queries[key] = value;
+							})
+						}
+					}
+					else{
+						return console.error("Search_Fileds is empty",search_fields);
+					}
+
+					myPage_handler.removeQueries(['filter_workflow_final_status']);
+					myPage_handler.load_data(queries,0).then((json_response)=> result_handler(json_response,table)).then(()=>{
+						myPage_handler.addQueries(queries);
+					});
+				}
+				else{
+					console.error("Attribute search_fields or search_mode should be set in the input element");
+				}
 			}
 		})
 	}
