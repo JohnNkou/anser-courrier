@@ -118,9 +118,7 @@ class View_Renderer extends Renderer
 
     private function get_search_filter_details( $field, $context, $widget_args ) {
 
-        $gravityview_view = GravityView_View::getInstance();
-
-        $form = $gravityview_view->getForm();
+        $form = $this->view->form;
 
         // for advanced field ids (eg, first name / last name )
         $name = 'filter_' . str_replace( '.', '_', $field['field'] );
