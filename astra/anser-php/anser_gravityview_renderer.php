@@ -220,7 +220,7 @@ class View_Renderer extends Renderer
             $search_fields = $this->search_criteria['search_fields'] ?? [];
             $search_mode = $this->search_criteria['search_mode'] ?? 'any';
             $input_fields = array_filter($search_fields,function($field){
-                return strpos($field['key'], "input") !== false;
+                return (int)$field['key'] !== 0;
             });
             $has_search_all = array_find($search_fields,function($field){
                 return $field['key'] == 'search_all';
@@ -229,7 +229,7 @@ class View_Renderer extends Renderer
 
             if(!empty($input_fields)){
                 $search_data = array_reduce($input_fields, function($x,$field){
-                    return $x . " " . $field['key'];
+                    return $x . " " . $field['name'];
                 },"");
             }
             elseif (!empty($has_search_all)) {
