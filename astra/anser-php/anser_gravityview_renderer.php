@@ -45,6 +45,8 @@ class View_Renderer extends Renderer
 
     	ob_start();
 
+        flogs("Search criteria %s",print_r($search_criteria,true));
+
     	$this->build($view,$entries);
 
     	return ob_get_clean();
