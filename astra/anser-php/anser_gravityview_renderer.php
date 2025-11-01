@@ -10,8 +10,7 @@ use GravityView_Widget_Search;
 class View_Renderer extends Renderer
  {
  	private $view;
- 	private $entries;
-    private $search_widget;
+ 	private $search_widget;
     private $search_criteria;
  	private $filters = [
  		["value"=>"",			"label"=>"tous"],
@@ -27,7 +26,6 @@ class View_Renderer extends Renderer
  	
  	public function render($view,$request){
         $this->view = $view;
- 		$this->entries = $view->get_entries($request);
 
         if($view->widgets->count() > 0){
             $widgets = $view->widgets->by_position("header_top*")->all();
@@ -47,7 +45,7 @@ class View_Renderer extends Renderer
         flogs("search_widget %s",print_r($search_widget->configuration,true));
         flogs("search_criteria %s",print_r($search_criteria,true));
 
-    	$this->build($this->view,$this->entries);
+    	$this->build();
 
     	return ob_get_clean();
  	}
