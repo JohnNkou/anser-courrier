@@ -116,6 +116,8 @@ if ( ! class_exists( '\GV\Gamajo_Template_Loader' ) ) {
 			// Get files names of templates, for given slug and name.
 			$templates = $this->get_template_file_names( $slug, $name );
 
+			echo "<h1>MON</h1>";
+
 			// Return the part that is found.
 			return $this->locate_template( $templates, $load, false );
 		}
