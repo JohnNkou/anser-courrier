@@ -327,10 +327,11 @@ class gravityview extends \GV\Shortcode {
 			}
 			error_log("Choose laned ");
 
-			flogs("WIDGETS %s",print_r($view->widgets,true));
-			flogs("FIELD 180 %s", print_r(array_find($view->form['fields'],function($field){
+			//flogs("WIDGETS %s",print_r($view->widgets,true));
+			flogs("VIEW %s",print_r($view,true));
+			/*flogs("FIELD 180 %s", print_r(array_find($view->form['fields'],function($field){
 				return $field->id == 180;
-			})));
+			})));*/
 			$renderer = new \GV\View_Renderer();
 			return self::_return( $renderer->render( $view, $request ) );
 		}
