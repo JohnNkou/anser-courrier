@@ -215,17 +215,41 @@ class View_Renderer extends Renderer
  	}
 
  	protected function header(){
- 		$title = $this->view->get_post()->post_title;
- 		?>
- 		<header>
-    		<div>
-    			<h1 class='inline'><?php echo $title ?></h1>
-    		</div>
-    		<form class='flex justify-end items-center gap-1 search_block'>
-    			<input type="text" class="" name="s" placeholder=""Recherche><button type='submit'>Rechercher</button>
-    		</form>
-    	</header>
- 		<?php
+        if($this->search_widget){
+            $title = $this->view->get_post()->post_title;
+            $search_fields = $this->search_criteria['search_fields'] ?? [];
+            $search_mode = $this->search_criteria['search_mode'] ?? 'any';
+            $input_fields = array_filter($search_fields,function($field){
+                return strpos($field['key'], "input") !== false
+            });
+            $has_search_all = array_find($search_fields,function($field){
+                return $field['key'] == 'search_all'
+            });
+            $search_data = "";
+
+            if(!empty($input_fields)){
+                $search_data = array_reduce($input_fields, function($x,$field){
+                    return $x . " " . $field['key'];
+                },"")
+            }
+            elseif (!empty($has_search_all)) {
+                $saerch_data = "search_all";
+            }
+            else{
+                flogs("View id %s has search filter not yet registered. %s",$this->view->ID,$this->search_widget);
+            }
+
+            ?>
+            <header>
+                <div>
+                    <h1 class='inline'><?php echo $title ?></h1>
+                </div>
+                <form class='flex justify-end items-center gap-1 search_block'>
+                    <input data-seach-mode="<?php echo $search_mode ?>" data-search-fields="<?php echo $search_data ?>" type="text" class="" name="s" placeholder=""Recherche><button type='submit'>Rechercher</button>
+                </form>
+            </header>
+            <?php
+        }
  	}
 
  	protected function filter(){
