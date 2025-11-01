@@ -228,6 +228,7 @@ class View_Renderer extends Renderer
             $search_data = "";
 
             if(!empty($input_fields)){
+                flogs("INPUT FIELDS IS %s",print_r($input_fields,true));
                 $search_data = array_reduce($input_fields, function($x,$field){
                     return $x . " " . $field['key'];
                 },"");
