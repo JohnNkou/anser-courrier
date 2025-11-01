@@ -47,7 +47,7 @@ class View_Renderer extends Renderer
         flogs("search_widget %s",print_r($search_widget->configuration,true));
         flogs("search_criteria %s",print_r($search_criteria,true));
 
-    	$this->build($view,$entries);
+    	$this->build($this->view,$this->entries);
 
     	return ob_get_clean();
  	}
