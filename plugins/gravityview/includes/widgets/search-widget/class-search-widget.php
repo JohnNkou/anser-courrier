@@ -1708,11 +1708,9 @@ class GravityView_Widget_Search extends \GV\Widget {
 		}
 		// prepare fields
 		foreach ( $search_fields as $k => $field ) {
-			error_log("FIELD ".json_encode($field));
 			$updated_field = $field;
 
 			$updated_field = $this->get_search_filter_details( $updated_field, $context, $widget_args );
-			error_log("UPDATED FIELDS ".json_encode($updated_field));
 			
 			switch ( $field['field'] ) {
 
@@ -1940,7 +1938,7 @@ class GravityView_Widget_Search extends \GV\Widget {
 
 		// get form field details
 		$form_field = gravityview_get_field( $form, $field['field'] );
-		error_log("FORM FIELD DETAILS ".json_encode($form_field));
+
 		$form_field_type = \GV\Utils::get( $form_field, 'type' );
 
 		$filter = array(
