@@ -32,8 +32,7 @@ class View_Renderer extends Renderer
         flogs("SEARCH WIDGET IS %s",$this->search_widgets);
 
  		$this->register_scripts();
- 		$this->register_styles();
-
+        
     	ob_start();
 
     	$this->build($view,$entries);
