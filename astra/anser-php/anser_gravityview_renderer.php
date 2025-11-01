@@ -266,7 +266,7 @@ class View_Renderer extends Renderer
                 ?>
                 <div class='flex gap-0 text-sm status_filter'>
                 <?php
-                    foreach ($workflow_field["choices"] as $choice) {
+                    foreach ($workflow_field["choices"] as $key => $choice) {
                         $class = $key == 0 ? "active":"";
                         $value = $choice['value'];
                         $label = $choice['text'];
