@@ -2,7 +2,6 @@
 namespace ANSER\GV;
 
 use GV\Renderer;
-use GravityView_Widget_Search;
 /**
   * 
   */
@@ -134,7 +133,7 @@ class View_Renderer extends Renderer
         $filter = array(
             'key'   => \GV\Utils::get( $field, 'field' ),
             'name'  => $name,
-            'label' => $field->label,
+            'label' => $field['label'],
             'input' => \GV\Utils::get( $field, 'input' ),
             'value' => $value,
             'type'  => $form_field_type,
@@ -161,10 +160,10 @@ class View_Renderer extends Renderer
             );
         }
 
-        if ( 'created_by' === $field['field'] ) {
+        /*if ( 'created_by' === $field['field'] ) {
             $filter['choices'] = self::get_created_by_choices( ( isset( $context->view ) ? $context->view : null ) );
             $filter['type']    = 'created_by';
-        }
+        }*/
 
         if( 'payment_status' === $field['field'] ) {
             $filter['type']    = 'entry_meta';
