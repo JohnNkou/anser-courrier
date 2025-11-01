@@ -27,7 +27,7 @@ class View_Renderer extends Renderer
  		$entries = $view->get_entries($request);
  		$this->view = $view;
  		$this->entries = $entries;
-        $this->search_widgets = $this->build_search_widget($view->widgets->by_position("header_top*")->all());
+        $this->search_widgets = $this->build_search_widget($view->widgets->by_position("header_top*")->all()[0]);
 
  		$this->register_scripts();
 
@@ -40,8 +40,6 @@ class View_Renderer extends Renderer
 
     private function build_search_widget($widget_args,$content = '', $context = ''){
         $view = $this->view;
-
-        flogs("WIDGET IN VIEW %s",print_r($widget_args,true));
 
         // get configured search fields
         $search_fields = ! empty( $widget_args['search_fields'] ) ? json_decode( $widget_args['search_fields'], true ) : '';
