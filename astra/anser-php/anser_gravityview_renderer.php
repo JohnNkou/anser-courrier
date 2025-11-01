@@ -12,6 +12,7 @@ class View_Renderer extends Renderer
  	private $view;
  	private $entries;
     private $search_widget;
+    private $search_criteria;
  	private $filters = [
  		["value"=>"",			"label"=>"tous"],
  		["value"=>"pending", 	"label"=>"en attente"],
