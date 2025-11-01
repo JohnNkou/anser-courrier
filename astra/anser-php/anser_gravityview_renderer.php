@@ -31,6 +31,8 @@ class View_Renderer extends Renderer
 
  		$this->register_scripts();
 
+        flogs("SEARCH WIDGET IS %s",print_r($this->search_widgets,true));
+
     	ob_start();
 
     	$this->build($view,$entries);
@@ -51,8 +53,6 @@ class View_Renderer extends Renderer
         // prepare fields
         foreach ( $search_fields as $k => $field ) {
             $updated_field = $field;
-
-            flogs("WIDGET FIELD %s",print_r($field,true));
 
             $updated_field = $this->get_search_filter_details( $updated_field, $context, $widget_args );
             
