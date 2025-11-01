@@ -38,7 +38,8 @@ class View_Renderer extends Renderer
     	return ob_get_clean();
  	}
 
-    private function build_search_widget($widget_args,$content = '', $context = ''){
+    private function build_search_widget($widget,$content = '', $context = ''){
+        $widget_args = $widget->configuration->all();
         $view = $this->view;
 
         // get configured search fields
