@@ -31,6 +31,8 @@ class View_Renderer extends Renderer
 
  		$this->register_scripts();
 
+        flogs("WIDGETS %s", print_r($view->widgets,true));
+
         flogs("SEARCH WIDGET IS %s",print_r($this->search_widgets,true));
 
     	ob_start();
