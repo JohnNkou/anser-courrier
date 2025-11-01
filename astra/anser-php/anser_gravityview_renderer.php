@@ -60,39 +60,39 @@ class View_Renderer extends Renderer
                 case 'search_all':
                     $updated_field['key']   = 'search_all';
                     $updated_field['input'] = 'search_all';
-                    $updated_field['value'] = $this->rgget_or_rgpost( 'gv_search' );
+                    $updated_field['value'] = '';
                     break;
 
                 case 'entry_date':
                     $updated_field['key']   = 'entry_date';
                     $updated_field['input'] = 'entry_date';
                     $updated_field['value'] = array(
-                        'start' => $this->rgget_or_rgpost( 'gv_start' ),
-                        'end'   => $this->rgget_or_rgpost( 'gv_end' ),
+                        'start' => '',
+                        'end'   => '',
                     );
                     break;
 
                 case 'entry_id':
                     $updated_field['key']   = 'entry_id';
                     $updated_field['input'] = 'entry_id';
-                    $updated_field['value'] = $this->rgget_or_rgpost( 'gv_id' );
+                    $updated_field['value'] = '';
                     break;
 
                 case 'created_by':
                     $updated_field['key']   = 'created_by';
                     $updated_field['name']  = 'gv_by';
-                    $updated_field['value'] = $this->rgget_or_rgpost( 'gv_by' );
+                    $updated_field['value'] = '';
                     break;
 
                 case 'is_approved':
                     $updated_field['key']     = 'is_approved';
-                    $updated_field['value']   = $this->rgget_or_rgpost( 'filter_is_approved' );
+                    $updated_field['value']   = '';
                     $updated_field['choices'] = self::get_is_approved_choices();
                     break;
 
                 case 'is_read':
                     $updated_field['key']     = 'is_read';
-                    $updated_field['value']   = $this->rgget_or_rgpost( 'filter_is_read' );
+                    $updated_field['value']   = '';
                     $updated_field['choices'] = array(
                         array(
                             'text'  => __( 'Unread', 'gk-gravityview' ),
