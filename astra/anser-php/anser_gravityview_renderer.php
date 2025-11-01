@@ -259,14 +259,14 @@ class View_Renderer extends Renderer
                 return $field["key"] == 'workflow_final_status';
             });
 
-            flogs("Workflow_field %s",print_r($workflow_field,true));
-            flogs("search_field %s",print_r($search_fields,true));
+            /*flogs("Workflow_field %s",print_r($workflow_field,true));
+            flogs("search_field %s",print_r($search_fields,true));*/
 
             if($workflow_field){
                 ?>
                 <div class='flex gap-0 text-sm status_filter'>
                 <?php
-                    foreach ($workflow_field->choices as $choice) {
+                    foreach ($workflow_field["choices"] as $choice) {
                         $class = $key == 0 ? "active":"";
                         $value = $choice['value'];
                         $label = $choice['text'];
