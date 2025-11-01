@@ -2,7 +2,7 @@
 namespace ANSER\GV;
 
 use GV\Renderer;
-use GravityView_Widget_Search;
+#use GravityView_Widget_Search;
 /**
   * 
   */
