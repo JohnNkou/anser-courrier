@@ -253,19 +253,28 @@ class View_Renderer extends Renderer
  	}
 
  	protected function filter(){
- 		?>
- 		<div class='flex gap-0 text-sm status_filter'>
- 		<?php
- 			foreach ($this->filters as $key => $filter) {
- 				$class = $key == 0 ? "active":"";
- 				$value = $filter['value'];
- 				$label = $filter['label'];
+        if($this->search_criteria){
+            $search_fields = $this->search_criteria['search_fields'];
+            $workflow_field = array_find($search_fields,function($field){
+                return $field->key == 'workflow_final_status';
+            });
 
- 				echo "<a class='$class' data-value='$value'>$label</a>";
- 			}
- 		?>
- 		</div>
- 		<?php
+            if($workflow_field){
+                ?>
+                <div class='flex gap-0 text-sm status_filter'>
+                <?php
+                    foreach ($workflow_field->choices as $choice) {
+                        $class = $key == 0 ? "active":"";
+                        $value = $choice['value'];
+                        $label = $choice['text'];
+
+                        echo "<a class='$class' data-value='$value'>$label</a>";
+                    }
+                ?>
+                </div>
+                <?php
+            }
+        }
  	}
 
  	protected function table(){
