@@ -220,10 +220,10 @@ class View_Renderer extends Renderer
             $search_fields = $this->search_criteria['search_fields'] ?? [];
             $search_mode = $this->search_criteria['search_mode'] ?? 'any';
             $input_fields = array_filter($search_fields,function($field){
-                return strpos($field['key'], "input") !== false
+                return strpos($field['key'], "input") !== false;
             });
             $has_search_all = array_find($search_fields,function($field){
-                return $field['key'] == 'search_all'
+                return $field['key'] == 'search_all';
             });
             $search_data = "";
 
