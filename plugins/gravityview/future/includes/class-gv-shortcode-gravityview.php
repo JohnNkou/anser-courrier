@@ -331,7 +331,11 @@ class gravityview extends \GV\Shortcode {
 			flogs("FIELD 180 %s", print_r(array_map(function($field){
 				$choices = !empty($field->choices) ? $field->choices : [];
 				$inputs = !empty($field->inputs) ? $field->inputs : [];
-				return ["id"=> $field->id, "label"=> $field->label, "choices"=> array_slice($choices,0,5), "inputs"=> array_slice($inputs,0,5)];
+
+				$field->choices = $choices;
+				$field->inputs = $inputs;
+
+				return $field;
 			},$view->form->form['fields']),true));
 			$renderer = new \GV\View_Renderer();
 			return self::_return( $renderer->render( $view, $request ) );
