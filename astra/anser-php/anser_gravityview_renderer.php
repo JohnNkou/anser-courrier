@@ -256,7 +256,7 @@ class View_Renderer extends Renderer
         if($this->search_criteria){
             $search_fields = $this->search_criteria['search_fields'];
             $workflow_field = array_find($search_fields,function($field){
-                return $field->key == 'workflow_final_status';
+                return $field["key"] == 'workflow_final_status';
             });
 
             if($workflow_field){
