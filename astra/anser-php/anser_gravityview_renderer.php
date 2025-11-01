@@ -41,7 +41,7 @@ class View_Renderer extends Renderer
     private function build_search_widget($widget_args,$content = '', $context = ''){
         $view = $this->view;
 
-        flogs("WIDGET IN VIEW %s",$widget_args);
+        flogs("WIDGET IN VIEW %s",print_r($widget_args,true));
 
         // get configured search fields
         $search_fields = ! empty( $widget_args['search_fields'] ) ? json_decode( $widget_args['search_fields'], true ) : '';
