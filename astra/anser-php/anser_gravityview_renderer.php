@@ -42,14 +42,7 @@ class View_Renderer extends Renderer
  	}
 
     private function build_search_widget($widget_args,$content = '', $context = ''){
-        $gravityview_view = GravityView_View::getInstance();
-
-        if ( empty( $gravityview_view ) ) {
-            gravityview()->log->debug( '$gravityview_view not instantiated yet.' );
-            return;
-        }
-
-        $view = \GV\View::by_id( $gravityview_view->view_id );
+        $view = $this->view;
 
         // get configured search fields
         $search_fields = ! empty( $widget_args['search_fields'] ) ? json_decode( $widget_args['search_fields'], true ) : '';
