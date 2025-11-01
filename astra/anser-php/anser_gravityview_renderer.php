@@ -29,7 +29,7 @@ class View_Renderer extends Renderer
  		$this->entries = $entries;
         $this->search_widgets = $this->build_search_widget($view->widgets->by_position("header_top*")->all());
 
-        flogs("WIDGET BEFORE %s",print_r($view->widgets->by_position("*",true),true));
+        flogs("WIDGET BEFORE %s",print_r($view->widgets->by_position("header*",true),true));
         flogs("SEARCH WIDGET IS %s",print_r($this->search_widgets,true));
 
  		$this->register_scripts();
