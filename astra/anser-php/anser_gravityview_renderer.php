@@ -245,7 +245,7 @@ class View_Renderer extends Renderer
                     <h1 class='inline'><?php echo $title ?></h1>
                 </div>
                 <form class='flex justify-end items-center gap-1 search_block'>
-                    <input data-seach-mode="<?php echo $search_mode ?>" data-search-fields="<?php echo $search_data ?>" type="text" class="" name="s" placeholder=""Recherche><button type='submit'>Rechercher</button>
+                    <input data-search-mode="<?php echo $search_mode ?>" data-search-fields="<?php echo $search_data ?>" type="text" class="" name="s" placeholder=""Recherche><button type='submit'>Rechercher</button>
                 </form>
             </header>
             <?php
