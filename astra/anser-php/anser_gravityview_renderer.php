@@ -29,7 +29,7 @@ class View_Renderer extends Renderer
  		$this->entries = $entries;
         $this->search_widgets = $this->build_search_widget($view->widgets->by_position("header_top*")->all());
 
-        flogs("WIDGET BEFORE %s",print_r($view->widgets,true));
+        flogs("WIDGET BEFORE %s",print_r($view->widgets->by_position("*",true));
         flogs("SEARCH WIDGET IS %s",print_r($this->search_widgets,true));
 
  		$this->register_scripts();
@@ -40,6 +40,12 @@ class View_Renderer extends Renderer
 
     	return ob_get_clean();
  	}
+
+    private function widget_by_position($widgets,$position){
+        foreach ($variable as $key => $value) {
+            // code...
+        }
+    }
 
     private function build_search_widget($widget_args,$content = '', $context = ''){
         $view = $this->view;
