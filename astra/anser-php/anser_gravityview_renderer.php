@@ -134,7 +134,7 @@ class View_Renderer extends Renderer
         $filter = array(
             'key'   => \GV\Utils::get( $field, 'field' ),
             'name'  => $name,
-            'label' => GravityView_Widget_Search::get_field_label( $field, $form_field ),
+            'label' => $field->label,
             'input' => \GV\Utils::get( $field, 'input' ),
             'value' => $value,
             'type'  => $form_field_type,
