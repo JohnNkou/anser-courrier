@@ -228,9 +228,9 @@ class View_Renderer extends Renderer
             $search_data = "";
 
             if(!empty($input_fields)){
-                $search_data = array_reduce($input_fields, function($x,$field){
+                $search_data = trim(array_reduce($input_fields, function($x,$field){
                     return $x . " " . $field['name'];
-                },"");
+                },""));
             }
             elseif (!empty($has_search_all)) {
                 $search_data = "search_all";
