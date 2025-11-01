@@ -150,6 +150,7 @@ abstract class View_Template extends Template {
 
 		/** Load the template. */
 		$this->get_template_part( static::$slug );
+		echo "<h1>TOtal</h1>";
 		$this->pop_template_data( 'gravityview' );
 	}
 }
