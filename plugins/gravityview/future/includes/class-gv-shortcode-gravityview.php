@@ -328,7 +328,7 @@ class gravityview extends \GV\Shortcode {
 			error_log("Choose laned ");
 
 			//flogs("WIDGETS %s",print_r($view->widgets,true));
-			flogs("views %s", print_r($view,true));
+			flogs("fields %s", print_r($view->fields,true));
 			$renderer = new \GV\View_Renderer();
 			return self::_return( $renderer->render( $view, $request ) );
 		}
