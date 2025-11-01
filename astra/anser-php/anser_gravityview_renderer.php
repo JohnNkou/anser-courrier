@@ -33,7 +33,7 @@ class View_Renderer extends Renderer
         $this->view = $view;
  		$this->entries = $entries;
         $this->search_widget = array_filter($view->widgets->all(), function($widget){
-            flogs("WIDGET CLASS %s",get_class($widget));
+            flogs("WIDGET CLASS %s is widget_search_class",get_class($widget), $widget instanceof GravityView_Widget_Search);
             return $widget instanceof GravityView_Widget_Search;
         });
  		$this->register_scripts();
