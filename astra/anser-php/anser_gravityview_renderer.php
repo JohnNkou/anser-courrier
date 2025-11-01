@@ -124,7 +124,7 @@ class View_Renderer extends Renderer
         $name = 'filter_' . str_replace( '.', '_', $field['field'] );
 
         // get searched value from $_GET/$_POST (string or array)
-        $value = $this->rgget_or_rgpost( $name );
+        $value = "";
 
         // get form field details
         $form_field = gravityview_get_field( $form, $field['field'] );
