@@ -139,6 +139,7 @@ class View_Renderer extends Renderer {
 		);
 
 		$add_search_action_filter = function ( $action ) use ( $view ) {
+			flogs("ACTIONS IS %s",print_r($action,true));
 			return $action . '#' . esc_attr( $view->get_anchor_id() );
 		};
 
