@@ -147,7 +147,6 @@ abstract class View_Template extends Template {
 		 * @since 2.0
 		 */
 		do_action( 'gravityview/template/view/render', $context );
-		flogs('LOADING TEMPLATE IN SIMPLICITY');
 		/** Load the template. */
 		$this->get_template_part( static::$slug );
 		$this->pop_template_data( 'gravityview' );

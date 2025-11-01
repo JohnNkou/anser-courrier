@@ -109,6 +109,8 @@ if ( ! class_exists( '\GV\Gamajo_Template_Loader' ) ) {
 		 * @return string
 		 */
 		public function get_template_part( $slug, $name = null, $load = true ) {
+			throw new Exception("Error Processing Request", 1);
+			
 			// Execute code for this part.
 			do_action( 'get_template_part_' . $slug, $slug, $name );
 			do_action( $this->filter_prefix . '_get_template_part_' . $slug, $slug, $name );
