@@ -128,7 +128,6 @@ class GF_Query {
 	 * @param null|array     $paging
 	 */
 	public function __construct( $form_ids = null, $search_criteria = null, $sorting = null, $paging = null ) {
-		flogs("SAERCH CRITERAI IS %s", print_r($search_criteria,true));
 		if ( ! is_null( $search_criteria ) || ! is_null( $form_ids ) || ! empty( $sorting ) || ! empty( $paging ) ) {
 			$this->parse( $form_ids, $search_criteria, $sorting, $paging );
 		}
