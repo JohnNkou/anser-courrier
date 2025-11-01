@@ -24,11 +24,12 @@ class View_Renderer extends Renderer
  	
  	public function render($view,$request){
  		$entries = $view->get_entries($request);
+
+        flogs("widgets %s",print_r($view->widgets,true));
+        
  		$this->view = $view;
  		$this->entries = $entries;
         $this->search_widgets = $this->build_search_widget($view->widgets->by_position("header_top*")->all()[0]);
-
-        flogs("widgets %s",print_r($view->widgets,true));
 
  		$this->register_scripts();
 
