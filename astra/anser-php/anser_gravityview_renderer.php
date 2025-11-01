@@ -35,7 +35,7 @@ class View_Renderer extends Renderer
         $search_widget = array_filter($view->widgets->all(), function($widget){
             return $widget instanceof GravityView_Widget_Search;
         })[0] ?? null;
-        $search_criteria = $search_widget ? build_search_criteria($search_widget,$view) : null;
+        $search_criteria = $search_widget ? $this->build_search_criteria($search_widget,$view) : null;
 
         $this->view = $view;
  		$this->entries = $entries;
