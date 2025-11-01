@@ -236,7 +236,7 @@ class View_Renderer extends Renderer
                 $search_data = "search_all";
             }
             else{
-                flogs("View id %s has search filter not yet registered. %s",$this->view->ID,$this->search_widget);
+                flogs("View id %s has search filter not yet registered. %s",$this->view->ID,print_r($this->search_widget,true));
             }
 
             ?>
