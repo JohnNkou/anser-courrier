@@ -25,9 +25,7 @@ class View_Renderer extends Renderer
  	public function render($view,$request){
  		$entries = $view->get_entries($request);
 
-        flogs("widgets %s",print_r($view->widgets->by_position("header_top*")->all(),true));
-
- 		$this->view = $view;
+        $this->view = $view;
  		$this->entries = $entries;
         $this->search_widgets = $this->build_search_widget($view->widgets->by_position("header_top*")->all()[0]);
 
@@ -113,7 +111,7 @@ class View_Renderer extends Renderer
         }
 
         return [
-            "search_fields"=> apply_filters( 'gravityview_widget_search_filters', $search_fields, $this, $widget_args, $context ),
+            "search_fields"=> apply_filters( 'gravityview_widget_search_filters', $search_fields, $widget, $widget_args, $context ),
             "search_mode"=> ! empty( $widget_args['search_mode'] ) ? $widget_args['search_mode'] : 'any'
         ];
     }
