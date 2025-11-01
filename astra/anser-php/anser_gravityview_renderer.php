@@ -228,13 +228,12 @@ class View_Renderer extends Renderer
             $search_data = "";
 
             if(!empty($input_fields)){
-                flogs("INPUT FIELDS IS %s",print_r($input_fields,true));
                 $search_data = array_reduce($input_fields, function($x,$field){
                     return $x . " " . $field['key'];
                 },"");
             }
             elseif (!empty($has_search_all)) {
-                $saerch_data = "search_all";
+                $search_data = "search_all";
             }
             else{
                 flogs("View id %s has search filter not yet registered. %s",$this->view->ID,$this->search_widget);
