@@ -2,7 +2,7 @@
 namespace ANSER\GV;
 
 use GV\Renderer;
-#use GravityView_Widget_Search;
+use GravityView_Widget_Search;
 /**
   * 
   */
@@ -31,15 +31,16 @@ class View_Renderer extends Renderer
             $widgets = $view->widgets->by_position("header_top*")->all();
         }
 
+        $search_widget = array_filter($view->widgets->all(), function($widget){
+            return $widget instanceof GravityView_Widget_Search;
+        })[0] ?? null;
+        $search_criteria = $search_widget ? build_search_criteria($search_widget,$view) : null;
+
         $this->view = $view;
  		$this->entries = $entries;
-        $this->search_widget = array_filter($view->widgets->all(), function($widget){
-            flogs("WIDGET CLASS %s is widget_search_class %s",get_class($widget), $widget instanceof GravityView_Widget_Search);
-            return $widget instanceof GravityView_Widget_Search;
-        });
+        $this->search_widget = $search_widget;
+        $this->search_criteria = $search_criteria;
  		$this->register_scripts();
-
-        flogs("SEARCH WIDGET IS %s",print_r($this->search_widget,true));
 
     	ob_start();
 
@@ -48,9 +49,8 @@ class View_Renderer extends Renderer
     	return ob_get_clean();
  	}
 
-    private function build_search_widget($widget,$content = '', $context = ''){
+    private function build_search_criteria($widget,$view,$content = '', $context = ''){
         $widget_args = $widget->configuration->all();
-        $view = $this->view;
 
         // get configured search fields
         $search_fields = ! empty( $widget_args['search_fields'] ) ? json_decode( $widget_args['search_fields'], true ) : '';
