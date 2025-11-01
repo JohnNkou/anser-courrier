@@ -10,6 +10,7 @@ class View_Renderer extends Renderer
  {
  	private $view;
  	private $entries;
+    private $search_widget;
  	private $filters = [
  		["value"=>"",			"label"=>"tous"],
  		["value"=>"pending", 	"label"=>"en attente"],
@@ -25,15 +26,18 @@ class View_Renderer extends Renderer
  	public function render($view,$request){
  		$entries = $view->get_entries($request);
 
+        if($view->widgets->count() > 0){
+            $widgets = $view->widgets->by_position("header_top*")->all();
+        }
+
         $this->view = $view;
  		$this->entries = $entries;
-        $this->search_widgets = $this->build_search_widget($view->widgets->by_position("header_top*")->all()[0]);
-
+        $this->search_widget = array_filter($view->widgets->all(), function($widget){
+            return $widget instanceof GravityView_Widget_Search
+        });
  		$this->register_scripts();
 
-        flogs("WIDGETS %s", print_r($view->widgets,true));
-
-        flogs("SEARCH WIDGET IS %s",print_r($this->search_widgets,true));
+        flogs("SEARCH WIDGET IS %s",print_r($this->search_widget,true));
 
     	ob_start();
 
