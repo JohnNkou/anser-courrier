@@ -409,7 +409,7 @@ class View_Table_Template extends View_Template {
 	 *
 	 * @return void
 	 */
-	public static function body_before( $context ) {
+	public static function body_before( $context ) { echo "<h1>TONTON</h1>";
 		/**
 		 * of the table.
 		 *
