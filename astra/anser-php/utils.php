@@ -14,7 +14,7 @@ function process_download_file($permission_granted, $form_id, $field_id){
 
     if($permission_granted){
         flogs("DOWNLOAD FILE FROM S3 %s",S3_UPLOAD_DIR_URL);
-        $upload_key = sprintf("%s/%s-%s/%s", S3_UPLOAD_DIR_URL,$form_id, wp_hash($form_id),$file);
+        $upload_key = sprintf("%s/%s-%s/%s", S3_MEDIA_GRAVITY_KEY,$form_id, wp_hash($form_id),$file);
 
         $s3Client = new Aws\S3\S3Client([
             "version" => "latest",
