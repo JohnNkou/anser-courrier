@@ -6,6 +6,7 @@ function handle_gravity_form_submission($display_value, $field, $entry, $form ){
         $value = RGFormsModel::get_lead_field_value($entry, $field);
 
         if(is_array($value)){
+            flogs("FIELD IS ARRAY %s %s",$field->label, print_r($value,true));
             if(array_find($value,function($v){
                 return strpos($v,"wp-content") !== false;
             })){
