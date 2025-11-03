@@ -1,8 +1,10 @@
 <?php
 require_once ABSPATH . "wp-content/plugins/gravityview/future/includes/class-gv-shortcode.php";
 
-function handle_gravity_form_submission($form,$entry){
-    flogs("VALASITER %s",print_r($entry,true));
+function handle_gravity_form_submission($display_value, $field, $entry, $form ){
+    if($field->type == 'fileupload'){
+        flogs("MY FIELD %s",$field);
+    }
 }
 
 function flogs($format, ...$args){

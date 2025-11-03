@@ -326,7 +326,7 @@ add_shortcode("anser_gravityflow",function(...$atts){
     return $anser_gf->shortcode(...$atts);
 });
 
-add_action('gravityflow_entry_detail_content_before','handle_gravity_form_submission',10,2);
+add_filter("gform_entry_field_value","handle_gravity_form_submission",10,4);
 
 $gravityflow_ajax_endpoint = GRAVITYFLOW_AJAX_ENDPOINT;
 $gravityview_ajax_endpoint = GRAVITYVIEW_AJAX_ENDPOINT;
