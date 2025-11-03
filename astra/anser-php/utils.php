@@ -29,7 +29,7 @@ function process_download_file($permission_granted, $form_id, $field_id){
         try{
             $result = $s3Client->getObject([
                 "Bucket" => "anser-tech-space",
-                "Key" => "medias/2025/01/0002KS25-pdf-106x150.jpg"
+                "Key" => $upload_key
             ]);
 
             flogs("GOT THE RESULT");
