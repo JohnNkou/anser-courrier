@@ -10,6 +10,8 @@ function process_download_file($permission_granted, $form_id, $field_id){
 
     $file = $_GET['gf-download'];
 
+    flogs("FILE IS %s",$file);
+
     if($permission_granted){
         flogs("DOWNLOAD FILE FROM S3 %s",S3_UPLOAD_DIR_URL);
         $upload_key = sprintf("%s/%s-%s/%s", S3_UPLOAD_DIR_URL,$form_id, wp_hash($form_id),trailingslashit($file));
