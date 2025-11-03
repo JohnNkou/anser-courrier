@@ -16,6 +16,7 @@ function process_download_file($permission_granted, $form_id, $field_id){
         $upload_key = sprintf("%s/%s-%s/%s", S3_UPLOAD_DIR_URL,$form_id, wp_hash($form_id),trailingslashit($file));
 
         $s3Client = new S3Client([
+            "version" => "latest",
             "region" => ADVMO_AWS_REGION,
             "credentials" => [
                 "key"       => ADVMO_AWS_KEY,
