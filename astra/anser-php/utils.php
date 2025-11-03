@@ -13,6 +13,9 @@ function handle_gravity_form_submission($display_value, $field, $entry, $form ){
                 flogs("FIELD %s has fileupload value %s",$field->label, print_r($value,true));
             }
         }
+        else{
+            flogs("FIELD %s is not an array %s",$field->label, $value);
+        }
     }
 }
 
