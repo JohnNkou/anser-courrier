@@ -19,7 +19,7 @@ function handle_gravity_form_submission($display_value, $field, $entry, $form ){
                     return wp_unslash($v);
                 }, $value);
 
-                gform_add_meta($entry['id'],"colc",json_encode($value), $form['id']);
+                gform_delete_meta($entry['id'],"colc");
                 flogs("FIELD %s has fileupload value %s",$field->label, print_r($value,true));
             }
         }
