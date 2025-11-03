@@ -1,5 +1,73 @@
 <?php
-require_once ABSPATH . "wp-content/plugins/gravityview/future/includes/class-gv-shortcode.php";
+require_once ABSPATH . "/wp-content/plugins/gravityview/future/includes/class-gv-shortcode.php";
+require_once ABSPATH . "vendor/autoload.php";
+
+use Aws\S3\S3Client;
+use Aws\Exception\AwsException;
+
+function process_download_file($permission_granted, $form_id, $field_id){
+
+    flogs("PROCESS DOWNLOAD FILE HANDLING");
+
+    $file = $_GET['gf-download'];
+
+    if($permission_granted){
+        flogs("DOWNLOAD FILE FROM S3 %s",S3_UPLOAD_DIR_URL);
+        $upload_key = sprintf("%s/%s", S3_UPLOAD_DIR_URL,trailingslashit($file));
+
+        $s3Client = new S3Client([
+            "region" => ADVMO_AWS_REGION,
+            "credentials" => [
+                "key"       => ADVMO_AWS_KEY,
+                "secret"    => ADVMO_AWS_SECRET
+            ]
+        ]);
+
+        try{
+            $result = $s3Client->getObject([
+                "Bucket" => ADVMO_AWS_BUCKET,
+                "Key" => $upload_key
+            ]);
+
+            $contentType = $result['ContentType'] ?? 'application/octet-stream';
+            $filename = basename($file);
+
+            header("Content-Description: File Transfer");
+            header("Content-Type: ". $contentType);
+            header("Content-Disposition: attachment; filename='" . $filename. "'");
+            header("Content-Transfer-Encoding: binary");
+
+            if(isset($result['ContentLength'])){
+                header('Content-Length: '.$result['ContentLength']);
+            }
+
+            if(ob_get_contents()){
+                ob_end_clean();
+            }
+
+            $stream = $result['Body'];
+
+            $stream->rewind();
+
+            while (!$stream->eof()){
+                echo $stream->read(1048576);
+                flush();
+            }
+        }
+        catch(AwsException $e){
+            http_response_code(404);
+            flogs("AWSException Error %s",print_r($e,true));
+        }
+        catch(\Exception $e){
+            http_response_code(500);
+            flogs("Exception Error %s",print_r($e,true));
+        }
+        exit;
+    }
+    else{
+        return $permission_granted;
+    }
+}
 
 function handle_gravity_form_submission($display_value, $field, $entry, $form ){
 
