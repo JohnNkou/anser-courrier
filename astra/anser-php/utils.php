@@ -1,6 +1,10 @@
 <?php
 require_once ABSPATH . "wp-content/plugins/gravityview/future/includes/class-gv-shortcode.php";
 
+function handle_gravity_form_submission($entry,$form){
+    flogs("ENTRY %s",$entry);
+}
+
 function flogs($format, ...$args){
 	$s = sprintf($format, ...$args);
 	error_log($s);
