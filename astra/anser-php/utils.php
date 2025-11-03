@@ -14,7 +14,7 @@ function handle_gravity_form_submission($display_value, $field, $entry, $form ){
             }
         }
         else{
-            flogs("FIELD %s is not an array %s %s",$field->label, print_r($value,true),);
+            flogs("FIELD %s is not an array %s %s",$field->label, gettype($value));
         }
     }
 }
