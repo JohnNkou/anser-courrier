@@ -2688,6 +2688,9 @@ class GravityView_Edit_Entry_Render {
 			return null;
 		}
 
+		throw new Exception("Error Processing Request", 1);
+		
+
 		$output = [
 			'status' => 'ok',
 			'data'   => [
