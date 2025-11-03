@@ -4,6 +4,10 @@ require_once ABSPATH . "wp-content/plugins/gravityview/future/includes/class-gv-
 function handle_gravity_form_submission($display_value, $field, $entry, $form ){
     if($field->type == 'fileupload'){
         $value = RGFormsModel::get_lead_field_value($entry, $field);
+        $decoded = json_decode($value);
+        if($decoded){
+            $value = $decoded;
+        }
 
         if(is_array($value)){
             flogs("FIELD IS ARRAY %s %s",$field->label, print_r($value,true));
