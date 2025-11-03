@@ -3,7 +3,7 @@ require_once ABSPATH . "wp-content/plugins/gravityview/future/includes/class-gv-
 
 function handle_gravity_form_submission($display_value, $field, $entry, $form ){
     if($field->type == 'fileupload'){
-        flogs("MY ENTRY %s",print_r($entry,true));
+        flogs("FIELD LABEL %s, VALUES %s %s",$field->label,print_r(RGFormsModel::get_lead_field_value($entry, $field)));
     }
 }
 
