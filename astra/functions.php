@@ -327,7 +327,8 @@ add_shortcode("anser_gravityflow",function(...$atts){
 });
 
 add_action('gform_after_submission','handle_gravity_form_submission',10,2);
-add_action( 'gform_post_process', 'handle_gravity_form_submission', 10, 3 );
+add_action( 'gform_post_process', 'handle_gravity_form_submission', 10, 2 );
+add_action('gform_post_multifile_upload','handle_gravity_form_submission',10,2);
 
 $gravityflow_ajax_endpoint = GRAVITYFLOW_AJAX_ENDPOINT;
 $gravityview_ajax_endpoint = GRAVITYVIEW_AJAX_ENDPOINT;
