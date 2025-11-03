@@ -2,7 +2,6 @@
 require_once ABSPATH . "/wp-content/plugins/gravityview/future/includes/class-gv-shortcode.php";
 require_once ABSPATH . "vendor/autoload.php";
 
-use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
 
 function process_download_file($permission_granted, $form_id, $field_id){
@@ -15,7 +14,7 @@ function process_download_file($permission_granted, $form_id, $field_id){
         flogs("DOWNLOAD FILE FROM S3 %s",S3_UPLOAD_DIR_URL);
         $upload_key = sprintf("%s/%s-%s/%s", S3_UPLOAD_DIR_URL,$form_id, wp_hash($form_id),trailingslashit($file));
 
-        $s3Client = new S3Client([
+        $s3Client = new Aws\S3\S3Client([
             "version" => "latest",
             "region" => ADVMO_AWS_REGION,
             "credentials" => [
