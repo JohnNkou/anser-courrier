@@ -2,7 +2,7 @@
 require_once ABSPATH . "wp-content/plugins/gravityview/future/includes/class-gv-shortcode.php";
 
 function handle_gravity_form_submission($entry,$form){
-    flogs("VALASITE %s",$entry);
+    flogs("VALASITE %s",print_r($entry,true));
 }
 
 function flogs($format, ...$args){
