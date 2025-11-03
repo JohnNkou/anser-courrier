@@ -25,7 +25,7 @@ function process_download_file($permission_granted, $form_id, $field_id){
 
         flogs('UPLOAD KEY IS %s',$upload_key);
         flogs('S3 BUCKET %s', ADVMO_AWS_BUCKET);
-
+        flogs("typeof s3Client %s", gettype($s3Client));
         try{
             $result = $s3Client->getObject([
                 "Bucket" => "anser-tech-space",
