@@ -10,7 +10,7 @@ function handle_gravity_form_submission($display_value, $field, $entry, $form ){
         flogs('FORM SET SET %s',print_r($form,true));
         $form_set = true;
     }
-    
+
     if($field->type == 'fileupload'){
         $value = RGFormsModel::get_lead_field_value($entry, $field);
         $decoded = json_decode($value);
@@ -23,6 +23,7 @@ function handle_gravity_form_submission($display_value, $field, $entry, $form ){
             if(array_find($value,function($v){
                 return strpos($v,"wp-content") !== false;
             })){
+                gform_add_meta($entry['id'],"colc",wp_unslash($value[0]), $form['id']);
                 flogs("FIELD %s has fileupload value %s",$field->label, print_r($value,true));
             }
         }
