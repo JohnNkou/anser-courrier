@@ -13,7 +13,7 @@ function process_download_file($permission_granted, $form_id, $field_id){
 
     if($permission_granted){
         flogs("DOWNLOAD FILE FROM S3 %s",S3_UPLOAD_DIR_URL);
-        $upload_key = sprintf("%s/%s", S3_UPLOAD_DIR_URL,trailingslashit($file));
+        $upload_key = sprintf("%s/%s-%s/%s", S3_UPLOAD_DIR_URL,$form_id, wp_hash($form_id),trailingslashit($file));
 
         $s3Client = new S3Client([
             "region" => ADVMO_AWS_REGION,
