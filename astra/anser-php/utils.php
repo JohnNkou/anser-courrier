@@ -11,11 +11,13 @@ function handle_gravity_form_submission($display_value, $field, $entry, $form ){
         }
 
         if(is_array($value)){
-            flogs("FIELD IS ARRAY %s %s with entry id %s",$field->label, print_r($value,true), $entry['id']);
+            flogs("UPLOADED DIR %s", print_r(wp_get_upload_dir(),true));
+            
             if(array_find($value,function($v){
                 return strpos($v,"wp-content") !== false;
             })){
                 $value = array_map(function($v){
+                    $pos = strpos("wp-content/uploads", needle)
                     return wp_unslash($v);
                 }, $value);
 
