@@ -31,7 +31,7 @@ function process_download_file($permission_granted, $form_id, $field_id){
         try{
             $result = $s3Client->getObject([
                 "Bucket" => ADVMO_AWS_BUCKET,
-                "Key" => $upload_key
+                "Key" => "media/gravity_forms/14-16d0b2584492cee7559662fa423bf96d/2025/11/IMG_0169.jpeg"
             ]);
 
             flogs("GOT THE RESULT");
