@@ -16,7 +16,7 @@ function process_download_file($permission_granted, $form_id, $field_id){
 
         $s3Client = new Aws\S3\S3Client([
             "version" => "latest",
-            "region" => ADVMO_AWS_REGION,
+            "region" => "us-east-1",
             "credentials" => [
                 "key"       => ADVMO_AWS_KEY,
                 "secret"    => ADVMO_AWS_SECRET
@@ -28,9 +28,11 @@ function process_download_file($permission_granted, $form_id, $field_id){
 
         try{
             $result = $s3Client->getObject([
-                "Bucket" => ADVMO_AWS_BUCKET,
-                "Key" => $upload_key
+                "Bucket" => "anser-tech-space",
+                "Key" => "medias/2025/01/0002KS25-pdf-106x150.jpg"
             ]);
+
+            flogs("GOT THE RESULT");
 
             $contentType = $result['ContentType'] ?? 'application/octet-stream';
             $filename = basename($file);
