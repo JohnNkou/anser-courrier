@@ -30,7 +30,7 @@ function process_download_file($permission_granted, $form_id, $field_id){
         flogs("typeof s3Client %s", gettype($s3Client));
         try{
             $result = $s3Client->getObject([
-                "Bucket" => "anser-tech-space",
+                "Bucket" => ADVMO_AWS_BUCKET,
                 "Key" => $upload_key
             ]);
 
