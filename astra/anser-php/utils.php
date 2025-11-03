@@ -23,6 +23,8 @@ function process_download_file($permission_granted, $form_id, $field_id){
             ]
         ]);
 
+        flogs('UPLOAD KEY IS %s',$upload_key);
+
         try{
             $result = $s3Client->getObject([
                 "Bucket" => ADVMO_AWS_BUCKET,
