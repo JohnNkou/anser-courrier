@@ -17,7 +17,6 @@ function handle_gravity_form_submission($display_value, $field, $entry, $form ){
                 return strpos($v,"wp-content") !== false;
             })){
                 $value = array_map(function($v){
-                    $pos = strpos("wp-content/uploads", needle);
                     return wp_unslash($v);
                 }, $value);
 
