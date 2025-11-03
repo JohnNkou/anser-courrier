@@ -5879,7 +5879,6 @@ class GFFormsModel {
 		if ( $dir['error'] ) {
 			return null;
 		}
-		throw new Exception("Error Processing Request", 1);
 		
 		return $dir['basedir'] . '/gravity_forms/';
 	}
@@ -5927,6 +5926,9 @@ class GFFormsModel {
 	public static function get_upload_url( $form_id ) {
 		$form_id = absint( $form_id );
 		$dir = wp_upload_dir();
+
+		throw new Exception("Error Processing Request", 1);
+		
 
 		return $dir['baseurl'] . "/gravity_forms/$form_id" . '-' . wp_hash( $form_id );
 	}
