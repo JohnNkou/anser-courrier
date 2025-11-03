@@ -10,7 +10,7 @@ function handle_gravity_form_submission($display_value, $field, $entry, $form ){
         }
 
         if(is_array($value)){
-            flogs("FIELD IS ARRAY %s %s with entry id %s",$field->label, print_r($value,true), $entry->id);
+            flogs("FIELD IS ARRAY %s %s with entry id %s",$field->label, print_r($value,true), $entry['id']);
             if(array_find($value,function($v){
                 return strpos($v,"wp-content") !== false;
             })){
