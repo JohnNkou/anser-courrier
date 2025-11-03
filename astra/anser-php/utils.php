@@ -1,7 +1,16 @@
 <?php
 require_once ABSPATH . "wp-content/plugins/gravityview/future/includes/class-gv-shortcode.php";
 
+$form_set = false;
+
 function handle_gravity_form_submission($display_value, $field, $entry, $form ){
+    global $form_set;
+
+    if(!$form_set){
+        flogs('FORM SET SET %s',print_r($form,true));
+        $form_set = true;
+    }
+    
     if($field->type == 'fileupload'){
         $value = RGFormsModel::get_lead_field_value($entry, $field);
         $decoded = json_decode($value);
