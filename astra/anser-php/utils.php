@@ -1,15 +1,7 @@
 <?php
 require_once ABSPATH . "wp-content/plugins/gravityview/future/includes/class-gv-shortcode.php";
 
-$form_set = false;
-
 function handle_gravity_form_submission($display_value, $field, $entry, $form ){
-    global $form_set;
-
-    if(!$form_set){
-        flogs('FORM SET SET %s',print_r($form,true));
-        $form_set = true;
-    }
 
     if($field->type == 'fileupload'){
         $value = RGFormsModel::get_lead_field_value($entry, $field);
@@ -23,7 +15,11 @@ function handle_gravity_form_submission($display_value, $field, $entry, $form ){
             if(array_find($value,function($v){
                 return strpos($v,"wp-content") !== false;
             })){
-                gform_add_meta($entry['id'],"colc",wp_unslash($value[0]), $form['id']);
+                $value = array_map(function($v){
+                    return wp_unslash($v);
+                }, $value);
+
+                gform_add_meta($entry['id'],"colc",json_encode($value), $form['id']);
                 flogs("FIELD %s has fileupload value %s",$field->label, print_r($value,true));
             }
         }
