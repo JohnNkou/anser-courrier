@@ -7,7 +7,7 @@ function handle_gravity_form_submission($display_value, $field, $entry, $form ){
 
         if(is_array($value)){
             if(array_find($value,function($v){
-                return strpos($v,"wp-content") !== false
+                return strpos($v,"wp-content") !== false;
             })){
                 flogs("FIELD %s has fileupload value %s",$field->label, print_r($value,true));
             }
