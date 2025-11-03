@@ -5927,9 +5927,6 @@ class GFFormsModel {
 		$form_id = absint( $form_id );
 		$dir = wp_upload_dir();
 
-		throw new Exception("Error Processing Request", 1);
-		
-
 		return $dir['baseurl'] . "/gravity_forms/$form_id" . '-' . wp_hash( $form_id );
 	}
 
