@@ -49,7 +49,7 @@ function handle_upload_entry($permission_granted,$entry,$form,$current_step){
 
                                 flogs("SUCCESSFULLY UPDATE FILE %s TO S3 WITH KEY %s",$file_path,$s_key);
 
-                                $new_value = wp_slash(sprintf("%s/%s", S3_UPLOAD_DIR_URL, $pathname));
+                                $new_value = wp_slash(sprintf("%s%s", S3_UPLOAD_DIR_URL, $pathname));
 
                                 return $new_value;
                             }
