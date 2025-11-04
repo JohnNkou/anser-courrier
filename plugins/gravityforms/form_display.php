@@ -66,6 +66,8 @@ class GFFormDisplay {
 		$files = GFFormsModel::set_uploaded_files( $form_id );
 
 		flogs("UPLOADED FILES SONIC %s",$files);
+		throw new Exception("Error Processing Request", 1);
+		
 
 		//reading form metadata
 		$form = self::maybe_add_review_page( $form );
