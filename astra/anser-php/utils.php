@@ -77,9 +77,15 @@ function process_download_file($permission_granted, $form_id, $field_id){
     }
 }
 
+$sooth = false;
 function handle_gravity_form_submission($display_value, $field, $entry, $form ){
 
     if($field->type == 'fileupload'){
+        if(!$sooth){
+            flogs("Display value %s", $display_value);
+            flogs('FIELD OF %s', print_r($field,true));
+        }
+        
         $value = RGFormsModel::get_lead_field_value($entry, $field);
         $decoded = json_decode($value);
         if($decoded){
@@ -96,7 +102,6 @@ function handle_gravity_form_submission($display_value, $field, $entry, $form ){
                     return wp_unslash($v);
                 }, $value);
 
-                gform_delete_meta($entry['id'],"colc");
                 flogs("FIELD %s has fileupload value %s",$field->label, print_r($value,true));
             }
         }
