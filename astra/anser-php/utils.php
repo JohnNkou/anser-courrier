@@ -7,7 +7,7 @@ use Aws\Exception\AwsException;
 function upload_entry_file($entry,$form){
     flogs("THE ENTRY IS %s",print_r($entry,true));
 
-    //throw new Exception("Error Processing Request", 1);
+    throw new Exception("Error Processing Request", 1);
 }
 
 function process_download_file($permission_granted, $form_id, $field_id){
