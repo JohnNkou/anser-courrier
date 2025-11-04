@@ -35,15 +35,9 @@ function upload_entry_file($entry,$form){
                         }
                     }
                 });
-
-                array_push($upload_files, $value);
             }
         }
     }
-
-    flogs("UPLOAD_FILES ARE %s",print_r($upload_files,true));
-
-    throw new Exception("Error Processing Request", 1);
 }
 
 function process_download_file($permission_granted, $form_id, $field_id){
