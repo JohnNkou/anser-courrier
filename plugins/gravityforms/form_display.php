@@ -2010,6 +2010,11 @@ class GFFormDisplay {
 		// Passwords are not saved to the database but should be available during the submission process.
 		$lead = GF_Field_Password::hydrate_passwords( $lead );
 
+		flogs("LEAD IS %s",print_r($lead,true));
+
+		throw new Exception("Error Processing Request", 1);
+		
+
 		if ( has_action( 'gform_entry_created' ) ) {
 			GFCommon::log_debug( __METHOD__ . '(): Executing functions hooked to gform_entry_created.' );
 			/**
