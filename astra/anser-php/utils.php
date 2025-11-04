@@ -19,7 +19,7 @@ function upload_entry_file($entry,$form){
                 array_walk($value, function($src){
                     if(strpos($src, S3_BUCKET_URL) !== false){
                         $basedir = wp_upload_dir()['basedir'];
-                        $pathname = str_replace(S3_BUCKET_URL, '', $src);
+                        $pathname = str_replace(S3_UPLOAD_DIR_URL, '', $src);
                         $file_path = sprintf("%s/%s",$basedir,$pathname);
                         flogs("PATH NAME IS %s",$pathname);
 
