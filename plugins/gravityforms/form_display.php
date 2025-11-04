@@ -164,7 +164,7 @@ class GFFormDisplay {
 			$abort_with_confirmation = gf_apply_filters( array( 'gform_abort_submission_with_confirmation', $form['id'] ), false, $form );
 
 			if ( $abort_with_confirmation ) {
-
+				flogs('ABORTING WITH TERMINATION');
 				GFCommon::log_debug( 'GFFormDisplay::process_form(): Aborting early via gform_abort_submission_with_confirmation filter.' );
 
 				// Display confirmation but doesn't process the form. Useful for spam filters.
@@ -172,7 +172,7 @@ class GFFormDisplay {
 				$is_valid     = false;
 				self::set_submission_if_null( $form_id, 'abort_with_confirmation', true );
 			} elseif ( ! $saving_for_later ) {
-
+				flogs("PROCESSING NOW WITHOUT DELAY");
 				GFCommon::log_debug( 'GFFormDisplay::process_form(): Submission is valid. Moving forward.' );
 
 				$gform_pre_submission_args = array( 'gform_pre_submission', $form_id );
@@ -223,6 +223,7 @@ class GFFormDisplay {
 				}
 
 			} elseif ( $saving_for_later ) {
+				flogs("SAVING FOR LATER");
 				GFCommon::log_debug( 'GFFormDisplay::process_form(): Saving for later.' );
 				$lead = GFFormsModel::get_current_lead();
 				$form = self::update_confirmation( $form, $lead, 'form_saved' );
@@ -257,7 +258,8 @@ class GFFormDisplay {
 				GFCommon::log_debug( 'GFFormDisplay::process_form(): Saved incomplete submission.' );
 
 			}
-
+			throw new Exception("Error Processing Request", 1);
+			
 			/**
 			 * Allows the confirmation redirect header to be suppressed. Required by GFAPI::submit_form().
 			 *
@@ -2009,11 +2011,6 @@ class GFFormDisplay {
 
 		// Passwords are not saved to the database but should be available during the submission process.
 		$lead = GF_Field_Password::hydrate_passwords( $lead );
-
-		flogs("LEAD IS %s",print_r($lead,true));
-
-		throw new Exception("Error Processing Request", 1);
-		
 
 		if ( has_action( 'gform_entry_created' ) ) {
 			GFCommon::log_debug( __METHOD__ . '(): Executing functions hooked to gform_entry_created.' );
