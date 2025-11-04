@@ -80,7 +80,9 @@ function process_download_file($permission_granted, $form_id, $field_id){
 function handle_gravity_form_submission($display_value, $field, $entry, $form ){
     if($field->type == 'fileupload'){
         $dir = wp_upload_dir();
-        flogs("DISPLAY VALUE IS %s %s", $display_value, gettype($display_value));
+        if(strpos($display_value, $dir['baseurl']) !== false){
+            flogs("DISPLAY VALUE IS %s %s", $display_value, gettype($display_value));
+        }
     }
 
     return $display_value;
