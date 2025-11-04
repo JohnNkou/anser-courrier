@@ -23,7 +23,7 @@ function handle_upload_entry($permission_granted,$entry,$form,$current_step){
 
             if(is_array($value)){
                 $dir = wp_upload_dir();
-                array_walk($value, function($v){
+                array_walk($value, function($v) use($dir){
                     $v = wp_unslash($v);
 
                     if(strpos($v, S3_UPLOAD_DIR_URL) == false){
