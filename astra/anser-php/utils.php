@@ -21,6 +21,7 @@ function upload_entry_file($entry,$form){
                         $basedir = wp_upload_dir()['basedir'];
                         $pathname = str_replace(S3_UPLOAD_DIR_URL, '', $src);
                         $file_path = sprintf("%s/%s",$basedir,$pathname);
+                        flogs("S3_UPLOAD_DIR_URL %s", S3_UPLOAD_DIR_URL);
                         flogs("PATH NAME IS %s",$pathname);
 
                         flogs("Checking for file name existing %s",$file_path);
