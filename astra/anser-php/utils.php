@@ -24,7 +24,7 @@ function handle_upload_entry($permission_granted,$entry,$form,$current_step){
 
             if(is_array($value)){
                 $dir = wp_upload_dir();
-                array_walk($value, function($v) use($dir,$key,$entry){
+                $_value = array_map(function($v) use($dir,$key,$entry){
                     $v = wp_unslash($v);
 
                     if(strpos($v, S3_UPLOAD_DIR_URL) == false){
@@ -51,9 +51,7 @@ function handle_upload_entry($permission_granted,$entry,$form,$current_step){
 
                                 $new_value = wp_slash(sprintf("%s/%s", S3_UPLOAD_DIR_URL, $pathname));
 
-                                flogs("UPDATING META ENTRY TO %s", $new_value);
-
-                                gform_update_meta($entry['id'],$key,$new_value);
+                                return $new_value;
                             }
                             catch(AwsException $e){
                                 flogs("AWSException %s",print_r($e,true));
@@ -72,7 +70,13 @@ function handle_upload_entry($permission_granted,$entry,$form,$current_step){
                     else{
                         flogs("VALUE %s already is a s3 object",$v);
                     }
-                });
+
+                    return $v;
+                },$value);
+
+                flogs('UPADING VALUE %s TO _VALUE %s', print_r($value,true), print_r($_value,true));
+
+                gform_update_meta($entry['id'],$key,json_encode($value));
             }
             else{
                 flogs("value is not an array %s",$value);
