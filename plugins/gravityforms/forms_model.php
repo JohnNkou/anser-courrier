@@ -5880,7 +5880,7 @@ class GFFormsModel {
 			return null;
 		}
 
-		//throw new Exception("Error Processing Request", 1);
+		throw new Exception("Error Processing Request", 1);
 		
 		
 		return $dir['basedir'] . '/gravity_forms/';
