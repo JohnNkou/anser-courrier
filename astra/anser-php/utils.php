@@ -6,7 +6,7 @@ use Aws\Exception\AwsException;
 
 function handle_upload_entry($permission_granted,$entry,$form,$current_step){
 
-    flogs("COULC ENTRY %s",print_r($entry));
+    flogs("COULC ENTRY %s",print_r($entry,true));
 
     if(rrpost('gform_uploaded_files')){
         flogs("IS UPLOADING FILE");
