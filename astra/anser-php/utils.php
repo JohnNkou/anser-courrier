@@ -5,12 +5,32 @@ require_once ABSPATH . "vendor/autoload.php";
 use Aws\Exception\AwsException;
 
 function handle_upload_entry($permission_granted,$entry,$form,$current_step){
+    $uploaded_files = rgpost('gform_uploaded_files');
 
-    flogs("COULC ENTRY %s",print_r($entry,true));
+    if($uploaded_files){
+        foreach ($uploaded_files as $key => $_) {
+            $key = str_replace("input_", "", $key);
+            $value = $entry[$key];
 
-    if(rgpost('gform_uploaded_files')){
-        flogs("IS UPLOADING FILE");
+            if(is_string($value)){
+                if(strlen($value)){
+                    $value = json_decode($value);
+                }
+            }
+
+            if(is_array($value)){
+                $value = array_map(function($v){
+                    return wp_unslash($v);
+                }, $value);
+
+                flogs("VALUE IS %s",print_r($value,true));
+            }
+            else{
+                flogs("value is not an array %s",$value);
+            }
+        }
     }
+
     return $permission_granted;
 }
 
