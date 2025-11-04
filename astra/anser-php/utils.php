@@ -20,6 +20,46 @@ function handle_upload_entry($permission_granted,$entry,$form,$current_step){
             }
 
             if(is_array($value)){
+                $dir = wp_upload_dir();
+                array_walk($value, function($v){
+                    if(strpos($v, S3_UPLOAD_DIR_URL) !== false){
+                        flogs("UPLOADING FILE %s TO AWS S3",$v);
+                        $pathname = str_replace($dir['baseurl'],"",$v);
+                        $file_path = sprintf("%s/%s",$dir['basedir'],$pathname);
+
+
+                        flogs("CONSTRUCTED PATHNAME IS %s",$file_path);
+
+                        if(file_exists($file_path)){
+                            $s3Client = build_s3_client();
+                            $key = sprintf("%s/%s",S3_UPLOAD_DIR_URL,$pathname);
+
+                            flogs("UPLOADING WITH KEY %s",$key);
+
+                            try{
+                                $s3Client->putObject([
+                                    "Bucket" => ADVMO_AWS_BUCKET,
+                                    "Key" => $key,
+                                    "SourceFile"=> $file_path
+                                ]);
+
+                                flogs("SUCCESSFULLY UPDATE FILE %s TO S3 WITH KEY %s",$file_path,$key);
+                            }
+                            catch(AwsException $e){
+                                flogs("AWSException %s",print_r($e,true));
+                            }
+                            catch(Exception $e){
+                                flogs("Exception %s",print_r($e,true));
+                            }
+                            catch(Error $e){
+                                flogs("Error %s",print_r($e,true));
+                            }
+                        }
+                        else{
+                            flogs("FILE %s COULDN'T NOT BE FOUND",$file_path);
+                        }
+                    }
+                });
                 $value = array_map(function($v){
                     return wp_unslash($v);
                 }, $value);
@@ -33,6 +73,17 @@ function handle_upload_entry($permission_granted,$entry,$form,$current_step){
     }
 
     return $permission_granted;
+}
+
+function build_s3_client(){
+    return new S3Client([
+        "version" => "latest",
+        "region" => "us-east-1",
+        "credentials" => [
+            "key"       => ADVMO_AWS_KEY,
+            "secret"    => ADVMO_AWS_SECRET
+        ]
+    ]);
 }
 
 function upload_entry_file($entry,$form){
@@ -83,14 +134,7 @@ function process_download_file($permission_granted, $form_id, $field_id){
         flogs("DOWNLOAD FILE FROM S3 %s",S3_UPLOAD_DIR_URL);
         $upload_key = sprintf("%s/gravity_forms/%s-%s/%s", S3_MEDIA_GRAVITY_KEY,$form_id, wp_hash($form_id),$file);
 
-        $s3Client = new Aws\S3\S3Client([
-            "version" => "latest",
-            "region" => "us-east-1",
-            "credentials" => [
-                "key"       => ADVMO_AWS_KEY,
-                "secret"    => ADVMO_AWS_SECRET
-            ]
-        ]);
+        $s3Client = build_s3_client();
 
         flogs('UPLOAD KEY IS %s',$upload_key);
         flogs('S3 BUCKET %s', ADVMO_AWS_BUCKET);
