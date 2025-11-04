@@ -175,6 +175,8 @@ function process_download_file($permission_granted, $form_id, $field_id){
                 echo $stream->read(1048576);
                 flush();
             }
+
+            exit;
         }
         catch(AwsException $e){
             http_response_code(404);
@@ -188,7 +190,6 @@ function process_download_file($permission_granted, $form_id, $field_id){
             http_response_code(500);
             flogs("Error error %s",print_r($e,true));
         }
-        exit;
     }
     else{
         return $permission_granted;
