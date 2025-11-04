@@ -81,7 +81,7 @@ function handle_gravity_form_submission($display_value, $field, $entry, $form ){
     if($field->type == 'fileupload'){
         $dir = wp_upload_dir();
         if(strpos($display_value, $dir['baseurl']) !== false){
-            $new_value = preg_replace("/". $dir['baseurl'] ."/", S3_BUCKET_URL, $display_value);
+            $new_value = str_replace($dir['baseurl'], S3_BUCKET_URL, $display_value);
             flogs("new IS %s %s", $new_value, $display_value);
         }
     }
