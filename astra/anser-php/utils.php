@@ -10,7 +10,7 @@ function handle_upload_entry($permission_granted,$entry,$form,$current_step){
     if($uploaded_files){
         $uploaded_files = json_decode($uploaded_files);
         flogs("UPLOADED_FILES IS %s", print_r($uploaded_files,true));
-        
+
         foreach ($uploaded_files as $key => $_) {
             $key = str_replace("input_", "", $key);
             $value = $entry[$key];
@@ -26,7 +26,7 @@ function handle_upload_entry($permission_granted,$entry,$form,$current_step){
                 array_walk($value, function($v){
                     $v = wp_unslash($v);
 
-                    if(strpos($v, S3_UPLOAD_DIR_URL) !== false){
+                    if(strpos($v, S3_UPLOAD_DIR_URL) == false){
                         flogs("UPLOADING FILE %s TO AWS S3",$v);
                         $pathname = str_replace($dir['baseurl'],"",$v);
                         $file_path = sprintf("%s/%s",$dir['basedir'],$pathname);
