@@ -258,7 +258,6 @@ class GFFormDisplay {
 				GFCommon::log_debug( 'GFFormDisplay::process_form(): Saved incomplete submission.' );
 
 			}
-			throw new Exception("Error Processing Request", 1);
 			
 			/**
 			 * Allows the confirmation redirect header to be suppressed. Required by GFAPI::submit_form().
