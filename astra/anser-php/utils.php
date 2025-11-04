@@ -30,14 +30,14 @@ function handle_upload_entry($permission_granted,$entry,$form,$current_step){
                     if(strpos($v, S3_UPLOAD_DIR_URL) == false){
                         flogs("UPLOADING FILE %s TO AWS S3",$v);
                         $pathname = str_replace($dir['baseurl'],"",$v);
-                        $file_path = sprintf("%s/%s",$dir['basedir'],$pathname);
+                        $file_path = sprintf("%s%s",$dir['basedir'],$pathname);
 
 
                         flogs("CONSTRUCTED PATHNAME IS %s",$file_path);
 
                         if(file_exists($file_path)){
                             $s3Client = build_s3_client();
-                            $key = sprintf("%s/%s",S3_UPLOAD_DIR_URL,$pathname);
+                            $key = sprintf("%s%s",S3_MEDIA_GRAVITY_KEY,$pathname);
 
                             flogs("UPLOADING WITH KEY %s",$key);
 
@@ -89,7 +89,7 @@ function build_s3_client(){
     ]);
 }
 
-function upload_entry_file($entry,$form){
+function remove_entry_file($entry,$form){
     $fields = $form['fields'];
     $upload_files = [];
 
