@@ -67,7 +67,6 @@ class GFFormDisplay {
 		
 		//reading form metadata
 		$form = self::maybe_add_review_page( $form );
-		throw new Exception("Error Processing Request", 1);
 
 		if ( ! rgar( $form, 'is_active' ) ) {
 			GFCommon::log_debug( __METHOD__ . '(): Aborting. Form is inactive.' );
