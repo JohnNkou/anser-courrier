@@ -77,36 +77,15 @@ function process_download_file($permission_granted, $form_id, $field_id){
     }
 }
 
-$sooth = false;
 function handle_gravity_form_submission($display_value, $field, $entry, $form ){
-
     if($field->type == 'fileupload'){
-        if(!$sooth){
-            flogs("Display value %s", $display_value);
-            flogs('FIELD OF %s', print_r($field,true));
-        }
-        
-        $value = RGFormsModel::get_lead_field_value($entry, $field);
-        $decoded = json_decode($value);
-        if($decoded){
-            $value = $decoded;
-        }
+        $dir = wp_upload_dir();
+        if(strpos($display_value, $dir['baseurl']) !== false){
+            $new_value = preg_replace("/".$dir['baseurl']"./", S3_BUCKET_URL , $display_value);
 
-        if(is_array($value)){
-            flogs("UPLOADED DIR %s", print_r(wp_get_upload_dir(),true));
+            flogs("NEW VALUE IS %s".$new_value);
 
-            if(array_find($value,function($v){
-                return strpos($v,"wp-content") !== false;
-            })){
-                $value = array_map(function($v){
-                    return wp_unslash($v);
-                }, $value);
-
-                flogs("FIELD %s has fileupload value %s",$field->label, print_r($value,true));
-            }
-        }
-        else{
-            flogs("FIELD %s is not an array %s %s",$field->label, $value, gettype($value));
+            return $new_value;
         }
     }
 }
