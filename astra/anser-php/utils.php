@@ -16,7 +16,24 @@ function upload_entry_file($entry,$form){
                     $value = json_decode(wp_unslash($value)) ?? $value;
                 }
 
-                flogs("VALUE OF TYPE %s", gettype($value));
+                array_walk($value, function($src){
+                    if(strpos($src, S3_BUCKET_URL) !== false){
+                        $basedir = wp_upload_dir()['basedir'];
+                        $pathname = str_replace(S3_BUCKET_URL, '', $src);
+                        $file_path = sprintf("%s/%s",$basedir,$pathname);
+                        flogs("PATH NAME IS %s",$pathname);
+
+                        flogs("Checking for file name existing %s",$file_path);
+
+                        if (file_exists($file_path)) {
+                            flogs("File existing. Removing");
+                            unlink($file_path);
+                        }
+                        else{
+                            flogs("File %s don't exist", $file_path);
+                        }
+                    }
+                });
 
                 array_push($upload_files, $value);
             }
