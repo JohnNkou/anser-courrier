@@ -82,6 +82,8 @@ function handle_gravity_form_submission($display_value, $field, $entry, $form ){
         $dir = wp_upload_dir();
         flogs("DISPLAY VALUE IS %s %s", $display_value, gettype($display_value));
     }
+
+    return $display_value;
 }
 
 function flogs($format, ...$args){
