@@ -8,6 +8,7 @@ function handle_upload_entry($permission_granted,$entry,$form,$current_step){
     $uploaded_files = rgpost('gform_uploaded_files');
 
     if($uploaded_files){
+        $uploaded_files = json_decode($uploaded_files);
         foreach ($uploaded_files as $key => $_) {
             $key = str_replace("input_", "", $key);
             $value = $entry[$key];
