@@ -80,14 +80,7 @@ function process_download_file($permission_granted, $form_id, $field_id){
 function handle_gravity_form_submission($display_value, $field, $entry, $form ){
     if($field->type == 'fileupload'){
         $dir = wp_upload_dir();
-        if(strpos($display_value, $dir['baseurl']) !== false){
-            flogs("S3 BUCKET URL IS %s and display_value is ",S3_BUCKET_URL,$display_value);
-            #$new_value = preg_replace("/".$dir['baseurl']."/", S3_BUCKET_URL , $display_value);
-
-            #flogs("NEW VALUE IS %s",$new_value);
-
-            return $display_value;
-        }
+        flogs("DISPLAY VALUE IS %s %s", $display_value, gettype($display_value));
     }
 }
 
