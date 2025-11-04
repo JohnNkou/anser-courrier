@@ -24,7 +24,7 @@ function handle_upload_entry($permission_granted,$entry,$form,$current_step){
 
             if(is_array($value)){
                 $dir = wp_upload_dir();
-                array_walk($value, function($v) use($dir){
+                array_walk($value, function($v) use($dir,$key,$entry){
                     $v = wp_unslash($v);
 
                     if(strpos($v, S3_UPLOAD_DIR_URL) == false){
@@ -37,18 +37,23 @@ function handle_upload_entry($permission_granted,$entry,$form,$current_step){
 
                         if(file_exists($file_path)){
                             $s3Client = build_s3_client();
-                            $key = sprintf("%s%s",S3_MEDIA_GRAVITY_KEY,$pathname);
+                            $s_key = sprintf("%s%s",S3_MEDIA_GRAVITY_KEY,$pathname);
 
-                            flogs("UPLOADING WITH KEY %s",$key);
-
+                            flogs("UPLOADING WITH KEY %s",$s_key);
                             try{
                                 $s3Client->putObject([
                                     "Bucket" => ADVMO_AWS_BUCKET,
-                                    "Key" => $key,
+                                    "Key" => $s_key,
                                     "SourceFile"=> $file_path
                                 ]);
 
-                                flogs("SUCCESSFULLY UPDATE FILE %s TO S3 WITH KEY %s",$file_path,$key);
+                                flogs("SUCCESSFULLY UPDATE FILE %s TO S3 WITH KEY %s",$file_path,$s_key);
+
+                                $new_value = wp_slash(sprintf("%s/%s", S3_UPLOAD_DIR_URL, $pathname));
+
+                                flogs("UPDATING META ENTRY TO %s", $new_value);
+
+                                gform_update_meta($entry['id'],$key,$new_value);
                             }
                             catch(AwsException $e){
                                 flogs("AWSException %s",print_r($e,true));
