@@ -10,10 +10,10 @@ function upload_entry_file($entry,$form){
 
     foreach ($fields as $field) {
         if($field->type == 'fileupload'){
-            $value = $entry[$form->id];
+            $value = $entry[$field->id];
             flogs("VALUE OF TYPE %s", gettype($value));
 
-            array_push($upload_files);
+            array_push($upload_files, $value);
         }
     }
 
