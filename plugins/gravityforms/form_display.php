@@ -65,8 +65,12 @@ class GFFormDisplay {
 		// Set files that have been uploaded to temp folder
 		$files = GFFormsModel::set_uploaded_files( $form_id );
 
+		flogs("UPLOADED FILES SONIC %s",$files);
+
 		//reading form metadata
 		$form = self::maybe_add_review_page( $form );
+		throw new Exception("Error Processing Request", 1);
+		r
 
 		if ( ! rgar( $form, 'is_active' ) ) {
 			GFCommon::log_debug( __METHOD__ . '(): Aborting. Form is inactive.' );

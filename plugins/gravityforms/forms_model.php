@@ -8357,7 +8357,6 @@ class GFFormsModel {
 	 * @return array
 	 */
 	public static function set_uploaded_files( $form_id ) {
-		throw new Exception("Error Processing Request", 1);
 		
 		$files = GFCommon::json_decode( stripslashes( GFForms::post( 'gform_uploaded_files' ) ) );
 		if ( ! is_array( $files ) ) {
