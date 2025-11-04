@@ -191,9 +191,8 @@ function process_download_file($permission_granted, $form_id, $field_id){
             flogs("Error error %s",print_r($e,true));
         }
     }
-    else{
-        return $permission_granted;
-    }
+    
+    return $permission_granted;
 }
 
 function handle_gravity_form_submission($display_value, $field, $entry, $form ){
