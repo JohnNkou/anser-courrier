@@ -76,7 +76,7 @@ function handle_upload_entry($permission_granted,$entry,$form,$current_step){
 
                 flogs('UPADING VALUE %s TO _VALUE %s', print_r($value,true), print_r($_value,true));
 
-                gform_update_meta($entry['id'],$key,json_encode($value));
+                //gform_update_meta($entry['id'],$key,json_encode($value));
             }
             else{
                 flogs("value is not an array %s",$value);
