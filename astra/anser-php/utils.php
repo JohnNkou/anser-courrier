@@ -4,6 +4,16 @@ require_once ABSPATH . "vendor/autoload.php";
 
 use Aws\Exception\AwsException;
 
+function handle_upload_entry($permission_granted,$entry,$form,$current_step){
+
+    flogs("COULC ENTRY %s",print_r($entry));
+
+    if(rrpost('gform_uploaded_files')){
+        flogs("IS UPLOADING FILE");
+    }
+    return $permission_granted;
+}
+
 function upload_entry_file($entry,$form){
     $fields = $form['fields'];
     $upload_files = [];
