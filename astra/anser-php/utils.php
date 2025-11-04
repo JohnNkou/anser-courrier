@@ -6,6 +6,19 @@ use Aws\Exception\AwsException;
 
 function upload_entry_file($entry,$form){
     flogs("THE ENTRY IS %s",print_r($entry,true));
+    $fields = $form['fields'];
+    $upload_files = [];
+
+    foreach ($$fields as $field) {
+        if($field->type == 'fileupload'){
+            $value = $entry[$form->id];
+            flogs("VALUE OF TYPE %s", gettype($value));
+
+            array_push($upload_files);
+        }
+    }
+
+    flogs("UPLOAD_FILES ARE %s",print_r($upload_files,true));
 
     throw new Exception("Error Processing Request", 1);
 }
