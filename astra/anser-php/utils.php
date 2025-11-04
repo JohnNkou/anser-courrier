@@ -2,6 +2,7 @@
 require_once ABSPATH . "/wp-content/plugins/gravityview/future/includes/class-gv-shortcode.php";
 require_once ABSPATH . "vendor/autoload.php";
 
+use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
 
 function handle_upload_entry($permission_granted,$entry,$form,$current_step){
