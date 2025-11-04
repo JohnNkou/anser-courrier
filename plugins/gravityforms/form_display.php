@@ -65,7 +65,7 @@ class GFFormDisplay {
 		// Set files that have been uploaded to temp folder
 		$files = GFFormsModel::set_uploaded_files( $form_id );
 
-		flogs("UPLOADED FILES SONIC %s",$files);
+		flogs("UPLOADED FILES SONIC %s",print_r($files,true));
 		throw new Exception("Error Processing Request", 1);
 		
 
