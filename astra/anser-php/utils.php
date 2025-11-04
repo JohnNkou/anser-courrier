@@ -11,9 +11,15 @@ function upload_entry_file($entry,$form){
     foreach ($fields as $field) {
         if($field->type == 'fileupload'){
             $value = $entry[$field->id];
-            flogs("VALUE OF TYPE %s", gettype($value));
+            if(strlen($value) > 0){
+                if(is_string($value)){
+                    $value = json_decode(wp_unslash($value)) ?? $value;
+                }
 
-            array_push($upload_files, $value);
+                flogs("VALUE OF TYPE %s", gettype($value));
+
+                array_push($upload_files, $value);
+            }
         }
     }
 
