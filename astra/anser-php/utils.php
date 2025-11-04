@@ -5,11 +5,10 @@ require_once ABSPATH . "vendor/autoload.php";
 use Aws\Exception\AwsException;
 
 function upload_entry_file($entry,$form){
-    flogs("THE ENTRY IS %s",print_r($entry,true));
     $fields = $form['fields'];
     $upload_files = [];
 
-    foreach ($$fields as $field) {
+    foreach ($fields as $field) {
         if($field->type == 'fileupload'){
             $value = $entry[$form->id];
             flogs("VALUE OF TYPE %s", gettype($value));
