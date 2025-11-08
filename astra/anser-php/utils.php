@@ -792,10 +792,6 @@ function build_inbox_editable_result($form,$entry,$current_step){
                 "inputs"=> $field->inputs
             ];
 
-            if($field->id == 79){
-                error_log(sprintf("FIELD TENDU %s with value %s and leaf_value %s", print_r($field,true), $_value, $_leaf_value));
-            }
-
             if(!empty($field->choices) || !empty($field->inputs)){
                 $choices = array_map(function($choice){
                     return [
@@ -827,6 +823,10 @@ function build_inbox_editable_result($form,$entry,$current_step){
                     error_log(sprintf("Coudln't retrieve field container html from field with label %s and id %s", $field->label, $field->id));
                 }
 
+            }
+
+            if($field->type == 'workflow_assignee_select'){
+                $result['value'] = $field->get_choices("");
             }
         }
         else{

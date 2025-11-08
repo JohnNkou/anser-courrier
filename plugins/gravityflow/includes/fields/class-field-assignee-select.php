@@ -116,8 +116,6 @@ class Gravity_Flow_Field_Assignee_Select extends GF_Field_Select {
 
 		$choices = $this->get_assignees_as_choices( $value, $include_users, $include_roles, $include_fields );
 
-		flogs("MY CHOICES %s --- %s",$value,$choices);
-
 		return $choices;
 	}
 
