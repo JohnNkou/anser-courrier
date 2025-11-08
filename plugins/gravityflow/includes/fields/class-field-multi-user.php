@@ -133,6 +133,8 @@ class Gravity_Flow_Field_Multi_User extends GF_Field_MultiSelect {
 			$account_choices[] = array( 'value' => $account->ID, 'text' => $account->display_name );
 		}
 
+		flogs("ACCOUNT CHOICES %s",print_r($account_choices,true));
+
 		return apply_filters( 'gravityflow_user_field', $account_choices, $form_id, $this );
 	}
 
