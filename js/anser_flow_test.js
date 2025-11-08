@@ -546,7 +546,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               break;
             case "text":
               atts.append("class", "card");
-              bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p><p>" + inbox.value + "</p></div>";
+              bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><p>" + inbox.value + "</p></div>";
               break;
             case "hidden":
               atts.append("class", "hidden");
@@ -586,16 +586,16 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   atts.append("class", "card");
                   inputAtts.set("type", "text");
                   inputAtts.set("placeholder", inbox.placeholder);
-                  bodyHtml += "<div " + atts.toString() + " ><p>" + inbox.label + "</p><p><input " + inputAtts.toString() + " /></p><div " + failedAtts.toString() + "></div></div>";
+                  bodyHtml += "<div " + atts.toString() + " ><label>" + inbox.label + "</label><p><input " + inputAtts.toString() + " /></p><div " + failedAtts.toString() + "></div></div>";
                   break;
                 case "textarea":
                   atts.append("class", "card");
                   inputAtts.remove("value");
-                  bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p><p><textarea " + inputAtts.toString() + ">" + value + "</textarea></p><div " + failedAtts.toString() + "></div></div>";
+                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><p><textarea " + inputAtts.toString() + ">" + value + "</textarea></p><div " + failedAtts.toString() + "></div></div>";
                   break;
                 case "radio":
                   atts.append("class", "card");
-                  bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p><p>";
+                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><p>";
                   inbox.choices.forEach((choice) => {
                     if (choice.value == value) {
                       inputAtts.set("checked", "checked");
@@ -610,7 +610,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   break;
                 case "checkbox":
                   atts.append("class", "card");
-                  bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p><div>";
+                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><div>";
                   inbox.choices.forEach((choice) => {
                     let checked = value.indexOf(choice.value) != -1, id = inbox.inputs.filter((input) => {
                       return input.label == choice.value;
@@ -631,7 +631,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   atts.append("class", "card");
                   inputAtts.remove("value");
                   inputAtts.remove("placeholder");
-                  bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p><select " + inputAtts.toString() + "><option>Selectionner</option>";
+                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><select " + inputAtts.toString() + "><option>Selectionner</option>";
                   inbox.choices.forEach((choice) => {
                     let selected = choice.value == value, atts2 = new Attributes;
                     if (selected) {
@@ -646,13 +646,13 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   atts.append("class", "card");
                   inputAtts.remove("value");
                   inputAtts.remove("placeholder");
-                  bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p><select " + inputAtts.toString() + ">" + inbox.value + "</select></div>";
+                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><select " + inputAtts.toString() + ">" + inbox.value + "</select></div>";
                   break;
                 case "workflow_multi_user":
                   atts.append("class", "card");
                   inputAtts.remove("value");
                   inputAtts.remove("placeholder");
-                  bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p><select multiple " + inputAtts.toString() + ">";
+                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><select multiple " + inputAtts.toString() + ">";
                   try {
                     inbox.leaf_value = JSON.parse(inbox.leaf_value);
                   } catch (error) {
@@ -670,13 +670,13 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   inputAtts.remove("value");
                   inputAtts.remove("placeholder");
                   inputAtts.set("type", "file");
-                  bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p>";
+                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label>";
                   bodyHtml += "<div><div><input " + inputAtts.toString() + " /></div><div>" + inbox.value + "</div><div class='file_detail_" + inbox.id + "'></div></div>";
                   bodyHtml += "</div>";
                   break;
                 case "date":
                   atts.append("class", "card");
-                  bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label < NaN;
+                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label < NaN;
                   break;
                 default:
                   console.error("unknwon inbox fieldType", inbox);
