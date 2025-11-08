@@ -1560,6 +1560,7 @@ PRIMARY KEY  (id)
 					$type = GFFormsModel::get_input_type( $field );
 					if ( $type == 'workflow_assignee_select' ) {
 						$assignee_fields[] = array( 'label' => GFFormsModel::get_label( $field ), 'value' => 'assignee_field|' . $field->id );
+						flogs("ASSIGNÉE FIELD %s",$assignee_fields);
 					} elseif ( $type == 'workflow_user' ) {
 						$assignee_fields[] = array( 'label' => GFFormsModel::get_label( $field ), 'value' => 'assignee_user_field|' . $field->id );
 					} elseif ( $type == 'workflow_multi_user' ) {
