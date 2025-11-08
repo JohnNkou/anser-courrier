@@ -642,6 +642,29 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   });
                   bodyHtml += "</select><div " + failedAtts.toString() + "></div></div>";
                   break;
+                case "workflow_assignee_select":
+                  atts.append("class", "card");
+                  inputAtts.remove("value");
+                  inputAtts.remove("placeholder");
+                  bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p><select " + inputAtts.toString() + ">" + inbox.value + "</select></div>";
+                  break;
+                case "workflow_multi_user":
+                  atts.append("class", "card");
+                  inputAtts.remove("value");
+                  inputAtts.remove("placeholder");
+                  bodyHtml += "<div " + atts.toString() + "><p>" + inbox.label + "</p><select multiple " + inputAtts.toString() + ">";
+                  try {
+                    inbox.leaf_value = JSON.parse(inbox.leaf_value);
+                  } catch (error) {
+                    inbox.leaf_value = [];
+                  }
+                  inbox.choices.forEach((choice) => {
+                    let selected = inbox.leaf_value.indexOf(choice.value) != -1 ? "selected" : "";
+                    bodyHtml += "<option " + selected + " value='" + choice.value + "'>" + choice.text + "</option>";
+                  });
+                  bodyHtml += "</select>";
+                  bodyHtml += "</div>";
+                  break;
                 case "fileupload":
                   atts.append("class", "card");
                   inputAtts.remove("value");
