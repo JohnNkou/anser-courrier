@@ -26,6 +26,7 @@ body #main {
     display: inline-block;
     width: 8em;
     color: inherit;
+    cursor: pointer;
 }
  #my-content .onglets .active {
     border-bottom: 0.2em solid green;
@@ -118,7 +119,7 @@ body #main {
  #my-content .count{
     font-size:0.7em;
     background-color:#263c86;
-    padding:0.3em;
+    padding:0 0.5em;
     color:white;
     position:absolute;
     right:0;
