@@ -382,11 +382,11 @@ class Gravity_Flow_API {
 		if ( ! empty( $search_criteria ) ) {
 			$form_ids = self::get_inbox_form_ids( $args, $search_criteria );
 			error_log("FORM IDS ".print_r($form_ids,true));
-			if ( ! empty( $form_ids ) ) {
+			if ( ! empty( $form_ids ) ) { flogs("MOUTH PICKIN");
 				$entries = GFAPI::get_entries( $form_ids, $search_criteria, self::get_inbox_sorting( $args ), self::get_inbox_paging( $args ), $total_count );
 			}
 		}
-        
+        flogs("SHUMAN OF DEATH");
 		gravity_flow()->log_debug( __METHOD__ . '(): duration of get_entries: ' . timer_stop() );
 		gravity_flow()->log_debug( __METHOD__ . "(): {$total_count} pending tasks." );
 
