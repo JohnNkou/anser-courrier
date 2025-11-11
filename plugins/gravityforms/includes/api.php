@@ -614,7 +614,7 @@ class GFAPI {
 	 * @return array|WP_Error Either an array of the Entry objects or a WP_Error instance.
 	 */
 	public static function get_entries( $form_ids, $search_criteria = array(), $sorting = null, $paging = null, &$total_count = null ) {
-
+		flogs('BAKA OF DEATH');
 		if ( empty( $sorting ) ) {
 			$sorting = array( 'key' => 'id', 'direction' => 'DESC', 'is_numeric' => true );
 		}
