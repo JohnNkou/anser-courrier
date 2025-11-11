@@ -626,7 +626,7 @@ class GFAPI {
 			}
 			return $entries;
 		}
-
+		flogs('MORMON');
 		$q = new GF_Query( $form_ids, $search_criteria, $sorting, $paging );
 		$entries = $q->get();
 		$total_count = $q->total_found;
