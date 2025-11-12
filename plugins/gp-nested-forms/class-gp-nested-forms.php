@@ -2568,9 +2568,10 @@ class GP_Nested_Forms extends GP_Plugin {
 
 			// phpcs:ignore
 			if ( empty( $entry_ids ) && is_callable( 'gravityview' ) && $gv_entry = gravityview()->request->is_edit_entry() ) {
+				flogs("Using gravityview now");
 				$parent_entry = $gv_entry->as_entry();
 				$entry_ids    = $this->get_child_entry_ids_from_value( $this->get_field_value( $form, $parent_entry, $field->id ) );
-
+				flogs("Now entry_ids is %s",print_r($entry_ids,true));
 				if ( $entry_ids ) {
 					$bypass_permissions = true;
 				}
@@ -2585,6 +2586,8 @@ class GP_Nested_Forms extends GP_Plugin {
 				if ( ! empty( $cart_item ) && isset( $cart_item['_gravity_form_lead'] ) && isset( $cart_item['_gravity_form_data'] ) ) {
 					$entry     = $cart_item['_gravity_form_lead'];
 					$entry_ids = $this->get_child_entry_ids_from_value( $this->get_field_value( $form, $entry, $field->id ) );
+
+					flogs("After wc_gforms_cart_item_key %s",print_r($entry_ids,true));
 				}
 			}
 
@@ -2602,6 +2605,8 @@ class GP_Nested_Forms extends GP_Plugin {
 			 */
 			$entry_ids = gf_apply_filters( array( 'gpnf_submitted_entry_ids', $form['id'], $field->id ), $entry_ids, $form, $field );
 
+			flogs("After applying filter gpfn %s",print_r($entry_ids,true));
+
 			// Load entries from session.
 			if ( empty( $entry_ids ) && $this->should_load_child_entries_from_session( $form, $field ) ) {
 
@@ -2609,6 +2614,8 @@ class GP_Nested_Forms extends GP_Plugin {
 				$_entries = $session->get( 'nested_entries' );
 				if ( ! empty( $_entries[ $field['id'] ] ) ) {
 					$entry_ids = $_entries[ $field['id'] ];
+
+					flogs("Loading entries from session %s",print_r($entry_ids,true));
 				}
 			}
 
