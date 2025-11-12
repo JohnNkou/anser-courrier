@@ -210,7 +210,6 @@ function handle_gravity_form_submission($display_value, $field, $entry, $form ){
         $dir = wp_upload_dir();
         if(strpos($display_value, $dir['baseurl']) !== false){
             $new_value = str_replace($dir['baseurl'], S3_BUCKET_URL, $display_value);
-            flogs("new IS %s %s", $new_value, $display_value);
         }
     }
 
@@ -415,7 +414,6 @@ function load_gravityview(){
 
 
 function load_gravityflow_inbox_entry(){
-    error_log("SHIFT OF THOUSAND");
     $entry_id = $_GET['entry_id'] ?: null;
     $entry = GFAPI::get_entry($entry_id);
     $passed_id = rgget("id");
@@ -437,8 +435,6 @@ function load_gravityflow_inbox_entry(){
     $form = GFAPI::get_form($form_id);
     $GFFlow = Gravity_Flow::get_instance();
     $current_step = $GFFlow->get_current_step($form,$entry);
-
-    error_log("ZONAL SHIFT");
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $results = build_inbox_results($form,$entry,$current_step);
@@ -775,6 +771,10 @@ function build_inbox_editable_result($form,$entry,$current_step){
                 $results[++$current_index] = [];
                 $current_array = &$results[$current_index];
             }
+        }
+
+        if($field->type == 'form'){
+            flogs("ODD FIELD %s",print_r($field));
         }
 
         if($entry_editor->is_editable_field($field)){
