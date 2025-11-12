@@ -2612,6 +2612,9 @@ class GP_Nested_Forms extends GP_Plugin {
 
 				$session  = new GPNF_Session( $form['id'] );
 				$_entries = $session->get( 'nested_entries' );
+
+				flogs("session entries are %s",print_r($_entries,true));
+				
 				if ( ! empty( $_entries[ $field['id'] ] ) ) {
 					$entry_ids = $_entries[ $field['id'] ];
 
@@ -2690,7 +2693,7 @@ class GP_Nested_Forms extends GP_Plugin {
 		$result = gf_apply_filters( array( 'gpnf_should_load_child_entries_from_session', $form['id'], $field->id ), true, $form, $field );
 
 		flogs("Result of Applying gpnf_should_load_child_entries_from_session %s",$result);
-		
+
 		return $result;
 	}
 
