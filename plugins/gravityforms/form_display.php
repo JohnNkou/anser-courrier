@@ -1737,7 +1737,7 @@ class GFFormDisplay {
 	}
 
 	public static function add_init_script( $form_id, $script_name, $location, $script ) {
-		$key = $script_name . '_' . $location; flogs("SCRIPT KEY IS %s",$key);
+		$key = $script_name . '_' . $location;
 
 		if ( ! isset( self::$init_scripts[ $form_id ] ) ) {
 			self::$init_scripts[ $form_id ] = array();
