@@ -730,6 +730,23 @@ function get_upload_data_settings($html){
     return null;
 }
 
+function handle_choice_input($field){
+    $choices = [];
+    $inputs = [];
+
+    if(!empty($field->choices)){
+        $choices = array_map(function($choice){
+            return [
+                "text"=> $choice['text'],
+                "value"=> $choice['value']
+            ];
+
+        }, $field->choices);
+    }
+
+    return ["choices"=> $choices, "inputs"=> $inputs];
+}
+
 function build_inbox_editable_result($form,$entry,$current_step){
     require_once ABSPATH . "/wp-content/plugins/gravityflow/includes/pages/class-entry-editor.php";
 
@@ -753,6 +770,10 @@ function build_inbox_editable_result($form,$entry,$current_step){
             $rules = $field->conditionalLogic['rules'];
             $actionType = $field->conditionalLogic['actionType'];
             $logicType = $field->conditionalLogic['logicType'];
+        }
+
+        if(!empty($field->inputs)){
+            flogs('INPUT IS LIKE %s',print_r($field->inputs,true));
         }
 
         if($entry_editor->is_hidden_field($field)){
@@ -788,16 +809,9 @@ function build_inbox_editable_result($form,$entry,$current_step){
                 "inputs"=> $field->inputs
             ];
 
-            if(!empty($field->choices) || !empty($field->inputs)){
-                $choices = array_map(function($choice){
-                    return [
-                        "text"=> $choice['text'],
-                        "value"=> $choice['value']
-                    ];
-
-                }, $field->choices);
-                $result['choices'] = $choices;
-            }
+            $input_choices = handle_choice_input($field);
+            $result['choices'] = $input_choices['choices'];
+            $result['inputs'] = $input_choices['inputs'];
 
             if($field->type == 'section'){
                 $result['type'] = 'section';
