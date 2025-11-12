@@ -22,7 +22,8 @@ class GPNF_Session {
 		$this->_context = $context;
 		$this->_cookie  = $this->get_cookie();
 
-		flogs("THE COOKIE IS %s",print_r($this->_cookie,true));
+		throw new Exception("Error Processing Request", 1);
+		
 	}
 
 	public function get( $prop ) {
