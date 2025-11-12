@@ -773,13 +773,6 @@ function build_inbox_editable_result($form,$entry,$current_step){
             }
         }
 
-        if($field->type == 'form'){
-            flogs("ODD FIELD %s",print_r($field,true));
-            $f_value = GFFormDisplay::get_field_content($field,"",false, $form['id'],$form);
-            flogs("F VALUE IS %s",$f_value);
-            $result['value'] = $f_value;
-        }
-
         if($entry_editor->is_editable_field($field)){
             $label = $field->label;
             $_value = get_entry_form_value($form,$entry,$field);
@@ -833,7 +826,10 @@ function build_inbox_editable_result($form,$entry,$current_step){
             }
 
             if($field->type == 'form'){
-
+                flogs("ODD FIELD %s",print_r($field,true));
+                $f_value = GFFormDisplay::get_field_content($field,"",false, $form['id'],$form);
+                flogs("F VALUE IS %s",$f_value);
+                $result['value'] = $f_value;
             }
         }
         else{
