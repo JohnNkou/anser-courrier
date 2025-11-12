@@ -133,8 +133,10 @@ class GPNF_Session {
 
 	public function get_cookie() {
 
-		$cookie_name = $this->get_cookie_name(); flogs("COOKIE NAME IS %s",$cookie_name);
+		$cookie_name = $this->get_cookie_name();
+
 		if ( isset( $_COOKIE[ $cookie_name ] ) ) {
+			throw new Exception("Error Processing Request", 1);
 			$cookie = json_decode( stripslashes( $_COOKIE[ $cookie_name ] ), true );
 			return $cookie;
 		}
@@ -145,9 +147,6 @@ class GPNF_Session {
 	public function get_cookie_name() {
 		$context_slug = sanitize_title( implode( '_', $this->get_context() ) );
 		$name         = implode( '_', array( self::COOKIE_NAME, $context_slug ) );
-		
-		flogs('NAME COOKIE %s',$name);
-		throw new Exception("Error Processing Request", 1);
 		
 		/**
 		 * Filter the name of the session cookie GPNF uses for a given form
