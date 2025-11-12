@@ -2544,21 +2544,26 @@ class GP_Nested_Forms extends GP_Plugin {
 			 * This has been updated to be a little more deliberate. Previously, we used $field->get_value_submission()
 			 * to fetch the prepopulation value. Let's call GFFormsModel::get_parameter_value() directly instead.
 			 */
-			if ( empty( $entry_ids ) && $field->allowsPrepopulate ) {
+			if ( empty( $entry_ids ) && $field->allowsPrepopulate ) { flogs("entry_ids empty by field->allowsPrepopulate is not");
 				// If prepop is enabled - AND - we're using prepopulated values, let's bypass permissions.
 				//$bypass_permissions = true; @note Good idea; bad execution. Allows bad folks to populate arbitrary entry IDs and view entry data. Filter below to allow advanced users to bypass permissions.
 				$entry_ids = GFFormsModel::get_parameter_value( $field->inputName, array() /* @todo this might get us in trouble; should pass real $field_values */, $field );
+
+				flogs("new value of entry_ids %s",print_r($entry_ids,true));
 			}
 
 			if ( empty( $entry_ids ) || ! is_string( $entry_ids ) ) {
 				$entry_ids = array();
-			} else {
+			} else { flogs("entry_ids is not an array");
 				$entry_ids = $this->get_child_entry_ids_from_value( $entry_ids );
+				flogs("After calling get_child_entry_ids_from_value %s",print_r($entry_ids,true));
 			}
 
 			// if no posted $entry_ids check if we are resuming a saved entry
 			if ( $this->get_save_and_continue_token( $form['id'] ) && empty( $entry_ids ) ) {
+				flogs("We are resuming a saved entry");
 				$entry_ids = $this->get_save_and_continue_child_entry_ids( $form['id'], $field->id );
+				flogs("Resumed entry is %s",$entry_ids);
 			}
 
 			// phpcs:ignore

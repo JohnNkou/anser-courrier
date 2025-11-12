@@ -242,7 +242,8 @@ class GP_Field_Nested_Form extends GF_Field {
 	}
 
 	public function get_value_entry_list( $value, $entry, $field_id, $columns, $form ) {
-
+		flogs("the VALUE GIVEN IS WHATS %s",$value);
+		
 		$field            = GFAPI::get_field( $form, $field_id );
 		$template         = new GP_Template( gp_nested_forms() );
 		$entries          = gp_nested_forms()->get_entries( $value );
