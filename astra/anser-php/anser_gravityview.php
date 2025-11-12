@@ -3,6 +3,8 @@
 	 * 
 	 */
 
+	require_once ABSPATH . "/plugins/future/includes/class-gv-shortcode-gravityview.php";
+
 	class Anser_GravityView extends \GV\Shortcodes\gravityview
 	{
 
