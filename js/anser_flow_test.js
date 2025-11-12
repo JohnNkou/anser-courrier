@@ -11,6 +11,19 @@ var require_anser_utily = __commonJS((exports2) => {
     }
     return fetch(url, { method: "GET" });
   }
+  function file_viewer_handler(node) {
+    node.addEventListener("click", (event) => {
+      let target = event.target;
+      if (target.href && /\.(pdf|jpg|jpeg|png|gif)/.test(target.href)) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        display_pdfviewer(target.href).catch((error) => {
+          console.error(error);
+          alert("Une erreur est survenue lors de l'affichage du pdf");
+        });
+      }
+    });
+  }
   function toggle_loader(text = "Chargement") {
     var loader = document.querySelector("#loader"), text_node = loader.querySelector(".text");
     if (loader) {
@@ -159,6 +172,7 @@ var require_anser_utily = __commonJS((exports2) => {
     }
   }
   exports2.page_handler = page_handler;
+  exports2.file_viewer_handler = file_viewer_handler;
   exports2.display_information_modal = display_information_modal;
   exports2.toggle_loader = toggle_loader;
   exports2.display_pdfviewer = display_pdfviewer;
