@@ -730,9 +730,8 @@ function get_upload_data_settings($html){
     return null;
 }
 
-function handle_choice_input($field){
-    $choices = [];
-    $inputs = [];
+function handle_choice($field){
+    $choices = null;
 
     if(!empty($field->choices)){
         $choices = array_map(function($choice){
@@ -744,7 +743,7 @@ function handle_choice_input($field){
         }, $field->choices);
     }
 
-    return ["choices"=> $choices, "inputs"=> $inputs];
+    return $choices;
 }
 
 function build_inbox_editable_result($form,$entry,$current_step){
@@ -770,10 +769,6 @@ function build_inbox_editable_result($form,$entry,$current_step){
             $rules = $field->conditionalLogic['rules'];
             $actionType = $field->conditionalLogic['actionType'];
             $logicType = $field->conditionalLogic['logicType'];
-        }
-
-        if(!empty($field->inputs)){
-            flogs('INPUT IS LIKE %s',print_r($field->inputs,true));
         }
 
         if($entry_editor->is_hidden_field($field)){
@@ -809,8 +804,8 @@ function build_inbox_editable_result($form,$entry,$current_step){
                 "inputs"=> $field->inputs
             ];
 
-            $input_choices = handle_choice_input($field);
-            $result['choices'] = $input_choices['choices'];
+            $choices = handle_choice($field);
+            $result['choices'] = $choices;
             $result['inputs'] = $input_choices['inputs'];
 
             if($field->type == 'section'){
@@ -852,7 +847,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
 
                     if((int)$field_id !== 0){
                         $field = GFFormsModel::get_field($inner_form,$field_id);
-                        $input_choices = handle_choice_input($field);
+                        $choices = handle_choice($field);
 
                         flogs("THE INNER FIELD %s",print_r($field,true));
 
@@ -860,8 +855,8 @@ function build_inbox_editable_result($form,$entry,$current_step){
                             "type"=> $field->type,
                             "label"=> $field->label,
                             "id"=> $field_id,
-                            "choices"=> $input_choices['choices'],
-                            "inputs"=> $input_choices['inputs']
+                            "choices"=> $choices,
+                            "inputs"=> $field->inputs
                         ];
                     }
                     else{
