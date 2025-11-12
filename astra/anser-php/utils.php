@@ -830,6 +830,18 @@ function build_inbox_editable_result($form,$entry,$current_step){
                 $f_value = GFFormDisplay::get_field_content($field,"",false, $form['id'],$form);
                 flogs("F VALUE IS %s",$f_value);
                 $result['value'] = $f_value;
+                $result['entries'] = $field->get_submitted_nested_entries( $form, $field->id );
+                $result['gpfnfForm'] = $field->gpnfForm;
+                $result['gpfnfields'] = array_map(function($field_id) use ($form){
+                    let $field = GFFormsModel::get_field($form,$field_id);
+
+                    return [
+                        "type"=> $field->type,
+                        "label"=> $field->label,
+                        "choice"=> $field->choice,
+                        "input"=> $field->input
+                    ];
+                }, $field->gpnfFields);
             }
         }
         else{
