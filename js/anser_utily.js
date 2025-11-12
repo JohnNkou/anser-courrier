@@ -1,0 +1,190 @@
+function Anser_loader(offset = 0, page_size = 10, queries = {}) {
+  let url = new URL(GravityAjax.ajax_url), searchParams = url.searchParams;
+  searchParams.set("offset", offset);
+  searchParams.set("limit", page_size);
+  for (let name in queries) {
+    searchParams.set(name, queries[name]);
+  }
+  return fetch(url, { method: "GET" });
+}
+
+function file_viewer_handler(node) {
+  node.addEventListener("click", (event) => {
+    let target = event.target;
+    if (target.href && /\.(pdf|jpg|jpeg|png|gif)/.test(target.href)) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      display_pdfviewer(target.href).catch((error) => {
+        console.error(error);
+        alert("Une erreur est survenue lors de l'affichage du pdf");
+      });
+    }
+  });
+}
+  
+function toggle_loader(text = "Chargement") {
+  var loader = document.querySelector("#loader"), text_node = loader.querySelector(".text");
+  if (loader) {
+    text_node.textContent = text;
+    loader.classList.toggle("hidden");
+  }
+}
+  
+function display_pdfviewer(src) {
+  let pdfview_node = document.getElementById("pdfviewer"), iframe = pdfview_node && pdfview_node.querySelector("iframe");
+  if (!pdfview_node && !iframe) {
+    return Promise.reject(new Error("pdfview and iframe should be node element"));
+  }
+  pdfview_node.classList.remove("hidden");
+  iframe.src = src;
+  return new Promise((resolve, reject) => {
+    pdfview_node.onclick = function(event) {
+      event.preventDefault();
+      let target = event.target;
+      if (target.classList.contains("close")) {
+        pdfview_node.classList.add("hidden");
+        iframe.src = "";
+        resolve(true);
+      }
+    };
+  });
+}
+
+function display_information_modal(text) {
+  let div = document.querySelector(".informationModal"), text_node = div && div.querySelector(".text");
+  if (!div || !text_node) {
+    return Promise.reject("div with class informationModal and div with class text should be found");
+  }
+  
+  text_node.innerHTML = text;
+  div.classList.remove("hidden");
+  return new Promise((resolve, reject) => {
+    div.onclick = function(event) {
+      event.preventDefault();
+      let target = event.target;
+      if (target.classList.contains("close")) {
+        div.classList.add("hidden");
+        resolve(true);
+      }
+    };
+  });
+}
+  
+function uploader() {
+  let node = document.getElementById("uploader"), text = node.querySelector(".text"), percent = node.querySelector(".percent"), button = node.querySelector("button");
+  button.onclick = () => {
+    text.textContent = "";
+    percent.textContent = "";
+    node.classList.add("hidden");
+  };
+  this.show = () => {
+    node.classList.remove("hidden");
+    return this;
+  };
+  this.updateText = (new_text) => {
+    text.textContent = new_text;
+    return this;
+  };
+  this.updatePercent = (_percent) => {
+    percent.textContent = _percent;
+    return this;
+  };
+  this.close = () => {
+    button.click();
+  };
+}
+
+function page_handler(navigationHandler, body, default_queries = {}) {
+  let nextPage = body.querySelector(".nextPage"), prevPage = body.querySelector(".previousPage"), with_queries = default_queries, navigation_waiters = [];
+  this.page = 0;
+  this.total_page = 0;
+  this.total = 0;
+  this.limit = 15;
+  this.onNavigation = function(fn) {
+    navigation_waiters.push(fn);
+  };
+
+  if (nextPage && prevPage) {
+    nextPage.addEventListener("click", (event) => {
+      this.goTo(this.page + 1).then((json_response) => {
+        if (navigationHandler) {
+          navigationHandler(json_response, body);
+        }
+      });
+    });
+    prevPage.addEventListener("click", (event) => {
+      this.goTo(this.page - 1).then((json_response) => {
+        if (navigationHandler) {
+          navigationHandler(json_response, body);
+        }
+      });
+    });
+  } 
+  else {
+    console.error("NAVIGATION ELEMENT WERE NOT FOUND");
+  }
+
+  function toggle_disable(value) {
+    nextPage.disabled = prevPage.disabled = value;
+  }
+
+  this.addQueries = (queries) => {
+    with_queries = { ...with_queries, ...queries };
+  };
+
+  this.removeQueries = (queries) => {
+    queries.forEach((querie_name) => {
+      delete with_queries[querie_name];
+    });
+  };
+
+  this.goTo = (newPage) => {
+    toggle_disable(true);
+    let offset = newPage * this.limit;
+    return this.load_data(with_queries, offset).then((json_response) => {
+      this.page = newPage;
+      navigation_waiters.forEach((fn) => {
+        fn(offset, offset + this.limit);
+      });
+      console.log("THE NEW PAGE IS", this.page);
+      display_nativation_handler(newPage, this.total_page);
+      return json_response;
+    }).finally(() => {
+      toggle_disable(false);
+    });
+  };
+
+  this.load_data = function(queries = {}, offset = this.page, limit = this.limit) {
+    toggle_loader();
+    return Anser_loader(offset, limit, { ...with_queries, ...queries }).then((response) => response.json()).then((response) => {
+      this.total_page = Math.ceil(response.data.total / this.limit);
+      this.total = response.data.total;
+      this.page = offset;
+      display_nativation_handler(offset, this.total_page);
+      return response;
+    }).finally(() => {
+      toggle_loader();
+    });
+  };
+  
+  function display_nativation_handler(page, total) {
+    if (navigationHandler) {
+      if (page == 0) {
+        prevPage.classList.add("hidden");
+      } else {
+        prevPage.classList.remove("hidden");
+      }
+      if (page >= total - 1) {
+        nextPage.classList.add("hidden");
+      } else {
+        nextPage.classList.remove("hidden");
+      }
+    }
+  }
+}
+
+exports.page_handler =              page_handler;
+exports.display_information_modal = display_information_modal;
+exports.toggle_loader =             toggle_loader;
+exports.display_pdfviewer =         display_pdfviewer;
+exports.uploader =                  uploader;

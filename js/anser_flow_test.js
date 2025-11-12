@@ -1,7 +1,7 @@
 var __commonJS = (cb, mod) => () => (mod || cb((mod = { exports: {} }).exports, mod), mod.exports);
 
 // js/anser_utily.js
-var require_anser_utily = __commonJS((exports2) => {
+var require_anser_utily = __commonJS((exports) => {
   function Anser_loader(offset = 0, page_size = 10, queries = {}) {
     let url = new URL(GravityAjax.ajax_url), searchParams = url.searchParams;
     searchParams.set("offset", offset);
@@ -10,19 +10,6 @@ var require_anser_utily = __commonJS((exports2) => {
       searchParams.set(name, queries[name]);
     }
     return fetch(url, { method: "GET" });
-  }
-  function file_viewer_handler(node) {
-    node.addEventListener("click", (event) => {
-      let target = event.target;
-      if (target.href && /\.(pdf|jpg|jpeg|png|gif)/.test(target.href)) {
-        event.preventDefault();
-        event.stopImmediatePropagation();
-        display_pdfviewer(target.href).catch((error) => {
-          console.error(error);
-          alert("Une erreur est survenue lors de l'affichage du pdf");
-        });
-      }
-    });
   }
   function toggle_loader(text = "Chargement") {
     var loader = document.querySelector("#loader"), text_node = loader.querySelector(".text");
@@ -91,7 +78,7 @@ var require_anser_utily = __commonJS((exports2) => {
       button.click();
     };
   }
-  exports2.page_handler = function page_handler(navigationHandler, body, default_queries = {}) {
+  function page_handler(navigationHandler, body, default_queries = {}) {
     let nextPage = body.querySelector(".nextPage"), prevPage = body.querySelector(".previousPage"), with_queries = default_queries, navigation_waiters = [];
     this.page = 0;
     this.total_page = 0;
@@ -170,16 +157,16 @@ var require_anser_utily = __commonJS((exports2) => {
         }
       }
     }
-  };
-  exports2.file_viewer_handler = file_viewer_handler;
-  exports2.display_information_modal = display_information_modal;
-  exports2.toggle_loader = toggle_loader;
-  exports2.display_pdfviewer = display_pdfviewer;
-  exports2.uploader = uploader;
+  }
+  exports.page_handler = page_handler;
+  exports.display_information_modal = display_information_modal;
+  exports.toggle_loader = toggle_loader;
+  exports.display_pdfviewer = display_pdfviewer;
+  exports.uploader = uploader;
 });
 
 // js/lib.js
-var require_lib = __commonJS((exports2) => {
+var require_lib = __commonJS((exports) => {
   function Attributes() {
     let attributes = {};
     this.append = function(name, value) {
@@ -234,16 +221,16 @@ var require_lib = __commonJS((exports2) => {
       return v.toString(16);
     });
   }
-  exports2.Attributes = Attributes;
-  exports2.guid = guid;
-  exports2.generateUniqueID = generateUniqueID;
-  exports2.is_object = function($data) {
+  exports.Attributes = Attributes;
+  exports.guid = guid;
+  exports.generateUniqueID = generateUniqueID;
+  exports.is_object = function($data) {
     return Object.prototype.toString.call($data) == Object.prototype.toString.call({});
   };
 });
 
 // js/anser_flow_utils.js
-var require_anser_flow_utils = __commonJS((exports2) => {
+var require_anser_flow_utils = __commonJS((exports) => {
   var { page_handler, display_information_modal, toggle_loader, display_pdfviewer, uploader } = require_anser_utily();
   var { Attributes, is_object, guid, generateUniqueID } = require_lib();
   function result_handler(json_response, table) {
@@ -905,13 +892,13 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       }
     });
   }
-  exports2.result_handler = result_handler;
-  exports2.entry_click_handler = entry_click_handler;
-  exports2.onglet_handler = onglet_handler;
+  exports.result_handler = result_handler;
+  exports.entry_click_handler = entry_click_handler;
+  exports.onglet_handler = onglet_handler;
 });
 
 // js/anser_view_util.js
-var require_anser_view_util = __commonJS((exports2) => {
+var require_anser_view_util = __commonJS((exports) => {
   var { page_handler } = require_anser_utily();
   function result_handler(json_response, table) {
     let { entries, total } = json_response.data;
@@ -1131,73 +1118,76 @@ var require_anser_view_util = __commonJS((exports2) => {
       console.error("No tbody found for registering entry_click_handler");
     }
   }
-  exports2.result_handler = result_handler;
-  exports2.filter_handler = filter_handler;
-  exports2.entry_click_handler = entry_click_handler;
+  exports.result_handler = result_handler;
+  exports.filter_handler = filter_handler;
+  exports.entry_click_handler = entry_click_handler;
 });
 
 // js/anser_flow.js
-var { page_handler, file_viewer_handler } = require_anser_utily();
-var { result_handler, entry_click_handler, onglet_handler } = require_anser_flow_utils();
-var { result_handler: result_handler_2, entry_click_handler: entry_click_handler_2 } = require_anser_view_util();
-var table = document.querySelector(".main-table");
-var second_table = document.querySelector(".second-table");
-var tbody = table.querySelector("tbody");
-var counts = document.querySelectorAll(".onglets .count");
-var navigationHelper = document.querySelector(".navigationHelper p");
-var myPage_handler = new page_handler((json_response) => result_handler(json_response, table), table);
-var myPage_handler_2 = second_table && new page_handler((json_response) => result_handler_2(json_response, second_table), second_table);
-var search_form = document.querySelector(".search_block");
-if (typeof _Page != "undefined") {
-  if (!_Page.form_ids) {
-    throw Error("No form_ids found in _Page");
+var require_anser_flow = __commonJS(() => {
+  var { page_handler, file_viewer_handler } = require_anser_utily();
+  var { result_handler, entry_click_handler, onglet_handler } = require_anser_flow_utils();
+  var { result_handler: result_handler_2, entry_click_handler: entry_click_handler_2 } = require_anser_view_util();
+  var table = document.querySelector(".main-table");
+  var second_table = document.querySelector(".second-table");
+  var tbody = table.querySelector("tbody");
+  var counts = document.querySelectorAll(".onglets .count");
+  var navigationHelper = document.querySelector(".navigationHelper p");
+  var myPage_handler = new page_handler((json_response) => result_handler(json_response, table), table);
+  var myPage_handler_2 = second_table && new page_handler((json_response) => result_handler_2(json_response, second_table), second_table);
+  var search_form = document.querySelector(".search_block");
+  if (typeof _Page != "undefined") {
+    if (!_Page.form_ids) {
+      throw Error("No form_ids found in _Page");
+    }
+    myPage_handler.addQueries({ form_ids: _Page.form_ids, action: GravityAjax.flow_action, security: GravityAjax.flow_nonce });
+    second_table && myPage_handler_2.addQueries({ id: _Page.view_id, secret: _Page.secret, action: GravityAjax.view_action, security: GravityAjax.view_nonce });
+    myPage_handler.load_data().then((json_response) => result_handler(json_response, table)).then(() => {
+      if (counts.length) {
+        counts[0].textContent = myPage_handler.total;
+        navigationHelper.textContent = "1-" + myPage_handler.limit + " de " + myPage_handler.total;
+      } else {
+        console.error("NO COUNTS NODE FOUND");
+      }
+    });
+    second_table && myPage_handler_2.load_data().then((json_response) => result_handler_2(json_response, second_table)).then(() => {
+      if (counts.length) {
+        counts[1].textContent = myPage_handler_2.total;
+      }
+    });
+    myPage_handler.onNavigation((offset, new_limit) => {
+      offset = offset + 1;
+      navigationHelper.textContent = offset + "-" + new_limit + " de " + myPage_handler.total;
+    });
+    second_table && myPage_handler_2.onNavigation((offset, new_limit) => {
+      offset = offset + 1;
+      navigationHelper.textContent = offset + "-" + new_limit + " de " + myPage_handler_2.total;
+    });
+    entry_click_handler(table);
+    second_table && entry_click_handler_2(second_table);
+    second_table && onglet_handler([table, second_table]);
+    file_viewer_handler(document.body);
+    search_form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      let form = event.target, input = form.elements.s;
+      if (input.value.length) {
+        let limit = myPage_handler.limit, queries = { term: input.value };
+        myPage_handler.load_data(queries, 0, limit).then((json_response) => result_handler(json_response, table)).then(() => {
+          if (counts.length) {
+            counts[0].textContent = myPage_handler.total;
+            navigationHelper.textContent = "1-" + myPage_handler.limit + " de " + myPage_handler.total;
+          } else {
+            console.error("NO COUNTS NODE FOUND");
+          }
+        }).catch((error) => {
+          console.error("ERROR", error);
+        });
+      } else {
+        console.warn("Nothing to search for");
+      }
+    });
+  } else {
+    console.error("No _Page found");
   }
-  myPage_handler.addQueries({ form_ids: _Page.form_ids, action: GravityAjax.flow_action, security: GravityAjax.flow_nonce });
-  second_table && myPage_handler_2.addQueries({ id: _Page.view_id, secret: _Page.secret, action: GravityAjax.view_action, security: GravityAjax.view_nonce });
-  myPage_handler.load_data().then((json_response) => result_handler(json_response, table)).then(() => {
-    if (counts.length) {
-      counts[0].textContent = myPage_handler.total;
-      navigationHelper.textContent = "1-" + myPage_handler.limit + " de " + myPage_handler.total;
-    } else {
-      console.error("NO COUNTS NODE FOUND");
-    }
-  });
-  second_table && myPage_handler_2.load_data().then((json_response) => result_handler_2(json_response, second_table)).then(() => {
-    if (counts.length) {
-      counts[1].textContent = myPage_handler_2.total;
-    }
-  });
-  myPage_handler.onNavigation((offset, new_limit) => {
-    offset = offset + 1;
-    navigationHelper.textContent = offset + "-" + new_limit + " de " + myPage_handler.total;
-  });
-  second_table && myPage_handler_2.onNavigation((offset, new_limit) => {
-    offset = offset + 1;
-    navigationHelper.textContent = offset + "-" + new_limit + " de " + myPage_handler_2.total;
-  });
-  entry_click_handler(table);
-  second_table && entry_click_handler_2(second_table);
-  second_table && onglet_handler([table, second_table]);
-  file_viewer_handler(document.body);
-  search_form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    let form = event.target, input = form.elements.s;
-    if (input.value.length) {
-      let limit = myPage_handler.limit, queries = { term: input.value };
-      myPage_handler.load_data(queries, 0, limit).then((json_response) => result_handler(json_response, table)).then(() => {
-        if (counts.length) {
-          counts[0].textContent = myPage_handler.total;
-          navigationHelper.textContent = "1-" + myPage_handler.limit + " de " + myPage_handler.total;
-        } else {
-          console.error("NO COUNTS NODE FOUND");
-        }
-      }).catch((error) => {
-        console.error("ERROR", error);
-      });
-    } else {
-      console.warn("Nothing to search for");
-    }
-  });
-} else {
-  console.error("No _Page found");
-}
+});
+export default require_anser_flow();
