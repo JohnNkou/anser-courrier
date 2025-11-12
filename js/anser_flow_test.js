@@ -663,9 +663,11 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   break;
                 case "date":
                   atts.append("class", "card");
-                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label < NaN;
+                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><input " + inputAtts.toString() + " />";
                   break;
                 default:
+                  atts.append("class", "card");
+                  bodyHtml += "<div " + atts.toString() + "><label>In- " + inbox.label + "</label><div>" + inbox.value + "</div></div>";
                   console.error("unknwon inbox fieldType", inbox);
               }
               break;
