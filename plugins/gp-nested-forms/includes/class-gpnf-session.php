@@ -128,8 +128,7 @@ class GPNF_Session {
 	}
 
 	public function set_cookie() {
-		throw new Exception("Error Processing Request", 1);
-		
+		flogs("SETTINGS COOKIE BONAVAN");
 		$result = setcookie( $this->get_cookie_name(), json_encode( $this->_cookie ), time() + 60 * 60 * 24 * 7, COOKIEPATH, COOKIE_DOMAIN, is_ssl() );
 	}
 
