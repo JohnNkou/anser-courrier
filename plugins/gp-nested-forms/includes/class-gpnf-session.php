@@ -22,6 +22,7 @@ class GPNF_Session {
 		$this->_context = $context;
 		$this->_cookie  = $this->get_cookie();
 
+		flogs("THE COOKIE IS %s",$this->_cookie);
 	}
 
 	public function get( $prop ) {
