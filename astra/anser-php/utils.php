@@ -833,7 +833,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
                 $result['entries'] = $field->get_submitted_nested_entries( $form, $field->id );
                 $result['gpfnfForm'] = $field->gpnfForm;
                 $result['gpfnfields'] = array_map(function($field_id) use ($form){
-                    let $field = GFFormsModel::get_field($form,$field_id);
+                    $field = GFFormsModel::get_field($form,$field_id);
 
                     return [
                         "type"=> $field->type,
