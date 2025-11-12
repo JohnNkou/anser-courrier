@@ -829,8 +829,9 @@ function build_inbox_editable_result($form,$entry,$current_step){
                 flogs("ODD FIELD %s",print_r($field,true));
                 $f_value = GFFormDisplay::get_field_content($field,"",false, $form['id'],$form);
                 flogs("F VALUE IS %s",$f_value);
+                $nested_form = gp_nested_forms();
                 $result['value'] = $f_value;
-                $result['entries'] = $field->get_submitted_nested_entries( $form, $field->id );
+                $result['entries'] = $nested_form->get_submitted_nested_entries( $form, $field->id );
                 $result['gpfnfForm'] = $field->gpnfForm;
                 $result['gpfnfields'] = array_map(function($field_id) use ($form){
                     $field = GFFormsModel::get_field($form,$field_id);
