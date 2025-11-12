@@ -135,7 +135,7 @@ class GPNF_Session {
 
 	public function get_cookie() {
 
-		$cookie_name = $this->get_cookie_name();
+		$cookie_name = $this->get_cookie_name(); flogs("COOKIE NAME IS %s",$cookie_name);
 		if ( isset( $_COOKIE[ $cookie_name ] ) ) {
 			$cookie = json_decode( stripslashes( $_COOKIE[ $cookie_name ] ), true );
 			return $cookie;
