@@ -618,14 +618,14 @@ class GFAPI {
 			$sorting = array( 'key' => 'id', 'direction' => 'DESC', 'is_numeric' => true );
 		}
 
-		if ( version_compare( GFFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) { flogs("CHIVAS");
+		if ( version_compare( GFFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
 			$entries = GF_Forms_Model_Legacy::search_leads( $form_ids, $search_criteria, $sorting, $paging );
 			if ( ! is_null( $total_count ) ) {
 				$total_count = self::count_entries( $form_ids, $search_criteria );
 			}
 			return $entries;
 		}
-		flogs('MORMON');
+		
 		$q = new GF_Query( $form_ids, $search_criteria, $sorting, $paging );
 		$entries = $q->get();
 		$total_count = $q->total_found;
