@@ -774,7 +774,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
         }
 
         if($field->type == 'form'){
-            flogs("ODD FIELD %s",print_r($field));
+            flogs("ODD FIELD %s",print_r($field,true));
         }
 
         if($entry_editor->is_editable_field($field)){
