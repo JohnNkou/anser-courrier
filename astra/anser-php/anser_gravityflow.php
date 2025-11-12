@@ -4897,7 +4897,9 @@ PRIMARY KEY  (id)
 			} else { error_log("No feedback here");
 
 				$renderer = new Anser_GravityFlow_Inbox($args);
-				return $renderer->render();
+				header('Content-Encoding: gzip');
+
+				return gzencode($renderer->render());
 
 				?>
 				<?php
