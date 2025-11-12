@@ -103,6 +103,8 @@ function remove_entry_file($entry,$form){
     $fields = $form['fields'];
     $upload_files = [];
 
+    flogs("GOT SOME JUICE");
+
     foreach ($fields as $field) {
         if($field->type == 'fileupload'){
             $value = $entry[$field->id];
