@@ -166,7 +166,7 @@ function page_handler(navigationHandler, body, default_queries = {}) {
       toggle_loader();
     });
   };
-  
+
   function display_nativation_handler(page, total) {
     if (navigationHandler) {
       if (page == 0) {
@@ -184,6 +184,7 @@ function page_handler(navigationHandler, body, default_queries = {}) {
 }
 
 exports.page_handler =              page_handler;
+exports.file_viewer_handler =       file_viewer_handler;
 exports.display_information_modal = display_information_modal;
 exports.toggle_loader =             toggle_loader;
 exports.display_pdfviewer =         display_pdfviewer;
