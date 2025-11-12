@@ -2687,7 +2687,11 @@ class GP_Nested_Forms extends GP_Plugin {
 		 * @param array  $form              Current parent form object.
 		 * @param object $field             Current Nested Form field object.
 		 */
-		return gf_apply_filters( array( 'gpnf_should_load_child_entries_from_session', $form['id'], $field->id ), true, $form, $field );
+		$result = gf_apply_filters( array( 'gpnf_should_load_child_entries_from_session', $form['id'], $field->id ), true, $form, $field );
+
+		flogs("Result of Applying gpnf_should_load_child_entries_from_session %s",$result);
+		
+		return $result;
 	}
 
 	public function remove_extra_other_choices( $form ) {
