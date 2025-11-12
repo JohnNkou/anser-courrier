@@ -319,7 +319,7 @@ add_action('wp_enqueue_scripts',function(){
 add_shortcode("anser_gravityview", array('Anser_Gravityview','shortcode'));
 
 add_shortcode("anser_gravityflow",function(...$atts){
-        flogs("IM'M RUNNING IN THIS THINGS");
+        flogs("IM'M RUNNING IN THIS THINGS ON THINGS");
         $anser_gf = Anser_GravityFlow::get_instance();
 
 
