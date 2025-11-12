@@ -848,8 +848,6 @@ function build_inbox_editable_result($form,$entry,$current_step){
                         $field = GFFormsModel::get_field($inner_form,$field_id);
                         $choices = handle_choice($field);
 
-                        flogs("THE INNER FIELD %s",print_r($field,true));
-
                         return [
                             "type"=> $field->type,
                             "label"=> $field->label,
