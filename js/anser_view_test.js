@@ -1,7 +1,7 @@
 var __commonJS = (cb, mod) => () => (mod || cb((mod = { exports: {} }).exports, mod), mod.exports);
 
 // js/anser_utily.js
-var require_anser_utily = __commonJS((exports) => {
+var require_anser_utily = __commonJS((exports2) => {
   function Anser_loader(offset = 0, page_size = 10, queries = {}) {
     let url = new URL(GravityAjax.ajax_url), searchParams = url.searchParams;
     searchParams.set("offset", offset);
@@ -158,15 +158,15 @@ var require_anser_utily = __commonJS((exports) => {
       }
     }
   }
-  exports.page_handler = page_handler;
-  exports.display_information_modal = display_information_modal;
-  exports.toggle_loader = toggle_loader;
-  exports.display_pdfviewer = display_pdfviewer;
-  exports.uploader = uploader;
+  exports2.page_handler = page_handler;
+  exports2.display_information_modal = display_information_modal;
+  exports2.toggle_loader = toggle_loader;
+  exports2.display_pdfviewer = display_pdfviewer;
+  exports2.uploader = uploader;
 });
 
 // js/anser_view_util.js
-var require_anser_view_util = __commonJS((exports) => {
+var require_anser_view_util = __commonJS((exports2) => {
   var { page_handler } = require_anser_utily();
   function result_handler(json_response, table) {
     let { entries, total } = json_response.data;
@@ -386,62 +386,59 @@ var require_anser_view_util = __commonJS((exports) => {
       console.error("No tbody found for registering entry_click_handler");
     }
   }
-  exports.result_handler = result_handler;
-  exports.filter_handler = filter_handler;
-  exports.entry_click_handler = entry_click_handler;
+  exports2.result_handler = result_handler;
+  exports2.filter_handler = filter_handler;
+  exports2.entry_click_handler = entry_click_handler;
 });
 
 // js/anser_view.js
-var require_anser_view = __commonJS(() => {
-  var { page_handler, file_viewer_handler } = require_anser_utily();
-  var { result_handler, filter_handler, entry_click_handler } = require_anser_view_util();
-  var search_form = document.querySelector(".search_block");
-  var table = document.querySelector(".main-table");
-  var tbody = table.querySelector("tbody");
-  var myPage_handler = new page_handler(result_handler, table);
-  if (typeof _Page == "undefined" || !_Page.view_id) {
-    console.error("_Page object should have a view_id property");
-  } else {
-    let queries = { id: _Page.view_id, action: GravityAjax.view_action, security: GravityAjax.view_nonce };
-    if (_Page.secret) {
-      queries.secret = _Page.secret;
-    }
-    filter_handler(myPage_handler, table);
-    file_viewer_handler(tbody);
-    entry_click_handler(table);
-    myPage_handler.addQueries(queries);
-    if (_Page.filters) {
-      search_form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        let input = search_form.elements.s, value = input.value, search_mode = input.getAttribute("data-search-mode"), search_fields = input.getAttribute("data-search-fields"), queries2;
-        if (value.length) {
-          if (search_fields && search_mode) {
-            queries2 = { mode: search_mode };
-            search_fields = search_fields.split(" ");
-            if (search_fields.length) {
-              if (search_fields.indexOf("search_all") != -1) {
-                queries2["gv_search"] = value;
-              } else {
-                search_fields.forEach((key) => {
-                  queries2[key] = value;
-                });
-              }
-            } else {
-              return console.error("Search_Fileds is empty", search_fields);
-            }
-            myPage_handler.removeQueries(["filter_workflow_final_status"]);
-            myPage_handler.load_data(queries2, 0).then((json_response) => result_handler(json_response, table)).then(() => {
-              myPage_handler.addQueries(queries2);
-            });
-          } else {
-            console.error("Attribute search_fields or search_mode should be set in the input element");
-          }
-        }
-      });
-    } else {
-      console.error("No filter on _page constant");
-    }
-    myPage_handler.load_data().then((json_response) => result_handler(json_response, table));
+var { page_handler, file_viewer_handler } = require_anser_utily();
+var { result_handler, filter_handler, entry_click_handler } = require_anser_view_util();
+var search_form = document.querySelector(".search_block");
+var table = document.querySelector(".main-table");
+var tbody = table.querySelector("tbody");
+var myPage_handler = new page_handler(result_handler, table);
+if (typeof _Page == "undefined" || !_Page.view_id) {
+  console.error("_Page object should have a view_id property");
+} else {
+  let queries = { id: _Page.view_id, action: GravityAjax.view_action, security: GravityAjax.view_nonce };
+  if (_Page.secret) {
+    queries.secret = _Page.secret;
   }
-});
-export default require_anser_view();
+  filter_handler(myPage_handler, table);
+  file_viewer_handler(tbody);
+  entry_click_handler(table);
+  myPage_handler.addQueries(queries);
+  if (_Page.filters) {
+    search_form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      let input = search_form.elements.s, value = input.value, search_mode = input.getAttribute("data-search-mode"), search_fields = input.getAttribute("data-search-fields"), queries2;
+      if (value.length) {
+        if (search_fields && search_mode) {
+          queries2 = { mode: search_mode };
+          search_fields = search_fields.split(" ");
+          if (search_fields.length) {
+            if (search_fields.indexOf("search_all") != -1) {
+              queries2["gv_search"] = value;
+            } else {
+              search_fields.forEach((key) => {
+                queries2[key] = value;
+              });
+            }
+          } else {
+            return console.error("Search_Fileds is empty", search_fields);
+          }
+          myPage_handler.removeQueries(["filter_workflow_final_status"]);
+          myPage_handler.load_data(queries2, 0).then((json_response) => result_handler(json_response, table)).then(() => {
+            myPage_handler.addQueries(queries2);
+          });
+        } else {
+          console.error("Attribute search_fields or search_mode should be set in the input element");
+        }
+      }
+    });
+  } else {
+    console.error("No filter on _page constant");
+  }
+  myPage_handler.load_data().then((json_response) => result_handler(json_response, table));
+}
