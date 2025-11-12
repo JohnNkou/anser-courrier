@@ -128,6 +128,8 @@ class GPNF_Session {
 	}
 
 	public function set_cookie() {
+		throw new Exception("Error Processing Request", 1);
+		
 		$result = setcookie( $this->get_cookie_name(), json_encode( $this->_cookie ), time() + 60 * 60 * 24 * 7, COOKIEPATH, COOKIE_DOMAIN, is_ssl() );
 	}
 
@@ -135,8 +137,9 @@ class GPNF_Session {
 
 		$cookie_name = $this->get_cookie_name();
 
+		flogs("COOKIE %s",$cookie_name);
+
 		if ( isset( $_COOKIE[ $cookie_name ] ) ) {
-			throw new Exception("Error Processing Request", 1);
 			$cookie = json_decode( stripslashes( $_COOKIE[ $cookie_name ] ), true );
 			return $cookie;
 		}
