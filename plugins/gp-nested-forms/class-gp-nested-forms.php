@@ -2525,7 +2525,7 @@ class GP_Nested_Forms extends GP_Plugin {
 	}
 
 	public function get_submitted_nested_entries( $form, $field_id = false, $display_values = true ) {
-
+		flogs("THE FORM ID IS %s",$form['id']);
 		$all_entries = array();
 		$nested_form = null;
 
