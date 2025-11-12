@@ -36,7 +36,7 @@ class Anser_GravityFlow_Inbox{
 	}
 
 	private function header(){
-		$title = $this->$title;
+		$title = $this->title;
 		
 		if(!$title){
 			$title = "Boite de reception";
