@@ -145,7 +145,8 @@ class GPNF_Session {
 	public function get_cookie_name() {
 		$context_slug = sanitize_title( implode( '_', $this->get_context() ) );
 		$name         = implode( '_', array( self::COOKIE_NAME, $context_slug ) );
-
+		
+		flogs('NAME COOKIE %s',$name);
 		throw new Exception("Error Processing Request", 1);
 		
 		/**
