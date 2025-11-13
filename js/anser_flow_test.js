@@ -848,7 +848,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             throw Error("Missing node");
           }
           if (inbox.type == "section") {
-            currentSection = node;
+            currentSection = node.querySelector("div");
             inSection = true;
             content_node.appendChild(node);
           } else {
