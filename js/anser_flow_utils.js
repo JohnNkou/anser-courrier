@@ -1,4 +1,4 @@
-const { page_handler, display_information_modal, toggle_loader, display_pdfviewer, uploader } = require('./anser_utily.js');
+const { page_handler, display_information_modal, toggle_loader, display_pdfviewer, uploader, display_formCreator } = require('./anser_utily.js');
 const { Attributes, is_object, guid, generateUniqueID } = require('./lib.js');
 
 function result_handler(json_response, table) {
@@ -432,7 +432,30 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index }
           break;
         }
 	      case 'form':{
-	      	
+	      	let div = document.createElement('div'),
+	      	label = document.createElement('label'),
+	      	button = document.createElement('button');
+
+	      	label.textContent = inbox.label;
+	      	button.textContent = "Ajouter";
+
+	      	atts.append('class','card');
+
+	      	setAttribute(div,atts);
+	      	div.appendChild(label);
+	      	div.appendChild(button);
+
+	      	button.onclick = function(event){
+	      		event.preventDefault();
+
+	      		display_formCreator({ fields: inbox.gpfnfields, title:inbox.label, form_id: inbox.gpfnfForm });
+	      	}
+
+	      	inbox.gpfnfields.forEach((field)=>{
+	      		let th = document.createElement('th');
+	      		th.textContent = field.label;
+	      		tr.appendChild(th);
+	      	})
 	      	return;
 	      }
         default:{
