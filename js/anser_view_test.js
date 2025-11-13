@@ -29,6 +29,7 @@ var require_anser_utily = __commonJS((exports2) => {
     if (!div) {
       throw Error("No formCreator div found");
     }
+    console.log("FORM", form);
     form.onsubmit = function(event) {
       event.preventDefault();
       console.log("Ok submit happening");
