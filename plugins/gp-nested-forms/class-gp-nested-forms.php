@@ -1820,8 +1820,6 @@ class GP_Nested_Forms extends GP_Plugin {
 			'mode'        => $mode,
 		);
 
-		flogs("DEBUG TRACE %s",print_r(debug_backtrace(2,30),true));
-		
 		return '<script type="text/javascript"> if( typeof GPNestedForms != "undefined" ) { GPNestedForms.loadEntry( ' . json_encode( $args ) . ' ); } </script>';
 
 	}
