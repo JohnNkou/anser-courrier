@@ -193,7 +193,7 @@ body #main {
 #formCreator button{
    padding:1em;
 }
-#formCreator .footer{
+#formCreator footer{
    display: flex;
    justify-content: center;
    gap: 3;

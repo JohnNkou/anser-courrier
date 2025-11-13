@@ -157,9 +157,9 @@ class Anser_GravityFlow_Inbox{
 						<select><option>Signer ici</option></select>
 					</div>
 				</div>
-				<div class="footer bg-white">
+				<footer class="bg-white">
 					<button type='button' class='close'>Annuler</button><button type='submit'>Ajouter</button>
-				</div>
+				</footer>
 			</form>
 		</div>
 	<?php
