@@ -95,6 +95,7 @@ var require_anser_utily = __commonJS((exports2) => {
       let input = document.createElement("input");
       input.name = hidden.name;
       input.value = hidden.value;
+      input.type = "hidden";
       contentNode.appendChild(input);
     });
     div.classList.remove("hidden");

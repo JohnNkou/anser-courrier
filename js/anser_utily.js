@@ -115,6 +115,7 @@ function display_formCreator({ fields, field_id, title, form_id, parent_form_id,
     let input = document.createElement('input');
     input.name = hidden.name;
     input.value = hidden.value;
+    input.type = 'hidden';
 
     contentNode.appendChild(input);
   })
