@@ -835,9 +835,10 @@ function build_inbox_editable_result($form,$entry,$current_step){
             }
 
             if($field->type == 'form'){
-                flogs("ODD FIELD %s",print_r($field,true));
                 gpnf_gravityflow();
-                
+
+                flogs("ENTRY IS %s",print_r($entry,true));
+
                 $f_value = GFFormDisplay::get_field_content($field,"",false, $form['id'],$form);
                 $nested_form = gp_nested_forms();
                 $inner_form = $field->gpnfForm;
