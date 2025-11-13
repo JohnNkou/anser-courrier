@@ -31,7 +31,7 @@ function display_formCreator({ inbox, entry_data }){
   entry_id =        entry_data.entry_id,
   div = document.getElementById('formCreator'),
   form = div && div.querySelector('form'),
-  titleNode = div && div.querySelector('.title'),
+  titleNode = document.createElement('div'),
   contentNode = div && div.querySelector('.content'),
   button = div && div.querySelector('.close'),
   hidden_fields = [{ name:"gpnf_parent_form_id", value:parent_form_id },{ name:"gpnf_nested_form_field_id", value: field_id }, { name:"gform_submission_method",value:"iframe" }, { name:"gform_theme", value:"gravity-theme" }, { name:"is_submit_"+form_id, value:"1" }, { name:"gform_submit", value:form_id }];
@@ -68,6 +68,10 @@ function display_formCreator({ inbox, entry_data }){
     titleNode.textContent = "";
     div.classList.add('hidden');
   }
+
+  titleNode.textContent = title;
+  titleNode.classList.add('title');
+  contentNode.appendChild(titleNode);
 
   fields.forEach((field)=>{
     let div = document.createElement('div'),
