@@ -191,6 +191,7 @@ class GFFormDisplay {
 					 *
 					 * @param array $form The Form object
 					 */
+					flogs("Running gform_pre_submission");
 					gf_do_action( $gform_pre_submission_args, $form );
 					GFCommon::log_debug( __METHOD__ . '(): Completed gform_pre_submission.' );
 				}
@@ -206,6 +207,7 @@ class GFFormDisplay {
 					 * @param array $form The form currently being processed.
 					 */
 					$form = gf_apply_filters( $gform_pre_submission_filter_args, $form );
+					flogs("Running gform_pre_submission_filter");
 					GFCommon::log_debug( __METHOD__ . '(): Completed gform_pre_submission_filter.' );
 				}
 
@@ -222,6 +224,7 @@ class GFFormDisplay {
 					 * @param array $lead The Entry object.
 					 * @param array $form The Form object.
 					 */
+					flogs("Running gform_after_submission");
 					gf_do_action( $gform_after_submission_args, $lead, $form );
 					GFCommon::log_debug( __METHOD__ . '(): Completed gform_after_submission.' );
 				}
@@ -317,6 +320,7 @@ class GFFormDisplay {
 			 * @param int   $source_page_number In a multi-page form, this parameters contains the number of the page that the submission came from.
 			 *                                  For example, when clicking "Next" on page 1, this parameter will be set to 1. When clicking "Previous" on page 2, this parameter will be set to 2.
 			 */
+			flogs("Running gform_post_process");
 			gf_do_action( $gform_post_process_args, $form, $page_number, $source_page_number );
 			GFCommon::log_debug( __METHOD__ . '(): Completed gform_post_process.' );
 		}
