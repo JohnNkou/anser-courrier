@@ -457,6 +457,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      	thead.appendChild(tr);
 	      	table.appendChild(thead);
 	      	table.appendChild(tbody);
+	      	div.appendChild(table);
 	      	div.appendChild(label);
 	      	div.appendChild(button);
 
