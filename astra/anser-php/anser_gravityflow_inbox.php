@@ -146,7 +146,7 @@ class Anser_GravityFlow_Inbox{
 					<div class="title"></div>
 				</div>
 				<footer class="bg-white">
-					<button type='button' class='close'>Annuler</button><button type='submit'>Ajouter</button>
+					<button type='button' class='close'>Annuler</button><input type='submit' value='Ajouter'>
 				</footer>
 			</form>
 		</div>
