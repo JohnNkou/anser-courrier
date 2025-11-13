@@ -143,7 +143,7 @@ class GPNF_GravityFlow {
 	 *
 	 * @return array
 	 */
-	public function get_submitted_entry_ids( $entry_ids, $form, $field ) {
+	public function get_submitted_entry_ids( $entry_ids, $form, $field ) { flogs("GET SUBMITTED ENTRY IDS IS RUNING");
 		/* Ensure workflow form ID matches the parent form ID being filtered. */
 		if ( $form['id'] != $this->get_current_flow_form_id() ) {
 			return $entry_ids;
