@@ -681,6 +681,19 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             break;
           }
           case "form": {
+            let build_inner_table2 = function(tr2, fieldValues) {
+              return function(field) {
+                let fieldValue = fieldValues[field.id], td = document.createElement("td"), value2 = fieldValue && fieldValue.label, method = "textContent";
+                if (value2) {
+                  if (value2.indexOf("<") != -1) {
+                    method = "innerHTML";
+                  }
+                  td[method] = value2;
+                }
+                tr2.appendChild(td);
+              };
+            };
+            var build_inner_table = build_inner_table2;
             let div = document.createElement("div"), label = document.createElement("label"), button = document.createElement("button"), table = document.createElement("table"), thead = document.createElement("thead"), tbody = document.createElement("tbody"), tr = document.createElement("tr"), innerField = inbox.gpfnfields;
             innerField.forEach((field) => {
               let th = document.createElement("th");
@@ -697,21 +710,20 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             div.appendChild(table);
             div.appendChild(label);
             div.appendChild(button);
+            if (inbox.entries && inbox.entries.forEach) {
+              inbox.entries.forEach((entry) => {
+                let id = entry.id, tr2 = document.createElement("tr");
+                tr2.setAttribute("entryId", id);
+                inbox.gpfnfields.forEach(build_inner_table2(tr2, entry));
+                tbody.appendChild(tr2);
+              });
+            }
             button.onclick = function(event) {
               event.preventDefault();
               display_formCreator({ inbox, entry_data, onsuccess: (data2) => {
                 let { entryId: id, fieldValues } = data2, tr2 = document.createElement("tr");
                 tr2.setAttribute("entryId", id);
-                inbox.gpfnfields.forEach((field) => {
-                  let fieldValue = fieldValues[field.id], td = document.createElement("td"), value2 = fieldValue && fieldValue.label, method = "textContent";
-                  if (value2) {
-                    if (value2.indexOf("<") != -1) {
-                      method = "innerHTML";
-                    }
-                    td[method] = value2;
-                  }
-                  tr2.appendChild(td);
-                });
+                inbox.gpfnfields.forEach(build_inner_table2(tr2, fieldValues));
                 tbody.appendChild(tr2);
               } });
             };
