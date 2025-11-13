@@ -213,8 +213,6 @@ class GFFormDisplay {
 
 				$confirmation = self::handle_submission( $form, $lead, $ajax );
 
-				flogs("CONFIRMATION IS %s",print_r($confirmation,true));
-
 				$gform_after_submission_args = array( 'gform_after_submission', $form_id );
 				if ( gf_has_action( $gform_after_submission_args ) ) {
 					GFCommon::log_debug( __METHOD__ . '(): Executing functions hooked to gform_after_submission.' );
@@ -1016,7 +1014,7 @@ class GFFormDisplay {
 	 */
 	public static function get_form( $form_id, $display_title = true, $display_description = true, $force_display = false, $field_values = null, $ajax = false, $tabindex = 0, $form_theme = null, $style_settings = null ) {
 		GFCommon::timer_start( __METHOD__ );
-
+		flogs("CALLED STACK %s",print_r(debug_backtrace(2),30));
 		/**
 		 * Provides the ability to modify the options used to display the form
 		 *
@@ -1032,11 +1030,11 @@ class GFFormDisplay {
 			error_log("form_args['ajax'] is set. New form_args is ".print_r($form_args));
 		} elseif ( $form_args ) {
 			$form_args['submission_method'] = $form_args['ajax'] ? self::SUBMISSION_METHOD_IFRAME : self::SUBMISSION_METHOD_POSTBACK;
-			error_log("Submission method not set. So setting new value for submission method to ".$form_args['submission_method']);
+			flogs("Submission method not set. So setting new value for submission method to ".$form_args['submission_method']);
 		}
 
 		if ( empty( $form_args['form_id'] ) ) {
-			error_log("form_args['form_id'] is empty. Returning");
+			flogs("form_args['form_id'] is empty. Returning");
 			return self::get_form_not_found_html( $form_id, $ajax );
 		}
 
