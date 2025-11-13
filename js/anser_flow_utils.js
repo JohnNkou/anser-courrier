@@ -38,7 +38,7 @@ function setAttribute(node,atts){
 }
 
 function build_entry_element({ inbox, inputAtts, atts, failedAtts }){
-	switch(inbox.type == 'section'){
+	switch(inbox.type){
 		case 'section':{
 			let section = document.createElement('section'),
 			h5 = document.createElement('h5');
