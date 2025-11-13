@@ -24,14 +24,23 @@ var require_anser_utily = __commonJS((exports2) => {
       }
     });
   }
-  function display_formCreator({ fields, title, form_id }) {
-    let div = document.getElementById("formCreator"), form = div && div.querySelector("form"), titleNode = div && div.querySelector(".title"), contentNode = div && div.querySelector(".content"), button = div && div.querySelector(".close");
+  function display_formCreator({ fields, field_id, title, form_id, parent_form_id, entry_id }) {
+    let div = document.getElementById("formCreator"), form = div && div.querySelector("form"), titleNode = div && div.querySelector(".title"), contentNode = div && div.querySelector(".content"), button = div && div.querySelector(".close"), hidden_fields = [{ name: "gpnf_parent_form_id", value: parent_form_id }, { name: "gpnf_nested_form_field_id", value: field_id }, { name: "gform_submission_method", value: "iframe" }, { name: "gform_theme", value: "gravity-theme" }, { name: "is_submit_" + form_id, value: "1" }, { name: "gform_submit", value: form_id }];
     if (!div) {
       throw Error("No formCreator div found");
     }
     form.onsubmit = function(event) {
       event.preventDefault();
       console.log("Ok submit happening");
+      let url = new URL(location.href), searchParams = url.searchParams;
+      searchParams.append("page", "gravityflow-inbox");
+      searchParams.append("view", "entry");
+      searchParams.append("id", parent_form_id);
+      searchParams.append("lid", entry_id);
+      fetch(url, {
+        method: "POST",
+        body: new FormData(event.target)
+      });
     };
     button.onclick = function() {
       console.log("CLOSING THE STUFF");
@@ -81,6 +90,12 @@ var require_anser_utily = __commonJS((exports2) => {
       div2.appendChild(label);
       div2.appendChild(inputNode);
       contentNode.appendChild(div2);
+    });
+    hidden_fields.forEach((hidden) => {
+      let input = document.createElement("input");
+      input.name = hidden.name;
+      input.value = hidden.value;
+      contentNode.appendChild(input);
     });
     div.classList.remove("hidden");
   }
