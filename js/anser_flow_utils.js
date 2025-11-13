@@ -431,6 +431,10 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index }
         	return div;
           break;
         }
+	      case 'form':{
+	      	
+	      	return;
+	      }
         default:{
         	let div = document.createElement('div'),
         	label = document.createElement('label'),

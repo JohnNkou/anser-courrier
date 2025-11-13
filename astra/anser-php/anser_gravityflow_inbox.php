@@ -137,6 +137,31 @@ class Anser_GravityFlow_Inbox{
 				<button class="end btn-info">Annuler</button>
 			</div>
 		</div>
+		<div id="formCreator">
+			<form class="content">
+				<header class="bg-sky-900">
+				 	<h1>Ajouter une traitement</h1>
+				</header>
+				<div class="content">
+					<div class="title">Traitement ordinaire de révision</div>
+					<div class="card">
+						<label>Traitement de l'assignée</label>
+						<textarea>Mufases</textarea>
+					</div>
+					<div class="card">
+						<label>Signature</label>
+						<select><option>Avec une peu de fois</option></select>
+					</div>
+					<div class="card">
+						<label>Signer ici</label>
+						<select><option>Signer ici</option></select>
+					</div>
+				</div>
+				<div class="footer" style="padding: 1em; text-align: center;">
+					<button type='button' class='close'>Annuler</button><button type='submit'>Ajouter</button>
+				</div>
+			</form>
+		</div>
 	<?php
 	}
 
