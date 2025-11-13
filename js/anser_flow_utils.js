@@ -434,7 +434,19 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      case 'form':{
 	      	let div = document.createElement('div'),
 	      	label = document.createElement('label'),
-	      	button = document.createElement('button');
+	      	button = document.createElement('button'),
+	      	table = document.createElement('table'),
+	      	thead = document.createElement('thead'),
+	      	tbody = document.createElement('tbody'),
+	      	tr = document.createElement('tr'),
+	      	innerField = inbox.gpfnfields;
+
+	      	innerField.forEach((field)=>{
+	      		let th = document.createElement('th');
+	      		th.textContent = field.label;
+
+	      		tr.appendChild(th);
+	      	})
 
 	      	label.textContent = inbox.label;
 	      	button.textContent = "Ajouter";
@@ -442,6 +454,9 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      	atts.append('class','card');
 
 	      	setAttribute(div,atts);
+	      	thead.appendChild(tr);
+	      	table.appendChild(thead);
+	      	table.appendChild(tbody);
 	      	div.appendChild(label);
 	      	div.appendChild(button);
 

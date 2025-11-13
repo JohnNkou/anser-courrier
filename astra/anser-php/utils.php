@@ -843,6 +843,8 @@ function build_inbox_editable_result($form,$entry,$current_step){
                 $result['entries'] = $nested_form->get_submitted_nested_entries( $form, $field->id );
                 $result['gpfnfForm'] = $inner_form;
                 $result['gform_ajax'] = html_entity_decode(GFFormDisplay::prepare_ajax_input_value($inner_form, null, 1, 0, "gravity-theme"));
+                $result['delete_nonce'] = wp_create_nonce('gpnf_delete_entry');
+                $result['edit_nonce'] = wp_create_nonce( 'gpnf_edit_entry' );
 
                 $result['gpfnfields'] = array_map(function($field_id) use ($inner_form){
 

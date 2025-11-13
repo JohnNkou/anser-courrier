@@ -652,11 +652,19 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             break;
           }
           case "form": {
-            let div = document.createElement("div"), label = document.createElement("label"), button = document.createElement("button");
+            let div = document.createElement("div"), label = document.createElement("label"), button = document.createElement("button"), table = document.createElement("table"), thead = document.createElement("thead"), tbody = document.createElement("tbody"), tr = document.createElement("tr"), innerField = inbox.gpfnfields;
+            innerField.forEach((field) => {
+              let th = document.createElement("th");
+              th.textContent = field.label;
+              tr.appendChild(th);
+            });
             label.textContent = inbox.label;
             button.textContent = "Ajouter";
             atts.append("class", "card");
             setAttribute(div, atts);
+            thead.appendChild(tr);
+            table.appendChild(thead);
+            table.appendChild(tbody);
             div.appendChild(label);
             div.appendChild(button);
             button.onclick = function(event) {
