@@ -167,6 +167,8 @@ class GPNF_GravityFlow {
 			return $entry_ids;
 		}
 
+		flogs("FLOW CHILD ENTRIES ARE %s", print_r($flow_child_entries,true));
+
 		return array_unique( array_merge( $entry_ids, $flow_child_entries[ $field->id ] ) );
 	}
 
