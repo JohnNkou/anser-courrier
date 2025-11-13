@@ -71,7 +71,13 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index }
 			p = document.createElement('p');
 
 			label.textContent = inbox.label;
-			p.textContent = inbox.value;
+
+			if(inbox.value.indexOf('<') == -1){
+				p.textContent = inbox.value;
+			}
+			else{
+				p.innerHTML = inbox.value;
+			}
 
 			atts.append('class','card');
 			setAttribute(div,atts);

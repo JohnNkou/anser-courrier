@@ -311,7 +311,11 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       case "text": {
         let div = document.createElement("div"), label = document.createElement("label"), p = document.createElement("p");
         label.textContent = inbox.label;
-        p.textContent = inbox.value;
+        if (inbox.value.indexOf("<") == -1) {
+          p.textContent = inbox.value;
+        } else {
+          p.innerHTML = inbox.value;
+        }
         atts.append("class", "card");
         setAttribute(div, atts);
         div.appendChild(label);
