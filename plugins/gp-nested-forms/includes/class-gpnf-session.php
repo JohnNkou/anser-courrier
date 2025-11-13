@@ -129,7 +129,6 @@ class GPNF_Session {
 
 	public function set_cookie() {
 		flogs("SETTINGS COOKIE BONAVAN");
-		flogs("TRACE %s",print_r(debug_backtrace(),true));
 		$result = setcookie( $this->get_cookie_name(), json_encode( $this->_cookie ), time() + 60 * 60 * 24 * 7, COOKIEPATH, COOKIE_DOMAIN, is_ssl() );
 	}
 
@@ -138,6 +137,7 @@ class GPNF_Session {
 		$cookie_name = $this->get_cookie_name();
 
 		flogs("COOKIE %s",$cookie_name);
+		flogs("TRACE %s",print_r(debug_backtrace(),true));
 
 		if ( isset( $_COOKIE[ $cookie_name ] ) ) {
 			$cookie = json_decode( stripslashes( $_COOKIE[ $cookie_name ] ), true );
