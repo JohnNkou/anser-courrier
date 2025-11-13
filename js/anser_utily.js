@@ -70,6 +70,7 @@ function display_formCreator({ inbox, entry_data, onsuccess }){
             display_information_modal("Mise à jour effectué avec succèss");
             if(onsuccess){
               onsuccess(payload.data);
+              event.target.reset();
             }
           }
           else{
