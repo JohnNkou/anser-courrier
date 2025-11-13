@@ -780,7 +780,7 @@ function display_entry(payloads, entry_data) {
 	        	}
 
 	        	if(inbox.type == 'section'){
-	        		currentSection = node.querySelector('div');
+	        		currentSection = node;
 	        		inSection = true;
 	        		content_node.appendChild(node);
 	        	}
