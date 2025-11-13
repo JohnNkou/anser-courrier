@@ -5635,7 +5635,6 @@ PRIMARY KEY  (id)
 		 * @return string
 		 */
 		public function shortcode( $atts, $content = null ) {
-			flogs("ZO SHANAN");
 			if ( get_post_type() != 'page' ) {
 				return '';
 			}
