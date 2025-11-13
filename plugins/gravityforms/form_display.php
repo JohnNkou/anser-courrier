@@ -1014,6 +1014,7 @@ class GFFormDisplay {
 	 */
 	public static function get_form( $form_id, $display_title = true, $display_description = true, $force_display = false, $field_values = null, $ajax = false, $tabindex = 0, $form_theme = null, $style_settings = null ) {
 		GFCommon::timer_start( __METHOD__ );
+		flogs("SERVER URL %s",$_SERVER['REQUEST_URI']);
 		flogs("CALLED STACK %s",print_r(debug_backtrace(2),30));
 		/**
 		 * Provides the ability to modify the options used to display the form
