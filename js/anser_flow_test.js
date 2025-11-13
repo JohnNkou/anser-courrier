@@ -253,7 +253,7 @@ var require_lib = __commonJS((exports2) => {
 
 // js/anser_flow_utils.js
 var require_anser_flow_utils = __commonJS((exports2) => {
-  var { page_handler, display_information_modal, toggle_loader, display_pdfviewer, uploader } = require_anser_utily();
+  var { page_handler, display_information_modal, toggle_loader, display_pdfviewer, uploader, display_formCreator } = require_anser_utily();
   var { Attributes, is_object, guid, generateUniqueID } = require_lib();
   function result_handler(json_response, table) {
     let { entries, field_values } = json_response.data;
@@ -567,6 +567,20 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             div.appendChild(input);
             return div;
             break;
+          }
+          case "form": {
+            let div = document.createElement("div"), label = document.createElement("label"), button = document.createElement("button");
+            label.textContent = inbox.label;
+            button.textContent = "Ajouter";
+            atts.append("class", "card");
+            setAttribute(div, atts);
+            div.appendChild(label);
+            div.appendChild(button);
+            button.onclick = function(event) {
+              event.preventDefault();
+              display_formCreator({ fields: inbox.gpfnfields, title: inbox.label, form_id: inbox.gpfnfForm });
+            };
+            return div;
           }
           default: {
             let div = document.createElement("div"), label = document.createElement("label"), div_22 = document.createElement("div");

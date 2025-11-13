@@ -451,12 +451,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index }
 	      		display_formCreator({ fields: inbox.gpfnfields, title:inbox.label, form_id: inbox.gpfnfForm });
 	      	}
 
-	      	inbox.gpfnfields.forEach((field)=>{
-	      		let th = document.createElement('th');
-	      		th.textContent = field.label;
-	      		tr.appendChild(th);
-	      	})
-	      	return;
+	      	return div;
 	      }
         default:{
         	let div = document.createElement('div'),
