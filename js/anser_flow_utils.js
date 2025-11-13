@@ -770,7 +770,7 @@ function display_entry(payloads, entry_data) {
 	          		}
 	        	}
 
-	        	let node = build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index });
+	        	/*let node = build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index });
 
 	        	if(!node){
 	        		console.log("Missing node for inbox",inbox);
@@ -789,9 +789,9 @@ function display_entry(payloads, entry_data) {
 	        		else{
 	        			content_node.appendChild(node);
 	        		}
-	        	}
+	        	}*/
 
-	        	/*switch (inbox.type) {
+	        	switch (inbox.type) {
 	          		case "section":
 	            		if (!should_display_field(inbox, field_ids, inboxes)) {
 	              			atts.append("class", "hidden");
@@ -952,7 +952,7 @@ function display_entry(payloads, entry_data) {
 	            	break;
 	          		default:
 	            		console.error("Unknwon inbox type", inbox);
-	        	}*/
+	        	}
 
 
 
@@ -966,9 +966,9 @@ function display_entry(payloads, entry_data) {
 	      	}
     	});
 
-    	/*if (inSection) {
+    	if (inSection) {
       		bodyHtml += "</div></section>";
-    	}*/
+    	}
   	});
 
   	content_node.onsubmit = (event) => {
@@ -1153,7 +1153,7 @@ function display_entry(payloads, entry_data) {
     	}
   	};
 
-  	//content_node.innerHTML = bodyHtml;
+  	content_node.innerHTML = bodyHtml;
 }
 
 function onglet_handler(contents) {
