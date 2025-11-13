@@ -333,7 +333,7 @@ add_filter('gform_get_form_confirmation_filter',function($confirmation_markup, $
         preg_match("/loadEntry\(([^\)]+)\)/", $confirmation_markup, $match);
 
         if(count($match) > 1){
-            wp_send_json_success(json_encode($match[1]));
+            wp_send_json_success(json_decode($match[1]));
             
             exit;
         }
