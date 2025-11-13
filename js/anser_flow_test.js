@@ -24,7 +24,7 @@ var require_anser_utily = __commonJS((exports2) => {
       }
     });
   }
-  function display_formCreator({ inbox, entry_data }) {
+  function display_formCreator({ inbox, entry_data, onsuccess }) {
     let { gpfnfields: fields, id: field_id, label: title, gpfnfForm: form_id } = inbox, parent_form_id = entry_data.form_id, entry_id = entry_data.entry_id, div = document.getElementById("formCreator"), form = div && div.querySelector("form"), titleNode = document.createElement("div"), contentNode = div && div.querySelector(".content"), button = div && div.querySelector(".close"), hidden_fields = [{ name: "gpnf_parent_form_id", value: parent_form_id }, { name: "gpnf_nested_form_field_id", value: field_id }, { name: "gform_submission_method", value: "iframe" }, { name: "gform_theme", value: "gravity-theme" }, { name: "is_submit_" + form_id, value: "1" }, { name: "gform_submit", value: form_id }];
     if (inbox.gform_ajax) {
       hidden_fields.push({ name: "gform_ajax", value: inbox.gform_ajax });
@@ -41,10 +41,35 @@ var require_anser_utily = __commonJS((exports2) => {
       searchParams.append("id", parent_form_id);
       searchParams.append("lid", entry_id);
       searchParams.append("anser_ajax", "true");
+      toggle_loader("Mise à jour");
       fetch(url, {
         method: "POST",
         body: new FormData(event.target)
-      }).then((response) => {});
+      }).then((response) => {
+        toggle_loader();
+        if (response.status == 200) {
+          response.json().then((payload) => {
+            if (payload.success) {
+              display_information_modal("Mise à jour effectué avec succèss");
+              if (onsuccess) {
+                onsuccess(payload.data);
+              }
+            } else {
+              console.log("Odd data", data);
+              display_information_modal("La mise à jour n'as pas pu aboutir");
+            }
+          }).catch((error) => {
+            console.error(error);
+            display_information_modal("La mise à jour n'a pas pu aboutir");
+          });
+        } else {
+          console.error("Bad repsonse");
+        }
+      }).catch((error) => {
+        toggle_loader();
+        console.error(error);
+        display_information_modal("Une erreur est survenue lors de la mise à jour");
+      });
     };
     button.onclick = function() {
       console.log("CLOSING THE STUFF");
@@ -671,7 +696,18 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             div.appendChild(button);
             button.onclick = function(event) {
               event.preventDefault();
-              display_formCreator({ inbox, entry_data });
+              display_formCreator({ inbox, entry_data, onsuccess: (data2) => {
+                let { entryId: id, fieldValues } = data2, tr2 = document.createElement("tr");
+                tr2.setAttribute("entryId", id);
+                inbox.gpfnfields.forEach((field) => {
+                  let fieldValue = fieldValues[field.id], td = document.createElement("td");
+                  if (fieldValue) {
+                    td.textContent = fieldValue.label;
+                  }
+                  tr2.appendChild(td);
+                });
+                tbody.appendChild(tr2);
+              } });
             };
             return div;
           }
@@ -1035,7 +1071,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           searchParams.set("entry_id", entry_data.entry_id);
           fetch(url, { method: "POST", body: fData }).then((response) => response.json()).then((json_response) => {
             up.close();
-            let { success, data } = json_response, message = data && data.message;
+            let { success, data: data2 } = json_response, message = data2 && data2.message;
             if (success) {
               let msg = message || "<h5>L'Operation a été effectué avec success</h5>";
               display_information_modal(msg).then(() => {
@@ -1046,8 +1082,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                 console.error(error);
               });
             } else {
-              if (data.invalid_field) {
-                data.invalid_field.forEach((invalid) => {
+              if (data2.invalid_field) {
+                data2.invalid_field.forEach((invalid) => {
                   let error_node = document.querySelector(".invalid-" + invalid.id);
                   if (error_node) {
                     error_node.textContent = invalid.message;
