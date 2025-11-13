@@ -5636,6 +5636,7 @@ PRIMARY KEY  (id)
 		 */
 		public function shortcode( $atts, $content = null ) {
 			if ( get_post_type() != 'page' ) {
+				flogs("POST TYPE NOT PAGE");
 				return '';
 			}
             
