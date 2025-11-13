@@ -281,6 +281,7 @@ if ( class_exists( 'GFForms' ) ) {
 		 */
 		public function init() {
 			parent::init();
+			flogs("TRACE %s",print_r(debug_backtrace(2,30),true));
 
 			if ( ! $this->is_gravityforms_supported( '2.5.6' ) ) {
 				$this->init_translations();
@@ -5636,7 +5637,6 @@ PRIMARY KEY  (id)
 		 */
 		public function shortcode( $atts, $content = null ) {
 			if ( get_post_type() != 'page' ) {
-				flogs("POST TYPE NOT PAGE");
 				return '';
 			}
             
