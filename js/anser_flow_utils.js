@@ -448,7 +448,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      	button.onclick = function(event){
 	      		event.preventDefault();
 
-	      		display_formCreator({ fields: inbox.gpfnfields, title:inbox.label, form_id: inbox.gpfnfForm, parent_form_id: entry_data.form_id, field_id: inbox.id, entry_id: entry_data.entry_id });
+	      		display_formCreator({ inbox:inbox, entry_data });
 	      	}
 
 	      	return div;

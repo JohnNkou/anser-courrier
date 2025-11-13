@@ -24,8 +24,11 @@ var require_anser_utily = __commonJS((exports2) => {
       }
     });
   }
-  function display_formCreator({ fields, field_id, title, form_id, parent_form_id, entry_id }) {
-    let div = document.getElementById("formCreator"), form = div && div.querySelector("form"), titleNode = div && div.querySelector(".title"), contentNode = div && div.querySelector(".content"), button = div && div.querySelector(".close"), hidden_fields = [{ name: "gpnf_parent_form_id", value: parent_form_id }, { name: "gpnf_nested_form_field_id", value: field_id }, { name: "gform_submission_method", value: "iframe" }, { name: "gform_theme", value: "gravity-theme" }, { name: "is_submit_" + form_id, value: "1" }, { name: "gform_submit", value: form_id }];
+  function display_formCreator({ inbox, entry_data }) {
+    let { gpfnfields: fields, id: field_id, label: title, gpfnfForm: form_id } = inbox, parent_form_id = entry_data.form_id, entry_id = entry_data.entry_id, div = document.getElementById("formCreator"), form = div && div.querySelector("form"), titleNode = div && div.querySelector(".title"), contentNode = div && div.querySelector(".content"), button = div && div.querySelector(".close"), hidden_fields = [{ name: "gpnf_parent_form_id", value: parent_form_id }, { name: "gpnf_nested_form_field_id", value: field_id }, { name: "gform_submission_method", value: "iframe" }, { name: "gform_theme", value: "gravity-theme" }, { name: "is_submit_" + form_id, value: "1" }, { name: "gform_submit", value: form_id }];
+    if (inbox.gform_ajax) {
+      hidden_fields.push({ name: "gform_ajax", value: inbox.gform_ajax });
+    }
     if (!div) {
       throw Error("No formCreator div found");
     }
