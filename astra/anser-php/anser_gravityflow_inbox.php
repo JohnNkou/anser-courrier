@@ -142,7 +142,7 @@ class Anser_GravityFlow_Inbox{
 				<header class="bg-sky-900">
 				 	<h1>Ajouter une traitement</h1>
 				</header>
-				<div class="content">
+				<div class="content bg-white">
 					<div class="title">Traitement ordinaire de révision</div>
 					<div class="card">
 						<label>Traitement de l'assignée</label>
