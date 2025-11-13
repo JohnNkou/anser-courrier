@@ -120,6 +120,8 @@ class GFFormDisplay {
 			$is_valid = self::validate( $form, $field_values, $page_number, $failed_validation_page );
 		}
 
+		flogs("FORM IS VALID %s",$is_valid);
+
 		$log_is_valid = $is_valid ? 'Yes' : 'No';
 		GFCommon::log_debug( __METHOD__ . "(): After validation. Is submission valid? {$log_is_valid}." );
 
