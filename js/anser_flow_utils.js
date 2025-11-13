@@ -37,7 +37,7 @@ function setAttribute(node,atts){
 	})
 }
 
-function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index }){
+function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, entry_data }){
 	switch(inbox.type){
 		case 'section':{
 			console.log('I am IN A SECTION BEAUTY');
@@ -448,7 +448,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index }
 	      	button.onclick = function(event){
 	      		event.preventDefault();
 
-	      		display_formCreator({ fields: inbox.gpfnfields, title:inbox.label, form_id: inbox.gpfnfForm });
+	      		display_formCreator({ fields: inbox.gpfnfields, title:inbox.label, form_id: inbox.gpfnfForm, parent_form_id: entry_data.form_id, field_id: inbox.id, entry_id: payloads.entry_id });
 	      	}
 
 	      	return div;
@@ -801,7 +801,7 @@ function display_entry(payloads, entry_data) {
 	          		}
 	        	}
 
-	        	let node = build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index });
+	        	let node = build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, entry_data });
 
 	        	if(!node){
 	        		console.log("Missing node for inbox",inbox);
