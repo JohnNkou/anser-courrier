@@ -654,7 +654,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             div.appendChild(button);
             button.onclick = function(event) {
               event.preventDefault();
-              display_formCreator({ fields: inbox.gpfnfields, title: inbox.label, form_id: inbox.gpfnfForm, parent_form_id: entry_data.form_id, field_id: inbox.id, entry_id: payloads.entry_id });
+              display_formCreator({ fields: inbox.gpfnfields, title: inbox.label, form_id: inbox.gpfnfForm, parent_form_id: entry_data.form_id, field_id: inbox.id, entry_id: entry_data.entry_id });
             };
             return div;
           }
@@ -882,8 +882,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       }
     }
   }
-  function display_entry(payloads2, entry_data) {
-    let inboxes = payloads2.inbox, entry_id = entry_data.entry_id, numero = entry_data.numero, form_title = payloads2.form_title, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), actionNodes = {}, bodyHtml = "", field_ids = {}, dependents = {}, required = {}, uploads = {}, file_to_sends = {};
+  function display_entry(payloads, entry_data) {
+    let inboxes = payloads.inbox, entry_id = entry_data.entry_id, numero = entry_data.numero, form_title = payloads.form_title, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), actionNodes = {}, bodyHtml = "", field_ids = {}, dependents = {}, required = {}, uploads = {}, file_to_sends = {};
     if (!content_node) {
       return console.error("Content node not found");
     }
@@ -1141,18 +1141,18 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       return console.error("Couldn't load Entry_click_handler because no tbody element was found");
     }
     tbody.addEventListener("click", (event) => {
-      let target = event.target, payloads2 = get_entry_ids(target, 5);
-      if (payloads2) {
+      let target = event.target, payloads = get_entry_ids(target, 5);
+      if (payloads) {
         let queries = {
-          entry_id: payloads2.entry_id,
-          id: payloads2.form_id,
+          entry_id: payloads.entry_id,
+          id: payloads.form_id,
           action: GravityAjax.flow_entry,
           nonce: GravityAjax.flow_nonce
         }, myPage_handler = new page_handler(null, table, queries);
         entry_toggler();
         myPage_handler.load_data().then((json_response) => {
           if (json_response.success) {
-            display_entry(json_response.data, payloads2);
+            display_entry(json_response.data, payloads);
           } else {
             let msg = json_response.data && json_response.data.msg || "La recherche de l'entrée n'a pas pu être effectuée";
             return display_information_modal(msg).finally(() => {
