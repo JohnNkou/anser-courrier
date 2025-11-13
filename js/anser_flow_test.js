@@ -53,6 +53,7 @@ var require_anser_utily = __commonJS((exports2) => {
               display_information_modal("Mise à jour effectué avec succèss");
               if (onsuccess) {
                 onsuccess(payload.data);
+                event.target.reset();
               }
             } else {
               console.log("Odd data", data);
@@ -702,9 +703,12 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                 let { entryId: id, fieldValues } = data2, tr2 = document.createElement("tr");
                 tr2.setAttribute("entryId", id);
                 inbox.gpfnfields.forEach((field) => {
-                  let fieldValue = fieldValues[field.id], td = document.createElement("td");
-                  if (fieldValue) {
-                    td.textContent = fieldValue.label;
+                  let fieldValue = fieldValues[field.id], td = document.createElement("td"), value2 = fieldValue && fieldValue.label, method = "textContent";
+                  if (value2) {
+                    if (value2.indexOf("<") != -1) {
+                      method = "innerHTML";
+                    }
+                    td[method] = value2;
                   }
                   tr2.appendChild(td);
                 });
