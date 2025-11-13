@@ -438,6 +438,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      	table = document.createElement('table'),
 	      	thead = document.createElement('thead'),
 	      	tbody = document.createElement('tbody'),
+	      	input = document.createElement('input'),
 	      	tr = document.createElement('tr'),
 	      	innerField = inbox.gpfnfields;
 
@@ -450,6 +451,8 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 
 	      	label.textContent = inbox.label;
 	      	button.textContent = "Ajouter";
+	      	input.type = 'hidden';
+	      	input.name = 'input_' + inbox.id;
 
 	      	atts.append('class','card');
 
@@ -460,11 +463,16 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      	div.appendChild(table);
 	      	div.appendChild(label);
 	      	div.appendChild(button);
+	      	div.appendChild(input);
 
 	      	if(inbox.entries && inbox.entries.forEach){
+	      		let ids = [];
+
 	      		inbox.entries.forEach((entry)=>{
 	      			let id = entry.id,
 	      			tr = document.createElement('tr');
+
+	      			ids.push(id);
 
 	      			tr.setAttribute('entryId',id);
 
@@ -472,6 +480,8 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 
 	      			tbody.appendChild(tr);
 	      		})
+
+	      		input.value = ids.join(',');
 	      	}
 
 	      	function build_inner_table(tr,fieldValues){
@@ -500,6 +510,8 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      			let id = data.entryId,
 	      			fieldValues = data.fieldValues,
 	      			tr = document.createElement('tr');
+
+	      			input.value += "," + id;
 
 	      			tr.setAttribute('entryId',id);
 
