@@ -143,19 +143,7 @@ class Anser_GravityFlow_Inbox{
 				 	<h1>Ajouter une traitement</h1>
 				</header>
 				<div class="content">
-					<div class="title">Traitement ordinaire de révision</div>
-					<div class="card">
-						<label>Traitement de l'assignée</label>
-						<textarea>Mufases</textarea>
-					</div>
-					<div class="card">
-						<label>Signature</label>
-						<select><option>Avec une peu de fois</option></select>
-					</div>
-					<div class="card">
-						<label>Signer ici</label>
-						<select><option>Signer ici</option></select>
-					</div>
+					<div class="title"></div>
 				</div>
 				<footer class="bg-white">
 					<button type='button' class='close'>Annuler</button><button type='submit'>Ajouter</button>
