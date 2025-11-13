@@ -45,6 +45,8 @@ class GFFormDisplay {
 
 		self::$submission_initiated_by = $initiated_by;
 
+		flogs("ALL IS WELL OF COURSE");
+
 		$form = GFAPI::get_form( $form_id );
 
 		$gform_pre_process_args = array( 'gform_pre_process', $form_id );
