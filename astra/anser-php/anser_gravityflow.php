@@ -4768,7 +4768,7 @@ PRIMARY KEY  (id)
 					return;
 				}
 
-				require_once( $this->get_base_path() . '/includes/pages/class-entry-detail.php' );
+				require_once( ABSPATH . 'wp-content/plugins/gravityflow/includes/pages/class-entry-detail.php' );
 
 				$step = $this->get_current_step( $form, $entry );
 				error_log("Current Step ".json_encode($step,true));
