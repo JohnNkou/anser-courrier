@@ -192,8 +192,10 @@ body #main {
 #formCreator button{
    padding:1em;
 }
-#formCreator button:first-child{
-   margin-left:0.3em;
+#formCreator .footer{
+   display: flex;
+   justify-content: center;
+   gap: 3;
 }
 
  #uploader{

@@ -138,11 +138,11 @@ class Anser_GravityFlow_Inbox{
 			</div>
 		</div>
 		<div id="formCreator">
-			<form>
+			<form class="bg-white">
 				<header class="bg-sky-900">
 				 	<h1>Ajouter une traitement</h1>
 				</header>
-				<div class="content bg-white">
+				<div class="content">
 					<div class="title">Traitement ordinaire de révision</div>
 					<div class="card">
 						<label>Traitement de l'assignée</label>
@@ -157,7 +157,7 @@ class Anser_GravityFlow_Inbox{
 						<select><option>Signer ici</option></select>
 					</div>
 				</div>
-				<div class="footer" style="padding: 1em; text-align: center;">
+				<div class="footer bg-white">
 					<button type='button' class='close'>Annuler</button><button type='submit'>Ajouter</button>
 				</div>
 			</form>
