@@ -694,7 +694,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               };
             };
             var build_inner_table = build_inner_table2;
-            let div = document.createElement("div"), label = document.createElement("label"), button = document.createElement("button"), table = document.createElement("table"), thead = document.createElement("thead"), tbody = document.createElement("tbody"), tr = document.createElement("tr"), innerField = inbox.gpfnfields;
+            let div = document.createElement("div"), label = document.createElement("label"), button = document.createElement("button"), table = document.createElement("table"), thead = document.createElement("thead"), tbody = document.createElement("tbody"), input = document.createElement("input"), tr = document.createElement("tr"), innerField = inbox.gpfnfields;
             innerField.forEach((field) => {
               let th = document.createElement("th");
               th.textContent = field.label;
@@ -702,6 +702,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             });
             label.textContent = inbox.label;
             button.textContent = "Ajouter";
+            input.type = "hidden";
+            input.name = "input_" + inbox.id;
             atts.append("class", "card");
             setAttribute(div, atts);
             thead.appendChild(tr);
@@ -710,18 +712,23 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             div.appendChild(table);
             div.appendChild(label);
             div.appendChild(button);
+            div.appendChild(input);
             if (inbox.entries && inbox.entries.forEach) {
+              let ids = [];
               inbox.entries.forEach((entry) => {
                 let id = entry.id, tr2 = document.createElement("tr");
+                ids.push(id);
                 tr2.setAttribute("entryId", id);
                 inbox.gpfnfields.forEach(build_inner_table2(tr2, entry));
                 tbody.appendChild(tr2);
               });
+              input.value = ids.join(",");
             }
             button.onclick = function(event) {
               event.preventDefault();
               display_formCreator({ inbox, entry_data, onsuccess: (data2) => {
                 let { entryId: id, fieldValues } = data2, tr2 = document.createElement("tr");
+                input.value += "," + id;
                 tr2.setAttribute("entryId", id);
                 inbox.gpfnfields.forEach(build_inner_table2(tr2, fieldValues));
                 tbody.appendChild(tr2);
