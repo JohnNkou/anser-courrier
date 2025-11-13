@@ -37,7 +37,7 @@ function setAttribute(node,atts){
 	})
 }
 
-function build_entry_element({ inbox, inputAtts, atts, failedAtts }){
+function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index }){
 	switch(inbox.type){
 		case 'section':{
 			let section = document.createElement('section'),
@@ -770,7 +770,7 @@ function display_entry(payloads, entry_data) {
 	          		}
 	        	}
 
-	        	let node = build_entry_element({ inbox, inputAtts, atts, failedAtts });
+	        	let node = build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index });
 
 	        	if(!node){
 	        		console.log("Missing node for inbox",inbox);

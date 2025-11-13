@@ -286,7 +286,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       });
     });
   }
-  function build_entry_element({ inbox, inputAtts, atts, failedAtts }) {
+  function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index }) {
     switch (inbox.type) {
       case "section": {
         let section = document.createElement("section"), h5 = document.createElement("h5");
@@ -811,7 +811,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       _inboxes.forEach((inbox, _index) => {
         try {
           field_ids[inbox.id] = index + "," + _index;
-          let inbox_index2 = index.toString() + "_" + _index, atts = new Attributes, inputAtts = new Attributes, failedAtts = new Attributes, value2;
+          let inbox_index = index.toString() + "_" + _index, atts = new Attributes, inputAtts = new Attributes, failedAtts = new Attributes, value2;
           inputAtts.set("id", inbox.id);
           inputAtts.append("name", "input_" + inbox.id);
           inputAtts.append("value", inbox.value || "");
@@ -840,7 +840,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               atts.append("class", "hidden");
             }
           }
-          let node = build_entry_element({ inbox, inputAtts, atts, failedAtts });
+          let node = build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index });
           if (!node) {
             console.log("Missing node for inbox", inbox);
             throw Error("Missing node");
@@ -857,7 +857,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             }
           }
           if (inbox.action) {
-            actionNodes[inbox_index2] = inbox.action;
+            actionNodes[inbox_index] = inbox.action;
           }
         } catch (error) {
           console.error("GREAT ERROR");
