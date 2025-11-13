@@ -266,3 +266,4 @@ exports.display_information_modal = display_information_modal;
 exports.toggle_loader =             toggle_loader;
 exports.display_pdfviewer =         display_pdfviewer;
 exports.uploader =                  uploader;
+exports.display_formCreator =       display_formCreator;

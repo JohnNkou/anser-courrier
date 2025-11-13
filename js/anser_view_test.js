@@ -24,6 +24,65 @@ var require_anser_utily = __commonJS((exports2) => {
       }
     });
   }
+  function display_formCreator({ fields, title, form_id }) {
+    let div = document.getElementById("formCreator"), form = document.querySelector("form"), titleNode = div && div.querySelector(".title"), contentNode = div && div.querySelector(".content"), button = div && div.querySelector(".close");
+    if (!div) {
+      throw Error("No formCreator div found");
+    }
+    form.onsubmit = function(event) {
+      event.preventDefault();
+      console.log("Ok submit happening");
+    };
+    button.onclick = function() {
+      contentNode.innerHTML = "";
+      titleNode.textContent = "";
+      div.classList.add("hidden");
+    };
+    fields.forEach((field) => {
+      let div2 = document.createElement("div"), label = document.createElement("label"), id = "input_" + field.id, inputNode;
+      div2.classList.add("card");
+      label.textContent = field.label;
+      switch (field.type) {
+        case "textarea": {
+          inputNode = document.createElement("textarea");
+          break;
+        }
+        case "select": {
+          inputNode = document.createElement("select");
+          field.choices.forEach((choice) => {
+            let option = document.createElement("option");
+            option.value = choice.value;
+            option.textContent = choice.text;
+            inputNode.appendChild(option);
+          });
+          inputNode.name = id;
+          break;
+        }
+        case "text":
+        case "date":
+        case "email":
+        case "hidden":
+          inputNode = document.createElement("input");
+          inputNode.type = field.type;
+          inputNode.name = id;
+          if (field.value) {
+            inputNode.value = field.value;
+          }
+          break;
+        case "fileupload":
+          inputNode = document.createElement("input");
+          inputNode.type = "file";
+          break;
+        default:
+          inputNode = document.createElement("span");
+          label.textContent += " Unknown";
+      }
+      div2.appendChild(label);
+      div2.appendChild(inputNode);
+      contentNode.appendChild(div2);
+    });
+    div.classList.remove("hidden");
+  }
   function toggle_loader(text = "Chargement") {
     var loader = document.querySelector("#loader"), text_node = loader.querySelector(".text");
     if (loader) {
@@ -177,6 +236,7 @@ var require_anser_utily = __commonJS((exports2) => {
   exports2.toggle_loader = toggle_loader;
   exports2.display_pdfviewer = display_pdfviewer;
   exports2.uploader = uploader;
+  exports2.display_formCreator = display_formCreator;
 });
 
 // js/anser_view_util.js
