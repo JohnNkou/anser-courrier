@@ -665,6 +665,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             thead.appendChild(tr);
             table.appendChild(thead);
             table.appendChild(tbody);
+            div.appendChild(table);
             div.appendChild(label);
             div.appendChild(button);
             button.onclick = function(event) {
