@@ -287,7 +287,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     });
   }
   function build_entry_element({ inbox, inputAtts, atts, failedAtts }) {
-    switch (inbox.type == "section") {
+    switch (inbox.type) {
       case "section": {
         let section = document.createElement("section"), h5 = document.createElement("h5");
         h5.className = "title";
