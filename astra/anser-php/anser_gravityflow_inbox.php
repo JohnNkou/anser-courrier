@@ -137,7 +137,7 @@ class Anser_GravityFlow_Inbox{
 				<button class="end btn-info">Annuler</button>
 			</div>
 		</div>
-		<div id="formCreator">
+		<div id="formCreator" class="flex hidden">
 			<form class="bg-white">
 				<header class="bg-sky-900">
 				 	<h1>Ajouter une traitement</h1>
