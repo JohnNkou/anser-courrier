@@ -40,6 +40,7 @@ function setAttribute(node,atts){
 function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index }){
 	switch(inbox.type){
 		case 'section':{
+			console.log('I am IN A SECTION BEAUTY');
 			let section = document.createElement('section'),
 			h5 = document.createElement('h5');
 			div_content = document.createElement('div'),
