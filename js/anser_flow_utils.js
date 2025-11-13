@@ -464,7 +464,26 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      	button.onclick = function(event){
 	      		event.preventDefault();
 
-	      		display_formCreator({ inbox:inbox, entry_data });
+	      		display_formCreator({ inbox:inbox, entry_data , onsuccess:(data)=>{
+	      			let id = data.entryId,
+	      			fieldValues = data.fieldValues,
+	      			tr = document.createElement('tr');
+
+	      			tr.setAttribute('entryId',id);
+
+	      			inbox.gpfnfields.forEach((field)=>{
+	      				let fieldValue = fieldValues[field.id],
+	      				td = document.createElement('td');
+
+	      				if(fieldValue){
+	      					td.textContent = fieldValue.label;
+	      				}
+
+	      				tr.appendChild(td);
+	      			})
+
+	      			tbody.appendChild(tr);
+	      		}});
 	      	}
 
 	      	return div;

@@ -22,7 +22,7 @@ function file_viewer_handler(node) {
   });
 }
 
-function display_formCreator({ inbox, entry_data }){
+function display_formCreator({ inbox, entry_data, onsuccess }){
   let fields =      inbox.gpfnfields,
   field_id =         inbox.id,
   title =           inbox.label,
@@ -57,11 +57,37 @@ function display_formCreator({ inbox, entry_data }){
     searchParams.append('lid', entry_id);
     searchParams.append('anser_ajax','true');
 
+    toggle_loader("Mise à jour");
+
     fetch(url,{
       method:'POST',
       body: new FormData(event.target)
     }).then((response)=>{
-      
+      toggle_loader();
+      if(response.status == 200){
+        response.json().then((payload)=>{
+          if(payload.success){
+            display_information_modal("Mise à jour effectué avec succèss");
+            if(onsuccess){
+              onsuccess(payload.data);
+            }
+          }
+          else{
+            console.log("Odd data",data);
+            display_information_modal("La mise à jour n'as pas pu aboutir");
+          }
+        }).catch((error)=>{
+          console.error(error);
+          display_information_modal("La mise à jour n'a pas pu aboutir");
+        })
+      }
+      else{
+        console.error("Bad repsonse");
+      }
+    }).catch((error)=>{
+      toggle_loader();
+      console.error(error);
+      display_information_modal("Une erreur est survenue lors de la mise à jour");
     });
   }
 
