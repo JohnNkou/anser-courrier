@@ -1820,6 +1820,8 @@ class GP_Nested_Forms extends GP_Plugin {
 			'mode'        => $mode,
 		);
 
+		flogs("DEBUG TRACE %s",print_r(debug_backtrace(2,30),true));
+		
 		return '<script type="text/javascript"> if( typeof GPNestedForms != "undefined" ) { GPNestedForms.loadEntry( ' . json_encode( $args ) . ' ); } </script>';
 
 	}
@@ -2614,7 +2616,7 @@ class GP_Nested_Forms extends GP_Plugin {
 				$_entries = $session->get( 'nested_entries' );
 
 				flogs("session entries are %s",print_r($_entries,true));
-				
+
 				if ( ! empty( $_entries[ $field['id'] ] ) ) {
 					$entry_ids = $_entries[ $field['id'] ];
 
