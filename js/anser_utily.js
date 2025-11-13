@@ -39,6 +39,7 @@ function display_formCreator({ fields, title, form_id }){
   }
 
   button.onclick = function(){
+    console.log("CLOSING THE STUFF")
     contentNode.innerHTML = "";
     titleNode.textContent = "";
     div.classList.add('hidden');

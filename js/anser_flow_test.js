@@ -34,6 +34,7 @@ var require_anser_utily = __commonJS((exports2) => {
       console.log("Ok submit happening");
     };
     button.onclick = function() {
+      console.log("CLOSING THE STUFF");
       contentNode.innerHTML = "";
       titleNode.textContent = "";
       div.classList.add("hidden");
