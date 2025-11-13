@@ -145,23 +145,25 @@ class GPNF_GravityFlow {
 	 */
 	public function get_submitted_entry_ids( $entry_ids, $form, $field ) { flogs("GET SUBMITTED ENTRY IDS IS RUNING");
 		/* Ensure workflow form ID matches the parent form ID being filtered. */
-		if ( $form['id'] != $this->get_current_flow_form_id() ) {
+		if ( $form['id'] != $this->get_current_flow_form_id() ) { flogs("Retuning becuase get_current_flow_form_id is not the same as form['id']")
 			return $entry_ids;
 		}
 
-		if ( ! $this->get_current_flow_entry_id() ) {
+		if ( ! $this->get_current_flow_entry_id() ) { flogs("get_current_flow_entry_id is falsy");
 			return $entry_ids;
 		}
 
 		$current_flow_entry = GFAPI::get_entry( $this->get_current_flow_entry_id() );
 
 		if ( is_wp_error( $current_flow_entry ) ) {
+			flogs("current_flow_entry is an wp_error");
 			return $entry_ids;
 		}
 
 		$flow_child_entries = $this->get_current_workflow_child_entries( $form, $current_flow_entry );
 
 		if ( empty( $flow_child_entries[ $field->id ] ) ) {
+			flogs("flow_child_entries is empty");
 			return $entry_ids;
 		}
 
