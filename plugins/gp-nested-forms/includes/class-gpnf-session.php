@@ -137,7 +137,7 @@ class GPNF_Session {
 		$cookie_name = $this->get_cookie_name();
 
 		flogs("COOKIE %s",$cookie_name);
-		flogs("TRACE %s",print_r(debug_backtrace(),true));
+		flogs("TRACE %s",print_r(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS,30),true));
 
 		if ( isset( $_COOKIE[ $cookie_name ] ) ) {
 			$cookie = json_decode( stripslashes( $_COOKIE[ $cookie_name ] ), true );
