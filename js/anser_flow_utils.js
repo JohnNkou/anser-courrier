@@ -24,6 +24,427 @@ function build_elements(table, entries) {
   }
 }
 
+function setAttribute(node,atts){
+	atts.forEach((values,attName)=>{
+		values.forEach((value)=>{
+			if(attName == 'class'){
+				node.classList.add(value);
+			}
+			else{
+				node.setAttribute(attName,value);
+			}
+		})
+	})
+}
+
+function build_entry_element({ inbox, inputAtts, atts, failedAtts }){
+	switch(inbox.type == 'section'){
+		case 'section':{
+			let section = document.createElement('section'),
+			h5 = document.createElement('h5');
+			h5.className = 'title';
+			h5.textContent = inbox.label;
+
+			setAttribute(section,atts);
+			section.appendChild(h5);
+			return section;
+			break;
+		}
+		case "html":{
+			let div = document.createElement('div'),
+			label = document.createElement('label');
+
+			label.textContent = inbox.label;
+
+			atts.append('class','card');
+			div.appendChild(label);
+			setAttribute(div,atts);
+			return div;
+			break;
+		}
+		case "text":{
+			let div = document.createElement('div'),
+			label = document.createElement('label'),
+			p = document.createElement('p');
+
+			label.textContent = inbox.label;
+			p.textContent = inbox.value;
+
+			atts.append('class','card');
+			setAttribute(div,atts);
+			div.appendChild(label); div.appendChild(p);
+			return div;
+			break;
+		}
+		case "hidden":{
+			let div = document.createElement('div'),
+			input = document.createElement('input');
+
+			input.type = 'hidden';
+
+			atts.append('class','hidden');
+			inputAtts.set('index', inbox_index);
+			setAttribute(div,atts);
+			setAttribute(input,inputAtts);
+			div.appendChild(input);
+
+			return div;
+			break;
+		}
+		case 'button':{
+			let div = document.createElement('div'),
+			button = document.createElement('button');
+
+			button.textContent = inbox.label;
+
+			atts.append('class','card');
+			inputAtts.set('index', inbox_index);
+			inputAtts.set('type', inbox.buttonType);
+			inputAtts.append('class', inbox.class);
+			setAttribute(div,atts);
+			setAttribute(button,inputAtts);
+			div.appendChild(button);
+
+			return div;
+			break;
+		}
+		case 'radio':{
+			let div = document.createElement('div'),
+			label = document.createElement('label'),
+			input = document.createElement('input');
+
+			label.textContent = inbox.label;
+			label.setAttribute('for', inbox.name);
+
+			if(inbox.checked){
+				inputAtts.set('checked','checked');
+			}
+
+			atts.append('class','card');
+			inputAtts.set('type','radio');
+			setAttribute(div,atts);
+			setAttribute(input, inputAtts);
+			div.appendChild(label);
+			div.appendChild(input);
+
+			return div;
+			break;
+		}
+		case 'submit':{
+			let div = document.createElement('div'),
+			button = document.createElement('button');
+
+			button.textContent = inbox.value;
+
+			atts.append('class','card');
+			inputAtts.set('index', inbox_index);
+			inputAtts.append('class','btn-success');
+			inputAtts.set('type','submit');
+			setAttribute(div,atts);
+			setAttribute(button,inputAtts);
+			div.appendChild(button);
+
+			return div;
+			break;
+		}
+		case "edit":
+      value = get_field_value(inbox);
+      inputAtts.set("value", value);
+      inputAtts.set("placeholder", inbox.placeholder);
+      switch (inbox.fieldType) {
+        case "text":
+        case "product":{
+        	let div = document.createElement('div'),
+        	div_error = document.createElement('div'),
+        	input = document.createElement('input'),
+        	label = document.createElement('label'),
+        	p = document.createElement('p');
+
+        	label.textContent = inbox.label;
+
+        	atts.append("class", "card");
+          inputAtts.set("type", "text");
+          inputAtts.set("placeholder", inbox.placeholder);
+          setAttribute(div,atts);
+          setAttribute(input, inputAtts);
+          setAttribute(div_error, failedAtts);
+          p.appendChild(input);
+          div.appendChild(label);
+          div.appendChild(p);
+          div.appendChild(div_error);
+
+          return div;
+          break;
+        }
+        case "textarea":{
+        	let div = document.createElement('div'),
+        	label = document.createElement('label'),
+        	p = document.createElement('p'),
+        	textarea = document.createElement('textarea'),
+        	div_error = document.createElement('div');
+
+        	label.textContent = inbox.label;
+        	textarea.textContent = value;
+
+        	atts.append("class", "card");
+          inputAtts.remove("value");
+          setAttribute(div,atts);
+          setAttribute(textarea, inputAtts);
+          setAttribute(div_error, failedAtts);
+          p.appendChild(textarea);
+          div.appendChild(label);
+          div.appendChild(p);
+          div.appendChild(div_error);
+
+          return div;
+          break;
+        }
+        case "radio":{
+        	let div = document.createElement('div'),
+        	label = document.createElement('label'),
+        	p = document.createElement('p'),
+        	div_error = document.createElement('div');
+
+        	inbox.choices.forEach((choice) => {
+        		let span = document.createElement('span'),
+        		label = document.createElement('label'),
+        		input = document.createElement('input');
+
+            if (choice.value == value) {
+              input.setAttribute('checked','checked')
+            }
+
+            label.textContent = choice.text;
+            input.type = 'radio';
+            input.value = choice.value;
+            
+            span.appendChild(label);
+            span.appendChild(input);
+            p.appendChild(span);
+          });
+
+          label.textContent = inbox.label;
+
+        	atts.append("class", "card");
+        	setAttribute(div,atts);
+        	setAttribute(div_error, failedAtts);
+        	div.appendChild(label);
+        	div.appendChild(p);
+        	div.appendChild(div_error);
+
+          return div;
+          break;
+        }
+        case "checkbox":{
+        	let div = document.createElement('div'),
+        	label = document.createElement('label')
+        	div_2 = document.createElement('div'),
+        	div_error = document.createElement('div');
+
+        	inbox.choices.forEach((choice) => {
+        		let p = document.createElement('p'),
+        		label = document.createElement('label'),
+        		input  = document.createElement('input'),
+            checked = value.indexOf(choice.value) != -1, 
+            id = inbox.inputs.filter((input) => {
+              return input.label == choice.value;
+            })[0]["id"];
+
+            if (checked) {
+            	input.setAttribute('checked','checked');
+            }
+
+            label.textContent = choice.text;
+            input.name = "input_" + id;
+            input.value  = choice.value;
+            input.type = 'checkbox';
+
+            p.appendChild(label);
+            p.appendChild(input);
+            div_2.appendChild(p);
+          });
+
+          label.textContent = inbox.label;
+
+        	atts.append("class", "card");
+        	setAttribute(div,atts);
+        	setAttribute(div_error,atts);
+        	div.appendChild(label);
+        	div.appendChild(div_2);
+        	div.appendChild(div_error);
+
+          return div;
+          break;
+        }
+        case "select":{
+        	let div = document.createElement('div'),
+        	label = document.createElement('label'),
+        	select = document.createElement('select'),
+        	div_error = document.createElement('div');
+
+        	label.textContent = inbox.label;
+
+        	[{ value:'', text:'---' }].concat(inbox.choices).forEach((choice) => {
+            let option = document.createElement('option'),
+            selected = choice.value == value;
+
+            if (selected) {
+            	option.setAttribute('selected','selected');
+            }
+            option.value = choice.value;
+            option.textContent = choice.text;
+
+            select.appendChild(option);
+          });
+
+        	atts.append("class", "card");
+          inputAtts.remove("value");
+          inputAtts.remove("placeholder");
+          setAttribute(div,atts);
+          setAttribute(select,inputAtts);
+          setAttribute(div_error,failedAtts);
+          div.appendChild(label);
+          div.appendChild(select);
+          div.appendChild(div_error);
+
+          return div;
+          break;
+        }
+        case "workflow_assignee_select":{
+        	let div = document.createElement('div'),
+        	label = document.createElement('label'),
+        	select = document.createElement('select'),
+        	div_error = document.createElement('div');
+
+        	label.textContent = inbox.label;
+
+        	atts.append("class", "card");
+          inputAtts.remove("value");
+          inputAtts.remove("placeholder");
+          setAttribute(div,atts);
+          setAttribute(select,inputAtts);
+          setAttribute(div_error,failedAtts);
+          div.appendChild(label);
+          div.appendChild(select);
+          div.appendChild(div_error);
+
+          return div;
+          break;
+        }
+        case "workflow_multi_user":{
+        	let div = document.createElement('div'),
+        	label = document.createElement('label'),
+        	select = document.createElement('select'),
+        	div_error = document.createElement('div_error');
+
+        	label.textContent = inbox.label;
+        	select.setAttribute('multiple','true');
+
+        	try {
+            inbox.leaf_value = JSON.parse(inbox.leaf_value);
+          } 
+          catch (error) {
+            inbox.leaf_value = [];
+          }
+          
+          inbox.choices.forEach((choice) => {
+            let option = document.createElement('option'),
+            selected = inbox.leaf_value.indexOf(choice.value) != -1 ? "selected" : "";
+
+            if(selected){
+            	option.setAttribute('selected','true');
+            }
+            option.value = choice.value;
+            option.textContent = choice.text;
+
+            select.appendChild(option);
+          });
+
+        	atts.append("class", "card");
+          inputAtts.remove("value");
+          inputAtts.remove("placeholder");
+          setAttribute(div,atts);
+          setAttribute(select, inputAtts);
+          setAttribute(div_error,failedAtts);
+          div.appendChild(label);
+          div.appendChild(select);
+          div.appendChild(div_error);
+
+          return div;
+          break;
+        }
+        case "fileupload":{
+        	let div = document.createElement('div'),
+        	label = document.createElement('label'),
+        	input = document.createElement('input'),
+        	div_input = document.createElement('div'),
+        	div_container = document.createElement('div'),
+        	div_2 = document.createElement('div'),
+        	div_list = document.createElement('div'),
+        	div_error = document.createElement('div'),
+        	fileDivAtts = new Attributes();
+
+        	label.textContent = inbox.label;
+        	div_2.innerHTML = inbox.value;
+
+        	atts.append("class", "card");
+          inputAtts.remove("value");
+          inputAtts.remove("placeholder");
+          inputAtts.set("type", "file");
+          fileDivAtts.append('class','file_detail_'+inbox.id);
+          setAttribute(div,atts);
+          setAttribute(input, inputAtts);
+          setAttribute(div_list, fileDivAtts);
+          setAttribute(div_error,failedAtts);
+          div.appendChild(label);
+          div_input.appendChild(input);
+          div_container.appendChild(div_input);
+          div_container.appendChild(div_2);
+          div_container.appendChild(div_list);
+          div.appendChild(div_container);
+
+          return div;
+          break;
+        }
+        case "date":{
+        	let div = document.createElement('div'),
+        	label = document.createElement('label'),
+        	input = document.createElement('input');
+
+        	label.textContent = inbox.label;
+
+        	atts.append("class", "card");
+        	setAttribute(div,atts);
+        	setAttribute(input,inputAtts);
+        	div.appendChild(label);
+        	div.appendChild(input);
+
+        	return div;
+          break;
+        }
+        default:{
+        	let div = document.createElement('div'),
+        	label = document.createElement('label'),
+        	div_2 = document.createElement('div');
+
+        	label.textContent = "In- " + inbox.label;
+        	div_2.innerHTML = inbox.value;
+
+        	atts.append('class','card');
+        	setAttribute(div,atts);
+        	div.appendChild(label);
+        	div.appendChild(div_2);
+
+          console.error("unknwon inbox fieldType", inbox);
+          return div;
+        }
+      }
+    break;
+  	default:
+    	console.error("Unknwon inbox type", inbox);
+	}
+}
+
 function update_file_to_send(input, file_to_sends) {
   let files = input.files, id = input.getAttribute("id"), evolution_div = document.querySelector(".file_detail_" + id);
   if (!id) {
@@ -305,7 +726,7 @@ function display_entry(payloads, entry_data) {
   	span_entry_number.textContent = numero;
 
   	inboxes.forEach((_inboxes, index) => {
-    	let inSection = false, section_with_rules = false;
+    	let inSection = false, section_with_rules = false, currentSection;
     	_inboxes.forEach((inbox, _index) => {
 
 	      	try {
@@ -349,7 +770,28 @@ function display_entry(payloads, entry_data) {
 	          		}
 	        	}
 
-	        	switch (inbox.type) {
+	        	let node = build_entry_element({ inbox, inputAtts, atts, failedAtts });
+
+	        	if(!node){
+	        		console.log("Missing node for inbox",inbox);
+	        		throw Error("Missing node");
+	        	}
+
+	        	if(inbox.type == 'section'){
+	        		currentSection = node;
+	        		inSection = true;
+	        		content_node.appendChild(node);
+	        	}
+	        	else{
+	        		if(inSection){
+	        			currentSection.appendChild(node);
+	        		}
+	        		else{
+	        			content_node.appendChild(node);
+	        		}
+	        	}
+
+	        	/*switch (inbox.type) {
 	          		case "section":
 	            		if (!should_display_field(inbox, field_ids, inboxes)) {
 	              			atts.append("class", "hidden");
@@ -510,7 +952,10 @@ function display_entry(payloads, entry_data) {
 	            	break;
 	          		default:
 	            		console.error("Unknwon inbox type", inbox);
-	        	}
+	        	}*/
+
+
+
 	        	if (inbox.action) {
 	          		actionNodes[inbox_index] = inbox.action;
 	        	}
@@ -521,9 +966,9 @@ function display_entry(payloads, entry_data) {
 	      	}
     	});
 
-    	if (inSection) {
+    	/*if (inSection) {
       		bodyHtml += "</div></section>";
-    	}
+    	}*/
   	});
 
   	content_node.onsubmit = (event) => {
@@ -708,7 +1153,7 @@ function display_entry(payloads, entry_data) {
     	}
   	};
 
-  	content_node.innerHTML = bodyHtml;
+  	//content_node.innerHTML = bodyHtml;
 }
 
 function onglet_handler(contents) {

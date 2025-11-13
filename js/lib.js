@@ -18,6 +18,16 @@ function Attributes(){
 		}
 	}
 
+	this.get = function(name){
+		return attributes[name];
+	}
+
+	this.forEach = function(fn){
+		for(let name in attributes){
+			fn(attributes[name],name);
+		}
+	}
+
 	this.set = function(name,value){
 		if(value != undefined){
 			attributes[name] = [value];

@@ -893,7 +893,6 @@ class GFForms {
 		if ( isset( $_POST['gform_send_resume_link'] ) ) {
 			GFFormDisplay::process_send_resume_link();
 		} elseif ( isset( $_POST['gform_submit'] ) ) {
-			flogs("BOUBAH DESENTIS");
 			$form_id = GFFormDisplay::is_submit_form_id_valid();
 			if ( $form_id ) {
 				GFFormDisplay::process_form( $form_id, GFFormDisplay::SUBMISSION_INITIATED_BY_WEBFORM );

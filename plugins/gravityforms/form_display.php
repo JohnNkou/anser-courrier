@@ -1092,7 +1092,7 @@ class GFFormDisplay {
 		//If form was submitted, read variables set during form submission procedure
 		$submission_info = isset( self::$submission[ $form_id ] ) ? self::$submission[ $form_id ] : false;
 
-		error_log("submission_info is ".print_r($submission_info,true));
+		error_log("submission_info is ".substr(print_r($submission_info,true), 0,100));
 
 		if ( rgar( $submission_info, 'saved_for_later' ) == true ) {
 			error_log("submission_info saved_for_later is true. Returning");

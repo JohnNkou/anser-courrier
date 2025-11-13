@@ -118,8 +118,8 @@ var require_anser_utily = __commonJS((exports2) => {
     } else {
       console.error("NAVIGATION ELEMENT WERE NOT FOUND");
     }
-    function toggle_disable(value) {
-      nextPage.disabled = prevPage.disabled = value;
+    function toggle_disable(value2) {
+      nextPage.disabled = prevPage.disabled = value2;
     }
     this.addQueries = (queries) => {
       with_queries = { ...with_queries, ...queries };
@@ -183,33 +183,41 @@ var require_anser_utily = __commonJS((exports2) => {
 var require_lib = __commonJS((exports2) => {
   function Attributes() {
     let attributes = {};
-    this.append = function(name, value) {
-      if (value != null) {
+    this.append = function(name, value2) {
+      if (value2 != null) {
         let array = attributes[name];
         if (!array) {
           array = attributes[name] = [];
         }
-        if (array.indexOf(value) == -1) {
-          array.push(value);
+        if (array.indexOf(value2) == -1) {
+          array.push(value2);
         }
       } else {
         console.warn("VALUE PASSED TO APPEND IS UNDEFINED", arguments);
       }
     };
-    this.set = function(name, value) {
-      if (value != null) {
-        attributes[name] = [value];
+    this.get = function(name) {
+      return attributes[name];
+    };
+    this.forEach = function(fn) {
+      for (let name in attributes) {
+        fn(attributes[name], name);
+      }
+    };
+    this.set = function(name, value2) {
+      if (value2 != null) {
+        attributes[name] = [value2];
       } else {
         console.warn("VALUE PASSED TO SET IS UNDEFINED", arguments);
       }
     };
-    this.remove = function(name, value) {
-      if (value == undefined) {
+    this.remove = function(name, value2) {
+      if (value2 == undefined) {
         delete attributes[name];
       } else {
         let array = attributes[name];
         if (array) {
-          let index = array.indexOf(value);
+          let index = array.indexOf(value2);
           if (index != -1) {
             array.splice(index, 1);
           }
@@ -265,6 +273,310 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       tbody.innerHTML = html;
     } else {
       console.error("TBODY NOT FOUND");
+    }
+  }
+  function setAttribute(node, atts) {
+    atts.forEach((values, attName) => {
+      values.forEach((value2) => {
+        if (attName == "class") {
+          node.classList.add(value2);
+        } else {
+          node.setAttribute(attName, value2);
+        }
+      });
+    });
+  }
+  function build_entry_element({ inbox, inputAtts, atts, failedAtts }) {
+    switch (inbox.type == "section") {
+      case "section": {
+        let section = document.createElement("section"), h5 = document.createElement("h5");
+        h5.className = "title";
+        h5.textContent = inbox.label;
+        setAttribute(section, atts);
+        section.appendChild(h5);
+        return section;
+        break;
+      }
+      case "html": {
+        let div = document.createElement("div"), label = document.createElement("label");
+        label.textContent = inbox.label;
+        atts.append("class", "card");
+        div.appendChild(label);
+        setAttribute(div, atts);
+        return div;
+        break;
+      }
+      case "text": {
+        let div = document.createElement("div"), label = document.createElement("label"), p = document.createElement("p");
+        label.textContent = inbox.label;
+        p.textContent = inbox.value;
+        atts.append("class", "card");
+        setAttribute(div, atts);
+        div.appendChild(label);
+        div.appendChild(p);
+        return div;
+        break;
+      }
+      case "hidden": {
+        let div = document.createElement("div"), input = document.createElement("input");
+        input.type = "hidden";
+        atts.append("class", "hidden");
+        inputAtts.set("index", inbox_index);
+        setAttribute(div, atts);
+        setAttribute(input, inputAtts);
+        div.appendChild(input);
+        return div;
+        break;
+      }
+      case "button": {
+        let div = document.createElement("div"), button = document.createElement("button");
+        button.textContent = inbox.label;
+        atts.append("class", "card");
+        inputAtts.set("index", inbox_index);
+        inputAtts.set("type", inbox.buttonType);
+        inputAtts.append("class", inbox.class);
+        setAttribute(div, atts);
+        setAttribute(button, inputAtts);
+        div.appendChild(button);
+        return div;
+        break;
+      }
+      case "radio": {
+        let div = document.createElement("div"), label = document.createElement("label"), input = document.createElement("input");
+        label.textContent = inbox.label;
+        label.setAttribute("for", inbox.name);
+        if (inbox.checked) {
+          inputAtts.set("checked", "checked");
+        }
+        atts.append("class", "card");
+        inputAtts.set("type", "radio");
+        setAttribute(div, atts);
+        setAttribute(input, inputAtts);
+        div.appendChild(label);
+        div.appendChild(input);
+        return div;
+        break;
+      }
+      case "submit": {
+        let div = document.createElement("div"), button = document.createElement("button");
+        button.textContent = inbox.value;
+        atts.append("class", "card");
+        inputAtts.set("index", inbox_index);
+        inputAtts.append("class", "btn-success");
+        inputAtts.set("type", "submit");
+        setAttribute(div, atts);
+        setAttribute(button, inputAtts);
+        div.appendChild(button);
+        return div;
+        break;
+      }
+      case "edit":
+        value = get_field_value(inbox);
+        inputAtts.set("value", value);
+        inputAtts.set("placeholder", inbox.placeholder);
+        switch (inbox.fieldType) {
+          case "text":
+          case "product": {
+            let div = document.createElement("div"), div_error2 = document.createElement("div"), input = document.createElement("input"), label = document.createElement("label"), p = document.createElement("p");
+            label.textContent = inbox.label;
+            atts.append("class", "card");
+            inputAtts.set("type", "text");
+            inputAtts.set("placeholder", inbox.placeholder);
+            setAttribute(div, atts);
+            setAttribute(input, inputAtts);
+            setAttribute(div_error2, failedAtts);
+            p.appendChild(input);
+            div.appendChild(label);
+            div.appendChild(p);
+            div.appendChild(div_error2);
+            return div;
+            break;
+          }
+          case "textarea": {
+            let div = document.createElement("div"), label = document.createElement("label"), p = document.createElement("p"), textarea = document.createElement("textarea"), div_error2 = document.createElement("div");
+            label.textContent = inbox.label;
+            textarea.textContent = value;
+            atts.append("class", "card");
+            inputAtts.remove("value");
+            setAttribute(div, atts);
+            setAttribute(textarea, inputAtts);
+            setAttribute(div_error2, failedAtts);
+            p.appendChild(textarea);
+            div.appendChild(label);
+            div.appendChild(p);
+            div.appendChild(div_error2);
+            return div;
+            break;
+          }
+          case "radio": {
+            let div = document.createElement("div"), label = document.createElement("label"), p = document.createElement("p"), div_error2 = document.createElement("div");
+            inbox.choices.forEach((choice) => {
+              let span = document.createElement("span"), label2 = document.createElement("label"), input = document.createElement("input");
+              if (choice.value == value) {
+                input.setAttribute("checked", "checked");
+              }
+              label2.textContent = choice.text;
+              input.type = "radio";
+              input.value = choice.value;
+              span.appendChild(label2);
+              span.appendChild(input);
+              p.appendChild(span);
+            });
+            label.textContent = inbox.label;
+            atts.append("class", "card");
+            setAttribute(div, atts);
+            setAttribute(div_error2, failedAtts);
+            div.appendChild(label);
+            div.appendChild(p);
+            div.appendChild(div_error2);
+            return div;
+            break;
+          }
+          case "checkbox": {
+            let div = document.createElement("div"), label = document.createElement("label");
+            div_2 = document.createElement("div"), div_error = document.createElement("div");
+            inbox.choices.forEach((choice) => {
+              let p = document.createElement("p"), label2 = document.createElement("label"), input = document.createElement("input"), checked = value.indexOf(choice.value) != -1, id = inbox.inputs.filter((input2) => {
+                return input2.label == choice.value;
+              })[0]["id"];
+              if (checked) {
+                input.setAttribute("checked", "checked");
+              }
+              label2.textContent = choice.text;
+              input.name = "input_" + id;
+              input.value = choice.value;
+              input.type = "checkbox";
+              p.appendChild(label2);
+              p.appendChild(input);
+              div_2.appendChild(p);
+            });
+            label.textContent = inbox.label;
+            atts.append("class", "card");
+            setAttribute(div, atts);
+            setAttribute(div_error, atts);
+            div.appendChild(label);
+            div.appendChild(div_2);
+            div.appendChild(div_error);
+            return div;
+            break;
+          }
+          case "select": {
+            let div = document.createElement("div"), label = document.createElement("label"), select = document.createElement("select"), div_error2 = document.createElement("div");
+            label.textContent = inbox.label;
+            [{ value: "", text: "---" }].concat(inbox.choices).forEach((choice) => {
+              let option = document.createElement("option"), selected = choice.value == value;
+              if (selected) {
+                option.setAttribute("selected", "selected");
+              }
+              option.value = choice.value;
+              option.textContent = choice.text;
+              select.appendChild(option);
+            });
+            atts.append("class", "card");
+            inputAtts.remove("value");
+            inputAtts.remove("placeholder");
+            setAttribute(div, atts);
+            setAttribute(select, inputAtts);
+            setAttribute(div_error2, failedAtts);
+            div.appendChild(label);
+            div.appendChild(select);
+            div.appendChild(div_error2);
+            return div;
+            break;
+          }
+          case "workflow_assignee_select": {
+            let div = document.createElement("div"), label = document.createElement("label"), select = document.createElement("select"), div_error2 = document.createElement("div");
+            label.textContent = inbox.label;
+            atts.append("class", "card");
+            inputAtts.remove("value");
+            inputAtts.remove("placeholder");
+            setAttribute(div, atts);
+            setAttribute(select, inputAtts);
+            setAttribute(div_error2, failedAtts);
+            div.appendChild(label);
+            div.appendChild(select);
+            div.appendChild(div_error2);
+            return div;
+            break;
+          }
+          case "workflow_multi_user": {
+            let div = document.createElement("div"), label = document.createElement("label"), select = document.createElement("select"), div_error2 = document.createElement("div_error");
+            label.textContent = inbox.label;
+            select.setAttribute("multiple", "true");
+            try {
+              inbox.leaf_value = JSON.parse(inbox.leaf_value);
+            } catch (error) {
+              inbox.leaf_value = [];
+            }
+            inbox.choices.forEach((choice) => {
+              let option = document.createElement("option"), selected = inbox.leaf_value.indexOf(choice.value) != -1 ? "selected" : "";
+              if (selected) {
+                option.setAttribute("selected", "true");
+              }
+              option.value = choice.value;
+              option.textContent = choice.text;
+              select.appendChild(option);
+            });
+            atts.append("class", "card");
+            inputAtts.remove("value");
+            inputAtts.remove("placeholder");
+            setAttribute(div, atts);
+            setAttribute(select, inputAtts);
+            setAttribute(div_error2, failedAtts);
+            div.appendChild(label);
+            div.appendChild(select);
+            div.appendChild(div_error2);
+            return div;
+            break;
+          }
+          case "fileupload": {
+            let div = document.createElement("div"), label = document.createElement("label"), input = document.createElement("input"), div_input = document.createElement("div"), div_container = document.createElement("div"), div_22 = document.createElement("div"), div_list = document.createElement("div"), div_error2 = document.createElement("div"), fileDivAtts = new Attributes;
+            label.textContent = inbox.label;
+            div_22.innerHTML = inbox.value;
+            atts.append("class", "card");
+            inputAtts.remove("value");
+            inputAtts.remove("placeholder");
+            inputAtts.set("type", "file");
+            fileDivAtts.append("class", "file_detail_" + inbox.id);
+            setAttribute(div, atts);
+            setAttribute(input, inputAtts);
+            setAttribute(div_list, fileDivAtts);
+            setAttribute(div_error2, failedAtts);
+            div.appendChild(label);
+            div_input.appendChild(input);
+            div_container.appendChild(div_input);
+            div_container.appendChild(div_22);
+            div_container.appendChild(div_list);
+            div.appendChild(div_container);
+            return div;
+            break;
+          }
+          case "date": {
+            let div = document.createElement("div"), label = document.createElement("label"), input = document.createElement("input");
+            label.textContent = inbox.label;
+            atts.append("class", "card");
+            setAttribute(div, atts);
+            setAttribute(input, inputAtts);
+            div.appendChild(label);
+            div.appendChild(input);
+            return div;
+            break;
+          }
+          default: {
+            let div = document.createElement("div"), label = document.createElement("label"), div_22 = document.createElement("div");
+            label.textContent = "In- " + inbox.label;
+            div_22.innerHTML = inbox.value;
+            atts.append("class", "card");
+            setAttribute(div, atts);
+            div.appendChild(label);
+            div.appendChild(div_22);
+            console.error("unknwon inbox fieldType", inbox);
+            return div;
+          }
+        }
+        break;
+      default:
+        console.error("Unknwon inbox type", inbox);
     }
   }
   function update_file_to_send(input, file_to_sends) {
@@ -383,16 +695,16 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     };
   }
   function get_field_value(field) {
-    let value = field.leaf_value || field.value;
-    if (value) {
-      if (is_object(value)) {
+    let value2 = field.leaf_value || field.value;
+    if (value2) {
+      if (is_object(value2)) {
         let values = [];
-        for (let id in value) {
-          values.push(value[id]);
+        for (let id in value2) {
+          values.push(value2[id]);
         }
         return values;
       } else {
-        return value;
+        return value2;
       }
     } else {
       return "";
@@ -416,20 +728,20 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       if (field_location) {
         let _field = get_field_by_location(field_location, inboxes);
         if (_field) {
-          let value = get_field_value(_field);
-          if (value.push) {
-            if (value.indexOf(ruleValue) == -1) {
+          let value2 = get_field_value(_field);
+          if (value2.push) {
+            if (value2.indexOf(ruleValue) == -1) {
               console.warn("CAN DISPLAY FIELD", field.label, "BECAUSE RULE DON'T SATISFY");
               console.warn("rule", field.rules);
               console.log("_field", _field);
-              console.log("VALUE", value);
+              console.log("VALUE", value2);
               validated = false;
             }
-          } else if (value != ruleValue) {
+          } else if (value2 != ruleValue) {
             console.warn("CAN DISPLAY FIELD", field.label, "BECAUSE RULE DON'T SATISFY");
             console.warn("rule", field.rules);
             console.log("_field", _field);
-            console.log("VALUE", value);
+            console.log("VALUE", value2);
             validated = false;
           }
         } else {
@@ -495,11 +807,11 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     span_title.textContent = form_title;
     span_entry_number.textContent = numero;
     inboxes.forEach((_inboxes, index) => {
-      let inSection = false, section_with_rules = false;
+      let inSection = false, section_with_rules = false, currentSection;
       _inboxes.forEach((inbox, _index) => {
         try {
           field_ids[inbox.id] = index + "," + _index;
-          let inbox_index = index.toString() + "_" + _index, atts = new Attributes, inputAtts = new Attributes, failedAtts = new Attributes, value;
+          let inbox_index2 = index.toString() + "_" + _index, atts = new Attributes, inputAtts = new Attributes, failedAtts = new Attributes, value2;
           inputAtts.set("id", inbox.id);
           inputAtts.append("name", "input_" + inbox.id);
           inputAtts.append("value", inbox.value || "");
@@ -528,177 +840,30 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               atts.append("class", "hidden");
             }
           }
-          switch (inbox.type) {
-            case "section":
-              if (!should_display_field(inbox, field_ids, inboxes)) {
-                atts.append("class", "hidden");
-              }
-              if (inbox.rules) {
-                section_with_rules = true;
-              }
-              bodyHtml += "<section " + atts.toString() + ">";
-              bodyHtml += "<h5 class='title'>" + inbox.label + "</h5>";
-              bodyHtml += "<div>";
-              inSection = true;
-              break;
-            case "html":
-              atts.append("class", "card");
-              bodyHtml += "<div " + atts.toString() + ">" + inbox.value + "</div>";
-              break;
-            case "text":
-              atts.append("class", "card");
-              bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><p>" + inbox.value + "</p></div>";
-              break;
-            case "hidden":
-              atts.append("class", "hidden");
-              inputAtts.set("index", inbox_index);
-              inputAtts.set("type", "hidden");
-              bodyHtml += "<div " + atts.toString() + "><input " + inputAtts.toString() + " /></div>";
-              break;
-            case "button":
-              atts.append("class", "card");
-              inputAtts.set("index", inbox_index);
-              inputAtts.set("type", inbox.buttonType);
-              inputAtts.append("class", inbox.class);
-              bodyHtml += "<div " + atts.toString() + "><button " + inputAtts.toString() + ">" + inbox.label + "</button></div>";
-              break;
-            case "radio":
-              atts.append("class", "card");
-              if (inbox.checked) {
-                inputAtts.set("checked", "checked");
-              }
-              inputAtts.set("type", "radio");
-              bodyHtml += "<div " + atts.toString() + "><label for='" + inbox.name + "'>" + inbox.label + "</label><input " + inputAtts.toString() + " /></div>";
-              break;
-            case "submit":
-              atts.append("class", "card");
-              inputAtts.set("index", inbox_index);
-              inputAtts.append("class", "btn-success");
-              inputAtts.set("type", "submit");
-              bodyHtml += "<div " + atts.toString() + "><button " + inputAtts.toString() + ">" + inbox.value + "</button></div>";
-              break;
-            case "edit":
-              value = get_field_value(inbox);
-              inputAtts.set("value", value);
-              inputAtts.set("placeholder", inbox.placeholder);
-              switch (inbox.fieldType) {
-                case "text":
-                case "product":
-                  atts.append("class", "card");
-                  inputAtts.set("type", "text");
-                  inputAtts.set("placeholder", inbox.placeholder);
-                  bodyHtml += "<div " + atts.toString() + " ><label>" + inbox.label + "</label><p><input " + inputAtts.toString() + " /></p><div " + failedAtts.toString() + "></div></div>";
-                  break;
-                case "textarea":
-                  atts.append("class", "card");
-                  inputAtts.remove("value");
-                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><p><textarea " + inputAtts.toString() + ">" + value + "</textarea></p><div " + failedAtts.toString() + "></div></div>";
-                  break;
-                case "radio":
-                  atts.append("class", "card");
-                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><p>";
-                  inbox.choices.forEach((choice) => {
-                    if (choice.value == value) {
-                      inputAtts.set("checked", "checked");
-                    } else {
-                      inputAtts.remove("checked");
-                    }
-                    inputAtts.set("type", "radio");
-                    inputAtts.set("value", choice.value);
-                    bodyHtml += "<span><label>" + choice.text + "</label><input " + inputAtts.toString() + " /></span>";
-                  });
-                  bodyHtml += "</p><div " + failedAtts.toString() + "></div></div>";
-                  break;
-                case "checkbox":
-                  atts.append("class", "card");
-                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><div>";
-                  inbox.choices.forEach((choice) => {
-                    let checked = value.indexOf(choice.value) != -1, id = inbox.inputs.filter((input) => {
-                      return input.label == choice.value;
-                    })[0]["id"];
-                    if (checked) {
-                      inputAtts.set("checked", "checked");
-                    } else {
-                      inputAtts.remove("checked");
-                    }
-                    inputAtts.set("name", "input_" + id);
-                    inputAtts.set("value", choice.value);
-                    inputAtts.set("type", "checkbox");
-                    bodyHtml += "<p><label>" + choice.text + "</label><input " + inputAtts.toString() + " /></p>";
-                  });
-                  bodyHtml += "</div><div " + failedAtts.toString() + "></div></div>";
-                  break;
-                case "select":
-                  atts.append("class", "card");
-                  inputAtts.remove("value");
-                  inputAtts.remove("placeholder");
-                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><select " + inputAtts.toString() + "><option>Selectionner</option>";
-                  inbox.choices.forEach((choice) => {
-                    let selected = choice.value == value, atts2 = new Attributes;
-                    if (selected) {
-                      atts2.set("selected", "selected");
-                    }
-                    atts2.set("value", choice.value);
-                    bodyHtml += "<option " + atts2.toString() + ">" + choice.text + "</option>";
-                  });
-                  bodyHtml += "</select><div " + failedAtts.toString() + "></div></div>";
-                  break;
-                case "workflow_assignee_select":
-                  atts.append("class", "card");
-                  inputAtts.remove("value");
-                  inputAtts.remove("placeholder");
-                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><select " + inputAtts.toString() + ">" + inbox.value + "</select></div>";
-                  break;
-                case "workflow_multi_user":
-                  atts.append("class", "card");
-                  inputAtts.remove("value");
-                  inputAtts.remove("placeholder");
-                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><select multiple " + inputAtts.toString() + ">";
-                  try {
-                    inbox.leaf_value = JSON.parse(inbox.leaf_value);
-                  } catch (error) {
-                    inbox.leaf_value = [];
-                  }
-                  inbox.choices.forEach((choice) => {
-                    let selected = inbox.leaf_value.indexOf(choice.value) != -1 ? "selected" : "";
-                    bodyHtml += "<option " + selected + " value='" + choice.value + "'>" + choice.text + "</option>";
-                  });
-                  bodyHtml += "</select>";
-                  bodyHtml += "</div>";
-                  break;
-                case "fileupload":
-                  atts.append("class", "card");
-                  inputAtts.remove("value");
-                  inputAtts.remove("placeholder");
-                  inputAtts.set("type", "file");
-                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label>";
-                  bodyHtml += "<div><div><input " + inputAtts.toString() + " /></div><div>" + inbox.value + "</div><div class='file_detail_" + inbox.id + "'></div></div>";
-                  bodyHtml += "</div>";
-                  break;
-                case "date":
-                  atts.append("class", "card");
-                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><input " + inputAtts.toString() + " />";
-                  break;
-                default:
-                  atts.append("class", "card");
-                  bodyHtml += "<div " + atts.toString() + "><label>In- " + inbox.label + "</label><div>" + inbox.value + "</div></div>";
-                  console.error("unknwon inbox fieldType", inbox);
-              }
-              break;
-            default:
-              console.error("Unknwon inbox type", inbox);
+          let node = build_entry_element({ inbox, inputAtts, atts, failedAtts });
+          if (!node) {
+            console.log("Missing node for inbox", inbox);
+            throw Error("Missing node");
+          }
+          if (inbox.type == "section") {
+            currentSection = node;
+            inSection = true;
+            content_node.appendChild(node);
+          } else {
+            if (inSection) {
+              currentSection.appendChild(node);
+            } else {
+              content_node.appendChild(node);
+            }
           }
           if (inbox.action) {
-            actionNodes[inbox_index] = inbox.action;
+            actionNodes[inbox_index2] = inbox.action;
           }
         } catch (error) {
           console.error("GREAT ERROR");
           console.error(error);
         }
       });
-      if (inSection) {
-        bodyHtml += "</div></section>";
-      }
     });
     content_node.onsubmit = (event) => {
       event.preventDefault();
@@ -847,7 +1012,6 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         }
       }
     };
-    content_node.innerHTML = bodyHtml;
   }
   function onglet_handler(contents) {
     let onglets = document.querySelector(".onglets");
@@ -929,14 +1093,14 @@ var require_anser_view_util = __commonJS((exports2) => {
     }
     filter_root.onclick = function(event) {
       event.preventDefault();
-      let target = event.target, value = target.getAttribute("data-value");
+      let target = event.target, value2 = target.getAttribute("data-value");
       if (target.tagName.toLowerCase() == "a") {
         if (!target.classList.contains("active")) {
           reset_link_style();
           target.classList.add("active");
-          if (value) {
+          if (value2) {
             page_handler2.removeQueries([..._Page.filters, "gv_search"]);
-            page_handler2.addQueries({ filter_workflow_final_status: value, mode: "all" });
+            page_handler2.addQueries({ filter_workflow_final_status: value2, mode: "all" });
           } else {
             page_handler2.removeQueries(["filter_workflow_final_status"]);
           }
@@ -955,13 +1119,13 @@ var require_anser_view_util = __commonJS((exports2) => {
           if (name == "id") {
             continue;
           }
-          let value = entry[name];
+          let value2 = entry[name];
           trs += "<td>";
-          if (value.indexOf) {
-            if (value.indexOf("http") == -1) {
+          if (value2.indexOf) {
+            if (value2.indexOf("http") == -1) {
               if (name == "État") {
                 let className = "p-1 rounded text-white shadow-md";
-                switch (value) {
+                switch (value2) {
                   case "pending":
                     className += " bg-blue-500";
                     break;
@@ -971,21 +1135,21 @@ var require_anser_view_util = __commonJS((exports2) => {
                   default:
                     className += " bg-green-500";
                 }
-                trs += "<span class='" + className + "'> " + value + "</span>";
+                trs += "<span class='" + className + "'> " + value2 + "</span>";
               } else {
-                trs += value;
+                trs += value2;
               }
             } else {
-              let values = JSON.parse(value);
-              values.forEach((value2) => {
-                trs += "<a href='" + value2 + "'>";
-                let name2 = value2.slice(value2.lastIndexOf("/") + 1);
+              let values = JSON.parse(value2);
+              values.forEach((value3) => {
+                trs += "<a href='" + value3 + "'>";
+                let name2 = value3.slice(value3.lastIndexOf("/") + 1);
                 trs += name2;
                 trs += "</a>";
               });
             }
           } else {
-            trs += value.toString();
+            trs += value2.toString();
           }
           trs += "</td>";
         }
@@ -1037,7 +1201,7 @@ var require_anser_view_util = __commonJS((exports2) => {
       }
     };
     for (let entry_name in entry) {
-      let value = entry[entry_name], current_slot;
+      let value2 = entry[entry_name], current_slot;
       if (is_information(entry_name)) {
         current_slot = informations;
       } else if (is_header(entry_name)) {
@@ -1050,10 +1214,10 @@ var require_anser_view_util = __commonJS((exports2) => {
         current_slot = autres;
       }
       current_slot.push("<div><p>" + entry_name + "</p>");
-      if (value.push || Object.prototype.toString.call(value) == Object.prototype.toString.call({})) {
+      if (value2.push || Object.prototype.toString.call(value2) == Object.prototype.toString.call({})) {
         current_slot.push("<p>");
-        if (value.push) {
-          value.forEach((v) => {
+        if (value2.push) {
+          value2.forEach((v) => {
             if (v.indexOf("http") != -1) {
               v = build_link(v);
               current_slot.push(v);
@@ -1062,11 +1226,11 @@ var require_anser_view_util = __commonJS((exports2) => {
             }
           });
         } else {
-          for (let name in value) {
-            let _value = value[name];
+          for (let name in value2) {
+            let _value = value2[name];
             if (_value) {
               if (_value.indexOf("http") != -1) {
-                _value = build_link(value);
+                _value = build_link(value2);
               }
               current_slot.push("<span>" + _value + "</span>");
             }
@@ -1074,7 +1238,7 @@ var require_anser_view_util = __commonJS((exports2) => {
         }
         current_slot.push("</p>");
       } else {
-        current_slot.push("<p>" + value + "</p>");
+        current_slot.push("<p>" + value2 + "</p>");
       }
       current_slot.push("</div>");
     }
