@@ -213,6 +213,8 @@ class GFFormDisplay {
 
 				$confirmation = self::handle_submission( $form, $lead, $ajax );
 
+				flogs("CONFIRMATION IS %s",print_r($confirmation,true));
+
 				$gform_after_submission_args = array( 'gform_after_submission', $form_id );
 				if ( gf_has_action( $gform_after_submission_args ) ) {
 					GFCommon::log_debug( __METHOD__ . '(): Executing functions hooked to gform_after_submission.' );
