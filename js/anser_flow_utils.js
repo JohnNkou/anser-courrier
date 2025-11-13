@@ -473,10 +473,16 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 
 	      			inbox.gpfnfields.forEach((field)=>{
 	      				let fieldValue = fieldValues[field.id],
-	      				td = document.createElement('td');
+	      				td = document.createElement('td'),
+	      				value = fieldValue && fieldValue.label,
+	      				method = 'textContent';
 
-	      				if(fieldValue){
-	      					td.textContent = fieldValue.label;
+	      				if(value){
+	      					if(value.indexOf('<') != -1){
+	      						method = 'innerHTML';
+	      					}
+	      					
+	      					td[method] = value;
 	      				}
 
 	      				tr.appendChild(td);
