@@ -331,7 +331,9 @@ add_filter("gform_entry_field_value","handle_gravity_form_submission",10,4);
 add_filter('gform_get_form_confirmation_filter',function($confirmation_markup, $form){
     preg_match("/loadEntry\(([^\)]+)\)/", $confirmation_markup, $match);
 
-    flogs("MATCH IS %s",print_r($match,true));
+    if(count($match) > 1){
+        flogs("ENTRY DATA IS %s",print_r(json_decode($match[1]),true));
+    }
 
     return $confirmation_markup;
 },10,2);
