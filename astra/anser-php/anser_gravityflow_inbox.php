@@ -138,7 +138,7 @@ class Anser_GravityFlow_Inbox{
 			</div>
 		</div>
 		<div id="formCreator">
-			<form class="content">
+			<form>
 				<header class="bg-sky-900">
 				 	<h1>Ajouter une traitement</h1>
 				</header>
