@@ -328,6 +328,10 @@ add_shortcode("anser_gravityflow",function(...$atts){
 
 add_filter("gform_entry_field_value","handle_gravity_form_submission",10,4);
 
+add_filter('gform_get_form_confirmation_filter',function($confirmation_markup, $form){
+    flogs("GET CONF CALLED");
+},10,2);
+
 add_filter("gform_permission_granted_pre_download","process_download_file",10,3);
 add_filter("gravityflow_permission_granted_entry_detail","handle_upload_entry",10,4);
 add_action('gform_after_submission','remove_entry_file',10,2);
