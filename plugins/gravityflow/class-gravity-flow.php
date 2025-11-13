@@ -281,7 +281,6 @@ if ( class_exists( 'GFForms' ) ) {
 		 */
 		public function init() {
 			parent::init();
-			flogs("TRACE %s",print_r(debug_backtrace(2,30),true));
 
 			if ( ! $this->is_gravityforms_supported( '2.5.6' ) ) {
 				$this->init_translations();
@@ -5636,6 +5635,7 @@ PRIMARY KEY  (id)
 		 * @return string
 		 */
 		public function shortcode( $atts, $content = null ) {
+			flogs("ZO SHANAN");
 			if ( get_post_type() != 'page' ) {
 				return '';
 			}
