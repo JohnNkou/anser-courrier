@@ -1863,6 +1863,7 @@ class GFFormDisplay {
 
 		if ( $ajax ) {
 			$ajax_value = self::prepare_ajax_input_value( $form_id, $display_title, $display_description, $tabindex, $theme, $is_valid_json ? $style_settings : null );
+			flogs("AJAX VALUE IS %s",$ajax_value);
 			$footer     .= "<input type='hidden' name='gform_ajax' value='" . esc_attr( $ajax_value ) . "' />";
 		}
 
