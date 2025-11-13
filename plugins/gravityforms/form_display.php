@@ -1585,7 +1585,7 @@ class GFFormDisplay {
 			return $form_string;
 
 		} else {
-
+			flogs("get_confirmation_marku");
 			return self::get_confirmation_markup( $form, $confirmation_message, $ajax, $style_settings, $form_theme );
 		}
 	}
