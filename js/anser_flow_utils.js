@@ -461,6 +461,38 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      	div.appendChild(label);
 	      	div.appendChild(button);
 
+	      	if(inbox.entries && inbox.entries.forEach){
+	      		inbox.entries.forEach((entry)=>{
+	      			let id = entry.id,
+	      			tr = document.createElement('tr');
+
+	      			tr.setAttribute('entryId',id);
+
+	      			inbox.gpfnfields.forEach(build_inner_table(tr, entry));
+
+	      			tbody.appendChild(tr);
+	      		})
+	      	}
+
+	      	function build_inner_table(tr,fieldValues){
+	      		return function(field){
+	      			let fieldValue = fieldValues[field.id],
+	      			td = document.createElement('td'),
+	      			value = fieldValue && fieldValue.label,
+	      			method = 'textContent';
+
+	      			if(value){
+	      				if(value.indexOf('<') != -1){
+	      					method = 'innerHTML';
+	      				}
+	      					
+	      				td[method] = value;
+	      			}
+
+	      			tr.appendChild(td);
+	      		}
+	      	}
+
 	      	button.onclick = function(event){
 	      		event.preventDefault();
 
@@ -471,22 +503,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 
 	      			tr.setAttribute('entryId',id);
 
-	      			inbox.gpfnfields.forEach((field)=>{
-	      				let fieldValue = fieldValues[field.id],
-	      				td = document.createElement('td'),
-	      				value = fieldValue && fieldValue.label,
-	      				method = 'textContent';
-
-	      				if(value){
-	      					if(value.indexOf('<') != -1){
-	      						method = 'innerHTML';
-	      					}
-	      					
-	      					td[method] = value;
-	      				}
-
-	      				tr.appendChild(td);
-	      			})
+	      			inbox.gpfnfields.forEach(build_inner_table(tr, fieldValues));
 
 	      			tbody.appendChild(tr);
 	      		}});
