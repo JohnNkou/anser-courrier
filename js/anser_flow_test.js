@@ -289,12 +289,13 @@ var require_anser_flow_utils = __commonJS((exports2) => {
   function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index }) {
     switch (inbox.type) {
       case "section": {
-        let section = document.createElement("section"), h5 = document.createElement("h5");
-        div_content = document.createElement("div"), h5.className = "title";
+        console.log("I am IN A SECTION BEAUTY");
+        let section = document.createElement("section"), h5 = document.createElement("h5"), div_content = document.createElement("div");
+        h5.className = "title";
         h5.textContent = inbox.label;
         setAttribute(section, atts);
         section.appendChild(h5);
-        section.appendChild(div_container);
+        section.appendChild(div_content);
         return section;
         break;
       }
@@ -531,7 +532,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             break;
           }
           case "fileupload": {
-            let div = document.createElement("div"), label = document.createElement("label"), input = document.createElement("input"), div_input = document.createElement("div"), div_container2 = document.createElement("div"), div_22 = document.createElement("div"), div_list = document.createElement("div"), div_error2 = document.createElement("div"), fileDivAtts = new Attributes;
+            let div = document.createElement("div"), label = document.createElement("label"), input = document.createElement("input"), div_input = document.createElement("div"), div_container = document.createElement("div"), div_22 = document.createElement("div"), div_list = document.createElement("div"), div_error2 = document.createElement("div"), fileDivAtts = new Attributes;
             label.textContent = inbox.label;
             div_22.innerHTML = inbox.value;
             atts.append("class", "card");
@@ -545,10 +546,10 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             setAttribute(div_error2, failedAtts);
             div.appendChild(label);
             div_input.appendChild(input);
-            div_container2.appendChild(div_input);
-            div_container2.appendChild(div_22);
-            div_container2.appendChild(div_list);
-            div.appendChild(div_container2);
+            div_container.appendChild(div_input);
+            div_container.appendChild(div_22);
+            div_container.appendChild(div_list);
+            div.appendChild(div_container);
             return div;
             break;
           }

@@ -42,14 +42,14 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index }
 		case 'section':{
 			console.log('I am IN A SECTION BEAUTY');
 			let section = document.createElement('section'),
-			h5 = document.createElement('h5');
-			div_content = document.createElement('div'),
+			h5 = document.createElement('h5'),
+			div_content = document.createElement('div');
 			h5.className = 'title';
 			h5.textContent = inbox.label;
 
 			setAttribute(section,atts);
 			section.appendChild(h5);
-			section.appendChild(div_container);
+			section.appendChild(div_content);
 			return section;
 			break;
 		}
