@@ -33,6 +33,8 @@ function display_formCreator({ fields, title, form_id }){
     throw Error("No formCreator div found");
   }
 
+  console.log('FORM',form);
+
   form.onsubmit = function(event){
     event.preventDefault();
     console.log("Ok submit happening");
