@@ -329,7 +329,9 @@ add_shortcode("anser_gravityflow",function(...$atts){
 add_filter("gform_entry_field_value","handle_gravity_form_submission",10,4);
 
 add_filter('gform_get_form_confirmation_filter',function($confirmation_markup, $form){
-    flogs("GET CONF CALLED");
+    preg_match("loadEntry\(([^\)]+)\)", $confirmation_markup, $match);
+
+    flogs("MATCH IS %s",print_r($match,true));
 
     return $confirmation_markup;
 },10,2);
