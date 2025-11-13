@@ -275,6 +275,311 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       console.error("TBODY NOT FOUND");
     }
   }
+  function setAttribute(node, atts) {
+    atts.forEach((values, attName) => {
+      values.forEach((value2) => {
+        if (attName == "class") {
+          node.classList.add(value2);
+        } else {
+          node.setAttribute(attName, value2);
+        }
+      });
+    });
+  }
+  function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index }) {
+    switch (inbox.type) {
+      case "section": {
+        let section = document.createElement("section"), h5 = document.createElement("h5");
+        div_content = document.createElement("div"), h5.className = "title";
+        h5.textContent = inbox.label;
+        setAttribute(section, atts);
+        section.appendChild(h5);
+        section.appendChild(div_container);
+        return section;
+        break;
+      }
+      case "html": {
+        let div = document.createElement("div"), label = document.createElement("label");
+        label.textContent = inbox.label;
+        atts.append("class", "card");
+        div.appendChild(label);
+        setAttribute(div, atts);
+        return div;
+        break;
+      }
+      case "text": {
+        let div = document.createElement("div"), label = document.createElement("label"), p = document.createElement("p");
+        label.textContent = inbox.label;
+        p.textContent = inbox.value;
+        atts.append("class", "card");
+        setAttribute(div, atts);
+        div.appendChild(label);
+        div.appendChild(p);
+        return div;
+        break;
+      }
+      case "hidden": {
+        let div = document.createElement("div"), input = document.createElement("input");
+        input.type = "hidden";
+        atts.append("class", "hidden");
+        inputAtts.set("index", inbox_index);
+        setAttribute(div, atts);
+        setAttribute(input, inputAtts);
+        div.appendChild(input);
+        return div;
+        break;
+      }
+      case "button": {
+        let div = document.createElement("div"), button = document.createElement("button");
+        button.textContent = inbox.label;
+        atts.append("class", "card");
+        inputAtts.set("index", inbox_index);
+        inputAtts.set("type", inbox.buttonType);
+        inputAtts.append("class", inbox.class);
+        setAttribute(div, atts);
+        setAttribute(button, inputAtts);
+        div.appendChild(button);
+        return div;
+        break;
+      }
+      case "radio": {
+        let div = document.createElement("div"), label = document.createElement("label"), input = document.createElement("input");
+        label.textContent = inbox.label;
+        label.setAttribute("for", inbox.name);
+        if (inbox.checked) {
+          inputAtts.set("checked", "checked");
+        }
+        atts.append("class", "card");
+        inputAtts.set("type", "radio");
+        setAttribute(div, atts);
+        setAttribute(input, inputAtts);
+        div.appendChild(label);
+        div.appendChild(input);
+        return div;
+        break;
+      }
+      case "submit": {
+        let div = document.createElement("div"), button = document.createElement("button");
+        button.textContent = inbox.value;
+        atts.append("class", "card");
+        inputAtts.set("index", inbox_index);
+        inputAtts.append("class", "btn-success");
+        inputAtts.set("type", "submit");
+        setAttribute(div, atts);
+        setAttribute(button, inputAtts);
+        div.appendChild(button);
+        return div;
+        break;
+      }
+      case "edit":
+        value = get_field_value(inbox);
+        inputAtts.set("value", value);
+        inputAtts.set("placeholder", inbox.placeholder);
+        switch (inbox.fieldType) {
+          case "text":
+          case "product": {
+            let div = document.createElement("div"), div_error2 = document.createElement("div"), input = document.createElement("input"), label = document.createElement("label"), p = document.createElement("p");
+            label.textContent = inbox.label;
+            atts.append("class", "card");
+            inputAtts.set("type", "text");
+            inputAtts.set("placeholder", inbox.placeholder);
+            setAttribute(div, atts);
+            setAttribute(input, inputAtts);
+            setAttribute(div_error2, failedAtts);
+            p.appendChild(input);
+            div.appendChild(label);
+            div.appendChild(p);
+            div.appendChild(div_error2);
+            return div;
+            break;
+          }
+          case "textarea": {
+            let div = document.createElement("div"), label = document.createElement("label"), p = document.createElement("p"), textarea = document.createElement("textarea"), div_error2 = document.createElement("div");
+            label.textContent = inbox.label;
+            textarea.textContent = value;
+            atts.append("class", "card");
+            inputAtts.remove("value");
+            setAttribute(div, atts);
+            setAttribute(textarea, inputAtts);
+            setAttribute(div_error2, failedAtts);
+            p.appendChild(textarea);
+            div.appendChild(label);
+            div.appendChild(p);
+            div.appendChild(div_error2);
+            return div;
+            break;
+          }
+          case "radio": {
+            let div = document.createElement("div"), label = document.createElement("label"), p = document.createElement("p"), div_error2 = document.createElement("div");
+            inbox.choices.forEach((choice) => {
+              let span = document.createElement("span"), label2 = document.createElement("label"), input = document.createElement("input");
+              if (choice.value == value) {
+                input.setAttribute("checked", "checked");
+              }
+              label2.textContent = choice.text;
+              input.type = "radio";
+              input.value = choice.value;
+              span.appendChild(label2);
+              span.appendChild(input);
+              p.appendChild(span);
+            });
+            label.textContent = inbox.label;
+            atts.append("class", "card");
+            setAttribute(div, atts);
+            setAttribute(div_error2, failedAtts);
+            div.appendChild(label);
+            div.appendChild(p);
+            div.appendChild(div_error2);
+            return div;
+            break;
+          }
+          case "checkbox": {
+            let div = document.createElement("div"), label = document.createElement("label");
+            div_2 = document.createElement("div"), div_error = document.createElement("div");
+            inbox.choices.forEach((choice) => {
+              let p = document.createElement("p"), label2 = document.createElement("label"), input = document.createElement("input"), checked = value.indexOf(choice.value) != -1, id = inbox.inputs.filter((input2) => {
+                return input2.label == choice.value;
+              })[0]["id"];
+              if (checked) {
+                input.setAttribute("checked", "checked");
+              }
+              label2.textContent = choice.text;
+              input.name = "input_" + id;
+              input.value = choice.value;
+              input.type = "checkbox";
+              p.appendChild(label2);
+              p.appendChild(input);
+              div_2.appendChild(p);
+            });
+            label.textContent = inbox.label;
+            atts.append("class", "card");
+            setAttribute(div, atts);
+            setAttribute(div_error, atts);
+            div.appendChild(label);
+            div.appendChild(div_2);
+            div.appendChild(div_error);
+            return div;
+            break;
+          }
+          case "select": {
+            let div = document.createElement("div"), label = document.createElement("label"), select = document.createElement("select"), div_error2 = document.createElement("div");
+            label.textContent = inbox.label;
+            [{ value: "", text: "---" }].concat(inbox.choices).forEach((choice) => {
+              let option = document.createElement("option"), selected = choice.value == value;
+              if (selected) {
+                option.setAttribute("selected", "selected");
+              }
+              option.value = choice.value;
+              option.textContent = choice.text;
+              select.appendChild(option);
+            });
+            atts.append("class", "card");
+            inputAtts.remove("value");
+            inputAtts.remove("placeholder");
+            setAttribute(div, atts);
+            setAttribute(select, inputAtts);
+            setAttribute(div_error2, failedAtts);
+            div.appendChild(label);
+            div.appendChild(select);
+            div.appendChild(div_error2);
+            return div;
+            break;
+          }
+          case "workflow_assignee_select": {
+            let div = document.createElement("div"), label = document.createElement("label"), select = document.createElement("select"), div_error2 = document.createElement("div");
+            label.textContent = inbox.label;
+            atts.append("class", "card");
+            inputAtts.remove("value");
+            inputAtts.remove("placeholder");
+            setAttribute(div, atts);
+            setAttribute(select, inputAtts);
+            setAttribute(div_error2, failedAtts);
+            div.appendChild(label);
+            div.appendChild(select);
+            div.appendChild(div_error2);
+            return div;
+            break;
+          }
+          case "workflow_multi_user": {
+            let div = document.createElement("div"), label = document.createElement("label"), select = document.createElement("select"), div_error2 = document.createElement("div_error");
+            label.textContent = inbox.label;
+            select.setAttribute("multiple", "true");
+            try {
+              inbox.leaf_value = JSON.parse(inbox.leaf_value);
+            } catch (error) {
+              inbox.leaf_value = [];
+            }
+            inbox.choices.forEach((choice) => {
+              let option = document.createElement("option"), selected = inbox.leaf_value.indexOf(choice.value) != -1 ? "selected" : "";
+              if (selected) {
+                option.setAttribute("selected", "true");
+              }
+              option.value = choice.value;
+              option.textContent = choice.text;
+              select.appendChild(option);
+            });
+            atts.append("class", "card");
+            inputAtts.remove("value");
+            inputAtts.remove("placeholder");
+            setAttribute(div, atts);
+            setAttribute(select, inputAtts);
+            setAttribute(div_error2, failedAtts);
+            div.appendChild(label);
+            div.appendChild(select);
+            div.appendChild(div_error2);
+            return div;
+            break;
+          }
+          case "fileupload": {
+            let div = document.createElement("div"), label = document.createElement("label"), input = document.createElement("input"), div_input = document.createElement("div"), div_container2 = document.createElement("div"), div_22 = document.createElement("div"), div_list = document.createElement("div"), div_error2 = document.createElement("div"), fileDivAtts = new Attributes;
+            label.textContent = inbox.label;
+            div_22.innerHTML = inbox.value;
+            atts.append("class", "card");
+            inputAtts.remove("value");
+            inputAtts.remove("placeholder");
+            inputAtts.set("type", "file");
+            fileDivAtts.append("class", "file_detail_" + inbox.id);
+            setAttribute(div, atts);
+            setAttribute(input, inputAtts);
+            setAttribute(div_list, fileDivAtts);
+            setAttribute(div_error2, failedAtts);
+            div.appendChild(label);
+            div_input.appendChild(input);
+            div_container2.appendChild(div_input);
+            div_container2.appendChild(div_22);
+            div_container2.appendChild(div_list);
+            div.appendChild(div_container2);
+            return div;
+            break;
+          }
+          case "date": {
+            let div = document.createElement("div"), label = document.createElement("label"), input = document.createElement("input");
+            label.textContent = inbox.label;
+            atts.append("class", "card");
+            setAttribute(div, atts);
+            setAttribute(input, inputAtts);
+            div.appendChild(label);
+            div.appendChild(input);
+            return div;
+            break;
+          }
+          default: {
+            let div = document.createElement("div"), label = document.createElement("label"), div_22 = document.createElement("div");
+            label.textContent = "In- " + inbox.label;
+            div_22.innerHTML = inbox.value;
+            atts.append("class", "card");
+            setAttribute(div, atts);
+            div.appendChild(label);
+            div.appendChild(div_22);
+            console.error("unknwon inbox fieldType", inbox);
+            return div;
+          }
+        }
+        break;
+      default:
+        console.error("Unknwon inbox type", inbox);
+    }
+  }
   function update_file_to_send(input, file_to_sends) {
     let files = input.files, id = input.getAttribute("id"), evolution_div = document.querySelector(".file_detail_" + id);
     if (!id) {
@@ -536,165 +841,21 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               atts.append("class", "hidden");
             }
           }
-          switch (inbox.type) {
-            case "section":
-              if (!should_display_field(inbox, field_ids, inboxes)) {
-                atts.append("class", "hidden");
-              }
-              if (inbox.rules) {
-                section_with_rules = true;
-              }
-              bodyHtml += "<section " + atts.toString() + ">";
-              bodyHtml += "<h5 class='title'>" + inbox.label + "</h5>";
-              bodyHtml += "<div>";
-              inSection = true;
-              break;
-            case "html":
-              atts.append("class", "card");
-              bodyHtml += "<div " + atts.toString() + ">" + inbox.value + "</div>";
-              break;
-            case "text":
-              atts.append("class", "card");
-              bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><p>" + inbox.value + "</p></div>";
-              break;
-            case "hidden":
-              atts.append("class", "hidden");
-              inputAtts.set("index", inbox_index);
-              inputAtts.set("type", "hidden");
-              bodyHtml += "<div " + atts.toString() + "><input " + inputAtts.toString() + " /></div>";
-              break;
-            case "button":
-              atts.append("class", "card");
-              inputAtts.set("index", inbox_index);
-              inputAtts.set("type", inbox.buttonType);
-              inputAtts.append("class", inbox.class);
-              bodyHtml += "<div " + atts.toString() + "><button " + inputAtts.toString() + ">" + inbox.label + "</button></div>";
-              break;
-            case "radio":
-              atts.append("class", "card");
-              if (inbox.checked) {
-                inputAtts.set("checked", "checked");
-              }
-              inputAtts.set("type", "radio");
-              bodyHtml += "<div " + atts.toString() + "><label for='" + inbox.name + "'>" + inbox.label + "</label><input " + inputAtts.toString() + " /></div>";
-              break;
-            case "submit":
-              atts.append("class", "card");
-              inputAtts.set("index", inbox_index);
-              inputAtts.append("class", "btn-success");
-              inputAtts.set("type", "submit");
-              bodyHtml += "<div " + atts.toString() + "><button " + inputAtts.toString() + ">" + inbox.value + "</button></div>";
-              break;
-            case "edit":
-              value2 = get_field_value(inbox);
-              inputAtts.set("value", value2);
-              inputAtts.set("placeholder", inbox.placeholder);
-              switch (inbox.fieldType) {
-                case "text":
-                case "product":
-                  atts.append("class", "card");
-                  inputAtts.set("type", "text");
-                  inputAtts.set("placeholder", inbox.placeholder);
-                  bodyHtml += "<div " + atts.toString() + " ><label>" + inbox.label + "</label><p><input " + inputAtts.toString() + " /></p><div " + failedAtts.toString() + "></div></div>";
-                  break;
-                case "textarea":
-                  atts.append("class", "card");
-                  inputAtts.remove("value");
-                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><p><textarea " + inputAtts.toString() + ">" + value2 + "</textarea></p><div " + failedAtts.toString() + "></div></div>";
-                  break;
-                case "radio":
-                  atts.append("class", "card");
-                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><p>";
-                  inbox.choices.forEach((choice) => {
-                    if (choice.value == value2) {
-                      inputAtts.set("checked", "checked");
-                    } else {
-                      inputAtts.remove("checked");
-                    }
-                    inputAtts.set("type", "radio");
-                    inputAtts.set("value", choice.value);
-                    bodyHtml += "<span><label>" + choice.text + "</label><input " + inputAtts.toString() + " /></span>";
-                  });
-                  bodyHtml += "</p><div " + failedAtts.toString() + "></div></div>";
-                  break;
-                case "checkbox":
-                  atts.append("class", "card");
-                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><div>";
-                  inbox.choices.forEach((choice) => {
-                    let checked = value2.indexOf(choice.value) != -1, id = inbox.inputs.filter((input) => {
-                      return input.label == choice.value;
-                    })[0]["id"];
-                    if (checked) {
-                      inputAtts.set("checked", "checked");
-                    } else {
-                      inputAtts.remove("checked");
-                    }
-                    inputAtts.set("name", "input_" + id);
-                    inputAtts.set("value", choice.value);
-                    inputAtts.set("type", "checkbox");
-                    bodyHtml += "<p><label>" + choice.text + "</label><input " + inputAtts.toString() + " /></p>";
-                  });
-                  bodyHtml += "</div><div " + failedAtts.toString() + "></div></div>";
-                  break;
-                case "select":
-                  atts.append("class", "card");
-                  inputAtts.remove("value");
-                  inputAtts.remove("placeholder");
-                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><select " + inputAtts.toString() + "><option>Selectionner</option>";
-                  inbox.choices.forEach((choice) => {
-                    let selected = choice.value == value2, atts2 = new Attributes;
-                    if (selected) {
-                      atts2.set("selected", "selected");
-                    }
-                    atts2.set("value", choice.value);
-                    bodyHtml += "<option " + atts2.toString() + ">" + choice.text + "</option>";
-                  });
-                  bodyHtml += "</select><div " + failedAtts.toString() + "></div></div>";
-                  break;
-                case "workflow_assignee_select":
-                  atts.append("class", "card");
-                  inputAtts.remove("value");
-                  inputAtts.remove("placeholder");
-                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><select " + inputAtts.toString() + ">" + inbox.value + "</select></div>";
-                  break;
-                case "workflow_multi_user":
-                  atts.append("class", "card");
-                  inputAtts.remove("value");
-                  inputAtts.remove("placeholder");
-                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><select multiple " + inputAtts.toString() + ">";
-                  try {
-                    inbox.leaf_value = JSON.parse(inbox.leaf_value);
-                  } catch (error) {
-                    inbox.leaf_value = [];
-                  }
-                  inbox.choices.forEach((choice) => {
-                    let selected = inbox.leaf_value.indexOf(choice.value) != -1 ? "selected" : "";
-                    bodyHtml += "<option " + selected + " value='" + choice.value + "'>" + choice.text + "</option>";
-                  });
-                  bodyHtml += "</select>";
-                  bodyHtml += "</div>";
-                  break;
-                case "fileupload":
-                  atts.append("class", "card");
-                  inputAtts.remove("value");
-                  inputAtts.remove("placeholder");
-                  inputAtts.set("type", "file");
-                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label>";
-                  bodyHtml += "<div><div><input " + inputAtts.toString() + " /></div><div>" + inbox.value + "</div><div class='file_detail_" + inbox.id + "'></div></div>";
-                  bodyHtml += "</div>";
-                  break;
-                case "date":
-                  atts.append("class", "card");
-                  bodyHtml += "<div " + atts.toString() + "><label>" + inbox.label + "</label><input " + inputAtts.toString() + " />";
-                  break;
-                default:
-                  atts.append("class", "card");
-                  bodyHtml += "<div " + atts.toString() + "><label>In- " + inbox.label + "</label><div>" + inbox.value + "</div></div>";
-                  console.error("unknwon inbox fieldType", inbox);
-              }
-              break;
-            default:
-              console.error("Unknwon inbox type", inbox);
+          let node = build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index });
+          if (!node) {
+            console.log("Missing node for inbox", inbox);
+            throw Error("Missing node");
+          }
+          if (inbox.type == "section") {
+            currentSection = node.querySelector("div");
+            inSection = true;
+            content_node.appendChild(node);
+          } else {
+            if (inSection) {
+              currentSection.appendChild(node);
+            } else {
+              content_node.appendChild(node);
+            }
           }
           if (inbox.action) {
             actionNodes[inbox_index] = inbox.action;
@@ -704,9 +865,6 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           console.error(error);
         }
       });
-      if (inSection) {
-        bodyHtml += "</div></section>";
-      }
     });
     content_node.onsubmit = (event) => {
       event.preventDefault();
@@ -855,7 +1013,6 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         }
       }
     };
-    content_node.innerHTML = bodyHtml;
   }
   function onglet_handler(contents) {
     let onglets = document.querySelector(".onglets");
