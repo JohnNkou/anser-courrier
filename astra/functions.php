@@ -330,6 +330,8 @@ add_filter("gform_entry_field_value","handle_gravity_form_submission",10,4);
 
 add_filter('gform_get_form_confirmation_filter',function($confirmation_markup, $form){
     flogs("GET CONF CALLED");
+
+    return $confirmation_markup;
 },10,2);
 
 add_filter("gform_permission_granted_pre_download","process_download_file",10,3);
