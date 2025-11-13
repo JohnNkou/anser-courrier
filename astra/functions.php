@@ -329,10 +329,14 @@ add_shortcode("anser_gravityflow",function(...$atts){
 add_filter("gform_entry_field_value","handle_gravity_form_submission",10,4);
 
 add_filter('gform_get_form_confirmation_filter',function($confirmation_markup, $form){
-    preg_match("/loadEntry\(([^\)]+)\)/", $confirmation_markup, $match);
+    if(isset($_REQUEST['anser_ajax'])){
+        preg_match("/loadEntry\(([^\)]+)\)/", $confirmation_markup, $match);
 
-    if(count($match) > 1){
-        flogs("ENTRY DATA IS %s",print_r(json_decode($match[1]),true));
+        if(count($match) > 1){
+            wp_send_json_success($match[1]);
+            
+            exit;
+        }
     }
 
     return $confirmation_markup;

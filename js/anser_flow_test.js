@@ -40,10 +40,11 @@ var require_anser_utily = __commonJS((exports2) => {
       searchParams.append("view", "entry");
       searchParams.append("id", parent_form_id);
       searchParams.append("lid", entry_id);
+      searchParams.append("anser_ajax", "true");
       fetch(url, {
         method: "POST",
         body: new FormData(event.target)
-      });
+      }).then((response) => {});
     };
     button.onclick = function() {
       console.log("CLOSING THE STUFF");

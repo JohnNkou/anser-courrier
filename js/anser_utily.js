@@ -55,10 +55,13 @@ function display_formCreator({ inbox, entry_data }){
     searchParams.append('view','entry');
     searchParams.append('id', parent_form_id);
     searchParams.append('lid', entry_id);
+    searchParams.append('anser_ajax','true');
 
     fetch(url,{
       method:'POST',
       body: new FormData(event.target)
+    }).then((response)=>{
+      
     });
   }
 
