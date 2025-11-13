@@ -274,7 +274,7 @@ class GFFormDisplay {
 
 			if ( is_array( $confirmation ) && isset( $confirmation['redirect'] ) && ! $suppress_redirect ) {
 				header( "Location: {$confirmation["redirect"]}" );
-
+				flogs("CONFIRMATION IS ARRAY");
 				$gform_post_submission_args = array( 'gform_post_submission', $form_id );
 				if ( gf_has_action( $gform_post_submission_args ) ) {
 					GFCommon::log_debug( __METHOD__ . '(): Executing functions hooked to gform_post_submission.' );
