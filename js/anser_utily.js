@@ -24,7 +24,7 @@ function file_viewer_handler(node) {
 
 function display_formCreator({ fields, title, form_id }){
   let div = document.getElementById('formCreator'),
-  form = document.querySelector('form'),
+  form = div && div.querySelector('form'),
   titleNode = div && div.querySelector('.title'),
   contentNode = div && div.querySelector('.content'),
   button = div && div.querySelector('.close');
@@ -32,8 +32,6 @@ function display_formCreator({ fields, title, form_id }){
   if(!div){
     throw Error("No formCreator div found");
   }
-
-  console.log('FORM',form);
 
   form.onsubmit = function(event){
     event.preventDefault();

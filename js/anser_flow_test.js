@@ -25,11 +25,10 @@ var require_anser_utily = __commonJS((exports2) => {
     });
   }
   function display_formCreator({ fields, title, form_id }) {
-    let div = document.getElementById("formCreator"), form = document.querySelector("form"), titleNode = div && div.querySelector(".title"), contentNode = div && div.querySelector(".content"), button = div && div.querySelector(".close");
+    let div = document.getElementById("formCreator"), form = div && div.querySelector("form"), titleNode = div && div.querySelector(".title"), contentNode = div && div.querySelector(".content"), button = div && div.querySelector(".close");
     if (!div) {
       throw Error("No formCreator div found");
     }
-    console.log("FORM", form);
     form.onsubmit = function(event) {
       event.preventDefault();
       console.log("Ok submit happening");
