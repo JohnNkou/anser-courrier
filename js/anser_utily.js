@@ -114,6 +114,7 @@ function display_formCreator({ inbox, entry_data, onsuccess }){
     switch(field.type){
       case 'textarea':{
         inputNode = document.createElement('textarea');
+        inputNode.name = id;
         break;
       }
       case 'select':{
@@ -142,6 +143,7 @@ function display_formCreator({ inbox, entry_data, onsuccess }){
       case 'fileupload':
         inputNode = document.createElement('input');
         inputNode.type = 'file';
+        inputNode.name = id;
         break;
       default:
         inputNode = document.createElement('span');

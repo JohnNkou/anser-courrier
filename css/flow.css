@@ -102,6 +102,9 @@ body #main {
     flex-direction: column;
     box-shadow: none;
 }
+#my-content .card table{
+   text-align: center;
+}
 .hidden{
    display: none;
 }

@@ -87,6 +87,7 @@ var require_anser_utily = __commonJS((exports2) => {
       switch (field.type) {
         case "textarea": {
           inputNode = document.createElement("textarea");
+          inputNode.name = id;
           break;
         }
         case "select": {
@@ -114,6 +115,7 @@ var require_anser_utily = __commonJS((exports2) => {
         case "fileupload":
           inputNode = document.createElement("input");
           inputNode.type = "file";
+          inputNode.name = id;
           break;
         default:
           inputNode = document.createElement("span");
