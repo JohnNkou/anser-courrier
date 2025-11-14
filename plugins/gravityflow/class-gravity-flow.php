@@ -4881,7 +4881,7 @@ PRIMARY KEY  (id)
 					$current_user_assignee_key = $this->get_current_user_assignee_key();
 					if ( $next_step && ( $next_step->is_assignee( $current_user_assignee_key ) || $args['check_permissions'] == false || $this->current_user_can_any( 'gravityflow_status_view_all' ) ) ) {
 						$step = $next_step->get_current_assignee_status() == 'complete' ? false : $next_step;
-						error_log("ASSIGNED STEP AFTER Checking user permission. Step is of class ".get_class($step));
+						flogs("ASSIGNED STEP AFTER Checking user permission. ");
 					} else {
 						$step = false;
 						$args['display_instructions'] = false;
