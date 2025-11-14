@@ -696,10 +696,13 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             var build_inner_table = build_inner_table2;
             let div = document.createElement("div"), label = document.createElement("label"), button = document.createElement("button"), table = document.createElement("table"), thead = document.createElement("thead"), tbody = document.createElement("tbody"), input = document.createElement("input"), tr = document.createElement("tr"), innerField = inbox.gpfnfields;
             innerField.forEach((field) => {
-              let th = document.createElement("th");
-              th.textContent = field.label;
-              tr.appendChild(th);
+              if (parseInt(field.id)) {
+                let th = document.createElement("th");
+                th.textContent = field.label;
+                tr.appendChild(th);
+              }
             });
+            tr.appendChild(document.createElement("th"));
             label.textContent = inbox.label;
             button.textContent = "Ajouter";
             input.type = "hidden";
@@ -713,13 +716,26 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             div.appendChild(label);
             div.appendChild(button);
             div.appendChild(input);
+            tbody.onclick = function(event) {
+              event.preventDefault();
+              let target = event.target, action = target.getAttribute("data-action"), entryId = target.getAttribute("entryId");
+              if (action == "delete") {
+                console.log("Received delete action. Cool");
+                console.log("EntryId", entryId);
+              }
+            };
             if (inbox.entries && inbox.entries.forEach) {
               let ids = [];
               inbox.entries.forEach((entry) => {
-                let id = entry.id, tr2 = document.createElement("tr");
+                let id = entry.id, tr2 = document.createElement("tr"), delete_link = document.createElement("a");
                 ids.push(id);
+                delete_link.setAttribute("entryId", id);
+                delete_link.setAttribute("data-action", "delete");
+                delete_link.href = "#";
+                delete_link.textContent = "Supprimer";
                 tr2.setAttribute("entryId", id);
                 inbox.gpfnfields.forEach(build_inner_table2(tr2, entry));
+                tr2.appendChild(delete_link);
                 tbody.appendChild(tr2);
               });
               input.value = ids.join(",");

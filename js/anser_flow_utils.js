@@ -443,11 +443,15 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      	innerField = inbox.gpfnfields;
 
 	      	innerField.forEach((field)=>{
-	      		let th = document.createElement('th');
-	      		th.textContent = field.label;
+	      		if(parseInt(field.id)){
+	      			let th = document.createElement('th');
+		      		th.textContent = field.label;
 
-	      		tr.appendChild(th);
+		      		tr.appendChild(th);
+	      		}
 	      	})
+
+	      	tr.appendChild(document.createElement("th"));
 
 	      	label.textContent = inbox.label;
 	      	button.textContent = "Ajouter";
@@ -465,18 +469,37 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      	div.appendChild(button);
 	      	div.appendChild(input);
 
+	      	tbody.onclick = function(event){
+	      		event.preventDefault();
+
+	      		let target = event.target,
+	      		action = target.getAttribute('data-action'),
+	      		entryId = target.getAttribute('entryId');
+
+	      		if(action == 'delete'){
+	      			console.log("Received delete action. Cool");
+	      			console.log("EntryId",entryId);
+	      		}
+	      	}
+
 	      	if(inbox.entries && inbox.entries.forEach){
 	      		let ids = [];
 
 	      		inbox.entries.forEach((entry)=>{
 	      			let id = entry.id,
-	      			tr = document.createElement('tr');
+	      			tr = document.createElement('tr'),
+	      			delete_link = document.createElement('a');
 
 	      			ids.push(id);
+	      			delete_link.setAttribute('entryId',id);
+	      			delete_link.setAttribute('data-action','delete');
+	      			delete_link.href = "#";
+	      			delete_link.textContent = "Supprimer";
 
 	      			tr.setAttribute('entryId',id);
 
 	      			inbox.gpfnfields.forEach(build_inner_table(tr, entry));
+	      			tr.appendChild(delete_link);
 
 	      			tbody.appendChild(tr);
 	      		})
