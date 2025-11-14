@@ -786,6 +786,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                 tr2.setAttribute("entryId", id);
                 delete_link.setAttribute("entryId", id);
                 delete_link.setAttribute("data-action", "delete");
+                delete_link.href = "#";
+                delete_link.textContent = "Supprimer";
                 inbox.gpfnfields.forEach(build_inner_table2(tr2, fieldValues));
                 td_delete.appendChild(delete_link);
                 tr2.appendChild(td_delete);

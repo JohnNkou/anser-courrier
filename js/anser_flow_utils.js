@@ -587,6 +587,8 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      			tr.setAttribute('entryId',id);
 	      			delete_link.setAttribute('entryId',id);
 	      			delete_link.setAttribute('data-action','delete');
+	      			delete_link.href = "#";
+	      			delete_link.textContent = "Supprimer";
 
 	      			inbox.gpfnfields.forEach(build_inner_table(tr, fieldValues));
 
