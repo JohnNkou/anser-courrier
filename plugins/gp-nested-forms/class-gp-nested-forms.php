@@ -2525,7 +2525,6 @@ class GP_Nested_Forms extends GP_Plugin {
 	}
 
 	public function get_submitted_nested_entries( $form, $field_id = false, $display_values = true ) {
-		flogs("THE FORM ID IS %s with field_id %s",$form['id'], $field_id);
 		$all_entries = array();
 		$nested_form = null;
 
@@ -2604,8 +2603,6 @@ class GP_Nested_Forms extends GP_Plugin {
 			 * @param object $field              Current field object.
 			 */
 			$entry_ids = gf_apply_filters( array( 'gpnf_submitted_entry_ids', $form['id'], $field->id ), $entry_ids, $form, $field );
-
-			flogs("After applying filter gpfn %s",print_r($entry_ids,true));
 
 			// Load entries from session.
 			if ( empty( $entry_ids ) && $this->should_load_child_entries_from_session( $form, $field ) ) {
