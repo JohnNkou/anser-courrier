@@ -477,8 +477,23 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      		entryId = target.getAttribute('entryId');
 
 	      		if(action == 'delete'){
+	      			let f = new FormData();
+
+	      			f.append('action','gpnf_delete_entry');
+	      			f.append('nonce', inbox.delete_nonce);
+	      			f.append('gpnf_entry_id', entryId);
+	      			f.append('gpnf_nested_form_field_id',inbox.gpfnfForm);
 	      			console.log("Received delete action. Cool");
 	      			console.log("EntryId",entryId);
+
+	      			toggle_loader("Suppression en cour");
+
+	      			fetch(inbox.action_url,{
+	      				method:'POST',
+	      				body: f
+	      			}).finally(()=>{
+	      				toggle_loader();
+	      			})
 	      		}
 	      	}
 

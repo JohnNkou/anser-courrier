@@ -720,8 +720,20 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               event.preventDefault();
               let target = event.target, action = target.getAttribute("data-action"), entryId = target.getAttribute("entryId");
               if (action == "delete") {
+                let f = new FormData;
+                f.append("action", "gpnf_delete_entry");
+                f.append("nonce", inbox.delete_nonce);
+                f.append("gpnf_entry_id", entryId);
+                f.append("gpnf_nested_form_field_id", inbox.gpfnfForm);
                 console.log("Received delete action. Cool");
                 console.log("EntryId", entryId);
+                toggle_loader("Suppression en cour");
+                fetch(inbox.action_url, {
+                  method: "POST",
+                  body: f
+                }).finally(() => {
+                  toggle_loader();
+                });
               }
             };
             if (inbox.entries && inbox.entries.forEach) {
