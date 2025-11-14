@@ -497,9 +497,9 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      				}
 	      					
 	      				td[method] = value;
-	      			}
 
-	      			tr.appendChild(td);
+	      				tr.appendChild(td);
+	      			}
 	      		}
 	      	}
 

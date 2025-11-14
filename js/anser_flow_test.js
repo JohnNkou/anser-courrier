@@ -689,8 +689,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                     method = "innerHTML";
                   }
                   td[method] = value2;
+                  tr2.appendChild(td);
                 }
-                tr2.appendChild(td);
               };
             };
             var build_inner_table = build_inner_table2;
