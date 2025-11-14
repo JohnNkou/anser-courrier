@@ -1,7 +1,7 @@
 <?php 
 namespace ANSER\GV;
 
-require_once ABSPATH . "wp-content/plugins/gravityview/future/includes/class-gv-renderer.php"
+require_once ABSPATH . "wp-content/plugins/gravityview/future/includes/class-gv-renderer.php";
 
 use GV\Renderer;
 use GravityView_Widget_Search;
