@@ -514,7 +514,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      			value = fieldValue && fieldValue.label,
 	      			method = 'textContent';
 
-	      			if(value){
+	      			if(value != undefined){
 	      				if(value.indexOf('<') != -1){
 	      					method = 'innerHTML';
 	      				}
