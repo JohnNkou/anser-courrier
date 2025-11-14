@@ -684,7 +684,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             let build_inner_table2 = function(tr2, fieldValues) {
               return function(field) {
                 let fieldValue = fieldValues[field.id], td = document.createElement("td"), value2 = fieldValue && fieldValue.label, method = "textContent";
-                if (value2) {
+                if (value2 != null) {
                   if (value2.indexOf("<") != -1) {
                     method = "innerHTML";
                   }
