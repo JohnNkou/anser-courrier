@@ -491,6 +491,37 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      			fetch(inbox.action_url,{
 	      				method:'POST',
 	      				body: f
+	      			}).then((response)=>{
+	      				if(response.status == 200){
+	      					response.json().then((data)=>{
+	      						if(data.success){
+	      							let parent;
+	      							display_information_modal("Suppression effectué");
+
+	      							while(parent = target.parentNode){
+	      								if(parent.tagName.toLowerCase() == "tr"){
+	      									tbody.removeChild(parent);
+	      									break;
+	      								}
+	      							}
+	      						}
+	      						else{
+	      							display_information_modal("La suppression n'a pas pu être effectuée");
+	      						}
+	      					}).catch((error)=>{
+	      						display_information_modal("La suppression n'a pas pu être effectuée");
+	      					})
+	      				}
+	      				else{
+	      					console.error("Bad status code",response.status);
+	      					display_information_modal("La suppression n'a pas pu être effectuée");
+
+	      					response.json().then(console.warn).catch(console.error);
+	      				}
+	      			}).catch((error)=>{
+	      				console.error("Error",error);
+
+	      				display_information_modal("Une erreur est survenue lors de la suppression");
 	      			}).finally(()=>{
 	      				toggle_loader();
 	      			})
