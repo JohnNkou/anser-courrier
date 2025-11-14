@@ -781,10 +781,14 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             button.onclick = function(event) {
               event.preventDefault();
               display_formCreator({ inbox, entry_data, onsuccess: (data2) => {
-                let { entryId: id, fieldValues } = data2, tr2 = document.createElement("tr");
+                let { entryId: id, fieldValues } = data2, tr2 = document.createElement("tr"), td_delete = document.createElement("td"), delete_link = document.createElement("a");
                 input.value += "," + id;
                 tr2.setAttribute("entryId", id);
+                delete_link.setAttribute("entryId", id);
+                delete_link.setAttribute("data-action", "delete");
                 inbox.gpfnfields.forEach(build_inner_table2(tr2, fieldValues));
+                td_delete.appendChild(delete_link);
+                tr2.appendChild(td_delete);
                 tbody.appendChild(tr2);
               } });
             };
