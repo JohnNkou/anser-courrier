@@ -578,14 +578,20 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      		display_formCreator({ inbox:inbox, entry_data , onsuccess:(data)=>{
 	      			let id = data.entryId,
 	      			fieldValues = data.fieldValues,
-	      			tr = document.createElement('tr');
+	      			tr = document.createElement('tr'),
+	      			td_delete = document.createElement('td'),
+	      			delete_link = document.createElement('a');
 
 	      			input.value += "," + id;
 
 	      			tr.setAttribute('entryId',id);
+	      			delete_link.setAttribute('entryId',id);
+	      			delete_link.setAttribute('data-action','delete');
 
 	      			inbox.gpfnfields.forEach(build_inner_table(tr, fieldValues));
 
+	      			td_delete.appendChild(delete_link);
+	      			tr.appendChild(td_delete);
 	      			tbody.appendChild(tr);
 	      		}});
 	      	}
