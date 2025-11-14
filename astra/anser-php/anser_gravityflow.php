@@ -5506,7 +5506,7 @@ PRIMARY KEY  (id)
 				}
 
 				while ( $step_complete && $step ) {
-					error_log("Looping while there step_complete and step are thruthy");
+					error_log("Anser Looping while there step_complete and step are thruthy");
 					$this->log_debug( __METHOD__ . '() - getting next step.' );
 
 					// Refresh the entry before getting the next step.
