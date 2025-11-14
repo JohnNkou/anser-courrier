@@ -2368,8 +2368,6 @@ class GP_Nested_Forms extends GP_Plugin {
 			$display_fields = rgar( $field, 'gpnfFields' );
 			$entries        = $this->get_submitted_nested_entries( $form, $field->id );
 			$primary_color  = $field->gpnfModalHeaderColor ? $field->gpnfModalHeaderColor : '#3498db';
-			
-			flogs("ENTRIES ARE THOSE %s",print_r($entries,true));
 
 			$ajax_context = array(
 				'post_id'      => get_queried_object_id(),
