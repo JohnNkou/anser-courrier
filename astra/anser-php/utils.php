@@ -806,7 +806,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
 
             $choices = handle_choice($field);
             $result['choices'] = $choices;
-            $result['inputs'] = $input_choices['inputs'];
+            $result['inputs'] = $field->inputs;
 
             if($field->type == 'section'){
                 $result['type'] = 'section';
