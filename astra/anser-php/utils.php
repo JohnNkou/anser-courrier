@@ -834,6 +834,12 @@ function build_inbox_editable_result($form,$entry,$current_step){
                 $result['value'] = $field->get_choices("");
             }
 
+            if($field->type == 'workflow_multi_user'){
+                $result['choices'] = array_map(function($choice){
+                    return [ "text"=> $choice['text'], "value"=> "user_id|".$choice['value'] ];
+                }, $choices)
+            }
+
             if($field->type == 'form'){
                 gpnf_gravityflow();
 
