@@ -830,10 +830,6 @@ function build_inbox_editable_result($form,$entry,$current_step){
 
             }
 
-            if($field->type == 'checkbox'){
-                flogs("CHECKBOX %s",print_r($field,true));
-            }
-
             if($field->type == 'workflow_assignee_select'){
                 $result['value'] = $field->get_choices("");
             }
