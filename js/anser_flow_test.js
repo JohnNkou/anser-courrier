@@ -494,12 +494,16 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         inputAtts.set("placeholder", inbox.placeholder);
         switch (inbox.fieldType) {
           case "text":
-          case "product": {
+          case "product":
+          case "date": {
             let div = document.createElement("div"), div_error2 = document.createElement("div"), input = document.createElement("input"), label = document.createElement("label"), p = document.createElement("p");
             label.textContent = inbox.label;
             atts.append("class", "card");
-            inputAtts.set("type", "text");
+            inputAtts.set("type", inbox.fieldType);
             inputAtts.set("placeholder", inbox.placeholder);
+            if (inbox.fieldType == "product") {
+              inputAtts.set("type", "text");
+            }
             setAttribute(div, atts);
             setAttribute(input, inputAtts);
             setAttribute(div_error2, failedAtts);

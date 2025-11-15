@@ -162,7 +162,8 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
       inputAtts.set("placeholder", inbox.placeholder);
       switch (inbox.fieldType) {
         case "text":
-        case "product":{
+        case "product":
+        case 'date':{
         	let div = document.createElement('div'),
         	div_error = document.createElement('div'),
         	input = document.createElement('input'),
@@ -172,8 +173,13 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
         	label.textContent = inbox.label;
 
         	atts.append("class", "card");
-          inputAtts.set("type", "text");
+          inputAtts.set("type", inbox.fieldType);
           inputAtts.set("placeholder", inbox.placeholder);
+
+          if(inbox.fieldType == 'product'){
+          	inputAtts.set('type','text');
+          }
+
           setAttribute(div,atts);
           setAttribute(input, inputAtts);
           setAttribute(div_error, failedAtts);
