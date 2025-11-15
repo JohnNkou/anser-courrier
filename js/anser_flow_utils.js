@@ -263,6 +263,8 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
             	input.setAttribute('checked','checked');
             }
 
+            input.setAttribute('id',inbox.id);
+
             label.textContent = choice.text;
             input.name = "input_" + id;
             input.value  = choice.value;

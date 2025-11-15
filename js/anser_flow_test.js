@@ -560,6 +560,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               if (checked) {
                 input.setAttribute("checked", "checked");
               }
+              input.setAttribute("id", inbox.id);
               label2.textContent = choice.text;
               input.name = "input_" + id;
               input.value = choice.value;
