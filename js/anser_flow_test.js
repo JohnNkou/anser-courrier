@@ -605,6 +605,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           case "workflow_assignee_select": {
             let div = document.createElement("div"), label = document.createElement("label"), select = document.createElement("select"), div_error2 = document.createElement("div");
             label.textContent = inbox.label;
+            select.innerHTML = inbox.value;
             atts.append("class", "card");
             inputAtts.remove("value");
             inputAtts.remove("placeholder");

@@ -326,6 +326,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
         	div_error = document.createElement('div');
 
         	label.textContent = inbox.label;
+        	select.innerHTML = inbox.value;
 
         	atts.append("class", "card");
           inputAtts.remove("value");
