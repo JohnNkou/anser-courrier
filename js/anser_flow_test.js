@@ -535,6 +535,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               }
               label2.textContent = choice.text;
               input.type = "radio";
+              input.name = "input_" + inbox.id;
               input.value = choice.value;
               span.appendChild(label2);
               span.appendChild(input);
@@ -1164,7 +1165,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               let msg = message || "<h5>L'Operation a été effectué avec success</h5>";
               display_information_modal(msg).then(() => {
                 toggle_loader("");
-                location.reload();
+                location.href = location.href;
               }).catch((error) => {
                 alert("Une erreur est survenue");
                 console.error(error);

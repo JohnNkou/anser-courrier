@@ -225,6 +225,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 
             label.textContent = choice.text;
             input.type = 'radio';
+            input.name = 'input_' + inbox.id;
             input.value = choice.value;
             
             span.appendChild(label);
@@ -1234,7 +1235,7 @@ function display_entry(payloads, entry_data) {
             			let msg = message || "<h5>L'Operation a été effectué avec success</h5>";
             			display_information_modal(msg).then(() => {
               				toggle_loader("");
-              				location.reload();
+              				location.href = location.href;
             			}).catch((error) => {
 	              			alert("Une erreur est survenue");
 	              			console.error(error);
