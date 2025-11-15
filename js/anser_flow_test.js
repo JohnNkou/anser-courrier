@@ -632,7 +632,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               if (selected) {
                 option.setAttribute("selected", "true");
               }
-              option.value = choice.value;
+              option.value = "user_id|" + choice.value;
               option.textContent = choice.text;
               select.appendChild(option);
             });

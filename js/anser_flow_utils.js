@@ -364,7 +364,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
             if(selected){
             	option.setAttribute('selected','true');
             }
-            option.value = choice.value;
+            option.value = 'user_id|' + choice.value;
             option.textContent = choice.text;
 
             select.appendChild(option);
