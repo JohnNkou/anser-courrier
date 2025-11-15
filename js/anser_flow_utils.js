@@ -350,6 +350,8 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
         	label.textContent = inbox.label;
         	select.setAttribute('multiple','true');
 
+        	inputAtts.set('name', 'input_'+inbox.id+'[]');
+
         	try {
             inbox.leaf_value = JSON.parse(inbox.leaf_value);
           } 

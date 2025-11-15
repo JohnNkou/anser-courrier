@@ -622,6 +622,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             let div = document.createElement("div"), label = document.createElement("label"), select = document.createElement("select"), div_error2 = document.createElement("div_error");
             label.textContent = inbox.label;
             select.setAttribute("multiple", "true");
+            inputAtts.set("name", "input_" + inbox.id + "[]");
             try {
               inbox.leaf_value = JSON.parse(inbox.leaf_value);
             } catch (error) {
@@ -632,7 +633,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               if (selected) {
                 option.setAttribute("selected", "true");
               }
-              option.value = "user_id|" + choice.value;
+              option.value = choice.value;
               option.textContent = choice.text;
               select.appendChild(option);
             });
