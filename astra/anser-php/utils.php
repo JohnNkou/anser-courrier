@@ -837,7 +837,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
             if($field->type == 'workflow_multi_user'){
                 $result['choices'] = array_map(function($choice){
                     return [ "text"=> $choice['text'], "value"=> "user_id|".$choice['value'] ];
-                }, $choices)
+                }, $choices);
             }
 
             if($field->type == 'form'){
