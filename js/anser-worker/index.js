@@ -6,21 +6,23 @@ function goodHandler(event){
 	url = new URL(request.url),
 	pathname = url.pathname;
 
-	return caches.open(APP_NAME).then((cache)=> cache.match(pathname)).then((response)=>{
-		if(response){
-			return response;
-		}
-
-		return fetch(event.request).then((response)=>{
-			if(response.status == 200){
-				return cache.put(response);
-			}
-			else{
-				console.warn("Couldn't cache file because of non 200 status code");
-
+	return caches.open(APP_NAME).then((cache)=> {
+		return cache.match(pathname).then((response)=>{
+			if(response){
 				return response;
 			}
-		})
+
+			return fetch(event.request).then((response)=>{
+				if(response.status == 200){
+					return cache.put(pathname,response);
+				}
+				else{
+					console.warn("Couldn't cache file because of non 200 status code");
+
+					return response;
+				}
+			})
+		});
 	})
 }
 

@@ -31,8 +31,8 @@ class SWN {
       let network_instruction = recordEntry.network_instruction;
       event.respondWith(Promise.resolve(true).then(() => {
         if (this.#to_handle[network_instruction]) {
-          return caches.open(this.#name).then((cache2) => {
-            return cache2.match(pathname).then((response) => {
+          return caches.open(this.#name).then((cache) => {
+            return cache.match(pathname).then((response) => {
               if (response) {
                 return response;
               } else {
@@ -56,8 +56,8 @@ class SWN {
               if (response.status >= 200 && response.status < 300) {
                 let r = await caches.match(pathname);
                 if (!r) {
-                  let cache2 = await caches.open(this.#name);
-                  event.waitUntil(cache2.put(pathname, response.clone()));
+                  let cache = await caches.open(this.#name);
+                  event.waitUntil(cache.put(pathname, response.clone()));
                 }
               }
             } catch (error) {
@@ -83,8 +83,8 @@ class SWN {
       if (exist) {
         await caches.delete(name);
       }
-      let cache2 = await caches.open(name);
-      await cache2.addAll(urls.map((url) => url.pathname));
+      let cache = await caches.open(name);
+      await cache.addAll(urls.map((url) => url.pathname));
       console.log("INSTALLATION ENDED");
       return true;
     }));
@@ -94,17 +94,19 @@ class SWN {
 // index.js
 function goodHandler(event) {
   let request = event.request, url = new URL(request.url), pathname = url.pathname;
-  return caches.open(APP_NAME).then((cache2) => cache2.match(pathname)).then((response) => {
-    if (response) {
-      return response;
-    }
-    return fetch(event.request).then((response2) => {
-      if (response2.status == 200) {
-        return cache.put(response2);
-      } else {
-        console.warn("Couldn't cache file because of non 200 status code");
-        return response2;
+  return caches.open(APP_NAME).then((cache) => {
+    return cache.match(pathname).then((response) => {
+      if (response) {
+        return response;
       }
+      return fetch(event.request).then((response2) => {
+        if (response2.status == 200) {
+          return cache.put(pathname, response2);
+        } else {
+          console.warn("Couldn't cache file because of non 200 status code");
+          return response2;
+        }
+      });
     });
   });
 }
