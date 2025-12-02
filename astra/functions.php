@@ -37,6 +37,7 @@ if ( ASTRA_THEME_ORG_VERSION ) {
 /**
  * Setup helper functions of Astra.
  */
+
 require_once ASTRA_THEME_DIR . 'inc/core/class-astra-theme-options.php';
 require_once ASTRA_THEME_DIR . 'inc/core/class-theme-strings.php';
 require_once ASTRA_THEME_DIR . 'inc/core/common-functions.php';
