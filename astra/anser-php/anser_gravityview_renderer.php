@@ -355,6 +355,17 @@ class View_Renderer extends Renderer
  				alert("Aucun filter definits dans gravityview");
  			}
  		</script>
+
+        <script>
+            if("serviceWorker" in navigator){
+                var url = "<?php echo $_SERVER['REQUEST_URI'] ?>";
+                navigator.serviceWorker.ready.then((workerRegistration)=>{
+                    let worker = workerRegistration.active || workerRegistration.installing;
+
+                    worker.postMessage({ type:'REGISTER', url });
+                })
+            }
+        </script>
  	<?php	
  	}
 
