@@ -361,7 +361,10 @@ add_action("wp_ajax_$gravityflow_entry_ajax_endpoint","load_gravityflow_inbox_en
 add_action("wp_ajax_$gravityview_entry_ajax_endpoint", $gravityview_entry_ajax_endpoint);
 
 add_filter('pre_http_request', function($pre,$args,$url){
-    flogs("URL OF PRE_HTTP_REQUEST %s", $url);
+    if(strpos($url, "doing_wp_cron") !== false){
+        flogs("Skipping url with pre_http_request %s",$url);
+        return true;
+    }
 
     return $pre;
 }, 10, 3);
