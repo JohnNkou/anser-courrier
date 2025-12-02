@@ -165,6 +165,17 @@ class Anser_GravityFlow_Inbox{
 			var _Page = { view_id:'<?php echo $view_id ?>', secret:'<?php echo $secret ?>' , filters:<?php echo $filters ?>, form_ids:<?php echo $form_ids ?> }
 		</script>
 
+		<script>
+			if("serviceWorker" in navigator){
+				let worker = await navigator.serviceWorker.ready;
+
+				console.log("Posting message to worker");
+
+				worker.postMessage("Salut mon beau <?php echo $_SERVER['REQUEST_URI'] ?>");
+				worker.postMessage({type:'REGISTER', data:'ME'});
+			}
+		</script>
+
 		<?php
 	}
 
