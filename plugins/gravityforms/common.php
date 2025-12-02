@@ -455,7 +455,7 @@ class GFCommon {
 	}
 
 	//Returns the url of the plugin's root folder
-	public static function get_base_url() { error_log("__FILE__ is ".__FILE__);
+	public static function get_base_url() {
 		return plugins_url( '', __FILE__ );
 	}
 
