@@ -167,12 +167,12 @@ class Anser_GravityFlow_Inbox{
 
 		<script>
 			if("serviceWorker" in navigator){
-				let worker = await navigator.serviceWorker.ready;
+				navigator.serviceWorker.ready((worker)=>{
+					console.log("Posting message to worker");
 
-				console.log("Posting message to worker");
-
-				worker.postMessage("Salut mon beau <?php echo $_SERVER['REQUEST_URI'] ?>");
-				worker.postMessage({type:'REGISTER', data:'ME'});
+					worker.postMessage("Salut mon beau <?php echo $_SERVER['REQUEST_URI'] ?>");
+					worker.postMessage({type:'REGISTER', data:'ME'});
+				})
 			}
 		</script>
 
