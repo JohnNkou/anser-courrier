@@ -1,5 +1,5 @@
 // js/anser-worker/index.js
-var APP_NAME = "anser-worker-v1.2";
+var APP_NAME = "anser-worker-v1.3";
 self.addEventListener("message", (event) => {
   let data = event.data;
   console.log("THE DATA SENT IS", data);

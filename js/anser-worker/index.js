@@ -1,4 +1,4 @@
-const APP_NAME = 'anser-worker-v1.2';
+const APP_NAME = 'anser-worker-v1.3';
 
 self.addEventListener('message',(event)=>{
 	let data = event.data;
