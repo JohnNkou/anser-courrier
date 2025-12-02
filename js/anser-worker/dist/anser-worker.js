@@ -1,5 +1,5 @@
 // js/anser-worker/index.js
-var APP_NAME = "anser-worker-v1.1.0";
+var APP_NAME = "anser-worker-v1.1.1";
 self.addEventListener("message", (event) => {
   let data = event.data, type = data.type, url = data.url, status = data.status || 200;
   if (type == "REGISTER") {
@@ -34,7 +34,8 @@ self.addEventListener("fetch", (event) => {
         console.log("Serving url", url.pathname);
         return response;
       }
-      return fetch(request);
+      console.log("Retrieving data", request.url);
+      return fetch(request.url);
     });
   }));
 });

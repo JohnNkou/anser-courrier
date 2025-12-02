@@ -1,4 +1,4 @@
-const APP_NAME = 'anser-worker-v1.1.0';
+const APP_NAME = 'anser-worker-v1.1.1';
 
 self.addEventListener('message',(event)=>{
 	let data = event.data,
@@ -46,7 +46,9 @@ self.addEventListener('fetch',(event)=>{
 				return response;
 			}
 
-			return fetch(request);
+			console.log("Retrieving data",request.url);
+
+			return fetch(request.url);
 		})
 	}))
 })
