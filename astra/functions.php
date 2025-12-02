@@ -360,11 +360,11 @@ add_action("wp_ajax_$gravityview_ajax_endpoint",$gravityview_ajax_endpoint);
 add_action("wp_ajax_$gravityflow_entry_ajax_endpoint","load_gravityflow_inbox_entry");
 add_action("wp_ajax_$gravityview_entry_ajax_endpoint", $gravityview_entry_ajax_endpoint);
 
-add_action('pre_http_request', function($pre,$args,$url){
+add_filter('pre_http_request', function($pre,$args,$url){
     flogs("URL OF PRE_HTTP_REQUEST %s", $url);
 
     return $pre;
-});
+}, 10, 3);
 
 /*add_action("wp_enqueue_scripts", function(){
     global $gravityflow_ajax_endpoint, $gravityview_ajax_endpoint, $gravityview_entry_view_endpoint,$gravityflow_inbox_entry_ajax_endpoint;
