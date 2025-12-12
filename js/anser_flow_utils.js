@@ -412,6 +412,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
           inputAtts.remove("value");
           inputAtts.remove("placeholder");
           inputAtts.set("type", "file");
+          inputAtts.set("class","cursor-pointer");
           fileDivAtts.append('class','file_detail_'+inbox.id);
           setAttribute(div,atts);
           setAttribute(input, inputAtts);
