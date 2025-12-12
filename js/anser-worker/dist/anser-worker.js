@@ -1,5 +1,5 @@
 // js/anser-worker/index.js
-var APP_NAME = "anser-worker-v1.1.1";
+var APP_NAME = "anser-worker-v1.1.2";
 self.addEventListener("message", (event) => {
   let data = event.data, type = data.type, url = data.url, status = data.status || 200;
   if (type == "REGISTER") {
