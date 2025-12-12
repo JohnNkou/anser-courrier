@@ -408,6 +408,8 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
         	label.textContent = inbox.label;
         	div_2.innerHTML = inbox.value;
 
+        	console.log("I'm OKAY");
+
         	atts.append("class", "card");
           inputAtts.remove("value");
           inputAtts.remove("placeholder");
