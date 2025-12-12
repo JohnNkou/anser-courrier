@@ -90,8 +90,8 @@ body #main {
     padding-left: 1em;
 }
  .entry-detail section > div {
-    display: flex;
-    gap: 1.5em;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     flex-wrap: wrap;
     align-items: flex-start;
 }
