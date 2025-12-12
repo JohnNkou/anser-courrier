@@ -48,7 +48,13 @@ self.addEventListener('fetch',(event)=>{
 
 			console.log("Retrieving data",request.url);
 
-			return fetch(request.url);
+			return fetch(request.url).then((response)=>{
+				return new Response(response.body,{
+					status: response.status,
+					statusText: response.statusText,
+					headers: response.headers
+				})
+			});
 		})
 	}))
 })
