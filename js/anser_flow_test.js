@@ -663,6 +663,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             inputAtts.remove("value");
             inputAtts.remove("placeholder");
             inputAtts.set("type", "file");
+            inputAtts.set("class", "cursor-pointer");
             fileDivAtts.append("class", "file_detail_" + inbox.id);
             setAttribute(div, atts);
             setAttribute(input, inputAtts);
