@@ -28,20 +28,22 @@ self.addEventListener("message", (event) => {
 });
 self.addEventListener("fetch", (event) => {
   let request = event.request, url = new URL(request.url);
-  event.respondWith(caches.open(APP_NAME).then((cache) => {
-    return cache.match(url.pathname).then((response) => {
-      if (response) {
-        console.log("Serving url", url.pathname);
-        return response;
-      }
-      console.log("Retrieving data", request.url);
-      return fetch(request.url).then((response2) => {
-        return new Response(response2.body, {
-          status: response2.status,
-          statusText: response2.statusText,
-          headers: response2.headers
+  if (url.pathname.indexOf("/wp-admin") !== 0) {
+    event.respondWith(caches.open(APP_NAME).then((cache) => {
+      return cache.match(url.pathname).then((response) => {
+        if (response) {
+          console.log("Serving url", url.pathname);
+          return response;
+        }
+        console.log("Retrieving data", request.url);
+        return fetch(request.url).then((response2) => {
+          return new Response(response2.body, {
+            status: response2.status,
+            statusText: response2.statusText,
+            headers: response2.headers
+          });
         });
       });
-    });
-  }));
+    }));
+  }
 });

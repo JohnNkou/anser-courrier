@@ -166,14 +166,14 @@ class Anser_GravityFlow_Inbox{
 		</script>
 
 		<script>
-			/*if("serviceWorker" in navigator){
+			if("serviceWorker" in navigator){
 				var url = "<?php echo $_SERVER['REQUEST_URI'] ?>";
 				navigator.serviceWorker.ready.then((workerRegistration)=>{
 					let worker = workerRegistration.active || workerRegistration.installing;
 
 					worker.postMessage({ type:'REGISTER', url });
 				})
-			}*/
+			}
 		</script>
 
 		<?php
