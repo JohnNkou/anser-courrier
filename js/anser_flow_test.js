@@ -659,7 +659,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             let div = document.createElement("div"), label = document.createElement("label"), input = document.createElement("input"), div_input = document.createElement("div"), div_container = document.createElement("div"), div_22 = document.createElement("div"), div_list = document.createElement("div"), div_error2 = document.createElement("div"), fileDivAtts = new Attributes;
             label.textContent = inbox.label;
             div_22.innerHTML = inbox.value;
-            console.log("I'm OKAY");
+            console.log("I'm OKAY GOMAN");
             atts.append("class", "card");
             inputAtts.remove("value");
             inputAtts.remove("placeholder");

@@ -1,5 +1,5 @@
 // js/anser-worker/index.js
-var APP_NAME = "anser-worker-v1.1.2";
+var APP_NAME = "anser-worker-v1.1.3";
 self.addEventListener("message", (event) => {
   let data = event.data, type = data.type, url = data.url, status = data.status || 200;
   if (type == "REGISTER") {
@@ -25,6 +25,16 @@ self.addEventListener("message", (event) => {
   } else {
     console.warn("Unknwon message type", type);
   }
+});
+self.addEventListener("activate", (event) => {
+  event.waitUntil(caches.keys().then((keys) => {
+    return Promise.all(keys.map((key) => {
+      if (key !== APP_NAME) {
+        return caches.delete(key);
+      }
+      return Promise.resolve(true);
+    }));
+  }).then(() => clients.claim()));
 });
 self.addEventListener("fetch", (event) => {
   let request = event.request, url = new URL(request.url);
