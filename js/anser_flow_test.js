@@ -1241,7 +1241,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             }
           } else {
             if (!node.classList.contains("hidden")) {
-              node.classList.append("hidden");
+              node.classList.add("hidden");
             }
           }
         });

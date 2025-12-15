@@ -1338,7 +1338,7 @@ function display_entry(payloads, entry_data) {
       				}
       				else{
       					if(!node.classList.contains('hidden')){
-      						node.classList.append('hidden');
+      						node.classList.add('hidden');
       					}
       				}
       			})
