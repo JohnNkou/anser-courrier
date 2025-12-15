@@ -267,4 +267,5 @@ textarea{
 }
 #my-content .select-dropdown a{
    padding:0.3em;
+   display:block;
 }
