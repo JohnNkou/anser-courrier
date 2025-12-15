@@ -519,6 +519,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             label.textContent = inbox.label;
             textarea.textContent = value;
             atts.append("class", "card");
+            atts.append("class", "span_textarea");
             inputAtts.remove("value");
             setAttribute(div, atts);
             setAttribute(textarea, inputAtts);

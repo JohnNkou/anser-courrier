@@ -202,6 +202,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
         	textarea.textContent = value;
 
         	atts.append("class", "card");
+        	atts.append('class', 'span_textarea');
           inputAtts.remove("value");
           setAttribute(div,atts);
           setAttribute(textarea, inputAtts);
