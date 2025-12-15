@@ -79,29 +79,55 @@ function generateUniqueID() {
 	});
 }
 
-function Select(data,rootNode){
+function Select(field,rootNode){
 	let div = document.createElement('div'),
 	div_span = document.createElement('div'),
 	div_dropdown = document.createElement('div'),
+	select = document.createElement('select'),
 	selected = [];
 
 	div.classList.append('select');
 	div_span.classList.append('select-viewer');
 	div_dropdown.classList.append('select-dropdown');
+	div_dropdown.classList.append('hidden');
 	div_span.setAttribute('contenteditable','true');
+
+	field.choices.forEach((choice,index)=>{
+		let a = document.createElement('a'),
+		option = document.createElement('option');
+
+		a.textContent = choice.text;
+		a.setAttribute('value', choice.value);
+		a.setAttribute('index',index);
+
+		option.value = choice.value;
+
+		div_dropdown.appendChild(a);
+	});
+
+	div_span.onfocusin = function(){
+		div_dropdown.classList.remove('hidden');
+	}
+
+	div_span.onfocusout = function(){
+		div_dropdown.classList.add('hidden');
+	}
 
 	div_dropdown.onclick = function(event){
 		event.preventDefault();
 
 		let target = event.target,
-		value = target.textContent,
+		value = target.getAttribute('value'),
+		_index = target.getAttribute('index'),
 		index = selected.indexOf(value);
 
 		if(index == -1){
 			selected.push(value);
+			select.options[_index].selected = true;
 		}
 		else{
 			selected.splice(index,1);
+			delete select.options[_index].selected;
 		}
 
 		div_span.innerHTML = selected.map((data)=>{
