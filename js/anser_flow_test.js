@@ -996,8 +996,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         let _field = get_field_by_location(field_location, inboxes);
         if (_field) {
           let value2 = get_field_value(_field);
-          if (operators[operator](value2, ruleValue)) {
-            console.warn("CAN DISPLAY FIELD", field.label, "BECAUSE RULE DON'T SATISFY");
+          if (!operators[operator](value2, ruleValue)) {
+            console.warn("CAN'T DISPLAY FIELD", field.label, "BECAUSE RULE DON'T SATISFY");
             console.warn("rule", field.rules);
             console.log("_field", _field);
             console.log("VALUE", value2);

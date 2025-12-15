@@ -849,8 +849,8 @@ function should_display_field(field, field_ids, inboxes) {
       		if (_field) {
         		let value = get_field_value(_field);
 
-        		if(operators[operator](value,ruleValue)){
-        			console.warn("CAN DISPLAY FIELD", field.label, "BECAUSE RULE DON'T SATISFY");
+        		if(!operators[operator](value,ruleValue)){
+        			console.warn("CAN'T DISPLAY FIELD", field.label, "BECAUSE RULE DON'T SATISFY");
           		console.warn("rule", field.rules);
           		console.log("_field", _field);
           		console.log("VALUE", value);
@@ -1332,7 +1332,6 @@ function display_entry(payloads, entry_data) {
       				node = document.querySelector('.' + build_index_class(inbox_index));
 
       				if(should_display_field(field, field_ids, inboxes)){
-
       					if(node.classList.contains('hidden')){
       						node.classList.remove('hidden');
       					}
