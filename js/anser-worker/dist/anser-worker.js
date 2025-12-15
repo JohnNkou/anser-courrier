@@ -1,5 +1,5 @@
 // js/anser-worker/index.js
-var APP_NAME = "anser-worker-v1.1.2";
+var APP_NAME = "anser-worker-v1.1.3";
 self.addEventListener("install", (event) => {
   self.skipWaiting();
 });
@@ -12,9 +12,11 @@ self.addEventListener("message", (event) => {
         if (!response) {
           fetch(url).then((response2) => {
             if (response2.status == status) {
+              console.log("ADDEING URL TO CACHE", url);
               cache.put(url, response2);
               event.source.postMessage("URL " + url + " successfully cached");
             } else {
+              console.log("STATUS DIFFERENT THEN THE GIVEN", response2, status);
               event.source.postMessage("Server return a status that was not expected. Expected status:" + status + ", Server status:response.status");
             }
           }).catch((error) => {
