@@ -1236,7 +1236,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             deps[length].classList.toggle("hidden");
           }
         }
-        dependents[id].forEach((field_id) => {
+        dependents[id] && dependents[id].forEach((field_id) => {
           let field = get_field_by_location(inbox_index, inboxes), node = document.querySelector("." + build_index_class(inbox_index));
           if (should_display_field(field, field_ids, inboxes)) {
             if (node.classList.contains("hidden")) {

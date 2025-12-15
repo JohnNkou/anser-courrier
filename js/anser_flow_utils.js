@@ -1326,7 +1326,7 @@ function display_entry(payloads, entry_data) {
         		}
       		}
 
-      		dependents[id].forEach((field_id)=>{
+      		dependents[id] && dependents[id].forEach((field_id)=>{
       				let field = get_field_by_location(inbox_index, inboxes),
       				node = document.querySelector('.' + build_index_class(inbox_index));
 
