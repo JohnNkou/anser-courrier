@@ -109,7 +109,7 @@ body #main {
 }
 
 .span_textarea{
-   grid-column: span 2;
+   grid-column: span 3;
 }
 #my-content .card table{
    text-align: center;
