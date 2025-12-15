@@ -397,7 +397,7 @@ var require_lib = __commonJS((exports2) => {
     };
     div_dropdown.onclick = function(event) {
       event.preventDefault();
-      let target = event.target, value2 = target.getAttribute("value"), _index = target.getAttribute("index"), index = selected.indexOf(value2);
+      let target = event.target, value2 = target.textContent, _index = target.getAttribute("index"), index = selected.indexOf(value2);
       if (index == -1) {
         selected.push(value2);
         select.options[_index].selected = true;

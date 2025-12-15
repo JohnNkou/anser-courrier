@@ -255,6 +255,8 @@ textarea{
    border:1px solid black;
    border-radius: 5px 5px 5px 5px;
    padding:0.5em;
+   display:flex;
+   gap: 0.5em;
 }
 .select-viewer span{
    background-color: black;

@@ -140,7 +140,7 @@ function Select(field,rootNode){
 		event.preventDefault();
 
 		let target = event.target,
-		value = target.getAttribute('value'),
+		value = target.textContent,
 		_index = target.getAttribute('index'),
 		index = selected.indexOf(value);
 
