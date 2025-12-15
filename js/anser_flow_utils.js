@@ -37,6 +37,10 @@ function setAttribute(node,atts){
 	})
 }
 
+function build_index_class(inbox_index){
+	return 'i'+inbox_index;
+}
+
 function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, entry_data }){
 	switch(inbox.type){
 		case 'section':{
@@ -174,7 +178,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
         	label.textContent = inbox.label;
 
         	atts.append("class", "card");
-        	atts.append('class', inbox_index);
+        	atts.append('class', build_index_class(inbox_index));
           inputAtts.set("type", inbox.fieldType);
           inputAtts.set("placeholder", inbox.placeholder);
 
@@ -205,7 +209,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 
         	atts.append("class", "card");
         	atts.append('class', 'span_textarea');
-        	atts.append('class', inbox_index);
+        	atts.append('class', build_index_class(inbox_index));
           inputAtts.remove("value");
           setAttribute(div,atts);
           setAttribute(textarea, inputAtts);
@@ -290,7 +294,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
           label.textContent = inbox.label;
 
         	atts.append("class", "card");
-        	atts.append('class', inbox_index);
+        	atts.append('class', build_index_class(inbox_index));
         	setAttribute(div,atts);
         	setAttribute(div_error,atts);
         	div.appendChild(label);
@@ -322,7 +326,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
           });
 
         	atts.append("class", "card");
-        	atts.append('class', inbox_index);
+        	atts.append('class', build_index_class(inbox_index));
           inputAtts.remove("value");
           inputAtts.remove("placeholder");
           setAttribute(div,atts);
@@ -345,7 +349,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
         	select.innerHTML = inbox.value;
 
         	atts.append("class", "card");
-        	atts.append('class', inbox_index);
+        	atts.append('class', build_index_class(inbox_index));
           inputAtts.remove("value");
           inputAtts.remove("placeholder");
           setAttribute(div,atts);
@@ -390,7 +394,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
           });
 
         	atts.append("class", "card");
-        	atts.append('class', inbox_index);
+        	atts.append('class', build_index_class(inbox_index));
           inputAtts.remove("value");
           inputAtts.remove("placeholder");
           setAttribute(div,atts);
@@ -420,7 +424,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
         	console.log("I'm OKAY GOMAN");
 
         	atts.append("class", "card");
-        	atts.append('class', inbox_index);
+        	atts.append('class', build_index_class(inbox_index));
           inputAtts.remove("value");
           inputAtts.remove("placeholder");
           inputAtts.set("type", "file");
@@ -448,7 +452,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
         	label.textContent = inbox.label;
 
         	atts.append("class", "card");
-        	atts.append('class', inbox_index);
+        	atts.append('class', build_index_class(inbox_index));
         	setAttribute(div,atts);
         	setAttribute(input,inputAtts);
         	div.appendChild(label);
@@ -486,7 +490,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 
 	      	atts.append('class','card');
 	      	atts.append('class','span_table');
-	      	atts.append('class', inbox_index);
+	      	atts.append('class', build_index_class(inbox_index));
 
 	      	setAttribute(div,atts);
 	      	thead.appendChild(tr);
