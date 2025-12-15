@@ -398,10 +398,10 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       });
     });
   }
-  function build_index_class(inbox_index2) {
-    return "i" + inbox_index2;
+  function build_index_class(inbox_index) {
+    return "i" + inbox_index;
   }
-  function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index: inbox_index2, entry_data }) {
+  function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, entry_data }) {
     switch (inbox.type) {
       case "section": {
         console.log("I am IN A SECTION BEAUTY");
@@ -432,7 +432,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           p.innerHTML = inbox.value;
         }
         atts.append("class", "card");
-        atts.append("class", inbox_index2);
+        atts.append("class", inbox_index);
         setAttribute(div, atts);
         div.appendChild(label);
         div.appendChild(p);
@@ -443,7 +443,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         let div = document.createElement("div"), input = document.createElement("input");
         input.type = "hidden";
         atts.append("class", "hidden");
-        inputAtts.set("index", inbox_index2);
+        inputAtts.set("index", inbox_index);
         setAttribute(div, atts);
         setAttribute(input, inputAtts);
         div.appendChild(input);
@@ -454,7 +454,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         let div = document.createElement("div"), button = document.createElement("button");
         button.textContent = inbox.label;
         atts.append("class", "card");
-        inputAtts.set("index", inbox_index2);
+        inputAtts.set("index", inbox_index);
         inputAtts.set("type", inbox.buttonType);
         inputAtts.append("class", inbox.class);
         setAttribute(div, atts);
@@ -483,7 +483,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         let div = document.createElement("div"), button = document.createElement("button");
         button.textContent = inbox.value;
         atts.append("class", "card");
-        inputAtts.set("index", inbox_index2);
+        inputAtts.set("index", inbox_index);
         inputAtts.append("class", "btn-success");
         inputAtts.set("type", "submit");
         setAttribute(div, atts);
@@ -503,7 +503,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             let div = document.createElement("div"), div_error2 = document.createElement("div"), input = document.createElement("input"), label = document.createElement("label"), p = document.createElement("p");
             label.textContent = inbox.label;
             atts.append("class", "card");
-            atts.append("class", build_index_class(inbox_index2));
+            atts.append("class", build_index_class(inbox_index));
             inputAtts.set("type", inbox.fieldType);
             inputAtts.set("placeholder", inbox.placeholder);
             if (inbox.fieldType == "product") {
@@ -525,7 +525,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             textarea.textContent = value;
             atts.append("class", "card");
             atts.append("class", "span_textarea");
-            atts.append("class", build_index_class(inbox_index2));
+            atts.append("class", build_index_class(inbox_index));
             inputAtts.remove("value");
             setAttribute(div, atts);
             setAttribute(textarea, inputAtts);
@@ -554,7 +554,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             });
             label.textContent = inbox.label;
             atts.append("class", "card");
-            atts.append("class", inbox_index2);
+            atts.append("class", inbox_index);
             setAttribute(div, atts);
             setAttribute(div_error2, failedAtts);
             div.appendChild(label);
@@ -584,7 +584,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             });
             label.textContent = inbox.label;
             atts.append("class", "card");
-            atts.append("class", build_index_class(inbox_index2));
+            atts.append("class", build_index_class(inbox_index));
             setAttribute(div, atts);
             setAttribute(div_error, atts);
             div.appendChild(label);
@@ -606,7 +606,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               select.appendChild(option);
             });
             atts.append("class", "card");
-            atts.append("class", build_index_class(inbox_index2));
+            atts.append("class", build_index_class(inbox_index));
             inputAtts.remove("value");
             inputAtts.remove("placeholder");
             setAttribute(div, atts);
@@ -623,7 +623,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             label.textContent = inbox.label;
             select.innerHTML = inbox.value;
             atts.append("class", "card");
-            atts.append("class", build_index_class(inbox_index2));
+            atts.append("class", build_index_class(inbox_index));
             inputAtts.remove("value");
             inputAtts.remove("placeholder");
             setAttribute(div, atts);
@@ -655,7 +655,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               select.appendChild(option);
             });
             atts.append("class", "card");
-            atts.append("class", build_index_class(inbox_index2));
+            atts.append("class", build_index_class(inbox_index));
             inputAtts.remove("value");
             inputAtts.remove("placeholder");
             setAttribute(div, atts);
@@ -673,7 +673,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             div_22.innerHTML = inbox.value;
             console.log("I'm OKAY GOMAN");
             atts.append("class", "card");
-            atts.append("class", build_index_class(inbox_index2));
+            atts.append("class", build_index_class(inbox_index));
             inputAtts.remove("value");
             inputAtts.remove("placeholder");
             inputAtts.set("type", "file");
@@ -696,7 +696,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             let div = document.createElement("div"), label = document.createElement("label"), input = document.createElement("input");
             label.textContent = inbox.label;
             atts.append("class", "card");
-            atts.append("class", build_index_class(inbox_index2));
+            atts.append("class", build_index_class(inbox_index));
             setAttribute(div, atts);
             setAttribute(input, inputAtts);
             div.appendChild(label);
@@ -733,7 +733,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             input.name = "input_" + inbox.id;
             atts.append("class", "card");
             atts.append("class", "span_table");
-            atts.append("class", build_index_class(inbox_index2));
+            atts.append("class", build_index_class(inbox_index));
             setAttribute(div, atts);
             thead.appendChild(tr);
             table.appendChild(thead);
@@ -1070,7 +1070,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       _inboxes.forEach((inbox, _index) => {
         try {
           field_ids[inbox.id] = index + "_" + _index;
-          let inbox_index2 = field_ids[inbox.id], atts = new Attributes, inputAtts = new Attributes, failedAtts = new Attributes, value2;
+          let inbox_index = field_ids[inbox.id], atts = new Attributes, inputAtts = new Attributes, failedAtts = new Attributes, value2;
           inputAtts.set("id", inbox.id);
           inputAtts.append("name", "input_" + inbox.id);
           inputAtts.append("value", inbox.value || "");
@@ -1102,7 +1102,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               atts.append("class", "hidden");
             }
           }
-          let node = build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index: inbox_index2, entry_data });
+          let node = build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, entry_data });
           if (!node) {
             console.log("Missing node for inbox", inbox);
             throw Error("Missing node");
@@ -1119,7 +1119,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             }
           }
           if (inbox.action) {
-            actionNodes[inbox_index2] = inbox.action;
+            actionNodes[inbox_index] = inbox.action;
           }
         } catch (error) {
           console.error("GREAT ERROR");
@@ -1230,14 +1230,14 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       let target = event.target, id = target.getAttribute("id"), value2 = target.value;
       if (id) {
         if (dependents[id]) {
-          let inbox_index2 = field_ids[id], t_field = get_field_by_location(inbox_index2, inboxes), classes = build_dependent_classe([{ fieldId: id }]), deps = document.querySelectorAll("." + classes), length = deps.length;
+          let inbox_index = field_ids[id], t_field = get_field_by_location(inbox_index, inboxes), classes = build_dependent_classe([{ fieldId: id }]), deps = document.querySelectorAll("." + classes), length = deps.length;
           t_field.leaf_value = value2;
           while (length--) {
             deps[length].classList.toggle("hidden");
           }
         }
         dependents[id] && dependents[id].forEach((field_id) => {
-          let field = get_field_by_location(inbox_index, inboxes), node = document.querySelector("." + build_index_class(inbox_index));
+          let inbox_index = field_ids[field_id], field = get_field_by_location(inbox_index, inboxes), node = document.querySelector("." + build_index_class(inbox_index));
           if (should_display_field(field, field_ids, inboxes)) {
             if (node.classList.contains("hidden")) {
               node.classList.toggle("hidden");

@@ -1327,7 +1327,8 @@ function display_entry(payloads, entry_data) {
       		}
 
       		dependents[id] && dependents[id].forEach((field_id)=>{
-      				let field = get_field_by_location(inbox_index, inboxes),
+      				let inbox_index = field_ids[field_id],
+      				field = get_field_by_location(inbox_index, inboxes),
       				node = document.querySelector('.' + build_index_class(inbox_index));
 
       				if(should_display_field(field, field_ids, inboxes)){
