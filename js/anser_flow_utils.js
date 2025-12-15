@@ -827,7 +827,7 @@ function should_display_field(field, field_ids, inboxes) {
     	return true;
   	}
 
-  	let operators = {
+  	var operators = {
   		is: function(value,data){
   			if(!(value instanceof Array)){
   				return value == data;

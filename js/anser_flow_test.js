@@ -980,7 +980,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     } else {
       return true;
     }
-    let operators = {
+    var operators = {
       is: function(value2, data2) {
         if (!(value2 instanceof Array)) {
           return value2 == data2;
