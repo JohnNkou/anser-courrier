@@ -1,4 +1,4 @@
-const APP_NAME = 'anser-worker-v1.1.1';
+const APP_NAME = 'anser-worker-v1.1.2';
 
 self.addEventListener('install',(event)=>{
 	self.skipWaiting();
@@ -65,7 +65,7 @@ self.addEventListener('fetch',(event)=>{
 
 				console.log("Retrieving data",request.url);
 
-				return fetch(request.url);/*.then((response)=>{
+				return fetch(request);/*.then((response)=>{
 					return new Response(response.body,{
 						status: response.status,
 						statusText: response.statusText,
