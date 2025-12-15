@@ -307,6 +307,7 @@ add_action('wp_enqueue_scripts',function(){
     $has_flow_short = has_shortcode($post->post_content,'anser_gravityflow');
 
     if($has_view_short || $has_flow_short){
+        flogs("BANANA");
         wp_enqueue_style('custom/global', '/css/global.css',[],null);
         wp_enqueue_style('custom/modal','/css/modal.css',[],null);
         wp_enqueue_script('tailwindcss','https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4',[],null,true);
