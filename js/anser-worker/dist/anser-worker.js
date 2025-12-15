@@ -1,5 +1,5 @@
 // js/anser-worker/index.js
-var APP_NAME = "anser-worker-v1.1.4";
+var APP_NAME = "anser-worker-v1.1.0";
 self.addEventListener("install", (event) => {
   self.skipWaiting();
 });
