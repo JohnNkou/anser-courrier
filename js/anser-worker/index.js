@@ -1,5 +1,9 @@
 const APP_NAME = 'anser-worker-v1.1.4';
 
+self.addEventListener('install',(event)=>{
+	self.skipWaiting();
+})
+
 self.addEventListener('message',(event)=>{
 	let data = event.data,
 	type = data.type,
@@ -36,6 +40,7 @@ self.addEventListener('message',(event)=>{
 })
 
 self.addEventListener('activate',(event)=>{
+	console.log("I'm activating");
 	event.waitUntil(caches.keys().then((keys)=>{
 		return Promise.all(keys.map((key)=>{
 			if(key !== APP_NAME){
