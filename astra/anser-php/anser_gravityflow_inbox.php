@@ -171,7 +171,7 @@ class Anser_GravityFlow_Inbox{
 				serviceWorkerContainer = navigator.serviceWorker;
 
 				serviceWorkerContainer.oncontrollerchange = ()=>{
-					let worker = serviceWorkerContainer.active || serviceWorkerContainer.installing;
+					let worker = serviceWorkerContainer.controller;
 
 					console.log("Posting message on controllerchange");
 
