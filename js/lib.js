@@ -96,7 +96,7 @@ function Select(field,rootNode){
 
 	function draw_view(){
 		div_span.innerHTML = selected.map((data)=>{
-			return '<span>'+data+'</span>';
+			return '<span class="text-nowrap">'+data+'</span>';
 		}).join('');
 	}
 

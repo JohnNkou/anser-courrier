@@ -366,7 +366,7 @@ var require_lib = __commonJS((exports2) => {
     div_span.setAttribute("contenteditable", "true");
     function draw_view() {
       div_span.innerHTML = selected.map((data2) => {
-        return "<span>" + data2 + "</span>";
+        return '<span class="text-nowrap">' + data2 + "</span>";
       }).join("");
     }
     field.choices.forEach((choice, index) => {
