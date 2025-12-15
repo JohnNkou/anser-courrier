@@ -1321,9 +1321,9 @@ function display_entry(payloads, entry_data) {
 
         		t_field.leaf_value = value;
 
-        		while (length--) {
+        		/*while (length--) {
           			deps[length].classList.toggle("hidden");
-        		}
+        		}*/
       		}
 
       		dependents[id] && dependents[id].forEach((field_id)=>{
