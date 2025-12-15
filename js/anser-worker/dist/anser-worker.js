@@ -1,5 +1,5 @@
 // js/anser-worker/index.js
-var APP_NAME = "anser-worker-v1.1.5";
+var APP_NAME = "anser-worker-v1.1.1";
 self.addEventListener("install", (event) => {
   self.skipWaiting();
 });
@@ -50,13 +50,7 @@ self.addEventListener("fetch", (event) => {
           return response;
         }
         console.log("Retrieving data", request.url);
-        return fetch(request.url).then((response2) => {
-          return new Response(response2.body, {
-            status: response2.status,
-            statusText: response2.statusText,
-            headers: response2.headers
-          });
-        });
+        return fetch(request.url);
       });
     }));
   }
