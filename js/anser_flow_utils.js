@@ -80,6 +80,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 			}
 
 			atts.append('class','card');
+			atts.append('class', inbox_index);
 			setAttribute(div,atts);
 			div.appendChild(label); div.appendChild(p);
 			return div;
@@ -173,6 +174,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
         	label.textContent = inbox.label;
 
         	atts.append("class", "card");
+        	atts.append('class', inbox_index);
           inputAtts.set("type", inbox.fieldType);
           inputAtts.set("placeholder", inbox.placeholder);
 
@@ -203,6 +205,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 
         	atts.append("class", "card");
         	atts.append('class', 'span_textarea');
+        	atts.append('class', inbox_index);
           inputAtts.remove("value");
           setAttribute(div,atts);
           setAttribute(textarea, inputAtts);
@@ -243,6 +246,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
           label.textContent = inbox.label;
 
         	atts.append("class", "card");
+        	atts.append('class', inbox_index);
         	setAttribute(div,atts);
         	setAttribute(div_error, failedAtts);
         	div.appendChild(label);
@@ -286,6 +290,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
           label.textContent = inbox.label;
 
         	atts.append("class", "card");
+        	atts.append('class', inbox_index);
         	setAttribute(div,atts);
         	setAttribute(div_error,atts);
         	div.appendChild(label);
@@ -317,6 +322,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
           });
 
         	atts.append("class", "card");
+        	atts.append('class', inbox_index);
           inputAtts.remove("value");
           inputAtts.remove("placeholder");
           setAttribute(div,atts);
@@ -339,6 +345,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
         	select.innerHTML = inbox.value;
 
         	atts.append("class", "card");
+        	atts.append('class', inbox_index);
           inputAtts.remove("value");
           inputAtts.remove("placeholder");
           setAttribute(div,atts);
@@ -383,6 +390,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
           });
 
         	atts.append("class", "card");
+        	atts.append('class', inbox_index);
           inputAtts.remove("value");
           inputAtts.remove("placeholder");
           setAttribute(div,atts);
@@ -412,6 +420,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
         	console.log("I'm OKAY GOMAN");
 
         	atts.append("class", "card");
+        	atts.append('class', inbox_index);
           inputAtts.remove("value");
           inputAtts.remove("placeholder");
           inputAtts.set("type", "file");
@@ -439,6 +448,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
         	label.textContent = inbox.label;
 
         	atts.append("class", "card");
+        	atts.append('class', inbox_index);
         	setAttribute(div,atts);
         	setAttribute(input,inputAtts);
         	div.appendChild(label);
@@ -476,6 +486,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 
 	      	atts.append('class','card');
 	      	atts.append('class','span_table');
+	      	atts.append('class', inbox_index);
 
 	      	setAttribute(div,atts);
 	      	thead.appendChild(tr);
@@ -816,6 +827,16 @@ function should_display_field(field, field_ids, inboxes) {
     	return true;
   	}
 
+  	let operators = {
+  		is: function(value,data){
+  			if(!(value instanceof Array)){
+  				return value == data;
+  			}
+
+  			return value.indexOf(data) != -1
+  		}
+  	}
+
   	function ruleChecker(rule) {
     	let { fieldId, operator, value: ruleValue } = rule, field_location = field_ids[fieldId], validated = true;
 
@@ -825,21 +846,12 @@ function should_display_field(field, field_ids, inboxes) {
       		if (_field) {
         		let value = get_field_value(_field);
 
-        		if (value.push) {
-          			if (value.indexOf(ruleValue) == -1) {
-            			console.warn("CAN DISPLAY FIELD", field.label, "BECAUSE RULE DON'T SATISFY");
-            			console.warn("rule", field.rules);
-            			console.log("_field", _field);
-            			console.log("VALUE", value);
-            			validated = false;
-          			}
-        		} 
-        		else if (value != ruleValue) {
-          			console.warn("CAN DISPLAY FIELD", field.label, "BECAUSE RULE DON'T SATISFY");
-          			console.warn("rule", field.rules);
-          			console.log("_field", _field);
-          			console.log("VALUE", value);
-          			validated = false;
+        		if(operators[operator](value,ruleValue)){
+        			console.warn("CAN DISPLAY FIELD", field.label, "BECAUSE RULE DON'T SATISFY");
+          		console.warn("rule", field.rules);
+          		console.log("_field", _field);
+          		console.log("VALUE", value);
+          		validated = false;
         		}
       		} 
       		else {
@@ -861,7 +873,7 @@ function build_dependent_classe(rules) {
 }
 
 function get_field_by_location(location2, inboxes) {
-  	let indexes = location2.split(","), field = indexes.length == 2 && inboxes[indexes[0]][indexes[1]];
+  	let indexes = location2.split("_"), field = indexes.length == 2 && inboxes[indexes[0]][indexes[1]];
   	return field;
 }
 
@@ -925,8 +937,8 @@ function display_entry(payloads, entry_data) {
     	_inboxes.forEach((inbox, _index) => {
 
 	      	try {
-	        	field_ids[inbox.id] = index + "," + _index;
-	        	let inbox_index = index.toString() + "_" + _index, 
+	        	field_ids[inbox.id] = index + "_" + _index;
+	        	let inbox_index = field_ids[inbox.id], 
 	        	atts = new Attributes, 
 	        	inputAtts = new Attributes, 
 	        	failedAtts = new Attributes, 
@@ -956,7 +968,11 @@ function display_entry(payloads, entry_data) {
 	          		}
 
 	          		inbox.rules.forEach((rule) => {
-	            		dependents[rule.fieldId] = true;
+	          			if(!dependents[rule.fieldId]){
+	          				dependents[rule.fieldId] = [];
+	          			}
+
+	            		dependents[rule.fieldId].push(inbox.id);
 	          		});
 	        	} 
 	        	else {
@@ -1293,11 +1309,30 @@ function display_entry(payloads, entry_data) {
     	
     	if (id) {
       		if (dependents[id]) {
+
         		let classes = build_dependent_classe([{ fieldId: id }]), deps = document.querySelectorAll("." + classes), length = deps.length;
         		while (length--) {
           			deps[length].classList.toggle("hidden");
         		}
       		}
+
+      		dependents[id].forEach((field_id)=>{
+      				let inbox_index = field_ids[field_id],
+      				field = get_field_by_location(inbox_index, inboxes),
+      				node = document.querySelector('.' + inbox_index);
+
+      				if(should_display_field(field, field_ids, inboxes)){
+
+      					if(node.classList.get('hidden')){
+      						node.classList.toggle('hidden');
+      					}
+      				}
+      				else{
+      					if(!node.classList.get('hidden')){
+      						node.classList.toggle('hidden');
+      					}
+      				}
+      			})
 
       		let field_location = field_ids[id];
 

@@ -1,7 +1,7 @@
 body #main {
     background-color: transparent;
 }
- #my-content * {
+#my-content * {
     margin: 0;
     padding: 0;
 }
@@ -245,4 +245,26 @@ textarea{
 }
  .card label, .card h1, .card h2, .card h3, .card h4, .card h5 {
     font-weight: bold;
+}
+
+.select{
+   position: relative;
+}
+
+#my-content .select-viewer{
+   border:1px solid black;
+   border-radius: 5px 5px 5px 5px;
+   padding:0.5em;
+}
+.select-viewer span{
+   background-color: black;
+   padding:0.3em;
+   color:white;
+}
+
+.select-dropdown{
+   position: absolute;
+}
+.select-dropdown a{
+   padding:0.3em;
 }

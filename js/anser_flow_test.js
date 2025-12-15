@@ -429,6 +429,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           p.innerHTML = inbox.value;
         }
         atts.append("class", "card");
+        atts.append("class", inbox_index);
         setAttribute(div, atts);
         div.appendChild(label);
         div.appendChild(p);
@@ -499,6 +500,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             let div = document.createElement("div"), div_error2 = document.createElement("div"), input = document.createElement("input"), label = document.createElement("label"), p = document.createElement("p");
             label.textContent = inbox.label;
             atts.append("class", "card");
+            atts.append("class", inbox_index);
             inputAtts.set("type", inbox.fieldType);
             inputAtts.set("placeholder", inbox.placeholder);
             if (inbox.fieldType == "product") {
@@ -520,6 +522,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             textarea.textContent = value;
             atts.append("class", "card");
             atts.append("class", "span_textarea");
+            atts.append("class", inbox_index);
             inputAtts.remove("value");
             setAttribute(div, atts);
             setAttribute(textarea, inputAtts);
@@ -548,6 +551,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             });
             label.textContent = inbox.label;
             atts.append("class", "card");
+            atts.append("class", inbox_index);
             setAttribute(div, atts);
             setAttribute(div_error2, failedAtts);
             div.appendChild(label);
@@ -577,6 +581,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             });
             label.textContent = inbox.label;
             atts.append("class", "card");
+            atts.append("class", inbox_index);
             setAttribute(div, atts);
             setAttribute(div_error, atts);
             div.appendChild(label);
@@ -598,6 +603,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               select.appendChild(option);
             });
             atts.append("class", "card");
+            atts.append("class", inbox_index);
             inputAtts.remove("value");
             inputAtts.remove("placeholder");
             setAttribute(div, atts);
@@ -614,6 +620,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             label.textContent = inbox.label;
             select.innerHTML = inbox.value;
             atts.append("class", "card");
+            atts.append("class", inbox_index);
             inputAtts.remove("value");
             inputAtts.remove("placeholder");
             setAttribute(div, atts);
@@ -645,6 +652,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               select.appendChild(option);
             });
             atts.append("class", "card");
+            atts.append("class", inbox_index);
             inputAtts.remove("value");
             inputAtts.remove("placeholder");
             setAttribute(div, atts);
@@ -662,6 +670,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             div_22.innerHTML = inbox.value;
             console.log("I'm OKAY GOMAN");
             atts.append("class", "card");
+            atts.append("class", inbox_index);
             inputAtts.remove("value");
             inputAtts.remove("placeholder");
             inputAtts.set("type", "file");
@@ -684,6 +693,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             let div = document.createElement("div"), label = document.createElement("label"), input = document.createElement("input");
             label.textContent = inbox.label;
             atts.append("class", "card");
+            atts.append("class", inbox_index);
             setAttribute(div, atts);
             setAttribute(input, inputAtts);
             div.appendChild(label);
@@ -720,6 +730,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             input.name = "input_" + inbox.id;
             atts.append("class", "card");
             atts.append("class", "span_table");
+            atts.append("class", inbox_index);
             setAttribute(div, atts);
             thead.appendChild(tr);
             table.appendChild(thead);
@@ -969,21 +980,21 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     } else {
       return true;
     }
+    let operators = {
+      is: function(value2, data2) {
+        if (!(value2 instanceof Array)) {
+          return value2 == data2;
+        }
+        return value2.indexOf(data2) != -1;
+      }
+    };
     function ruleChecker(rule) {
       let { fieldId, operator, value: ruleValue } = rule, field_location = field_ids[fieldId], validated = true;
       if (field_location) {
         let _field = get_field_by_location(field_location, inboxes);
         if (_field) {
           let value2 = get_field_value(_field);
-          if (value2.push) {
-            if (value2.indexOf(ruleValue) == -1) {
-              console.warn("CAN DISPLAY FIELD", field.label, "BECAUSE RULE DON'T SATISFY");
-              console.warn("rule", field.rules);
-              console.log("_field", _field);
-              console.log("VALUE", value2);
-              validated = false;
-            }
-          } else if (value2 != ruleValue) {
+          if (operators[operator](value2, ruleValue)) {
             console.warn("CAN DISPLAY FIELD", field.label, "BECAUSE RULE DON'T SATISFY");
             console.warn("rule", field.rules);
             console.log("_field", _field);
@@ -1005,7 +1016,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     return rules.map((rule) => "dependent_" + rule.fieldId).join(" ");
   }
   function get_field_by_location(location2, inboxes) {
-    let indexes = location2.split(","), field = indexes.length == 2 && inboxes[indexes[0]][indexes[1]];
+    let indexes = location2.split("_"), field = indexes.length == 2 && inboxes[indexes[0]][indexes[1]];
     return field;
   }
   function check_validity({ form, field_ids, inboxes, required }) {
@@ -1056,8 +1067,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       let inSection = false, section_with_rules = false, currentSection;
       _inboxes.forEach((inbox, _index) => {
         try {
-          field_ids[inbox.id] = index + "," + _index;
-          let inbox_index = index.toString() + "_" + _index, atts = new Attributes, inputAtts = new Attributes, failedAtts = new Attributes, value2;
+          field_ids[inbox.id] = index + "_" + _index;
+          let inbox_index = field_ids[inbox.id], atts = new Attributes, inputAtts = new Attributes, failedAtts = new Attributes, value2;
           inputAtts.set("id", inbox.id);
           inputAtts.append("name", "input_" + inbox.id);
           inputAtts.append("value", inbox.value || "");
@@ -1079,7 +1090,10 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               }
             }
             inbox.rules.forEach((rule) => {
-              dependents[rule.fieldId] = true;
+              if (!dependents[rule.fieldId]) {
+                dependents[rule.fieldId] = [];
+              }
+              dependents[rule.fieldId].push(inbox.id);
             });
           } else {
             if (inbox.display == false) {
@@ -1219,6 +1233,18 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             deps[length].classList.toggle("hidden");
           }
         }
+        dependents[id].forEach((field_id) => {
+          let inbox_index = field_ids[field_id], field = get_field_by_location(inbox_index, inboxes), node = document.querySelector("." + inbox_index);
+          if (should_display_field(field, field_ids, inboxes)) {
+            if (node.classList.get("hidden")) {
+              node.classList.toggle("hidden");
+            }
+          } else {
+            if (!node.classList.get("hidden")) {
+              node.classList.toggle("hidden");
+            }
+          }
+        });
         let field_location = field_ids[id];
         if (field_location) {
           let field = get_field_by_location(field_location, inboxes);

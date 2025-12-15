@@ -79,6 +79,42 @@ function generateUniqueID() {
 	});
 }
 
+function Select(data,rootNode){
+	let div = document.createElement('div'),
+	div_span = document.createElement('div'),
+	div_dropdown = document.createElement('div'),
+	selected = [];
+
+	div.classList.append('select');
+	div_span.classList.append('select-viewer');
+	div_dropdown.classList.append('select-dropdown');
+	div_span.setAttribute('contenteditable','true');
+
+	div_dropdown.onclick = function(event){
+		event.preventDefault();
+
+		let target = event.target,
+		value = target.textContent,
+		index = selected.indexOf(value);
+
+		if(index == -1){
+			selected.push(value);
+		}
+		else{
+			selected.splice(index,1);
+		}
+
+		div_span.innerHTML = selected.map((data)=>{
+			return '<span>'+data+'</span>';
+		}).join('');
+	}
+
+	div.appendChild(div_span);
+	div.appendChild(div_dropdown);
+
+	rootNode.appendChild(div);
+}
+
 exports.Attributes = Attributes;
 exports.guid = guid;
 exports.generateUniqueID = generateUniqueID;
