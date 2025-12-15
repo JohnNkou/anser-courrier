@@ -313,6 +313,7 @@ add_action('wp_enqueue_scripts',function(){
         wp_enqueue_script('worker-installer', '/js/anser-worker/installer.js','1.2', [],null,true);
 
         if($has_flow_short){
+            flogs("MUSSHROOM");
             wp_enqueue_style("custom_flow","/css/flow.css",[],null);
         }
     }
