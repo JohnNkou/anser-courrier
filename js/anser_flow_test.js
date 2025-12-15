@@ -355,9 +355,65 @@ var require_lib = __commonJS((exports2) => {
       return v.toString(16);
     });
   }
+  function Select(field, rootNode) {
+    let div = document.createElement("div"), div_span = document.createElement("div"), div_dropdown = document.createElement("div"), select = document.createElement("select"), selected = [];
+    div.classList.append("select");
+    div_span.classList.append("select-viewer");
+    div_dropdown.classList.append("select-dropdown");
+    div_dropdown.classList.append("hidden");
+    div_span.setAttribute("contenteditable", "true");
+    function draw_view() {
+      div_span.innerHTML = selected.map((data2) => {
+        return "<span>" + data2 + "</span>";
+      }).join("");
+    }
+    field.choices.forEach((choice, index) => {
+      let a = document.createElement("a"), option = document.createElement("option"), field_value = field.leaf_value || field.value;
+      a.textContent = choice.text;
+      a.setAttribute("value", choice.value);
+      a.setAttribute("index", index);
+      option.value = choice.value;
+      div_dropdown.appendChild(a);
+      select.appendChild(option);
+      if (field_value instanceof Array) {
+        for (let i = 0;i < field_value.length; i++) {
+          if (field_value[i] == choice.value) {
+            selected.push(choice.value);
+            option.setAttribute("selected", "true");
+          }
+        }
+      } else if (field_value == choice.value) {
+        selected.push(choice.value);
+        option.setAttribute("selected", "true");
+      }
+    });
+    div_span.onfocusin = function() {
+      div_dropdown.classList.remove("hidden");
+    };
+    div_span.onfocusout = function() {
+      div_dropdown.classList.add("hidden");
+    };
+    div_dropdown.onclick = function(event) {
+      event.preventDefault();
+      let target = event.target, value2 = target.getAttribute("value"), _index = target.getAttribute("index"), index = selected.indexOf(value2);
+      if (index == -1) {
+        selected.push(value2);
+        select.options[_index].selected = true;
+      } else {
+        selected.splice(index, 1);
+        delete select.options[_index].selected;
+      }
+      draw_view();
+    };
+    draw_view();
+    div.appendChild(div_span);
+    div.appendChild(div_dropdown);
+    rootNode.appendChild(div);
+  }
   exports2.Attributes = Attributes;
   exports2.guid = guid;
   exports2.generateUniqueID = generateUniqueID;
+  exports2.Select = Select;
   exports2.is_object = function($data) {
     return Object.prototype.toString.call($data) == Object.prototype.toString.call({});
   };
@@ -366,7 +422,7 @@ var require_lib = __commonJS((exports2) => {
 // js/anser_flow_utils.js
 var require_anser_flow_utils = __commonJS((exports2) => {
   var { page_handler, display_information_modal, toggle_loader, display_pdfviewer, uploader, display_formCreator } = require_anser_utily();
-  var { Attributes, is_object, guid, generateUniqueID } = require_lib();
+  var { Attributes, is_object, guid, generateUniqueID, Select } = require_lib();
   function result_handler(json_response, table) {
     let { entries, field_values } = json_response.data;
     build_elements(table, entries);
@@ -636,33 +692,20 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             break;
           }
           case "workflow_multi_user": {
-            let div = document.createElement("div"), label = document.createElement("label"), select = document.createElement("select"), div_error2 = document.createElement("div_error");
+            let div = document.createElement("div"), label = document.createElement("label"), div_node = document.createElement("div"), div_error2 = document.createElement("div_error");
             label.textContent = inbox.label;
-            select.setAttribute("multiple", "true");
-            inputAtts.set("name", "input_" + inbox.id + "[]");
             try {
               inbox.leaf_value = JSON.parse(inbox.leaf_value);
             } catch (error) {
               inbox.leaf_value = [];
             }
-            inbox.choices.forEach((choice) => {
-              let option = document.createElement("option"), selected = inbox.leaf_value.indexOf(choice.value) != -1 ? "selected" : "";
-              if (selected) {
-                option.setAttribute("selected", "true");
-              }
-              option.value = choice.value;
-              option.textContent = choice.text;
-              select.appendChild(option);
-            });
+            Select(inbox, div_node);
             atts.append("class", "card");
             atts.append("class", build_index_class(inbox_index));
-            inputAtts.remove("value");
-            inputAtts.remove("placeholder");
             setAttribute(div, atts);
-            setAttribute(select, inputAtts);
             setAttribute(div_error2, failedAtts);
             div.appendChild(label);
-            div.appendChild(select);
+            div.appendChild(div_node);
             div.appendChild(div_error2);
             return div;
             break;

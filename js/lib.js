@@ -92,9 +92,16 @@ function Select(field,rootNode){
 	div_dropdown.classList.append('hidden');
 	div_span.setAttribute('contenteditable','true');
 
+	function draw_view(){
+		div_span.innerHTML = selected.map((data)=>{
+			return '<span>'+data+'</span>';
+		}).join('');
+	}
+
 	field.choices.forEach((choice,index)=>{
 		let a = document.createElement('a'),
-		option = document.createElement('option');
+		option = document.createElement('option'),
+		field_value = field.leaf_value || field.value;
 
 		a.textContent = choice.text;
 		a.setAttribute('value', choice.value);
@@ -103,6 +110,20 @@ function Select(field,rootNode){
 		option.value = choice.value;
 
 		div_dropdown.appendChild(a);
+		select.appendChild(option);
+
+		if(field_value instanceof Array){
+			for(let i=0; i < field_value.length; i++){
+				if(field_value[i] == choice.value){
+					selected.push(choice.value);
+					option.setAttribute('selected','true');
+				}
+			}
+		}
+		else if(field_value == choice.value){
+			selected.push(choice.value);
+			option.setAttribute('selected','true');
+		}
 	});
 
 	div_span.onfocusin = function(){
@@ -130,10 +151,10 @@ function Select(field,rootNode){
 			delete select.options[_index].selected;
 		}
 
-		div_span.innerHTML = selected.map((data)=>{
-			return '<span>'+data+'</span>';
-		}).join('');
+		draw_view();
 	}
+
+	draw_view();
 
 	div.appendChild(div_span);
 	div.appendChild(div_dropdown);
@@ -144,6 +165,7 @@ function Select(field,rootNode){
 exports.Attributes = Attributes;
 exports.guid = guid;
 exports.generateUniqueID = generateUniqueID;
+exports.Select = Select;
 exports.is_object = function($data){
 	return Object.prototype.toString.call($data) == Object.prototype.toString.call({})
 }

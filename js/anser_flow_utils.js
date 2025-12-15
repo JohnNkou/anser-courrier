@@ -1,5 +1,5 @@
 const { page_handler, display_information_modal, toggle_loader, display_pdfviewer, uploader, display_formCreator } = require('./anser_utily.js');
-const { Attributes, is_object, guid, generateUniqueID } = require('./lib.js');
+const { Attributes, is_object, guid, generateUniqueID, Select } = require('./lib.js');
 
 function result_handler(json_response, table) {
   let { entries, field_values } = json_response.data;
@@ -365,13 +365,10 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
         case "workflow_multi_user":{
         	let div = document.createElement('div'),
         	label = document.createElement('label'),
-        	select = document.createElement('select'),
+        	div_node = document.createElement('div'),
         	div_error = document.createElement('div_error');
 
         	label.textContent = inbox.label;
-        	select.setAttribute('multiple','true');
-
-        	inputAtts.set('name', 'input_'+inbox.id+'[]');
 
         	try {
             inbox.leaf_value = JSON.parse(inbox.leaf_value);
@@ -379,29 +376,15 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
           catch (error) {
             inbox.leaf_value = [];
           }
+
+          Select(inbox, div_node);
           
-          inbox.choices.forEach((choice) => {
-            let option = document.createElement('option'),
-            selected = inbox.leaf_value.indexOf(choice.value) != -1 ? "selected" : "";
-
-            if(selected){
-            	option.setAttribute('selected','true');
-            }
-            option.value = choice.value;
-            option.textContent = choice.text;
-
-            select.appendChild(option);
-          });
-
-        	atts.append("class", "card");
+          atts.append("class", "card");
         	atts.append('class', build_index_class(inbox_index));
-          inputAtts.remove("value");
-          inputAtts.remove("placeholder");
           setAttribute(div,atts);
-          setAttribute(select, inputAtts);
           setAttribute(div_error,failedAtts);
           div.appendChild(label);
-          div.appendChild(select);
+          div.appendChild(div_node);
           div.appendChild(div_error);
 
           return div;
