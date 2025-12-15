@@ -1315,7 +1315,7 @@ function display_entry(payloads, entry_data) {
     	if (id) {
       		if (dependents[id]) {
 
-        		let inbox_index = field_ids[id],
+        		var inbox_index = field_ids[id],
         		t_field = get_field_by_location(inbox_index,inboxes),
         		classes = build_dependent_classe([{ fieldId: id }]), deps = document.querySelectorAll("." + classes), length = deps.length;
 
@@ -1334,12 +1334,12 @@ function display_entry(payloads, entry_data) {
       				if(should_display_field(field, field_ids, inboxes)){
 
       					if(node.classList.contains('hidden')){
-      						node.classList.toggle('hidden');
+      						node.classList.remove('hidden');
       					}
       				}
       				else{
       					if(!node.classList.contains('hidden')){
-      						node.classList.toggle('hidden');
+      						node.classList.append('hidden');
       					}
       				}
       			})

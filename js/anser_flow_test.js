@@ -1230,18 +1230,18 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       let target = event.target, id = target.getAttribute("id"), value2 = target.value;
       if (id) {
         if (dependents[id]) {
-          let inbox_index = field_ids[id], t_field = get_field_by_location(inbox_index, inboxes), classes = build_dependent_classe([{ fieldId: id }]), deps = document.querySelectorAll("." + classes), length = deps.length;
+          var inbox_index = field_ids[id], t_field = get_field_by_location(inbox_index, inboxes), classes = build_dependent_classe([{ fieldId: id }]), deps = document.querySelectorAll("." + classes), length = deps.length;
           t_field.leaf_value = value2;
         }
         dependents[id] && dependents[id].forEach((field_id) => {
-          let inbox_index = field_ids[field_id], field = get_field_by_location(inbox_index, inboxes), node = document.querySelector("." + build_index_class(inbox_index));
+          let inbox_index2 = field_ids[field_id], field = get_field_by_location(inbox_index2, inboxes), node = document.querySelector("." + build_index_class(inbox_index2));
           if (should_display_field(field, field_ids, inboxes)) {
             if (node.classList.contains("hidden")) {
-              node.classList.toggle("hidden");
+              node.classList.remove("hidden");
             }
           } else {
             if (!node.classList.contains("hidden")) {
-              node.classList.toggle("hidden");
+              node.classList.append("hidden");
             }
           }
         });
