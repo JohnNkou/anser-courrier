@@ -89,6 +89,8 @@ function Select(field,rootNode){
 	div.classList.add('select');
 	div_span.classList.add('select-viewer');
 	div_dropdown.classList.add('select-dropdown');
+	div_dropdown.classList.add('shadow-md');
+	div_dropdown.classList.add('bg-white');
 	div_dropdown.classList.add('hidden');
 	div_span.setAttribute('contenteditable','true');
 
