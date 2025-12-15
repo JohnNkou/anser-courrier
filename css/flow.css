@@ -104,8 +104,12 @@ body #main {
     box-shadow: none;
 }
 
+.card textarea{
+   width: 100%;
+}
+
 .span_textarea{
-   grid-column: span 3;
+   grid-column: span 2;
 }
 #my-content .card table{
    text-align: center;
