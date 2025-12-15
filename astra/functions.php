@@ -307,8 +307,8 @@ add_action('wp_enqueue_scripts',function(){
     $has_flow_short = has_shortcode($post->post_content,'anser_gravityflow');
 
     if($has_view_short || $has_flow_short){
-        wp_enqueue_style('custom/global', '/css/global.css');
-        wp_enqueue_style('custom/modal','/css/modal.css');
+        wp_enqueue_style('custom/global', '/css/global.css',[],null);
+        wp_enqueue_style('custom/modal','/css/modal.css',[],null);
         wp_enqueue_script('tailwindcss','https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4',[],null,true);
         wp_enqueue_script('worker-installer', '/js/anser-worker/installer.js','1.2', [],null,true);
 
