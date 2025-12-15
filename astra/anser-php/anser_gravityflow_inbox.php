@@ -167,9 +167,21 @@ class Anser_GravityFlow_Inbox{
 
 		<script>
 			if("serviceWorker" in navigator){
-				var url = "<?php echo $_SERVER['REQUEST_URI'] ?>";
-				navigator.serviceWorker.ready.then((workerRegistration)=>{
+				var url = "<?php echo $_SERVER['REQUEST_URI'] ?>",
+				serviceWorkerContainer = navigator.serviceWorker;
+
+				serviceWorkerContainer.oncontrollerchange = ()=>{
+					let worker = serviceWorkerContainer.active || serviceWorkerContainer.installing;
+
+					console.log("Posting message on controllerchange");
+
+					worker.postMessage({ type:'REGISTER', url });
+				}
+
+				serviceWorkerContainer.ready.then((workerRegistration)=>{
 					let worker = workerRegistration.active || workerRegistration.installing;
+
+					console.log("Posting message on ready");
 
 					worker.postMessage({ type:'REGISTER', url });
 				})
