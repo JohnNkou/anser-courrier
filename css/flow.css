@@ -103,6 +103,10 @@ body #main {
     flex-direction: column;
     box-shadow: none;
 }
+
+.card textarea{
+   width: auto;
+}
 #my-content .card table{
    text-align: center;
 }
@@ -116,7 +120,7 @@ body #main {
     padding-left: 1em;
     padding_bottom: 1em;
 }
-#my-content textarea{
+textarea{
    width:35em;
    height:10em;
 }
