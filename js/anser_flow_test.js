@@ -980,16 +980,15 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     } else {
       return true;
     }
-    var operators = {
-      is: function(value2, data2) {
-        if (!(value2 instanceof Array)) {
-          return value2 == data2;
-        }
-        return value2.indexOf(data2) != -1;
-      }
-    };
     function ruleChecker(rule) {
-      let { fieldId, operator, value: ruleValue } = rule, field_location = field_ids[fieldId], validated = true;
+      let { fieldId, operator, value: ruleValue } = rule, field_location = field_ids[fieldId], validated = true, operators = {
+        is: function(value2, data2) {
+          if (!(value2 instanceof Array)) {
+            return value2 == data2;
+          }
+          return value2.indexOf(data2) != -1;
+        }
+      };
       if (field_location) {
         let _field = get_field_by_location(field_location, inboxes);
         if (_field) {

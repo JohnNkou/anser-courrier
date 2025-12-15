@@ -827,18 +827,17 @@ function should_display_field(field, field_ids, inboxes) {
     	return true;
   	}
 
-  	var operators = {
-  		is: function(value,data){
-  			if(!(value instanceof Array)){
-  				return value == data;
-  			}
-
-  			return value.indexOf(data) != -1
-  		}
-  	}
-
   	function ruleChecker(rule) {
-    	let { fieldId, operator, value: ruleValue } = rule, field_location = field_ids[fieldId], validated = true;
+    	let { fieldId, operator, value: ruleValue } = rule, field_location = field_ids[fieldId], validated = true,
+    	operators = {
+	  		is: function(value,data){
+	  			if(!(value instanceof Array)){
+	  				return value == data;
+	  			}
+
+	  			return value.indexOf(data) != -1
+	  		}
+	  	};
 
     	if (field_location) {
       		let _field = get_field_by_location(field_location, inboxes);
