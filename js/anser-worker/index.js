@@ -1,4 +1,4 @@
-const APP_NAME = 'anser-worker-v1.1.1';
+const APP_NAME = 'anser-worker-v1.1.2';
 
 self.addEventListener('install',(event)=>{
 	self.skipWaiting();
@@ -9,6 +9,8 @@ self.addEventListener('message',(event)=>{
 	type = data.type,
 	url = data.url,
 	status = data.status || 200;
+
+	console.log('RECEIVED MESSAGE', data);
 
 	if(type == 'REGISTER'){
 		caches.open(APP_NAME).then((cache)=>{
@@ -44,6 +46,7 @@ self.addEventListener('activate',(event)=>{
 	event.waitUntil(caches.keys().then((keys)=>{
 		return Promise.all(keys.map((key)=>{
 			if(key !== APP_NAME){
+				console.log("REMOVED KEY",key);
 				return caches.delete(key);
 			}
 			return Promise.resolve(true);

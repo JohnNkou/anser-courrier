@@ -1,10 +1,11 @@
 // js/anser-worker/index.js
-var APP_NAME = "anser-worker-v1.1.1";
+var APP_NAME = "anser-worker-v1.1.2";
 self.addEventListener("install", (event) => {
   self.skipWaiting();
 });
 self.addEventListener("message", (event) => {
   let data = event.data, type = data.type, url = data.url, status = data.status || 200;
+  console.log("RECEIVED MESSAGE", data);
   if (type == "REGISTER") {
     caches.open(APP_NAME).then((cache) => {
       cache.match(url).then((response) => {
@@ -34,6 +35,7 @@ self.addEventListener("activate", (event) => {
   event.waitUntil(caches.keys().then((keys) => {
     return Promise.all(keys.map((key) => {
       if (key !== APP_NAME) {
+        console.log("REMOVED KEY", key);
         return caches.delete(key);
       }
       return Promise.resolve(true);
