@@ -475,6 +475,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      	input.name = 'input_' + inbox.id;
 
 	      	atts.append('class','card');
+	      	atts.append('class','span_table');
 
 	      	setAttribute(div,atts);
 	      	thead.appendChild(tr);

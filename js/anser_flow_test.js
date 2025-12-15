@@ -719,6 +719,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             input.type = "hidden";
             input.name = "input_" + inbox.id;
             atts.append("class", "card");
+            atts.append("class", "span_table");
             setAttribute(div, atts);
             thead.appendChild(tr);
             table.appendChild(thead);
