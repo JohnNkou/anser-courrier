@@ -1202,10 +1202,10 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       if (Object.keys(with_multiple).length) {
         for (let id in with_multiple) {
           let fId = "input_" + id;
-          form.getAll(fId).forEach((value2) => {
-            form.append(fId + "[]", value2);
+          fData.getAll(fId).forEach((value2) => {
+            fData.append(fId + "[]", value2);
           });
-          form.delete(fId);
+          fData.delete(fId);
         }
       }
       let up = new uploader, p;

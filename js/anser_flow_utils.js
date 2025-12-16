@@ -1211,11 +1211,11 @@ function display_entry(payloads, entry_data) {
     		for(let id in with_multiple){
     			let fId = 'input_' + id;
 
-    			form.getAll(fId).forEach((value)=>{
-    				form.append(fId+'[]', value);
+    			fData.getAll(fId).forEach((value)=>{
+    				fData.append(fId+'[]', value);
     			})
 
-    			form.delete(fId);
+    			fData.delete(fId);
     		}
     	}
 
