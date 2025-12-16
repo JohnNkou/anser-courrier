@@ -91,7 +91,7 @@ body #main {
 }
  .entry-detail section > div {
     display: grid;
-    grid-template-columns: repeat(5,minmax(10em,30em));
+    grid-template-columns: repeat(5,minmax(10em,40em));
     flex-wrap: wrap;
     align-items: flex-start;
     gap:2em;
