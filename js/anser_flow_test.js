@@ -681,6 +681,11 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           }
           case "workflow_assignee_select": {
             let div = document.createElement("div"), label = document.createElement("label"), select = document.createElement("select"), div_error2 = document.createElement("div");
+            if (inbox.leaf_value) {
+              if (inbox.value.indexOf(inbox.leaf_value) != -1) {
+                inbox.value = inbox.value.replace(inbox.leaf_value, inbox.leaf_value + "' selected");
+              }
+            }
             label.textContent = inbox.label;
             select.innerHTML = inbox.value;
             atts.append("class", "card");
