@@ -117,6 +117,7 @@ body #main {
 #my-content .span_table button{
    width:10em;
    padding:0.2em;
+   margin-top:1em;
 }
 #my-content .card table{
    text-align: center;
