@@ -197,6 +197,11 @@ textarea{
    align-items: center;
    overflow: scroll;
 }
+
+#formCreator header{
+   background-color:#091a5a;
+   color:white;
+}
 #formCreator .content{
    padding:1em;
 }
