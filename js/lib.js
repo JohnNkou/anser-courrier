@@ -126,7 +126,7 @@ function Select(field,rootNode){
 			}
 		}
 		else if(field_value == choice.value){
-			selected.push(choice.value);
+			selected.push(choice.text);
 			option.setAttribute('selected','true');
 		}
 	});

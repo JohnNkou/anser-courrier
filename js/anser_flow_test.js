@@ -388,7 +388,7 @@ var require_lib = __commonJS((exports2) => {
           }
         }
       } else if (field_value == choice.value) {
-        selected.push(choice.value);
+        selected.push(choice.text);
         option.setAttribute("selected", "true");
       }
     });
