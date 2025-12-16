@@ -362,8 +362,9 @@ var require_lib = __commonJS((exports2) => {
     div_dropdown.classList.add("select-dropdown");
     div_dropdown.classList.add("shadow-md");
     div_dropdown.classList.add("bg-white");
-    select.classList.add("hidden");
     div_dropdown.classList.add("hidden");
+    select.classList.add("hidden");
+    select.setAttribute("multiple", "true");
     div_span.setAttribute("contenteditable", "true");
     function draw_view() {
       div_span.innerHTML = selected.map((data2) => {
