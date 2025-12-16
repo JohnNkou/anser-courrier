@@ -383,7 +383,7 @@ var require_lib = __commonJS((exports2) => {
       if (field_value instanceof Array) {
         for (let i = 0;i < field_value.length; i++) {
           if (field_value[i] == choice.value) {
-            selected.push(choice.value);
+            selected.push(choice.text);
             option.setAttribute("selected", "true");
           }
         }
