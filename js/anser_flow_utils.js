@@ -928,7 +928,6 @@ function display_entry(payloads, entry_data) {
   	inboxes.forEach((_inboxes, index) => {
     	let inSection = false, section_with_rules = false, currentSection;
     	_inboxes.forEach((inbox, _index) => {
-
 	      	try {
 	        	field_ids[inbox.id] = index + "_" + _index;
 	        	let inbox_index = field_ids[inbox.id], 

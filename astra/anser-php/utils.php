@@ -832,6 +832,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
 
             if($field->type == 'workflow_assignee_select'){
                 $result['value'] = $field->get_choices("");
+                flogs("THE FIELD %s", print_r($field));
             }
 
             if($field->type == 'form'){
