@@ -265,6 +265,7 @@ textarea{
 
 .select-dropdown{
    position: absolute;
+   height:20em;
 }
 #my-content .select-dropdown a{
    padding:0.3em;
