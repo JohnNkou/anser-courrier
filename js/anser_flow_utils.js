@@ -347,7 +347,8 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 
         	if(inbox.leaf_value){
         		if(inbox.value.indexOf(inbox.leaf_value) != -1){
-        			inbox.value = inbox.value.replace(inbox.leaf_value,inbox.leaf_value + '" selected');
+        			let slat = inbox.value[inbox.value.indexOf(inbox.leaf_value)-1];
+        			inbox.value = inbox.value.replace(slat + inbox.leaf_value + slat, slat + inbox.leaf_value + slat + " selected");
         		}
         	}
 

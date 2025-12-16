@@ -683,7 +683,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             let div = document.createElement("div"), label = document.createElement("label"), select = document.createElement("select"), div_error2 = document.createElement("div");
             if (inbox.leaf_value) {
               if (inbox.value.indexOf(inbox.leaf_value) != -1) {
-                inbox.value = inbox.value.replace(inbox.leaf_value, inbox.leaf_value + '" selected');
+                let slat = inbox.value[inbox.value.indexOf(inbox.leaf_value) - 1];
+                inbox.value = inbox.value.replace(slat + inbox.leaf_value + slat, slat + inbox.leaf_value + slat + " selected");
               }
             }
             label.textContent = inbox.label;
