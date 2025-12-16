@@ -15,7 +15,7 @@ header *:first-child{
     margin-right: auto;
 }
 
-#main thead, #main button, header{
+#main thead, #main button{
     background-color:#091a5a;
     color:white;
 }
