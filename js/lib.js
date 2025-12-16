@@ -91,6 +91,7 @@ function Select(field,rootNode){
 	div_dropdown.classList.add('select-dropdown');
 	div_dropdown.classList.add('shadow-md');
 	div_dropdown.classList.add('bg-white');
+	select.classList.add('hidden');
 	div_dropdown.classList.add('hidden');
 	div_span.setAttribute('contenteditable','true');
 
@@ -160,6 +161,7 @@ function Select(field,rootNode){
 
 	div.appendChild(div_span);
 	div.appendChild(div_dropdown);
+	div.appendChild(select);
 
 	rootNode.appendChild(div);
 }
