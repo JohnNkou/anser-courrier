@@ -352,8 +352,6 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
         		}
         	}
 
-        	with_multiple[inbox.id] = true;
-
         	label.textContent = inbox.label;
         	select.innerHTML = inbox.value;
 
@@ -395,6 +393,8 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
           div.appendChild(label);
           div.appendChild(div_node);
           div.appendChild(div_error);
+
+          with_multiple[inbox.id] = true;
 
           return div;
           break;

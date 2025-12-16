@@ -688,7 +688,6 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                 inbox.value = inbox.value.replace(slat + inbox.leaf_value + slat, slat + inbox.leaf_value + slat + " selected");
               }
             }
-            with_multiple[inbox.id] = true;
             label.textContent = inbox.label;
             select.innerHTML = inbox.value;
             atts.append("class", "card");
@@ -720,6 +719,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             div.appendChild(label);
             div.appendChild(div_node);
             div.appendChild(div_error2);
+            with_multiple[inbox.id] = true;
             return div;
             break;
           }
