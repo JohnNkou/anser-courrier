@@ -94,6 +94,7 @@ function Select(field,rootNode){
 	div_dropdown.classList.add('hidden');
 	select.classList.add('hidden');
 	select.setAttribute('multiple','true');
+	select.setAttribute('name','input_'+field.id);
 	div_span.setAttribute('contenteditable','true');
 
 	function draw_view(){

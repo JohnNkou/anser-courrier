@@ -365,6 +365,7 @@ var require_lib = __commonJS((exports2) => {
     div_dropdown.classList.add("hidden");
     select.classList.add("hidden");
     select.setAttribute("multiple", "true");
+    select.setAttribute("name", "input_" + field.id);
     div_span.setAttribute("contenteditable", "true");
     function draw_view() {
       div_span.innerHTML = selected.map((data2) => {
