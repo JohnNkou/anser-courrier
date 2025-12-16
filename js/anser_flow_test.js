@@ -463,7 +463,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
   function build_index_class(inbox_index) {
     return "i" + inbox_index;
   }
-  function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, entry_data }) {
+  function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, entry_data, with_multiple }) {
     switch (inbox.type) {
       case "section": {
         console.log("I am IN A SECTION BEAUTY");
@@ -688,6 +688,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                 inbox.value = inbox.value.replace(slat + inbox.leaf_value + slat, slat + inbox.leaf_value + slat + " selected");
               }
             }
+            with_multiple[inbox.id] = true;
             label.textContent = inbox.label;
             select.innerHTML = inbox.value;
             atts.append("class", "card");
@@ -1101,7 +1102,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     }
   }
   function display_entry(payloads, entry_data) {
-    let inboxes = payloads.inbox, entry_id = entry_data.entry_id, numero = entry_data.numero, form_title = payloads.form_title, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), actionNodes = {}, bodyHtml = "", field_ids = {}, dependents = {}, required = {}, uploads = {}, file_to_sends = {};
+    let inboxes = payloads.inbox, entry_id = entry_data.entry_id, numero = entry_data.numero, form_title = payloads.form_title, main_node = document.querySelector(".entry-detail"), span_title = document.querySelector(".form_name"), span_entry_number = document.querySelector(".entry-id"), content_node = document.querySelector(".entry-detail .content"), back = document.querySelector(".entry-detail .back"), actionNodes = {}, bodyHtml = "", field_ids = {}, dependents = {}, required = {}, uploads = {}, file_to_sends = {}, with_multiple = {};
     if (!content_node) {
       return console.error("Content node not found");
     }
@@ -1157,7 +1158,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               atts.append("class", "hidden");
             }
           }
-          let node = build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, entry_data });
+          let node = build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, entry_data, with_multiple });
           if (!node) {
             console.log("Missing node for inbox", inbox);
             throw Error("Missing node");
@@ -1197,6 +1198,15 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           });
         }
         return;
+      }
+      if (Object.keys(with_multiple).length) {
+        for (let id in with_multiple) {
+          let fId = "input_" + id;
+          form.getAll(fId).forEach((value2) => {
+            form.append(fId + "[]", value2);
+          });
+          form.delete(fId);
+        }
       }
       let up = new uploader, p;
       up.show();
