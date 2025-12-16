@@ -104,11 +104,6 @@ body #main {
     box-shadow: none;
 }
 
-#my-content .card table button{
-   padding:0.2em;
-   width:10em;
-}
-
 .card textarea{
    width: 100%;
 }
@@ -118,6 +113,10 @@ body #main {
 }
 .span_table{
    grid-column: span 5;
+}
+#my-content .span_table button{
+   width:10em;
+   padding:0.2em;
 }
 #my-content .card table{
    text-align: center;
