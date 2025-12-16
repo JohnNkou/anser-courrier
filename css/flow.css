@@ -104,6 +104,11 @@ body #main {
     box-shadow: none;
 }
 
+#my-content .card table button{
+   padding:0.2em;
+   width:10em;
+}
+
 .card textarea{
    width: 100%;
 }
