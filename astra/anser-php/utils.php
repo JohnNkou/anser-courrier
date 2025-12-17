@@ -1192,6 +1192,7 @@ function load_gravityflow_inbox(){
         header("X-Abel-Trump: Maga");
         header_remove("Expires");
         header_remove("Cache-Control");
+        header("Cache-Control: no-cache");
         header("Last-Modified:". get_last_modified($entries[0]['date_updated']));
         flogs("HEADER LIST %s", print_r(headers_list(),true));
     }
