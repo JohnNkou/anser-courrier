@@ -53,7 +53,6 @@ var require_anser_utily = __commonJS((exports2) => {
         if (response.status == 200) {
           response.json().then((payload) => {
             if (payload.success) {
-              display_information_modal("Mise à jour effectué avec succèss");
               if (onsuccess) {
                 onsuccess(payload.data);
                 event.target.reset();
