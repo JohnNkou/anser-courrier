@@ -1190,6 +1190,7 @@ function load_gravityflow_inbox(){
 
     if(count($entries) > 0){
         flogs("SETTING Last-Modified HEADER");
+        header("X-ABEL-TRUMP: Maga");
         header("Last-Modified:". get_last_modified($entries[0]['date_updated']));
     }
     
