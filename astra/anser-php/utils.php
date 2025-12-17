@@ -1189,9 +1189,11 @@ function load_gravityflow_inbox(){
     },$entries);
 
     if(count($entries) > 0){
-        flogs("HEADER LIST %s", print_r(headers_list(),true));
-        header("X-ABEL-TRUMP: Maga");
+        header("X-Abel-Trump: Maga");
+        header_remove("Expires");
+        header_remove("Cache-Control");
         header("Last-Modified:". get_last_modified($entries[0]['date_updated']));
+        flogs("HEADER LIST %s", print_r(headers_list(),true));
     }
     
     wp_send_json_success(["entries"=>$filtered_entries, "field_values"=> $fields_values, "total"=> $total]);
