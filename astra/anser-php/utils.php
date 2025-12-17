@@ -1078,6 +1078,12 @@ function handle_non_editable_field($form,$entry,$current_step,$field,$display_em
     }
 }
 
+function get_last_modified($date_string){
+    $t = strtotime($date_string);
+
+    return date("D, d M Y h:i:s",$t) . " GMT";
+}
+
 
 function load_gravityflow_inbox(){
     // The global $post must be set in order for the gravityflow class to pass the request and not return an empty string
@@ -1108,8 +1114,6 @@ function load_gravityflow_inbox(){
         $entries = Gravity_Flow_API::get_inbox_entries( ["form_id"=>$form_ids, "paging"=> ["offset"=>$offset, "page_size"=> $limit]],$total);
     }
 
-    flogs("ENTRIES %s",print_r($entries,true));
-    
     $fields_values = [];
     
     foreach (explode(",",$form_ids) as $form_id){
@@ -1183,6 +1187,10 @@ function load_gravityflow_inbox(){
         
        return $new_entry; 
     },$entries);
+
+    if(count($entries) > 0){
+        header("Last-Modified:". get_last_modified($entries[0]['date_updated']));
+    }
     
     wp_send_json_success(["entries"=>$filtered_entries, "field_values"=> $fields_values, "total"=> $total]);
 }
