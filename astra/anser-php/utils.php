@@ -1107,6 +1107,8 @@ function load_gravityflow_inbox(){
         $search_criteria = build_search_criteria();
         $entries = Gravity_Flow_API::get_inbox_entries( ["form_id"=>$form_ids, "paging"=> ["offset"=>$offset, "page_size"=> $limit]],$total);
     }
+
+    flogs("ENTRIES %s",print_r($entries,true));
     
     $fields_values = [];
     
