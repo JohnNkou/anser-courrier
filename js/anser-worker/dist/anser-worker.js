@@ -1,5 +1,5 @@
 // js/anser-worker/index.js
-var APP_NAME = "anser-worker-v1.1.9";
+var APP_NAME = "anser-worker-v1.1.1";
 self.addEventListener("install", (event) => {
   self.skipWaiting();
 });
@@ -46,16 +46,18 @@ self.addEventListener("activate", (event) => {
 });
 self.addEventListener("fetch", (event) => {
   let request = event.request, url = new URL(request.url);
-  if (url.pathname.indexOf("/wp-admin") !== 0) {
-    event.respondWith(caches.open(APP_NAME).then((cache) => {
-      return cache.match(url.pathname).then((response) => {
-        if (response) {
-          console.log("Serving url", url.pathname);
-          return response;
-        }
-        console.log("Retrieving data", request.url);
-        return fetch(request);
-      });
-    }));
+  if (!request.headers.get("no-cache")) {
+    if (url.pathname.indexOf("/wp-admin") !== 0) {
+      event.respondWith(caches.open(APP_NAME).then((cache) => {
+        return cache.match(url.pathname).then((response) => {
+          if (response) {
+            console.log("Serving url", url.pathname);
+            return response;
+          }
+          console.log("Retrieving data", request.url);
+          return fetch(request);
+        });
+      }));
+    }
   }
 });

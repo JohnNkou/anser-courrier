@@ -60,8 +60,11 @@ function display_formCreator({ inbox, entry_data, onsuccess }){
     toggle_loader("Mise à jour");
 
     fetch(url,{
-      method:'POST',
-      body: new FormData(event.target)
+      method:   'POST',
+      body:     new FormData(event.target),
+      headers:{
+        'no-cache':'true'
+      }
     }).then((response)=>{
       toggle_loader();
       if(response.status == 200){
