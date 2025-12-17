@@ -1189,11 +1189,13 @@ function load_gravityflow_inbox(){
     },$entries);
 
     if(count($entries) > 0){
+        $last_modified = get_last_modified($entries[0]['date_updated']);
         header("X-Abel-Trump: Maga");
         header_remove("Expires");
         header_remove("Cache-Control");
         header("Cache-Control: no-cache");
-        header("Last-Modified:". get_last_modified($entries[0]['date_updated']));
+        header("Last-Modified:". $last_modified);
+        header("Etag:".base64_encode($last_modified));
         flogs("HEADER LIST %s", print_r(headers_list(),true));
     }
     

@@ -373,11 +373,6 @@ add_filter('pre_http_request', function($pre,$args,$url){
     return $pre;
 }, 10, 3);
 
-add_action('send_headers', function () {
-    header_remove('Last-Modified');
-    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-    header("Cache-Control: no-store");
-}, 0);
 
 /*add_action("wp_enqueue_scripts", function(){
     global $gravityflow_ajax_endpoint, $gravityview_ajax_endpoint, $gravityview_entry_view_endpoint,$gravityflow_inbox_entry_ajax_endpoint;
