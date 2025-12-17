@@ -376,7 +376,7 @@ add_filter('pre_http_request', function($pre,$args,$url){
 add_action('send_headers', function () {
     header_remove('Last-Modified');
     header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-    header("Cache-Control: no-store")
+    header("Cache-Control: no-store");
 }, 0);
 
 /*add_action("wp_enqueue_scripts", function(){
