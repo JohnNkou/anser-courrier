@@ -616,7 +616,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             });
             label.textContent = inbox.label;
             atts.append("class", "card");
-            atts.append("class", inbox_index);
+            atts.append("class", build_index_class(inbox_index));
             setAttribute(div, atts);
             setAttribute(div_error2, failedAtts);
             div.appendChild(label);

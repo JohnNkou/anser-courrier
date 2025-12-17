@@ -250,7 +250,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
           label.textContent = inbox.label;
 
         	atts.append("class", "card");
-        	atts.append('class', inbox_index);
+        	atts.append('class', build_index_class(inbox_index));
         	setAttribute(div,atts);
         	setAttribute(div_error, failedAtts);
         	div.appendChild(label);

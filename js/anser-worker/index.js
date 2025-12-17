@@ -1,4 +1,4 @@
-const APP_NAME = 'anser-worker-v1.1.8';
+const APP_NAME = 'anser-worker-v1.1.9';
 
 self.addEventListener('install',(event)=>{
 	self.skipWaiting();
