@@ -820,9 +820,9 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   if (response.status == 200) {
                     response.json().then((data2) => {
                       if (data2.success) {
-                        let count = 10, parent;
+                        let count = 10, parent = target;
                         display_information_modal("Suppression effectué");
-                        while (parent = target.parentNode) {
+                        while (parent = parent.parentNode) {
                           if (parent.tagName.toLowerCase() == "tr") {
                             tbody.removeChild(parent);
                             break;

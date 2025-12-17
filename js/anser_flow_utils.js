@@ -520,10 +520,10 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      					response.json().then((data)=>{
 	      						if(data.success){
 	      							let count = 10,
-	      							parent;
+	      							parent = target;
 	      							display_information_modal("Suppression effectué");
 
-	      							while(parent = target.parentNode){
+	      							while(parent = parent.parentNode){
 	      								if(parent.tagName.toLowerCase() == "tr"){
 	      									tbody.removeChild(parent);
 	      									break;
