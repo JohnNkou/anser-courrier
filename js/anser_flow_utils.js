@@ -519,12 +519,18 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      				if(response.status == 200){
 	      					response.json().then((data)=>{
 	      						if(data.success){
-	      							let parent;
+	      							let count = 10,
+	      							parent;
 	      							display_information_modal("Suppression effectué");
 
 	      							while(parent = target.parentNode){
 	      								if(parent.tagName.toLowerCase() == "tr"){
 	      									tbody.removeChild(parent);
+	      									break;
+	      								}
+
+	      								if(!(count--)){
+	      									console.error("Didn't find parrent with tagName tr");
 	      									break;
 	      								}
 	      							}
