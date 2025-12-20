@@ -1198,6 +1198,8 @@ function load_gravityflow_inbox(){
 
     if(isset($_REQUEST['excel'])){
 
+        flogs("MY GET ARE %s", print_r($_GET,true));
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
@@ -1217,7 +1219,7 @@ function load_gravityflow_inbox(){
         }
 
         header("Content-Type:application/vdn.opencmlformats-officedocument.spreadsheetml.sheet");
-        header("Content-Disposition: attachment; filename='stuff.xlsx'");
+        header("Content-Disposition: attachment; filename=stuff.xlsx");
         header("Cache-Controle: no-cache;no-store");
 
         flogs("EXCEL DATA IS %s",print_r($excel_data,true));
