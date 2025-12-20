@@ -1220,6 +1220,8 @@ function load_gravityflow_inbox(){
         header("Content-Disposition: attachment; filename='stuff.xlsx'");
         header("Cache-Controle: no-cache;no-store");
 
+        flogs("EXCEL DATA IS %s",print_r($excel_data,true));
+
         $sheet->fromArray($excel_data);
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
