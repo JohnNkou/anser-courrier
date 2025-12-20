@@ -1208,13 +1208,11 @@ function load_gravityflow_inbox(){
         $excel_data = [$required_form_fields];
         $i = 0;
 
-        flogs("FILTERED ENTRIES %s", print_r($filtered_entries,true));
-
         while($i < count($filtered_entries)){
             $dup = [];
 
-            foreach ($required_form_fields as $key => $value) {
-                $dup[$key] = $filtered_entries[$i][$key];
+            foreach ($required_form_fields as $value) {
+                $dup[$key] = $filtered_entries[$i][$value];
             }
 
             array_push($excel_data, $dup);
