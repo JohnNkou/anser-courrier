@@ -78,9 +78,12 @@ class Anser_GravityFlow_Inbox{
 					}
 				?>
 			</div>
-		<div class='navigationHelper'>
-			<p></p>
-		</div>
+			<div>
+				<button id='excel-button' class='capitilize'>excel</button>
+			</div>
+			<div class='navigationHelper'>
+				<p></p>
+			</div>
 		</div>
 	<?php
 	}
@@ -196,7 +199,7 @@ class Anser_GravityFlow_Inbox{
 	}
 
 	private function register_scripts(){
-		wp_enqueue_script('gravityflow-inbox-ajax', '/js/anser_flow_test.js',[], '1.4', true);
+		wp_enqueue_script('gravityflow-inbox-ajax', '/js/anser_flow_test.js',[], '1.5', true);
 		wp_localize_script('gravityflow-inbox-ajax',JS_AJAX_NAME, [
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'flow_action' => GRAVITYFLOW_AJAX_ENDPOINT,

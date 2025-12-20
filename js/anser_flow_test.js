@@ -1654,6 +1654,7 @@ var table = document.querySelector(".main-table");
 var second_table = document.querySelector(".second-table");
 var tbody = table.querySelector("tbody");
 var counts = document.querySelectorAll(".onglets .count");
+var excel_button = document.getElementById("excel-button");
 var navigationHelper = document.querySelector(".navigationHelper p");
 var myPage_handler = new page_handler((json_response) => result_handler(json_response, table), table);
 var myPage_handler_2 = second_table && new page_handler((json_response) => result_handler_2(json_response, second_table), second_table);
@@ -1661,6 +1662,28 @@ var search_form = document.querySelector(".search_block");
 if (typeof _Page != "undefined") {
   if (!_Page.form_ids) {
     throw Error("No form_ids found in _Page");
+  }
+  if (excel_button) {
+    excel_button.onclick = function(event) {
+      event.preventDefault();
+      let url = new URL(GravityAjax.ajax_url);
+      url.searchParams.set("form_ids", _Page.form_ids);
+      url.searchParams.set("action", GravityAjax.flow_action);
+      url.searchParams.set("security", GravityAjax.flow_nonce);
+      url.searchParams.set("excel", "true");
+      console.log("Fetching excel data");
+      fetch(url).then((response) => {
+        if (response.status == 200) {
+          console.log("Got Data");
+        } else {
+          console.log("Bad Data");
+        }
+      }).catch((error) => {
+        console.error("Error while fetching excel", error);
+      }).finally(() => {
+        console.log("Ened fetching");
+      });
+    };
   }
   myPage_handler.addQueries({ form_ids: _Page.form_ids, action: GravityAjax.flow_action, security: GravityAjax.flow_nonce });
   second_table && myPage_handler_2.addQueries({ id: _Page.view_id, secret: _Page.secret, action: GravityAjax.view_action, security: GravityAjax.view_nonce });
