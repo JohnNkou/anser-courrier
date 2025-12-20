@@ -4,6 +4,8 @@ require_once ABSPATH . "vendor/autoload.php";
 
 use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 function handle_upload_entry($permission_granted,$entry,$form,$current_step){
     $uploaded_files = rgpost('gform_uploaded_files');
@@ -1195,10 +1197,6 @@ function load_gravityflow_inbox(){
     },$entries);
 
     if(isset($_REQUEST['excel'])){
-        require_once 'vendor/autoload.php';
-
-        use PhpOffice\PhpSpreadsheet\Spreadsheet;
-        use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
