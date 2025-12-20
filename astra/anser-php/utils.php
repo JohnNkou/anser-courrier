@@ -1208,6 +1208,8 @@ function load_gravityflow_inbox(){
         $excel_data = [$required_form_fields];
         $i = 0;
 
+        flogs("FILTERED ENTRIES %s", print_r($filtered_entries,true));
+
         while($i < count($filtered_entries)){
             $dup = [];
 
