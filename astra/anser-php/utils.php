@@ -1118,9 +1118,6 @@ function load_gravityflow_inbox(){
             $offset = 0;
             $limit = 1000000;
         }
-        else{
-            flogs('GROP GET %s', print_r($_GET,true));
-        }
 
         $entries = Gravity_Flow_API::get_inbox_entries( ["form_id"=>$form_ids, "paging"=> ["offset"=>$offset, "page_size"=> $limit]],$total);
     }
@@ -1131,25 +1128,27 @@ function load_gravityflow_inbox(){
         $fields_values[$form_id] = [];
         $form = GFAPI::get_form($form_id);
         $id_founds = [];
-        
-        foreach ($form['fields'] as $field){
-            $found_field = array_filter($required_form_fields,function($value) use ($field, &$id_founds){
-                $label = strtolower($field->label);
-                
-                if(strpos($label,$value) !== false){
-                    if(array_key_exists($value,$id_founds) === false){
-                        $id_founds[$value] = $field->id;
-                        return true;
+
+        if($form){
+            foreach ($form['fields'] as $field){
+                $found_field = array_filter($required_form_fields,function($value) use ($field, &$id_founds){
+                    $label = strtolower($field->label);
+                    
+                    if(strpos($label,$value) !== false){
+                        if(array_key_exists($value,$id_founds) === false){
+                            $id_founds[$value] = $field->id;
+                            return true;
+                        }
                     }
-                }
+                    
+                    return false;
+                });
                 
-                return false;
-            });
-            
-            if(count($found_field) > 0){
-                $field_value = array_values($found_field)[0];
-                array_push($required_fields,$field->id);
-                $fields_values[$form_id][$field_value] = $field->id;
+                if(count($found_field) > 0){
+                    $field_value = array_values($found_field)[0];
+                    array_push($required_fields,$field->id);
+                    $fields_values[$form_id][$field_value] = $field->id;
+                }
             }
         }
     }
