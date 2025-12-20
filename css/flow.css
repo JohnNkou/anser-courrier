@@ -78,7 +78,6 @@ body #main {
     text-align:center;
 }
  #my-content .informationModal button{
-    padding:0.5em;
     margin-top:2em;
 }
  #my-content .entry-detail header {
@@ -217,9 +216,6 @@ textarea{
    display: flex;
 }
 
-#formCreator button{
-   padding:1em;
-}
 #formCreator footer{
    display: flex;
    justify-content: center;
