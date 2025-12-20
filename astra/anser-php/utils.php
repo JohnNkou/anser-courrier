@@ -1111,6 +1111,12 @@ function load_gravityflow_inbox(){
     }
     else{
         $search_criteria = build_search_criteria();
+
+        if(isset($_REQUEST['excel'])){
+            $offset = 0;
+            $limit = 1000000;
+        }
+
         $entries = Gravity_Flow_API::get_inbox_entries( ["form_id"=>$form_ids, "paging"=> ["offset"=>$offset, "page_size"=> $limit]],$total);
     }
 
@@ -1188,15 +1194,40 @@ function load_gravityflow_inbox(){
        return $new_entry; 
     },$entries);
 
-    if(count($entries) > 0){
-        $last_modified = get_last_modified($entries[0]['date_updated']);
-        header("X-Abel-Trump: Maga");
-        header_remove("Expires");
-        header_remove("Cache-Control");
-        header("Cache-Control: no-cache");
-        header("Last-Modified:". $last_modified);
-        header("Etag:".base64_encode($last_modified));
-        flogs("HEADER LIST %s", print_r(headers_list(),true));
+    if(isset($_REQUEST['excel'])){
+        require_once 'vendor/autoload.php';
+
+        use PhpOffice\PhpSpreadsheet\Spreadsheet;
+        use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $excel_data = [$required_form_fields];
+        $i = 0;
+
+        while($i < count($filtered_entries)){
+            $dup = [];
+
+            foreach ($required_form_fields as $key => $value) {
+                $dup[$key] = $filtered_entries[$i][$key];
+            }
+
+            array_push($excel_data, $dup);
+        }
+
+        $i++;
+
+        header("Content-Type:application/vdn.opencmlformats-officedocument.spreadsheetml.sheet");
+        header("Content-Disposition: attachment; filename='stuff.xlsx'");
+        header("Cache-Controle: no-cache;no-store");
+
+        $sheet->fromArray($excel_data);
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
+        exit;
+
+
     }
     
     wp_send_json_success(["entries"=>$filtered_entries, "field_values"=> $fields_values, "total"=> $total]);
