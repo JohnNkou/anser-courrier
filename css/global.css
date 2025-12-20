@@ -15,6 +15,10 @@ header *:first-child{
     margin-right: auto;
 }
 
+#my-content button {
+    padding: 0.5em;
+}
+
 #main thead, #main button{
     background-color:#091a5a;
     color:white;
