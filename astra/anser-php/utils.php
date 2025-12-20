@@ -1212,9 +1212,9 @@ function load_gravityflow_inbox(){
             }
 
             array_push($excel_data, $dup);
-        }
 
-        $i++;
+            $i++;
+        }
 
         header("Content-Type:application/vdn.opencmlformats-officedocument.spreadsheetml.sheet");
         header("Content-Disposition: attachment; filename='stuff.xlsx'");
