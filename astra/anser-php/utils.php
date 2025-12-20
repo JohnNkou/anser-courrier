@@ -1212,7 +1212,7 @@ function load_gravityflow_inbox(){
             $dup = [];
 
             foreach ($required_form_fields as $value) {
-                $dup[$key] = $filtered_entries[$i][$value];
+                $dup[$value] = $filtered_entries[$i][$value];
             }
 
             array_push($excel_data, $dup);
