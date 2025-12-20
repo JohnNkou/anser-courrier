@@ -1671,18 +1671,7 @@ if (typeof _Page != "undefined") {
       url.searchParams.set("action", GravityAjax.flow_action);
       url.searchParams.set("security", GravityAjax.flow_nonce);
       url.searchParams.set("excel", "true");
-      console.log("Fetching excel data");
-      fetch(url).then((response) => {
-        if (response.status == 200) {
-          console.log("Got Data");
-        } else {
-          console.log("Bad Data");
-        }
-      }).catch((error) => {
-        console.error("Error while fetching excel", error);
-      }).finally(() => {
-        console.log("Ened fetching");
-      });
+      location.href = url.toString();
     };
   }
   myPage_handler.addQueries({ form_ids: _Page.form_ids, action: GravityAjax.flow_action, security: GravityAjax.flow_nonce });

@@ -28,7 +28,9 @@ if(typeof _Page != "undefined"){
             url.searchParams.set('security', GravityAjax.flow_nonce);
             url.searchParams.set('excel','true');
 
-            console.log("Fetching excel data");
+            location.href = url.toString();
+
+            /*console.log("Fetching excel data");
 
             fetch(url).then((response)=>{
                 if(response.status == 200){
@@ -41,7 +43,7 @@ if(typeof _Page != "undefined"){
                 console.error("Error while fetching excel",error);
             }).finally(()=>{
                 console.log("Ened fetching");
-            })
+            })*/
         }
     }
 
