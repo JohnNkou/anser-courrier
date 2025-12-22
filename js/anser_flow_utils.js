@@ -84,6 +84,8 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 			}
 
 			if(inbox.value.indexOf('table') != -1){
+				p = document.createElement('div');
+				p.innerHTML = inbox.value;
 				atts.append('class','span_table');
 			}
 

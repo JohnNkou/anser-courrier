@@ -496,6 +496,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           p.innerHTML = inbox.value;
         }
         if (inbox.value.indexOf("table") != -1) {
+          p = document.createElement("div");
+          p.innerHTML = inbox.value;
           atts.append("class", "span_table");
         }
         atts.append("class", "card");

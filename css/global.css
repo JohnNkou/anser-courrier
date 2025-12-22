@@ -27,6 +27,11 @@ header *:first-child{
     background-color:#091a5a;
     color:white;
 }
+#main table table thead{
+    background-color: white;
+    color:black;
+}
+#
 #main table{
     border-bottom:1px solid silver;
     table-layout: fixed;
@@ -38,6 +43,9 @@ header *:first-child{
 }
 #main td, #main th{
     border:none;
+}
+#main table table th, #main table table td{
+    border:1px solid black;
 }
 #main td{
     white-space: nowrap;
