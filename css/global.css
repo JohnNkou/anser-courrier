@@ -27,7 +27,7 @@ header *:first-child{
     background-color:#091a5a;
     color:white;
 }
-#main table table thead{
+#main table.gpnf-nested-entries thead{
     background-color: white;
     color:black;
 }
@@ -44,7 +44,7 @@ header *:first-child{
 #main td, #main th{
     border:none;
 }
-#main table table th, #main table table td{
+#main table.gpnf-nested-entries th, #main table.gpnf-nested-entries td{
     border:1px solid black;
 }
 #main td{
