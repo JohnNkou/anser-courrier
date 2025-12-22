@@ -35,6 +35,7 @@ header *:first-child{
 #main table{
     border-bottom:1px solid silver;
     table-layout: fixed;
+    border-collapse: collapse;
 }
 #my-content{
     padding:1em;
