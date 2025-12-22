@@ -573,6 +573,19 @@ function handle_gravityflow_action($step){
 
             $default_status = $step->default_status ? $step->default_status : 'complete';
 
+            if($step->note_mode !== 'hidden'){
+                $posted_note = rgpost('gravityflow_note');
+
+                array_push($action,[
+                    'type'=> 'edit',
+                    'fieldType'=>'textarea',
+                    'id'=> 'gravityflow-note',
+                    'name'=> 'gravityflow_note',
+                    'label'=> esc_html__('Note', 'gravityflow'),
+                    'value'=> $posted_note
+                ]);
+            }
+
             if (in_array($default_status, array('hidden','submit_buttons'), true)) {
                 array_push($action, [
                     "type"=>"hidden",
