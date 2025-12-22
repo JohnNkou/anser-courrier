@@ -240,8 +240,7 @@ textarea{
     align-items:center;
 }
  #tools .navigationHelper{
-    margin-left:auto;
-    font-size:0.8em;
+   font-size:0.8em;
 }
  #uploader div *{
     color:white;

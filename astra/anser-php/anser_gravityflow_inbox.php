@@ -78,11 +78,13 @@ class Anser_GravityFlow_Inbox{
 					}
 				?>
 			</div>
-			<div id='excel-container'>
-				<button id='excel-button' class='capitilize'>excel</button>
-			</div>
-			<div class='navigationHelper'>
-				<p></p>
+			<div class="ms-auto flex gap-2">
+				<div id='excel-container'>
+					<button id='excel-button' class='capitilize'>excel</button>
+				</div>
+				<div class='navigationHelper'>
+					<p></p>
+				</div>
 			</div>
 		</div>
 	<?php
