@@ -19,7 +19,11 @@ body #main {
  #my-content header form input {
     width: auto;
 }
- #my-content .onglets a {
+
+.onglets{
+   margin-right: auto;
+}
+#my-content .onglets a {
     display: inline-block;
     width: 8em;
     color: inherit;

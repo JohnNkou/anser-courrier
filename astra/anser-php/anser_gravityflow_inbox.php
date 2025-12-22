@@ -78,7 +78,7 @@ class Anser_GravityFlow_Inbox{
 					}
 				?>
 			</div>
-			<div class="ms-auto flex gap-2">
+			<div class="flex gap-2">
 				<div id='excel-container'>
 					<button id='excel-button' class='capitilize'>excel</button>
 				</div>
