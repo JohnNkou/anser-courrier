@@ -20,7 +20,7 @@ body #main {
     width: auto;
 }
 
-.onglets{
+#my-content .onglets{
    margin-right: auto;
 }
 #my-content .onglets a {
