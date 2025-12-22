@@ -315,7 +315,7 @@ add_action('wp_enqueue_scripts',function(){
 
         if($has_flow_short){
             flogs("MUSSHROOM");
-            wp_enqueue_style("custom_flow","/css/flow.css",[],null);
+            wp_enqueue_style("custom_flow","/css/flow.css",[],'1.2');
         }
     }
 });
