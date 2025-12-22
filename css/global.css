@@ -31,7 +31,6 @@ header *:first-child{
     background-color: white;
     color:black;
 }
-#
 #main table{
     border-bottom:1px solid silver;
     table-layout: fixed;
