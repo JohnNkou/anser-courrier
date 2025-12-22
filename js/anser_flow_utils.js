@@ -83,6 +83,10 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 				p.innerHTML = inbox.value;
 			}
 
+			if(inbox.value.indexOf('table') != -1){
+				atts.append('class','span_table');
+			}
+
 			atts.append('class','card');
 			atts.append('class', inbox_index);
 			setAttribute(div,atts);

@@ -495,6 +495,9 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         } else {
           p.innerHTML = inbox.value;
         }
+        if (inbox.value.indexOf("table") != -1) {
+          atts.append("class", "span_table");
+        }
         atts.append("class", "card");
         atts.append("class", inbox_index);
         setAttribute(div, atts);
