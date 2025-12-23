@@ -7,6 +7,15 @@ use Aws\Exception\AwsException;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
+function set_anser_cookie(){
+    $user = wp_get_current_user();
+    $expiration = time() + apply_filters( 'auth_cookie_expiration', 14 * DAY_IN_SECONDS, $user->data->ID);
+
+    flogs("\n\nSettings COOKIE TAMPA %s\n\n", ANSER_COOKIE_NAME);
+
+    setcookie(ANSER_COOKIE_NAME,$user->data->ID,$expiration);
+}
+
 function handle_upload_entry($permission_granted,$entry,$form,$current_step){
     $uploaded_files = rgpost('gform_uploaded_files');
 

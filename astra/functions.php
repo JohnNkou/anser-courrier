@@ -321,19 +321,16 @@ add_action('wp_enqueue_scripts',function(){
 });
 
 add_action('wp_login', function($user_login,$user){
-    $expiration = time() + apply_filters( 'auth_cookie_expiration', 14 * DAY_IN_SECONDS, $user->data->ID);
-
-    flogs("\n\nSettings COOKIE TAMPA %s\n\n", ANSER_COOKIE_NAME);
-
-    setcookie(ANSER_COOKIE_NAME,$user->data->user_email,$expiration);
+    set_anser_cookie();
 },10,2);
 
 add_action('switch_to_user', function($user_id, $old_user_id){
-    flogs("\n\nSwitching to user %s\n %s\n\n", $user_id, print_r(wp_get_current_user()->data,true));
+    set_anser_cookie();
+
 },10,2);
 
 add_action('switch_back_user', function($user_id, $old_user_id){
-    flogs("\n\nReserting back to main user. \n %s\n", print_r(wp_get_current_user()->data,true));
+    set_anser_cookie();
 },10,2);
 
 add_shortcode("anser_gravityview", array('Anser_Gravityview','shortcode'));
