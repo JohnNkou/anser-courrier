@@ -1,4 +1,4 @@
-const APP_NAME = 'anser-worker-v1.1.2',
+const APP_NAME = 'anser-worker-v1.1.3',
 COOKIE_NAME = 'u-e';
 
 self.addEventListener('install',(event)=>{
@@ -82,24 +82,25 @@ self.addEventListener('activate',(event)=>{
 
 self.addEventListener('fetch',(event)=>{
 	let request = event.request,
-	url = new URL(request.url);
+	url = new URL(request.url),
+	local_url = new URL(request.url);
 
 	if(!request.headers.get('no-cache')){
 		if(url.pathname.indexOf('/wp-admin') !== 0){
 			event.respondWith(cookieStore.get(COOKIE_NAME).then((data)=>{
 				if(data){
-					url.searchParams.set(COOKIE_NAME, data.value);
+					local_url.searchParams.set(COOKIE_NAME, data.value);
 				}
 
 				return caches.open(APP_NAME).then((cache)=>{
-					let local_url = new URL(request.url),
-					sKeys = [];
+					let sKeys = [];
 
 					local_url.searchParams.forEach((value,key)=>{
 						if(key != COOKIE_NAME){
 							sKeys.push(key);
 						}
-					})
+					});
+
 					sKeys.forEach((key)=> local_url.searchParams.delete(key));
 
 					return cache.match(local_url.href).then((response)=>{
