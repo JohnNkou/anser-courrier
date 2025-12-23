@@ -329,11 +329,11 @@ add_action('wp_login', function($user_login,$user){
 },10,2);
 
 add_action('switch_to_user', function($user_id, $old_user_id){
-    flogs("\n\nSwitching to user %s\n\n", $user_id);
+    flogs("\n\nSwitching to user %s\n %s\n\n", $user_id, print_r(wp_get_current_user(),true));
 },10,2);
 
 add_action('switch_back_user', function($user_id, $old_user_id){
-    flogs("\n\nReserting back to main user\n\n");
+    flogs("\n\nReserting back to main user. \n %s\n", print_r(wp_get_current_user(),true));
 },10,2);
 
 add_shortcode("anser_gravityview", array('Anser_Gravityview','shortcode'));
