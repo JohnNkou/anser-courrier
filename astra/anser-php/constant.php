@@ -8,6 +8,6 @@ define('GRAVITYVIEW_NONCE_NAME','gravityview_nonce__');
 define('GRAVITYVIEW_ENTRY_NONCE_NAME','gravityview_entry_nonce__');
 define('GRAVITYFLOW_NONCE_NAME','gravityflow_nonce__');
 define('GRAVITYFLOW_ENTRY_NONCE_NAME', 'gravityflow_entry_nonce__');
-
+define('ANSER_COOKIE_NAME', 'u-e');
 
 ?>

@@ -320,6 +320,14 @@ add_action('wp_enqueue_scripts',function(){
     }
 });
 
+add_action('wp_login', function($user_login,$user){
+    $expiration = time() + apply_filters( 'auth_cookie_expiration', 14 * DAY_IN_SECONDS, $user->data->ID);
+
+    flogs("Settings COOKIE TAMPA %s", ANSER_COOKIE_NAME);
+
+    setcookie(ANSER_COOKIE_NAME,$user->data->user_email,$expiration);
+},10,2);
+
 add_shortcode("anser_gravityview", array('Anser_Gravityview','shortcode'));
 
 add_shortcode("anser_gravityflow",function(...$atts){

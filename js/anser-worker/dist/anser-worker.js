@@ -4,7 +4,7 @@ self.addEventListener("install", (event) => {
   self.skipWaiting();
 });
 self.addEventListener("message", (event) => {
-  let data = event.data, type = data.type, url = data.url, status = data.status || 200;
+  let data = event.data, type = data.type, url = data.url, cookie_name = data.cookie_name, status = data.status || 200;
   console.log("RECEIVED MESSAGE", data);
   if (type == "REGISTER") {
     caches.open(APP_NAME).then((cache) => {
@@ -12,8 +12,21 @@ self.addEventListener("message", (event) => {
         if (!response) {
           fetch(url).then((response2) => {
             if (response2.status == status) {
-              console.log("ADDEING URL TO CACHE", url);
-              cache.put(url, response2);
+              if (cookie_name) {
+                cookieStore.get(cookie_name).then((data2) => {
+                  if (data2) {
+                    let value = data2.value;
+                    console.log("Associating request with cookie value", value);
+                    url.searchParams.set("email", value);
+                  } else {
+                    console.log("Cookie value not found", cookie_name);
+                  }
+                }).finally(() => {
+                  cache.put(url, response2);
+                });
+              } else {
+                cache.put(url, response2);
+              }
               event.source.postMessage("URL " + url + " successfully cached");
             } else {
               console.log("STATUS DIFFERENT THEN THE GIVEN", response2, status);

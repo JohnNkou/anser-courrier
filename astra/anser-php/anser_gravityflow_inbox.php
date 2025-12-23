@@ -2,15 +2,12 @@
 class Anser_GravityFlow_Inbox{
 	private $args;
 	private $form_ids;
+	private $cookie_name = 'u-e';
 	public $title;
 
 	public function __construct($args){
 		$form_ids = $args['form_id'] ?? null;
 		$title = $args['title'] ?? null;
-		$user = wp_get_current_user();
-
-		flogs("USER IS %s", print_r(wp_get_current_user(),true));
-		flogs("Expiration is %s", apply_filters( 'auth_cookie_expiration', 14 * DAY_IN_SECONDS, get_current_user_id()));
 
 		if(!$form_ids){
 			throw new Exception("No form_ids found in arguments", 1);
@@ -175,6 +172,7 @@ class Anser_GravityFlow_Inbox{
 		<script>
 			if("serviceWorker" in navigator){
 				var url = "<?php echo $_SERVER['REQUEST_URI'] ?>",
+				cookie_name = "<?php echo ANSER_COOKIE_NAME ?>",
 				serviceWorkerContainer = navigator.serviceWorker;
 
 				serviceWorkerContainer.oncontrollerchange = ()=>{
@@ -182,7 +180,7 @@ class Anser_GravityFlow_Inbox{
 
 					console.log("Posting message on controllerchange");
 
-					worker.postMessage({ type:'REGISTER', url });
+					worker.postMessage({ type:'REGISTER', url: url, cookie_name: cookie_name });
 				}
 
 				serviceWorkerContainer.ready.then((workerRegistration)=>{

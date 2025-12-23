@@ -8,6 +8,7 @@ self.addEventListener('message',(event)=>{
 	let data = event.data,
 	type = data.type,
 	url = data.url,
+	cookie_name = data.cookie_name,
 	status = data.status || 200;
 
 	console.log('RECEIVED MESSAGE', data);
@@ -18,8 +19,25 @@ self.addEventListener('message',(event)=>{
 				if(!response){
 					fetch(url).then((response)=>{
 						if(response.status == status){
-							console.log("ADDEING URL TO CACHE",url);
-							cache.put(url,response);
+
+							if(cookie_name){
+								cookieStore.get(cookie_name).then((data)=>{
+									if(data){
+										let value = data.value;
+										console.log("Associating request with cookie value",value);
+
+										url.searchParams.set('email',value);
+									}
+									else{
+										console.log("Cookie value not found",cookie_name);
+									}
+								}).finally(()=>{
+									cache.put(url,response);
+								})
+							}
+							else{
+								cache.put(url,response);
+							}
 
 							event.source.postMessage("URL "+url + " successfully cached");
 						}
