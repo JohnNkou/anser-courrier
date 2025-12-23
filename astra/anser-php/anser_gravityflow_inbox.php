@@ -7,8 +7,10 @@ class Anser_GravityFlow_Inbox{
 	public function __construct($args){
 		$form_ids = $args['form_id'] ?? null;
 		$title = $args['title'] ?? null;
+		$user = wp_get_current_user();
 
 		flogs("USER IS %s", print_r(wp_get_current_user(),true));
+		flogs("Expiration is %s", apply_filters( 'auth_cookie_expiration', 14 * DAY_IN_SECONDS, wp_get_current_user_id()));
 
 		if(!$form_ids){
 			throw new Exception("No form_ids found in arguments", 1);
