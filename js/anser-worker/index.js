@@ -1,4 +1,4 @@
-const APP_NAME = 'anser-worker-v1.1.9',
+const APP_NAME = 'anser-worker-v1.1.1',
 COOKIE_NAME = 'u-e';
 
 self.addEventListener('install',(event)=>{
@@ -37,11 +37,11 @@ self.addEventListener('message',(event)=>{
 			console.log("Going after the duck");
 
 			caches.open(APP_NAME).then((cache)=>{
-				cache.match(url).then((response)=>{
+				cache.match(url.href).then((response)=>{
 					if(!response){
 						fetch(url).then((response)=>{
 							if(response.status == status){
-								cache.put(url,response);
+								cache.put(url.href,response);
 
 								event.source.postMessage("URL "+url + " successfully cached");
 							}
@@ -101,7 +101,7 @@ self.addEventListener('fetch',(event)=>{
 					})
 					sKeys.forEach((key)=> local_url.searchParams.delete(key));
 
-					return cache.match(local_url).then((response)=>{
+					return cache.match(local_url.href).then((response)=>{
 						if(response){
 							console.log("Serving url",url);
 							return response;

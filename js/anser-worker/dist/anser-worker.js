@@ -1,5 +1,5 @@
 // js/anser-worker/index.js
-var APP_NAME = "anser-worker-v1.1.9";
+var APP_NAME = "anser-worker-v1.1.1";
 var COOKIE_NAME = "u-e";
 self.addEventListener("install", (event) => {
   self.skipWaiting();
@@ -26,11 +26,11 @@ self.addEventListener("message", (event) => {
     }).finally(() => {
       console.log("Going after the duck");
       caches.open(APP_NAME).then((cache) => {
-        cache.match(url).then((response) => {
+        cache.match(url.href).then((response) => {
           if (!response) {
             fetch(url).then((response2) => {
               if (response2.status == status) {
-                cache.put(url, response2);
+                cache.put(url.href, response2);
                 event.source.postMessage("URL " + url + " successfully cached");
               } else {
                 console.log("STATUS DIFFERENT THEN THE GIVEN", response2, status);
@@ -78,7 +78,7 @@ self.addEventListener("fetch", (event) => {
             }
           });
           sKeys.forEach((key) => local_url.searchParams.delete(key));
-          return cache.match(local_url).then((response) => {
+          return cache.match(local_url.href).then((response) => {
             if (response) {
               console.log("Serving url", url);
               return response;
