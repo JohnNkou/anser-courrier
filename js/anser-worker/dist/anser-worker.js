@@ -11,6 +11,11 @@ self.addEventListener("message", (event) => {
   }
   console.log("RECEIVED MESSAGE", data);
   if (type == "REGISTER") {
+    url.searchParams.forEach((value, key) => {
+      if (key != cookie_name) {
+        url.searchParams.delete(key);
+      }
+    });
     cookieStore.get(cookie_name).then((data2) => {
       console.log("Finished verifing cookie information");
       if (data2) {
@@ -64,7 +69,13 @@ self.addEventListener("fetch", (event) => {
           url.searchParams.set(COOKIE_NAME, data.value);
         }
         return caches.open(APP_NAME).then((cache) => {
-          return cache.match(url).then((response) => {
+          let local_url = new URL(request.url);
+          local_url.searchParams.forEach((value, key) => {
+            if (key != COOKIE_NAME) {
+              local_url.searchParams.delete(key);
+            }
+          });
+          return cache.match(local_url).then((response) => {
             if (response) {
               console.log("Serving url", url);
               return response;
