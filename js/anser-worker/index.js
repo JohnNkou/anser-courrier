@@ -1,4 +1,4 @@
-const APP_NAME = 'anser-worker-v1.1.8',
+const APP_NAME = 'anser-worker-v1.1.9',
 COOKIE_NAME = 'u-e';
 
 self.addEventListener('install',(event)=>{
@@ -19,11 +19,14 @@ self.addEventListener('message',(event)=>{
 	console.log('RECEIVED MESSAGE', data);
 
 	if(type == 'REGISTER'){
+		let sKeys = [];
 		url.searchParams.forEach((value,key)=>{
 			if(key != cookie_name){
-				url.searchParams.delete(key);
+				sKeys.push(key);
 			}
 		})
+
+		sKeys.forEach((key)=> url.searchParams.delete(key));
 
 		cookieStore.get(cookie_name).then((data)=>{
 			console.log('Finished verifing cookie information');
@@ -88,13 +91,15 @@ self.addEventListener('fetch',(event)=>{
 				}
 
 				return caches.open(APP_NAME).then((cache)=>{
-					let local_url = new URL(request.url);
+					let local_url = new URL(request.url),
+					sKeys = [];
 
 					local_url.searchParams.forEach((value,key)=>{
 						if(key != COOKIE_NAME){
-							local_url.searchParams.delete(key);
+							sKeys.push(key);
 						}
 					})
+					sKeys.forEach((key)=> local_url.searchParams.delete(key));
 
 					return cache.match(local_url).then((response)=>{
 						if(response){
