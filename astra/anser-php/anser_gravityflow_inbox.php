@@ -171,7 +171,7 @@ class Anser_GravityFlow_Inbox{
 
 		<script>
 			if("serviceWorker" in navigator){
-				var url = new URL(location.origin + location.pathname),
+				var url = location.origin + location.pathname,
 				serviceWorkerContainer = navigator.serviceWorker;
 
 				serviceWorkerContainer.oncontrollerchange = ()=>{
