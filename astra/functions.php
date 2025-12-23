@@ -328,6 +328,14 @@ add_action('wp_login', function($user_login,$user){
     setcookie(ANSER_COOKIE_NAME,$user->data->user_email,$expiration);
 },10,2);
 
+add_action('switch_to_user', function($user_id, $old_user_id){
+    flogs("\n\nSwitching to user %s\n\n", $user_id);
+},10,2);
+
+add_action('switch_back_user', function($user_id, $old_user_id){
+    flogs("\n\nReserting back to main user\n\n");
+},10,2);
+
 add_shortcode("anser_gravityview", array('Anser_Gravityview','shortcode'));
 
 add_shortcode("anser_gravityflow",function(...$atts){
