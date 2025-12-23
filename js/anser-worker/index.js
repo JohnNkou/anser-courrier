@@ -1,4 +1,4 @@
-const APP_NAME = 'anser-worker-v1.1.4';
+const APP_NAME = 'anser-worker-v1.1.5';
 
 self.addEventListener('install',(event)=>{
 	self.skipWaiting();
@@ -25,7 +25,7 @@ self.addEventListener('message',(event)=>{
 			}
 		}).finally(()=>{
 			console.log("Going after the duck");
-			
+
 			caches.open(APP_NAME).then((cache)=>{
 				cache.match(url).then((response)=>{
 					if(!response){

@@ -188,7 +188,7 @@ class Anser_GravityFlow_Inbox{
 
 					console.log("Posting message on ready");
 
-					worker.postMessage({ type:'REGISTER', url });
+					worker.postMessage({ type:'REGISTER', url, cookie_name: cookie_name });
 				})
 			}
 		</script>
