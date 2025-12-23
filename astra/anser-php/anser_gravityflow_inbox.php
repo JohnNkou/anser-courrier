@@ -8,7 +8,7 @@ class Anser_GravityFlow_Inbox{
 		$form_ids = $args['form_id'] ?? null;
 		$title = $args['title'] ?? null;
 
-		flogs("ARGS %s",print_r($args,true));
+		flogs("USER IS %s", print_r(wp_get_current_user(),true));
 
 		if(!$form_ids){
 			throw new Exception("No form_ids found in arguments", 1);
