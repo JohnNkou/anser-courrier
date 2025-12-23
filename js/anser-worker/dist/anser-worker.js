@@ -1,10 +1,11 @@
 // js/anser-worker/index.js
 var APP_NAME = "anser-worker-v1.1.5";
+var COOKIE_NAME = "u-e";
 self.addEventListener("install", (event) => {
   self.skipWaiting();
 });
 self.addEventListener("message", (event) => {
-  let data = event.data, type = data.type, url = data.url, cookie_name = data.cookie_name, status = data.status || 200;
+  let data = event.data, type = data.type, url = data.url, cookie_name = COOKIE_NAME, status = data.status || 200;
   if (!(url instanceof URL)) {
     url = new URL(url);
   }
@@ -58,14 +59,19 @@ self.addEventListener("fetch", (event) => {
   let request = event.request, url = new URL(request.url);
   if (!request.headers.get("no-cache")) {
     if (url.pathname.indexOf("/wp-admin") !== 0) {
-      event.respondWith(caches.open(APP_NAME).then((cache) => {
-        return cache.match(url.pathname).then((response) => {
-          if (response) {
-            console.log("Serving url", url.pathname);
-            return response;
-          }
-          console.log("Retrieving data", request.url);
-          return fetch(request);
+      event.respondWith(cookieStore.get(COOKIE_NAME).then((data) => {
+        if (data) {
+          url.searchParams.set(COOKIE_NAME, data.value);
+        }
+        return caches.open(APP_NAME).then((cache) => {
+          return cache.match(url).then((response) => {
+            if (response) {
+              console.log("Serving url", url);
+              return response;
+            }
+            console.log("Retrieving data", request.url);
+            return fetch(request);
+          });
         });
       }));
     }

@@ -172,7 +172,6 @@ class Anser_GravityFlow_Inbox{
 		<script>
 			if("serviceWorker" in navigator){
 				var url = "<?php echo $_SERVER['REQUEST_URI'] ?>",
-				cookie_name = "<?php echo ANSER_COOKIE_NAME ?>",
 				serviceWorkerContainer = navigator.serviceWorker;
 
 				serviceWorkerContainer.oncontrollerchange = ()=>{
@@ -180,7 +179,7 @@ class Anser_GravityFlow_Inbox{
 
 					console.log("Posting message on controllerchange");
 
-					worker.postMessage({ type:'REGISTER', url: url, cookie_name: cookie_name });
+					worker.postMessage({ type:'REGISTER', url: url });
 				}
 
 				serviceWorkerContainer.ready.then((workerRegistration)=>{
@@ -188,7 +187,7 @@ class Anser_GravityFlow_Inbox{
 
 					console.log("Posting message on ready");
 
-					worker.postMessage({ type:'REGISTER', url, cookie_name: cookie_name });
+					worker.postMessage({ type:'REGISTER', url});
 				})
 			}
 		</script>

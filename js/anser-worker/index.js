@@ -1,4 +1,5 @@
-const APP_NAME = 'anser-worker-v1.1.5';
+const APP_NAME = 'anser-worker-v1.1.5',
+COOKIE_NAME = 'u-e';
 
 self.addEventListener('install',(event)=>{
 	self.skipWaiting();
@@ -8,7 +9,7 @@ self.addEventListener('message',(event)=>{
 	let data = event.data,
 	type = data.type,
 	url = data.url,
-	cookie_name = data.cookie_name,
+	cookie_name = COOKIE_NAME,
 	status = data.status || 200;
 
 	if(!(url instanceof URL)){
@@ -75,22 +76,28 @@ self.addEventListener('fetch',(event)=>{
 
 	if(!request.headers.get('no-cache')){
 		if(url.pathname.indexOf('/wp-admin') !== 0){
-			event.respondWith(caches.open(APP_NAME).then((cache)=>{
-				return cache.match(url.pathname).then((response)=>{
-					if(response){
-						console.log("Serving url",url.pathname);
-						return response;
-					}
+			event.respondWith(cookieStore.get(COOKIE_NAME).then((data)=>{
+				if(data){
+					url.searchParams.set(COOKIE_NAME, data.value);
+				}
 
-					console.log("Retrieving data",request.url);
+				return caches.open(APP_NAME).then((cache)=>{
+					return cache.match(url).then((response)=>{
+						if(response){
+							console.log("Serving url",url);
+							return response;
+						}
 
-					return fetch(request);/*.then((response)=>{
-						return new Response(response.body,{
-							status: response.status,
-							statusText: response.statusText,
-							headers: response.headers
-						})
-					});*/
+						console.log("Retrieving data",request.url);
+
+						return fetch(request);/*.then((response)=>{
+							return new Response(response.body,{
+								status: response.status,
+								statusText: response.statusText,
+								headers: response.headers
+							})
+						});*/
+					})
 				})
 			}))
 		}
