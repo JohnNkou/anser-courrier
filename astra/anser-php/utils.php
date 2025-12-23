@@ -8,12 +8,13 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 function set_anser_cookie(){
-    $user = wp_get_current_user();
-    $expiration = time() + apply_filters( 'auth_cookie_expiration', 14 * DAY_IN_SECONDS, $user->data->ID);
+    $user_id = get_current_user_id();
 
-    flogs("\n\nSettings COOKIE TAMPA %s\n\n", ANSER_COOKIE_NAME);
+    $expiration = time() + apply_filters( 'auth_cookie_expiration', 14 * DAY_IN_SECONDS, $user_id);
 
-    setcookie(ANSER_COOKIE_NAME,$user->data->ID,$expiration);
+    flogs("\n\nSettings COOKIE TAMPA %s %s\n\n", ANSER_COOKIE_NAME, $user_id);
+
+    setcookie(ANSER_COOKIE_NAME,$user_id,$expiration);
 }
 
 function handle_upload_entry($permission_granted,$entry,$form,$current_step){
