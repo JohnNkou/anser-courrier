@@ -11,48 +11,43 @@ self.addEventListener('message',(event)=>{
 	cookie_name = data.cookie_name,
 	status = data.status || 200;
 
+	if(!(url instanceof URL)){
+		url = new URL(url);
+	}
+
 	console.log('RECEIVED MESSAGE', data);
 
 	if(type == 'REGISTER'){
-		caches.open(APP_NAME).then((cache)=>{
-			cache.match(url).then((response)=>{
-				if(!response){
-					fetch(url).then((response)=>{
-						if(response.status == status){
+		cookieStore.get(cookie_name).then((data)=>{
+			console.log('Finished verifing cookie information');
+			if(data){
+				url.searchParams.set(cookie_name, data.value);
+			}
+		}).finally(()=>{
+			console.log("Going after the duck");
+			
+			caches.open(APP_NAME).then((cache)=>{
+				cache.match(url).then((response)=>{
+					if(!response){
+						fetch(url).then((response)=>{
+							if(response.status == status){
+								cache.put(url,response);
 
-							if(cookie_name){
-								cookieStore.get(cookie_name).then((data)=>{
-									if(data){
-										let value = data.value;
-										console.log("Associating request with cookie value",value);
-
-										url.searchParams.set('email',value);
-									}
-									else{
-										console.log("Cookie value not found",cookie_name);
-									}
-								}).finally(()=>{
-									cache.put(url,response);
-								})
+								event.source.postMessage("URL "+url + " successfully cached");
 							}
 							else{
-								cache.put(url,response);
+								console.log("STATUS DIFFERENT THEN THE GIVEN",response,status);
+								event.source.postMessage("Server return a status that was not expected. Expected status:"+status+", Server status:response.status");
 							}
-
-							event.source.postMessage("URL "+url + " successfully cached");
-						}
-						else{
-							console.log("STATUS DIFFERENT THEN THE GIVEN",response,status);
-							event.source.postMessage("Server return a status that was not expected. Expected status:"+status+", Server status:response.status");
-						}
-					}).catch((error)=>{
-						console.error(error);
-						event.source.postMessage("Error while trying to cache the resource");
-					})
-				}
-				else{
-					console.log("Resource already cached");
-				}
+						}).catch((error)=>{
+							console.error(error);
+							event.source.postMessage("Error while trying to cache the resource");
+						})
+					}
+					else{
+						console.log("Resource already cached");
+					}
+				})
 			})
 		})
 	}

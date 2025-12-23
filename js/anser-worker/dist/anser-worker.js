@@ -5,40 +5,37 @@ self.addEventListener("install", (event) => {
 });
 self.addEventListener("message", (event) => {
   let data = event.data, type = data.type, url = data.url, cookie_name = data.cookie_name, status = data.status || 200;
+  if (!(url instanceof URL)) {
+    url = new URL(url);
+  }
   console.log("RECEIVED MESSAGE", data);
   if (type == "REGISTER") {
-    caches.open(APP_NAME).then((cache) => {
-      cache.match(url).then((response) => {
-        if (!response) {
-          fetch(url).then((response2) => {
-            if (response2.status == status) {
-              if (cookie_name) {
-                cookieStore.get(cookie_name).then((data2) => {
-                  if (data2) {
-                    let value = data2.value;
-                    console.log("Associating request with cookie value", value);
-                    url.searchParams.set("email", value);
-                  } else {
-                    console.log("Cookie value not found", cookie_name);
-                  }
-                }).finally(() => {
-                  cache.put(url, response2);
-                });
-              } else {
+    cookieStore.get(cookie_name).then((data2) => {
+      console.log("Finished verifing cookie information");
+      if (data2) {
+        url.searchParams.set(cookie_name, data2.value);
+      }
+    }).finally(() => {
+      console.log("Going after the duck");
+      caches.open(APP_NAME).then((cache) => {
+        cache.match(url).then((response) => {
+          if (!response) {
+            fetch(url).then((response2) => {
+              if (response2.status == status) {
                 cache.put(url, response2);
+                event.source.postMessage("URL " + url + " successfully cached");
+              } else {
+                console.log("STATUS DIFFERENT THEN THE GIVEN", response2, status);
+                event.source.postMessage("Server return a status that was not expected. Expected status:" + status + ", Server status:response.status");
               }
-              event.source.postMessage("URL " + url + " successfully cached");
-            } else {
-              console.log("STATUS DIFFERENT THEN THE GIVEN", response2, status);
-              event.source.postMessage("Server return a status that was not expected. Expected status:" + status + ", Server status:response.status");
-            }
-          }).catch((error) => {
-            console.error(error);
-            event.source.postMessage("Error while trying to cache the resource");
-          });
-        } else {
-          console.log("Resource already cached");
-        }
+            }).catch((error) => {
+              console.error(error);
+              event.source.postMessage("Error while trying to cache the resource");
+            });
+          } else {
+            console.log("Resource already cached");
+          }
+        });
       });
     });
   } else {
