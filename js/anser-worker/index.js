@@ -1,4 +1,4 @@
-const APP_NAME = 'anser-worker-v1.1.7',
+const APP_NAME = 'anser-worker-v1.1.8',
 COOKIE_NAME = 'u-e';
 
 self.addEventListener('install',(event)=>{
