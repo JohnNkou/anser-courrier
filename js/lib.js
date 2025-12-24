@@ -231,6 +231,10 @@ function Select(field,rootNode){
 			delete select.options[_index].selected;
 		}
 
+		if(div_dropdown.children.length != field.choices.length){
+			display_choices(field.choices);
+		}
+
 		draw_view();
 	}
 

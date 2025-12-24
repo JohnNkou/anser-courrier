@@ -460,6 +460,9 @@ var require_lib = __commonJS((exports2) => {
         selected.splice(index, 1);
         delete select.options[_index].selected;
       }
+      if (div_dropdown.children.length != field.choices.length) {
+        display_choices(field.choices);
+      }
       draw_view();
     };
     draw_view();
