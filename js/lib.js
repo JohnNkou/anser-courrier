@@ -155,7 +155,8 @@ function Select(field,rootNode){
 	}
 
 	div_span.oninput = (event)=>{
-		let length = spans.length;
+		let spans = div_span.querySelectorAll('.text-nowrap'),
+		length = spans.length;
 
 		while(length--){
 			let data = selected[length],

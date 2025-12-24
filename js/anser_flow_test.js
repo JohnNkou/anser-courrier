@@ -411,9 +411,9 @@ var require_lib = __commonJS((exports2) => {
       div_dropdown.classList.add("hidden");
     };
     div_span.oninput = (event) => {
-      let length = spans.length;
+      let spans2 = div_span.querySelectorAll(".text-nowrap"), length = spans2.length;
       while (length--) {
-        let data2 = selected[length], span_data = spans[length].innerHTML;
+        let data2 = selected[length], span_data = spans2[length].innerHTML;
         if (span_data == data2) {
           continue;
         }
@@ -422,7 +422,7 @@ var require_lib = __commonJS((exports2) => {
           draw_view();
           break;
         } else {
-          spans[length].textContent = data2;
+          spans2[length].textContent = data2;
         }
       }
     };
