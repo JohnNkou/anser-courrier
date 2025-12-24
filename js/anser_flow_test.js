@@ -385,12 +385,10 @@ var require_lib = __commonJS((exports2) => {
       }
     }
     function display_choices(choices) {
+      let chosen_choices = [];
       div_dropdown.innerHTML = "";
       choices.forEach((choice, index) => {
-        let a = document.createElement("a"), option = document.createElement("option"), field_value = field.leaf_value || field.value;
-        a.textContent = choice.text;
-        a.setAttribute("value", choice.value);
-        a.setAttribute("index", index);
+        let option = document.createElement("option"), field_value = field.leaf_value || field.value;
         option.value = choice.value;
         select.appendChild(option);
         if (field_value instanceof Array) {
@@ -405,8 +403,15 @@ var require_lib = __commonJS((exports2) => {
           option.setAttribute("selected", "true");
         }
         if (selected.indexOf(choice.text) == -1) {
-          div_dropdown.appendChild(a);
+          chosen_choices.push([choice, index]);
         }
+      });
+      chosen_choices.forEach((data2) => {
+        let a = document.createElement("a");
+        a.textContent = data2[0].text;
+        a.setAttribute("value", data2[0].value);
+        a.setAttribute("index", data2[1]);
+        div_dropdown.appendChild(a);
       });
     }
     display_choices(field.choices);

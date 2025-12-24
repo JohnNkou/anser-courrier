@@ -120,15 +120,12 @@ function Select(field,rootNode){
 
 
 	function display_choices(choices){
+		let chosen_choices = [];
 		div_dropdown.innerHTML = '';
-		choices.forEach((choice,index)=>{
-			let a = document.createElement('a'),
-			option = document.createElement('option'),
-			field_value = field.leaf_value || field.value;
 
-			a.textContent = choice.text;
-			a.setAttribute('value', choice.value);
-			a.setAttribute('index',index);
+		choices.forEach((choice,index)=>{
+			let option = document.createElement('option'),
+			field_value = field.leaf_value || field.value;
 
 			option.value = choice.value;
 			select.appendChild(option);
@@ -147,9 +144,19 @@ function Select(field,rootNode){
 			}
 
 			if(selected.indexOf(choice.text) == -1){
-				div_dropdown.appendChild(a);
+				chosen_choices.push([choice,index]);
 			}
 		});
+
+		chosen_choices.forEach((data)=>{
+			let a = document.createElement('a');
+
+			a.textContent = data[0].text;
+			a.setAttribute('value', data[0].value);
+			a.setAttribute('index', data[1]);
+
+			div_dropdown.appendChild(a);
+		})
 	}
 
 	display_choices(field.choices);
