@@ -84,7 +84,8 @@ function Select(field,rootNode){
 	div_span = document.createElement('div'),
 	div_dropdown = document.createElement('div'),
 	select = document.createElement('select'),
-	selected = [];
+	selected = [],
+	spans;
 
 	div.classList.add('select');
 	div_span.classList.add('select-viewer');
@@ -102,29 +103,10 @@ function Select(field,rootNode){
 			return '<span index="'+ index +'" class="text-nowrap cursor-pointer">'+data+'</span>';
 		}).join('');
 
+		spans = document.querySelectorAll('.text-nowrap');
+
 		if(div_span.innerHTML.trim().length){
-			Array.prototype.forEach.call(div_span.querySelectorAll('.text-nowrap'),(span)=>{
-				let index = span.getAttribute('index'),
-				data = selected[index];
-
-				span.onchange = function(event){
-					let value = span.textContent;
-
-					console.log('I CHANGED I CHANGED');
-
-					if(value.length > data){
-						event.preventDefault();
-						event.stopImmediatePropagation();
-					}
-					else if(value.length < data){
-						selected.splice(index,1);
-
-						draw_view();
-					}
-				}
-			})
-
-			if(div_span.innerHTML.indexOf('span') == -1){
+			if(div_span.innerHTML.querySelector('.input') == -1){
 				div_span.innerHTML += '<span class="input"></span>';
 			}
 			else if(div_span.children.length > 1){
@@ -170,6 +152,28 @@ function Select(field,rootNode){
 
 	div_span.onfocusout = function(){
 		div_dropdown.classList.add('hidden');
+	}
+
+	div_span.oninput = (event)=>{
+		let length = spans.length;
+
+		while(length--){
+			let data = selected[length],
+			span_data = spans[length].textContent;
+
+			if(span_data == data){
+				continue;
+			}
+
+			if(span_data.length < data.length){
+				selected.splice(length,1);
+				draw_view();
+				break;
+			}
+			else{
+				spans[length].textContent = data;
+			}
+		}
 	}
 
 	div_dropdown.onclick = function(event){

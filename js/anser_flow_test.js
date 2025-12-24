@@ -358,7 +358,7 @@ var require_lib = __commonJS((exports2) => {
     });
   }
   function Select(field, rootNode) {
-    let div = document.createElement("div"), div_span = document.createElement("div"), div_dropdown = document.createElement("div"), select = document.createElement("select"), selected = [];
+    let div = document.createElement("div"), div_span = document.createElement("div"), div_dropdown = document.createElement("div"), select = document.createElement("select"), selected = [], spans;
     div.classList.add("select");
     div_span.classList.add("select-viewer");
     div_dropdown.classList.add("select-dropdown");
@@ -373,22 +373,9 @@ var require_lib = __commonJS((exports2) => {
       div_span.innerHTML = selected.map((data2, index) => {
         return '<span index="' + index + '" class="text-nowrap cursor-pointer">' + data2 + "</span>";
       }).join("");
+      spans = document.querySelectorAll(".text-nowrap");
       if (div_span.innerHTML.trim().length) {
-        Array.prototype.forEach.call(div_span.querySelectorAll(".text-nowrap"), (span) => {
-          let index = span.getAttribute("index"), data2 = selected[index];
-          span.onchange = function(event) {
-            let value2 = span.textContent;
-            console.log("I CHANGED I CHANGED");
-            if (value2.length > data2) {
-              event.preventDefault();
-              event.stopImmediatePropagation();
-            } else if (value2.length < data2) {
-              selected.splice(index, 1);
-              draw_view();
-            }
-          };
-        });
-        if (div_span.innerHTML.indexOf("span") == -1) {
+        if (div_span.innerHTML.querySelector(".input") == -1) {
           div_span.innerHTML += '<span class="input"></span>';
         } else if (div_span.children.length > 1) {
           let span_input = div_span.querySelector(".input");
@@ -422,6 +409,22 @@ var require_lib = __commonJS((exports2) => {
     };
     div_span.onfocusout = function() {
       div_dropdown.classList.add("hidden");
+    };
+    div_span.oninput = (event) => {
+      let length = spans.length;
+      while (length--) {
+        let data2 = selected[length], span_data = spans[length].textContent;
+        if (span_data == data2) {
+          continue;
+        }
+        if (span_data.length < data2.length) {
+          selected.splice(length, 1);
+          draw_view();
+          break;
+        } else {
+          spans[length].textContent = data2;
+        }
+      }
     };
     div_dropdown.onclick = function(event) {
       event.preventDefault();
