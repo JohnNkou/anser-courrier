@@ -378,6 +378,7 @@ var require_lib = __commonJS((exports2) => {
           let index = span.getAttribute("index"), data2 = selected[index];
           span.onchange = function(event) {
             let value2 = span.textContent;
+            console.log("I CHANGED I CHANGED");
             if (value2.length > data2) {
               event.preventDefault();
               event.stopImmediatePropagation();

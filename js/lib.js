@@ -110,6 +110,8 @@ function Select(field,rootNode){
 				span.onchange = function(event){
 					let value = span.textContent;
 
+					console.log('I CHANGED I CHANGED');
+
 					if(value.length > data){
 						event.preventDefault();
 						event.stopImmediatePropagation();
