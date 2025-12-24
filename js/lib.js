@@ -118,33 +118,39 @@ function Select(field,rootNode){
 		}
 	}
 
-	field.choices.forEach((choice,index)=>{
-		let a = document.createElement('a'),
-		option = document.createElement('option'),
-		field_value = field.leaf_value || field.value;
 
-		a.textContent = choice.text;
-		a.setAttribute('value', choice.value);
-		a.setAttribute('index',index);
+	function display_choices(choices){
+		div_dropdown.innerHTML = '';
+		choices.forEach((choice,index)=>{
+			let a = document.createElement('a'),
+			option = document.createElement('option'),
+			field_value = field.leaf_value || field.value;
 
-		option.value = choice.value;
+			a.textContent = choice.text;
+			a.setAttribute('value', choice.value);
+			a.setAttribute('index',index);
 
-		div_dropdown.appendChild(a);
-		select.appendChild(option);
+			option.value = choice.value;
 
-		if(field_value instanceof Array){
-			for(let i=0; i < field_value.length; i++){
-				if(field_value[i] == choice.value){
-					selected.push(choice.text);
-					option.setAttribute('selected','true');
+			div_dropdown.appendChild(a);
+			select.appendChild(option);
+
+			if(field_value instanceof Array){
+				for(let i=0; i < field_value.length; i++){
+					if(field_value[i] == choice.value){
+						selected.push(choice.text);
+						option.setAttribute('selected','true');
+					}
 				}
 			}
-		}
-		else if(field_value == choice.value){
-			selected.push(choice.text);
-			option.setAttribute('selected','true');
-		}
-	});
+			else if(field_value == choice.value){
+				selected.push(choice.text);
+				option.setAttribute('selected','true');
+			}
+		});
+	}
+
+	display_choices(field.choices);
 
 	div_span.onfocusin = function(){
 		div_dropdown.classList.remove('hidden');
@@ -155,24 +161,55 @@ function Select(field,rootNode){
 	}
 
 	div_span.oninput = (event)=>{
-		let spans = div_span.querySelectorAll('.text-nowrap'),
-		length = spans.length;
+		if(selected.length){
+			let spans = div_span.querySelectorAll('.text-nowrap'),
+			input_span = div_span.querySelector('.input'),
+			length = spans.length;
 
-		while(length--){
-			let data = selected[length],
-			span_data = spans[length].innerHTML;
+			while(length--){
+				let data = selected[length],
+				span_data = spans[length].innerHTML;
 
-			if(span_data == data){
-				continue;
+				if(span_data == data){
+					continue;
+				}
+
+				if(span_data.length < data.length){
+					selected.splice(length,1);
+					draw_view();
+					break;
+				}
+				else{
+					spans[length].textContent = data;
+				}
 			}
 
-			if(span_data.length < data.length){
-				selected.splice(length,1);
-				draw_view();
-				break;
+			if(input_span.textContent.length){
+				let value = input_span.textContent.toLowerCase(),
+				choices = field.choices.filter((choice)=>{
+					return choice.text.toLowerCase().indexOf(value) != -1
+				});
+
+				display_choices(choices);
 			}
-			else{
-				spans[length].textContent = data;
+			else if(div_dropdown.children.length != field.choices.length){
+				display_choices(field.choices);
+			}
+		}
+		else{
+
+			let value = div_span.textContent.toLowerCase(),
+			choices;
+
+			if(value.length){
+				choices = field.choices.filter((choice)=>{
+					return choice.text.toLowerCase().indexOf(value) != -1;
+				});
+
+				display_choices(choices);
+			}
+			else if(div_dropdown.children.length != field.choices.length){
+				display_choices(field.choices);
 			}
 		}
 	}

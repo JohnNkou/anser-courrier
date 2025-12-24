@@ -384,26 +384,30 @@ var require_lib = __commonJS((exports2) => {
         }
       }
     }
-    field.choices.forEach((choice, index) => {
-      let a = document.createElement("a"), option = document.createElement("option"), field_value = field.leaf_value || field.value;
-      a.textContent = choice.text;
-      a.setAttribute("value", choice.value);
-      a.setAttribute("index", index);
-      option.value = choice.value;
-      div_dropdown.appendChild(a);
-      select.appendChild(option);
-      if (field_value instanceof Array) {
-        for (let i = 0;i < field_value.length; i++) {
-          if (field_value[i] == choice.value) {
-            selected.push(choice.text);
-            option.setAttribute("selected", "true");
+    function display_choices(choices) {
+      div_dropdown.innerHTML = "";
+      choices.forEach((choice, index) => {
+        let a = document.createElement("a"), option = document.createElement("option"), field_value = field.leaf_value || field.value;
+        a.textContent = choice.text;
+        a.setAttribute("value", choice.value);
+        a.setAttribute("index", index);
+        option.value = choice.value;
+        div_dropdown.appendChild(a);
+        select.appendChild(option);
+        if (field_value instanceof Array) {
+          for (let i = 0;i < field_value.length; i++) {
+            if (field_value[i] == choice.value) {
+              selected.push(choice.text);
+              option.setAttribute("selected", "true");
+            }
           }
+        } else if (field_value == choice.value) {
+          selected.push(choice.text);
+          option.setAttribute("selected", "true");
         }
-      } else if (field_value == choice.value) {
-        selected.push(choice.text);
-        option.setAttribute("selected", "true");
-      }
-    });
+      });
+    }
+    display_choices(field.choices);
     div_span.onfocusin = function() {
       div_dropdown.classList.remove("hidden");
     };
@@ -411,18 +415,38 @@ var require_lib = __commonJS((exports2) => {
       div_dropdown.classList.add("hidden");
     };
     div_span.oninput = (event) => {
-      let spans2 = div_span.querySelectorAll(".text-nowrap"), length = spans2.length;
-      while (length--) {
-        let data2 = selected[length], span_data = spans2[length].innerHTML;
-        if (span_data == data2) {
-          continue;
+      if (selected.length) {
+        let spans2 = div_span.querySelectorAll(".text-nowrap"), input_span = div_span.querySelector(".input"), length = spans2.length;
+        while (length--) {
+          let data2 = selected[length], span_data = spans2[length].innerHTML;
+          if (span_data == data2) {
+            continue;
+          }
+          if (span_data.length < data2.length) {
+            selected.splice(length, 1);
+            draw_view();
+            break;
+          } else {
+            spans2[length].textContent = data2;
+          }
         }
-        if (span_data.length < data2.length) {
-          selected.splice(length, 1);
-          draw_view();
-          break;
-        } else {
-          spans2[length].textContent = data2;
+        if (input_span.textContent.length) {
+          let value2 = input_span.textContent.toLowerCase(), choices = field.choices.filter((choice) => {
+            return choice.text.toLowerCase().indexOf(value2) != -1;
+          });
+          display_choices(choices);
+        } else if (div_dropdown.children.length != field.choices.length) {
+          display_choices(field.choices);
+        }
+      } else {
+        let value2 = div_span.textContent.toLowerCase(), choices;
+        if (value2.length) {
+          choices = field.choices.filter((choice) => {
+            return choice.text.toLowerCase().indexOf(value2) != -1;
+          });
+          display_choices(choices);
+        } else if (div_dropdown.children.length != field.choices.length) {
+          display_choices(field.choices);
         }
       }
     };
