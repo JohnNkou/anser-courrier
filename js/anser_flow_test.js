@@ -375,7 +375,7 @@ var require_lib = __commonJS((exports2) => {
       }).join("");
       spans = document.querySelectorAll(".text-nowrap");
       if (div_span.innerHTML.trim().length) {
-        if (div_span.querySelector(".input") == -1) {
+        if (div_span.querySelector(".input")) {
           div_span.innerHTML += '<span class="input"></span>';
         } else if (div_span.children.length > 1) {
           let span_input = div_span.querySelector(".input");
