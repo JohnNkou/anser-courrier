@@ -102,33 +102,35 @@ function Select(field,rootNode){
 			return '<span index="'+ index +'" class="text-nowrap cursor-pointer">'+data+'</span>';
 		}).join('');
 
-		Array.prototype.forEach.call(div_span.querySelectorAll('.text-nowrap'),(span)=>{
-			let index = span.getAttribute('index'),
-			data = selected[index];
+		if(div_span.innerHTML.trim().length){
+			Array.prototype.forEach.call(div_span.querySelectorAll('.text-nowrap'),(span)=>{
+				let index = span.getAttribute('index'),
+				data = selected[index];
 
-			span.onchange = function(event){
-				let value = span.textContent;
+				span.onchange = function(event){
+					let value = span.textContent;
 
-				if(value.length > data){
-					event.preventDefault();
-					event.stopImmediatePropagation();
+					if(value.length > data){
+						event.preventDefault();
+						event.stopImmediatePropagation();
+					}
+					else if(value.length < data){
+						selected.splice(index,1);
+
+						draw_view();
+					}
 				}
-				else if(value.length < data){
-					selected.splice(index,1);
+			})
 
-					draw_view();
-				}
+			if(div_span.innerHTML.indexOf('span') == -1){
+				div_span.innerHTML += '<span class="input"></span>';
 			}
-		})
+			else if(div_span.children.length > 1){
+				let span_input = div_span.querySelector('.input');
 
-		if(div_span.innerHTML.indexOf('span') == -1){
-			div_span.innerHTML += '<span class="input"></span>';
-		}
-		else if(div_span.children.length > 1){
-			let span_input = div_span.querySelector('.input');
-
-			div_span.removeChild(span_input);
-			div_span.appendChild(span_input);
+				div_span.removeChild(span_input);
+				div_span.appendChild(span_input);
+			}
 		}
 	}
 
