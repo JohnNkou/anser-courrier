@@ -68,7 +68,6 @@ thead tr:last-child{
     border-top:1px solid silver;
 }
 #main tr:hover{
-    transform: translate(0px,2px);
     box-shadow:0px 1px 5px #00000042;
 }
 #main table.gpnf-nested-entries tr:hover{

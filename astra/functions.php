@@ -308,7 +308,7 @@ add_action('wp_enqueue_scripts',function(){
 
     if($has_view_short || $has_flow_short){
         flogs("BANANA");
-        wp_enqueue_style('custom/global', '/css/global.css',[],'1.6');
+        wp_enqueue_style('custom/global', '/css/global.css',[],'1.7');
         wp_enqueue_style('custom/modal','/css/modal.css',[],'1.2');
         wp_enqueue_script('tailwindcss','https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4',[],null,true);
         wp_enqueue_script('worker-installer', '/js/anser-worker/installer.js','1.2', [],null,true);
