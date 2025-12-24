@@ -131,8 +131,6 @@ function Select(field,rootNode){
 			a.setAttribute('index',index);
 
 			option.value = choice.value;
-
-			div_dropdown.appendChild(a);
 			select.appendChild(option);
 
 			if(field_value instanceof Array){
@@ -146,6 +144,10 @@ function Select(field,rootNode){
 			else if(field_value == choice.value){
 				selected.push(choice.text);
 				option.setAttribute('selected','true');
+			}
+
+			if(selected.indexOf(choice.text) == -1){
+				div_dropdown.appendChild(a);
 			}
 		});
 	}

@@ -392,7 +392,6 @@ var require_lib = __commonJS((exports2) => {
         a.setAttribute("value", choice.value);
         a.setAttribute("index", index);
         option.value = choice.value;
-        div_dropdown.appendChild(a);
         select.appendChild(option);
         if (field_value instanceof Array) {
           for (let i = 0;i < field_value.length; i++) {
@@ -404,6 +403,9 @@ var require_lib = __commonJS((exports2) => {
         } else if (field_value == choice.value) {
           selected.push(choice.text);
           option.setAttribute("selected", "true");
+        }
+        if (selected.indexOf(choice.text) == -1) {
+          div_dropdown.appendChild(a);
         }
       });
     }
