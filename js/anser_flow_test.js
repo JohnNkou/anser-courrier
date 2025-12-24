@@ -373,7 +373,7 @@ var require_lib = __commonJS((exports2) => {
       div_span.innerHTML = selected.map((data2, index) => {
         return '<span index="' + index + '" class="text-nowrap cursor-pointer">' + data2 + "</span>";
       }).join("");
-      spans = document.querySelectorAll(".text-nowrap");
+      spans = div_span.querySelectorAll(".text-nowrap");
       if (div_span.innerHTML.trim().length) {
         if (!div_span.querySelector(".input")) {
           div_span.innerHTML += '<span class="input"></span>';
@@ -413,7 +413,7 @@ var require_lib = __commonJS((exports2) => {
     div_span.oninput = (event) => {
       let length = spans.length;
       while (length--) {
-        let data2 = selected[length], span_data = spans[length].textContent;
+        let data2 = selected[length], span_data = spans[length].innerHTML;
         if (span_data == data2) {
           continue;
         }

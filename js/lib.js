@@ -103,7 +103,7 @@ function Select(field,rootNode){
 			return '<span index="'+ index +'" class="text-nowrap cursor-pointer">'+data+'</span>';
 		}).join('');
 
-		spans = document.querySelectorAll('.text-nowrap');
+		spans = div_span.querySelectorAll('.text-nowrap');
 
 		if(div_span.innerHTML.trim().length){
 			if(!div_span.querySelector('.input')){
@@ -159,7 +159,7 @@ function Select(field,rootNode){
 
 		while(length--){
 			let data = selected[length],
-			span_data = spans[length].textContent;
+			span_data = spans[length].innerHTML;
 
 			if(span_data == data){
 				continue;
