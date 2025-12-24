@@ -407,11 +407,14 @@ var require_lib = __commonJS((exports2) => {
         }
       });
       chosen_choices.forEach((data2) => {
-        let a = document.createElement("a");
-        a.textContent = data2[0].text;
-        a.setAttribute("value", data2[0].value);
-        a.setAttribute("index", data2[1]);
-        div_dropdown.appendChild(a);
+        let text = data2[0].text, value2 = data2[0].value, index = data2[1], a;
+        if (selected.indexOf(text) == -1) {
+          a = document.createElement("a");
+          a.textContent = text;
+          a.setAttribute("value", value2);
+          a.setAttribute("index", index);
+          div_dropdown.appendChild(a);
+        }
       });
     }
     display_choices(field.choices);

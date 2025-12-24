@@ -149,13 +149,20 @@ function Select(field,rootNode){
 		});
 
 		chosen_choices.forEach((data)=>{
-			let a = document.createElement('a');
+			let text = data[0].text,
+			value = data[0].value,
+			index = data[1],
+			a;
 
-			a.textContent = data[0].text;
-			a.setAttribute('value', data[0].value);
-			a.setAttribute('index', data[1]);
+			if(selected.indexOf(text) == -1){
+				a = document.createElement('a');
 
-			div_dropdown.appendChild(a);
+				a.textContent = text;
+				a.setAttribute('value', value);
+				a.setAttribute('index', index);
+
+				div_dropdown.appendChild(a);
+			}
 		})
 	}
 
