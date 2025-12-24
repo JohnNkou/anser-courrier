@@ -109,7 +109,7 @@ class Anser_GravityFlow_Inbox{
 	?>
 		<div class='entry-detail hidden'>
 			<header>
-				<a class='back'><svg fill="#000000" width="16px" height="16px" viewBox="0 0 200 200" data-name="Layer 1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"><title/><path d="M160,89.75H56l53-53a9.67,9.67,0,0,0,0-14,9.67,9.67,0,0,0-14,0l-56,56a30.18,30.18,0,0,0-8.5,18.5c0,1-.5,1.5-.5,2.5a6.34,6.34,0,0,0,.5,3,31.47,31.47,0,0,0,8.5,18.5l56,56a9.9,9.9,0,0,0,14-14l-52.5-53.5H160a10,10,0,0,0,0-20Z"/></svg></a>
+				<a class='back cursor-pointer'><svg fill="#000000" width="16px" height="16px" viewBox="0 0 200 200" data-name="Layer 1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"><title/><path d="M160,89.75H56l53-53a9.67,9.67,0,0,0,0-14,9.67,9.67,0,0,0-14,0l-56,56a30.18,30.18,0,0,0-8.5,18.5c0,1-.5,1.5-.5,2.5a6.34,6.34,0,0,0,.5,3,31.47,31.47,0,0,0,8.5,18.5l56,56a9.9,9.9,0,0,0,14-14l-52.5-53.5H160a10,10,0,0,0,0-20Z"/></svg></a>
 				<h3><span class='form_name'></span><span class='entry-id'></span></h3>
 			</header>
 			<form class="content" novalidate></form>
@@ -200,7 +200,7 @@ class Anser_GravityFlow_Inbox{
 	}
 
 	private function register_scripts(){
-		wp_enqueue_script('gravityflow-inbox-ajax', '/js/anser_flow_test.js',[], '2.7', true);
+		wp_enqueue_script('gravityflow-inbox-ajax', '/js/anser_flow_test.js',[], '2.8', true);
 		wp_localize_script('gravityflow-inbox-ajax',JS_AJAX_NAME, [
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'flow_action' => GRAVITYFLOW_AJAX_ENDPOINT,
