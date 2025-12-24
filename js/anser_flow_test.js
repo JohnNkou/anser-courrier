@@ -370,9 +370,29 @@ var require_lib = __commonJS((exports2) => {
     select.setAttribute("name", "input_" + field.id);
     div_span.setAttribute("contenteditable", "true");
     function draw_view() {
-      div_span.innerHTML = selected.map((data2) => {
-        return '<span class="text-nowrap">' + data2 + "</span>";
+      div_span.innerHTML = selected.map((data2, index) => {
+        return '<span index="' + index + '" class="text-nowrap cursor-pointer">' + data2 + "</span>";
       }).join("");
+      Array.prototype.forEach.call(div_span.querySelectorAll(".text-nowrap"), (span) => {
+        let index = span.getAttribute("index"), data2 = selected[index];
+        span.onchange = function(event) {
+          let value2 = span.textContent;
+          if (value2.length > data2) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+          } else if (value2.length < data2) {
+            selected.splice(index, 1);
+            draw_view();
+          }
+        };
+      });
+      if (div_span.innerHTML.indexOf("span") == -1) {
+        div_span.innerHTML += '<span class="input"></span>';
+      } else if (div_span.children.length > 1) {
+        let span_input = div_span.querySelector(".input");
+        div_span.removeChild(span_input);
+        div_span.appendChild(span_input);
+      }
     }
     field.choices.forEach((choice, index) => {
       let a = document.createElement("a"), option = document.createElement("option"), field_value = field.leaf_value || field.value;
