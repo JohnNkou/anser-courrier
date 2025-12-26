@@ -434,7 +434,10 @@ var require_lib = __commonJS((exports2) => {
             spans2[length].textContent = data2;
           }
         }
-        if (input_span.textContent.length) {
+        if (!input_span) {
+          draw_view();
+        }
+        if (input_span && input_span.textContent.length) {
           let value2 = input_span.textContent.toLowerCase(), choices = field.choices.filter((choice) => {
             return choice.text.toLowerCase().indexOf(value2) != -1;
           });

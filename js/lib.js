@@ -191,7 +191,11 @@ function Select(field,rootNode){
 				}
 			}
 
-			if(input_span.textContent.length){
+			if(!input_span){
+				draw_view();
+			}
+
+			if(input_span && input_span.textContent.length){
 				let value = input_span.textContent.toLowerCase(),
 				choices = field.choices.filter((choice)=>{
 					return choice.text.toLowerCase().indexOf(value) != -1
