@@ -96,7 +96,7 @@ var require_anser_utily = __commonJS((exports2) => {
         case "textarea": {
           inputNode = document.createElement("textarea");
           inputNode.name = id;
-          if (entry) {
+          if (entry && entry[field.id]) {
             inputNode.value = entry[field.id].value;
           }
           break;
@@ -108,7 +108,7 @@ var require_anser_utily = __commonJS((exports2) => {
             option.value = choice.value;
             option.textContent = choice.text;
             inputNode.appendChild(option);
-            if (entry && entry[field.id].value == choice.value) {
+            if (entry && entry[field.id] && entry[field.id].value == choice.value) {
               option.selected = true;
             }
           });
@@ -125,7 +125,7 @@ var require_anser_utily = __commonJS((exports2) => {
           if (field.value) {
             inputNode.value = field.value;
           }
-          if (entry) {
+          if (entry && entry[field.id]) {
             inputNode.value = entry[field.id].value;
           }
           break;

@@ -125,7 +125,7 @@ function display_formCreator({ inbox, entry_data, onsuccess, entry }){
         inputNode = document.createElement('textarea');
         inputNode.name = id;
 
-        if(entry){
+        if(entry && entry[field.id]){
           inputNode.value = entry[field.id].value;
         }
         break;
@@ -138,7 +138,7 @@ function display_formCreator({ inbox, entry_data, onsuccess, entry }){
           option.textContent = choice.text;
           inputNode.appendChild(option);
 
-          if(entry && entry[field.id].value == choice.value){
+          if(entry && entry[field.id] && entry[field.id].value == choice.value){
             option.selected = true;
           }
         });
@@ -157,7 +157,7 @@ function display_formCreator({ inbox, entry_data, onsuccess, entry }){
           inputNode.value = field.value;
         }
 
-        if(entry){
+        if(entry && entry[field.id]){
           inputNode.value = entry[field.id].value;
         }
         break;
