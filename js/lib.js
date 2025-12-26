@@ -159,7 +159,6 @@ function Select(field,rootNode){
 				a = document.createElement('a');
 				a.textContent = choice.text;
 				a.setAttribute('value', choice.value);
-				a.setAttribute('index',index);
 
 				div_dropdown.appendChild(a);
 			}
@@ -238,9 +237,8 @@ function Select(field,rootNode){
 		event.preventDefault();
 
 		let target = event.target,
-		value = target.textContent,
-		_index = target.getAttribute('index'),
-		choice = field.choices[_index];
+		value = target.getAttribute('value'),
+		choice = field.choices.filter((choice)=> choice.value == value);
 
 		if(choice){
 			selected.push(choice);

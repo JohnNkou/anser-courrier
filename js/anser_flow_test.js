@@ -411,7 +411,6 @@ var require_lib = __commonJS((exports2) => {
           a = document.createElement("a");
           a.textContent = choice.text;
           a.setAttribute("value", choice.value);
-          a.setAttribute("index", index);
           div_dropdown.appendChild(a);
         }
       });
@@ -464,7 +463,7 @@ var require_lib = __commonJS((exports2) => {
     };
     div_dropdown.onclick = function(event) {
       event.preventDefault();
-      let target = event.target, value2 = target.textContent, _index = target.getAttribute("index"), choice = field.choices[_index];
+      let target = event.target, value2 = target.getAttribute("value"), choice = field.choices.filter((choice2) => choice2.value == value2);
       if (choice) {
         selected.push(choice);
         select.options[_index].selected = true;
@@ -1196,9 +1195,9 @@ var require_anser_flow_utils = __commonJS((exports2) => {
     span_entry_number.textContent = numero;
     inboxes.forEach((_inboxes, index) => {
       let inSection = false, section_with_rules = false, currentSection;
-      _inboxes.forEach((inbox, _index) => {
+      _inboxes.forEach((inbox, _index2) => {
         try {
-          field_ids[inbox.id] = index + "_" + _index;
+          field_ids[inbox.id] = index + "_" + _index2;
           let inbox_index = field_ids[inbox.id], atts = new Attributes, inputAtts = new Attributes, failedAtts = new Attributes, value2;
           inputAtts.set("id", inbox.id);
           inputAtts.append("name", "input_" + inbox.id);
@@ -1431,15 +1430,15 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       console.log("SHIFFI");
       if (index != null) {
         if (!target.classList.contains("active")) {
-          contents.forEach((content, _index) => {
-            if (_index == index) {
+          contents.forEach((content, _index2) => {
+            if (_index2 == index) {
               content.classList.remove("hidden");
             } else {
               content.classList.add("hidden");
             }
           });
-          Array.prototype.forEach.call(onglets.children, (child, _index) => {
-            if (index == _index) {
+          Array.prototype.forEach.call(onglets.children, (child, _index2) => {
+            if (index == _index2) {
               child.classList.add("active");
             } else {
               child.classList.remove("active");
