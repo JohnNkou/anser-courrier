@@ -601,6 +601,8 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      			modify_link.href = "#";
 	      			modify_link.textContent = 'Modifier';
 
+	      			div_button.className='flex gap-2';
+
 	      			tr.setAttribute('entryId',id);
 
 	      			inbox.gpfnfields.forEach(build_inner_table(tr, entry));

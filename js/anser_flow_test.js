@@ -97,7 +97,7 @@ var require_anser_utily = __commonJS((exports2) => {
           inputNode = document.createElement("textarea");
           inputNode.name = id;
           if (entry) {
-            inputNode.value = entry[id].value;
+            inputNode.value = entry[field.id].value;
           }
           break;
         }
@@ -108,7 +108,7 @@ var require_anser_utily = __commonJS((exports2) => {
             option.value = choice.value;
             option.textContent = choice.text;
             inputNode.appendChild(option);
-            if (entry && entry[id].value == choice.value) {
+            if (entry && entry[field.id].value == choice.value) {
               option.selected = true;
             }
           });
@@ -126,7 +126,7 @@ var require_anser_utily = __commonJS((exports2) => {
             inputNode.value = field.value;
           }
           if (entry) {
-            inputNode.value = entry[id].value;
+            inputNode.value = entry[field.id].value;
           }
           break;
         case "fileupload":
@@ -962,6 +962,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                 delete_link.textContent = "Supprimer";
                 modify_link.href = "#";
                 modify_link.textContent = "Modifier";
+                div_button.className = "flex gap-2";
                 tr2.setAttribute("entryId", id);
                 inbox.gpfnfields.forEach(build_inner_table2(tr2, entry));
                 div_button.appendChild(modify_link);

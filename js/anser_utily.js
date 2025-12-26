@@ -126,7 +126,7 @@ function display_formCreator({ inbox, entry_data, onsuccess, entry }){
         inputNode.name = id;
 
         if(entry){
-          inputNode.value = entry[id].value;
+          inputNode.value = entry[field.id].value;
         }
         break;
       }
@@ -138,7 +138,7 @@ function display_formCreator({ inbox, entry_data, onsuccess, entry }){
           option.textContent = choice.text;
           inputNode.appendChild(option);
 
-          if(entry && entry[id].value == choice.value){
+          if(entry && entry[field.id].value == choice.value){
             option.selected = true;
           }
         });
@@ -158,7 +158,7 @@ function display_formCreator({ inbox, entry_data, onsuccess, entry }){
         }
 
         if(entry){
-          inputNode.value = entry[id].value;
+          inputNode.value = entry[field.id].value;
         }
         break;
       case 'fileupload':
