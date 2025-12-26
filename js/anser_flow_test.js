@@ -390,12 +390,17 @@ var require_lib = __commonJS((exports2) => {
       }
     }
     function display_choices(choices) {
+      let optionLength = select.options.length, choiceLength = field.choices.length;
       div_dropdown.innerHTML = "";
       choices.forEach((choice, index) => {
-        let option = document.createElement("option"), a;
-        option.value = choice.value;
-        if (!select.options.length) {
+        let a, option;
+        if (optionLength != choiceLength) {
+          option = document.createElement("option");
+          option.value = choice.value;
           select.appendChild(option);
+          optionLength++;
+        } else {
+          option = select.options[index];
         }
         if (selected.filter((s) => s.value == choice.value)[0]) {
           option.setAttribute("selected", true);

@@ -127,17 +127,26 @@ function Select(field,rootNode){
 
 
 	function display_choices(choices){
+		let optionLength = select.options.length,
+		choiceLength = field.choices.length;
+
 		div_dropdown.innerHTML = '';
 
 		choices.forEach((choice,index)=>{
-			let option = document.createElement('option'),
-			a;
+			let a,option;
 
-			option.value = choice.value;
+			if(optionLength != choiceLength){
+				option = document.createElement('option');
+				option.value = choice.value;
 
-			if(!select.options.length){
 				select.appendChild(option);
+
+				optionLength++;
 			}
+			else{
+				option = select.options[index];
+			}
+
 
 			if(selected.filter((s)=> s.value == choice.value)[0]){
 				option.setAttribute('selected',true);
