@@ -963,7 +963,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   if (entry) {
                     display_formCreator({ inbox, entry_data, entry, onsuccess: (data2) => {
                       for (let field_id in data2.fieldValues) {
-                        entry[field_id] = data2.fieldValues[field_id].value;
+                        entry[field_id].value = data2.fieldValues[field_id].value;
                       }
                       tbody.innerHTML = "";
                       build_entries_rows2();

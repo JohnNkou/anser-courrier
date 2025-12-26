@@ -571,7 +571,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      			if(entry){
 	      				display_formCreator({ inbox, entry_data, entry, onsuccess:(data)=>{
 	      					for(let field_id in data.fieldValues){
-	      						entry[field_id] = data.fieldValues[field_id].value;
+	      						entry[field_id].value = data.fieldValues[field_id].value;
 	      					};
 
 	      					tbody.innerHTML = '';
