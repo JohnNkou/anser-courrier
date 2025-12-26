@@ -396,6 +396,8 @@ var require_lib = __commonJS((exports2) => {
             if (field_value[i] == choice.value) {
               selected.push(choice.text);
               option.setAttribute("selected", "true");
+            } else if (option.selected) {
+              option.removeAttribute("selected");
             }
           }
         } else if (field_value == choice.value) {

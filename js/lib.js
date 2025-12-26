@@ -136,6 +136,9 @@ function Select(field,rootNode){
 						selected.push(choice.text);
 						option.setAttribute('selected','true');
 					}
+					else if(option.selected){
+						option.removeAttribute('selected');
+					}
 				}
 			}
 			else if(field_value == choice.value){
