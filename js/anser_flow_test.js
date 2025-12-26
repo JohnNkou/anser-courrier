@@ -937,7 +937,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   break;
                 }
                 case "edit": {
-                  let entry = inbox.entries.filter((entry2) => entry2.id == entryId);
+                  let entry = inbox.entries.filter((entry2) => entry2.id == entryId)[0];
                   if (entry) {
                     display_formCreator({ inbox, entry_data, entry, onsuccess: (data2) => {
                       console.log("OXFORD", data2);

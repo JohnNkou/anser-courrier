@@ -566,7 +566,7 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      			break;
 	      		}
 	      		case 'edit':{
-	      			let entry = inbox.entries.filter((entry)=> entry.id == entryId);
+	      			let entry = inbox.entries.filter((entry)=> entry.id == entryId)[0];
 
 	      			if(entry){
 	      				display_formCreator({ inbox, entry_data, entry, onsuccess:(data)=>{
