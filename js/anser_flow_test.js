@@ -849,6 +849,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
           }
           case "form": {
             let build_entries_rows2 = function() {
+              let ids = [];
               inbox.entries.forEach((entry) => {
                 let id = entry.id, tr2 = document.createElement("tr"), div_button = document.createElement("div"), modify_link = document.createElement("a"), delete_link = document.createElement("a");
                 ids.push(id);
@@ -868,6 +869,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                 tr2.appendChild(div_button);
                 tbody.appendChild(tr2);
               });
+              return ids;
             }, build_inner_table2 = function(tr2, fieldValues) {
               return function(field) {
                 let fieldValue = fieldValues[field.id], td = document.createElement("td"), value2 = fieldValue && fieldValue.label, method = "textContent";
@@ -974,9 +976,8 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               }
             };
             if (inbox.entries && inbox.entries.forEach) {
-              let ids2 = [];
-              build_entries_rows2();
-              input.value = ids2.join(",");
+              let ids = build_entries_rows2();
+              input.value = ids.join(",");
             }
             button.onclick = function(event) {
               event.preventDefault();

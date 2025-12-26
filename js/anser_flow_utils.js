@@ -588,14 +588,13 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      	}
 
 	      	if(inbox.entries && inbox.entries.forEach){
-	      		let ids = [];
-
-		      		build_entries_rows();
+	      		let ids = build_entries_rows();
 
 	      		input.value = ids.join(',');
 	      	}
 
 	      	function build_entries_rows(){
+	      		let ids = []
 	      		inbox.entries.forEach((entry)=>{
 		      			let id = entry.id,
 		      			tr = document.createElement('tr'),
@@ -624,6 +623,8 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 
 		      			tbody.appendChild(tr);
 		      		})
+
+	      		return ids;
 	      	}
 
 	      	function build_inner_table(tr,fieldValues){
