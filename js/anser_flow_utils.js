@@ -570,7 +570,13 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 
 	      			if(entry){
 	      				display_formCreator({ inbox, entry_data, entry, onsuccess:(data)=>{
-	      					console.log('OXFORD',data);
+	      					for(let field_id in data.fieldValues){
+	      						entry[field_id] = data.fieldValues[field_id].value;
+	      					};
+
+	      					tbody.innerHTML = '';
+
+	      					build_entries_rows();
 	      				} })
 	      			}
 	      			else{
@@ -584,36 +590,40 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      	if(inbox.entries && inbox.entries.forEach){
 	      		let ids = [];
 
-	      		inbox.entries.forEach((entry)=>{
-	      			let id = entry.id,
-	      			tr = document.createElement('tr'),
-	      			div_button = document.createElement('div'),
-	      			modify_link = document.createElement('a'),
-	      			delete_link = document.createElement('a');
-
-	      			ids.push(id);
-	      			delete_link.setAttribute('entryId',id);
-	      			delete_link.setAttribute('data-action','delete');
-	      			modify_link.setAttribute('entryId',id);
-	      			modify_link.setAttribute('data-action','edit');
-	      			delete_link.href = "#";
-	      			delete_link.textContent = "Supprimer";
-	      			modify_link.href = "#";
-	      			modify_link.textContent = 'Modifier';
-
-	      			div_button.className='flex gap-2';
-
-	      			tr.setAttribute('entryId',id);
-
-	      			inbox.gpfnfields.forEach(build_inner_table(tr, entry));
-	      			div_button.appendChild(modify_link);
-	      			div_button.appendChild(delete_link);
-	      			tr.appendChild(div_button);
-
-	      			tbody.appendChild(tr);
-	      		})
+		      		build_entries_rows();
 
 	      		input.value = ids.join(',');
+	      	}
+
+	      	function build_entries_rows(){
+	      		inbox.entries.forEach((entry)=>{
+		      			let id = entry.id,
+		      			tr = document.createElement('tr'),
+		      			div_button = document.createElement('div'),
+		      			modify_link = document.createElement('a'),
+		      			delete_link = document.createElement('a');
+
+		      			ids.push(id);
+		      			delete_link.setAttribute('entryId',id);
+		      			delete_link.setAttribute('data-action','delete');
+		      			modify_link.setAttribute('entryId',id);
+		      			modify_link.setAttribute('data-action','edit');
+		      			delete_link.href = "#";
+		      			delete_link.textContent = "Supprimer";
+		      			modify_link.href = "#";
+		      			modify_link.textContent = 'Modifier';
+
+		      			div_button.className='flex gap-2';
+
+		      			tr.setAttribute('entryId',id);
+
+		      			inbox.gpfnfields.forEach(build_inner_table(tr, entry));
+		      			div_button.appendChild(modify_link);
+		      			div_button.appendChild(delete_link);
+		      			tr.appendChild(div_button);
+
+		      			tbody.appendChild(tr);
+		      		})
 	      	}
 
 	      	function build_inner_table(tr,fieldValues){

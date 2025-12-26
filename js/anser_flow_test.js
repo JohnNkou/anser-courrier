@@ -848,7 +848,27 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             break;
           }
           case "form": {
-            let build_inner_table2 = function(tr2, fieldValues) {
+            let build_entries_rows2 = function() {
+              inbox.entries.forEach((entry) => {
+                let id = entry.id, tr2 = document.createElement("tr"), div_button = document.createElement("div"), modify_link = document.createElement("a"), delete_link = document.createElement("a");
+                ids.push(id);
+                delete_link.setAttribute("entryId", id);
+                delete_link.setAttribute("data-action", "delete");
+                modify_link.setAttribute("entryId", id);
+                modify_link.setAttribute("data-action", "edit");
+                delete_link.href = "#";
+                delete_link.textContent = "Supprimer";
+                modify_link.href = "#";
+                modify_link.textContent = "Modifier";
+                div_button.className = "flex gap-2";
+                tr2.setAttribute("entryId", id);
+                inbox.gpfnfields.forEach(build_inner_table2(tr2, entry));
+                div_button.appendChild(modify_link);
+                div_button.appendChild(delete_link);
+                tr2.appendChild(div_button);
+                tbody.appendChild(tr2);
+              });
+            }, build_inner_table2 = function(tr2, fieldValues) {
               return function(field) {
                 let fieldValue = fieldValues[field.id], td = document.createElement("td"), value2 = fieldValue && fieldValue.label, method = "textContent";
                 if (value2 != null) {
@@ -860,7 +880,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                 }
               };
             };
-            var build_inner_table = build_inner_table2;
+            var build_entries_rows = build_entries_rows2, build_inner_table = build_inner_table2;
             let div = document.createElement("div"), label = document.createElement("label"), button = document.createElement("button"), table = document.createElement("table"), thead = document.createElement("thead"), tbody = document.createElement("tbody"), input = document.createElement("input"), tr = document.createElement("tr"), innerField = inbox.gpfnfields;
             innerField.forEach((field) => {
               if (parseInt(field.id)) {
@@ -940,7 +960,11 @@ var require_anser_flow_utils = __commonJS((exports2) => {
                   let entry = inbox.entries.filter((entry2) => entry2.id == entryId)[0];
                   if (entry) {
                     display_formCreator({ inbox, entry_data, entry, onsuccess: (data2) => {
-                      console.log("OXFORD", data2);
+                      for (let field_id in data2.fieldValues) {
+                        entry[field_id] = data2.fieldValues[field_id].value;
+                      }
+                      tbody.innerHTML = "";
+                      build_entries_rows2();
                     } });
                   } else {
                     console.error("No entry to delete found");
@@ -950,27 +974,9 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               }
             };
             if (inbox.entries && inbox.entries.forEach) {
-              let ids = [];
-              inbox.entries.forEach((entry) => {
-                let id = entry.id, tr2 = document.createElement("tr"), div_button = document.createElement("div"), modify_link = document.createElement("a"), delete_link = document.createElement("a");
-                ids.push(id);
-                delete_link.setAttribute("entryId", id);
-                delete_link.setAttribute("data-action", "delete");
-                modify_link.setAttribute("entryId", id);
-                modify_link.setAttribute("data-action", "edit");
-                delete_link.href = "#";
-                delete_link.textContent = "Supprimer";
-                modify_link.href = "#";
-                modify_link.textContent = "Modifier";
-                div_button.className = "flex gap-2";
-                tr2.setAttribute("entryId", id);
-                inbox.gpfnfields.forEach(build_inner_table2(tr2, entry));
-                div_button.appendChild(modify_link);
-                div_button.appendChild(delete_link);
-                tr2.appendChild(div_button);
-                tbody.appendChild(tr2);
-              });
-              input.value = ids.join(",");
+              let ids2 = [];
+              build_entries_rows2();
+              input.value = ids2.join(",");
             }
             button.onclick = function(event) {
               event.preventDefault();
