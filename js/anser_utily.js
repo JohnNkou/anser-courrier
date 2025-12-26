@@ -22,7 +22,7 @@ function file_viewer_handler(node) {
   });
 }
 
-function display_formCreator({ inbox, entry_data, onsuccess }){
+function display_formCreator({ inbox, entry_data, onsuccess, entry }){
   let fields =      inbox.gpfnfields,
   field_id =         inbox.id,
   title =           inbox.label,
@@ -56,6 +56,12 @@ function display_formCreator({ inbox, entry_data, onsuccess }){
     searchParams.append('id', parent_form_id);
     searchParams.append('lid', entry_id);
     searchParams.append('anser_ajax','true');
+
+    if(entry){
+      searchParams.append('gpnf_entry_id', entry.id);
+      searchParams.append('gpnf_mode','edit');
+      searchParams.append('gpnf_edit_entry_submission', inbox.edit_nonce);
+    }
 
     toggle_loader("Mise à jour");
 
@@ -118,6 +124,10 @@ function display_formCreator({ inbox, entry_data, onsuccess }){
       case 'textarea':{
         inputNode = document.createElement('textarea');
         inputNode.name = id;
+
+        if(entry){
+          inputNode.value = entry[id].value;
+        }
         break;
       }
       case 'select':{
@@ -127,6 +137,10 @@ function display_formCreator({ inbox, entry_data, onsuccess }){
           option.value = choice.value;
           option.textContent = choice.text;
           inputNode.appendChild(option);
+
+          if(entry && entry[id].value == choice.value){
+            option.selected = true;
+          }
         });
         inputNode.name = id;
         break;
@@ -141,6 +155,10 @@ function display_formCreator({ inbox, entry_data, onsuccess }){
 
         if(field.value){
           inputNode.value = field.value;
+        }
+
+        if(entry){
+          inputNode.value = entry[id].value;
         }
         break;
       case 'fileupload':

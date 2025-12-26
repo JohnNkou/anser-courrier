@@ -24,7 +24,7 @@ var require_anser_utily = __commonJS((exports2) => {
       }
     });
   }
-  function display_formCreator({ inbox, entry_data, onsuccess }) {
+  function display_formCreator({ inbox, entry_data, onsuccess, entry }) {
     let { gpfnfields: fields, id: field_id, label: title, gpfnfForm: form_id } = inbox, parent_form_id = entry_data.form_id, entry_id = entry_data.entry_id, div = document.getElementById("formCreator"), form = div && div.querySelector("form"), titleNode = document.createElement("div"), contentNode = div && div.querySelector(".content"), button = div && div.querySelector(".close"), hidden_fields = [{ name: "gpnf_parent_form_id", value: parent_form_id }, { name: "gpnf_nested_form_field_id", value: field_id }, { name: "gform_submission_method", value: "iframe" }, { name: "gform_theme", value: "gravity-theme" }, { name: "is_submit_" + form_id, value: "1" }, { name: "gform_submit", value: form_id }];
     if (inbox.gform_ajax) {
       hidden_fields.push({ name: "gform_ajax", value: inbox.gform_ajax });
@@ -41,6 +41,11 @@ var require_anser_utily = __commonJS((exports2) => {
       searchParams.append("id", parent_form_id);
       searchParams.append("lid", entry_id);
       searchParams.append("anser_ajax", "true");
+      if (entry) {
+        searchParams.append("gpnf_entry_id", entry.id);
+        searchParams.append("gpnf_mode", "edit");
+        searchParams.append("gpnf_edit_entry_submission", inbox.edit_nonce);
+      }
       toggle_loader("Mise à jour");
       fetch(url, {
         method: "POST",
@@ -91,6 +96,9 @@ var require_anser_utily = __commonJS((exports2) => {
         case "textarea": {
           inputNode = document.createElement("textarea");
           inputNode.name = id;
+          if (entry) {
+            inputNode.value = entry[id].value;
+          }
           break;
         }
         case "select": {
@@ -100,6 +108,9 @@ var require_anser_utily = __commonJS((exports2) => {
             option.value = choice.value;
             option.textContent = choice.text;
             inputNode.appendChild(option);
+            if (entry && entry[id].value == choice.value) {
+              option.selected = true;
+            }
           });
           inputNode.name = id;
           break;
@@ -113,6 +124,9 @@ var require_anser_utily = __commonJS((exports2) => {
           inputNode.name = id;
           if (field.value) {
             inputNode.value = field.value;
+          }
+          if (entry) {
+            inputNode.value = entry[id].value;
           }
           break;
         case "fileupload":
@@ -874,51 +888,65 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             tbody.onclick = function(event) {
               event.preventDefault();
               let target = event.target, action = target.getAttribute("data-action"), entryId = target.getAttribute("entryId");
-              if (action == "delete") {
-                let f = new FormData;
-                f.append("action", "gpnf_delete_entry");
-                f.append("nonce", inbox.delete_nonce);
-                f.append("gpnf_entry_id", entryId);
-                f.append("gpnf_nested_form_field_id", inbox.gpfnfForm);
-                console.log("Received delete action. Cool");
-                console.log("EntryId", entryId);
-                toggle_loader("Suppression en cour");
-                fetch(inbox.action_url, {
-                  method: "POST",
-                  body: f
-                }).then((response) => {
-                  if (response.status == 200) {
-                    response.json().then((data2) => {
-                      if (data2.success) {
-                        let count = 10, parent = target;
-                        display_information_modal("Suppression effectué");
-                        while (parent = parent.parentNode) {
-                          if (parent.tagName.toLowerCase() == "tr") {
-                            tbody.removeChild(parent);
-                            break;
+              switch (action) {
+                case "delete": {
+                  let f = new FormData;
+                  f.append("action", "gpnf_delete_entry");
+                  f.append("nonce", inbox.delete_nonce);
+                  f.append("gpnf_entry_id", entryId);
+                  f.append("gpnf_nested_form_field_id", inbox.gpfnfForm);
+                  console.log("Received delete action. Cool");
+                  console.log("EntryId", entryId);
+                  toggle_loader("Suppression en cour");
+                  fetch(inbox.action_url, {
+                    method: "POST",
+                    body: f
+                  }).then((response) => {
+                    if (response.status == 200) {
+                      response.json().then((data2) => {
+                        if (data2.success) {
+                          let count = 10, parent = target;
+                          display_information_modal("Suppression effectué");
+                          while (parent = parent.parentNode) {
+                            if (parent.tagName.toLowerCase() == "tr") {
+                              tbody.removeChild(parent);
+                              break;
+                            }
+                            if (!count--) {
+                              console.error("Didn't find parrent with tagName tr");
+                              break;
+                            }
                           }
-                          if (!count--) {
-                            console.error("Didn't find parrent with tagName tr");
-                            break;
-                          }
+                        } else {
+                          display_information_modal("La suppression n'a pas pu être effectuée");
                         }
-                      } else {
+                      }).catch((error) => {
                         display_information_modal("La suppression n'a pas pu être effectuée");
-                      }
-                    }).catch((error) => {
+                      });
+                    } else {
+                      console.error("Bad status code", response.status);
                       display_information_modal("La suppression n'a pas pu être effectuée");
-                    });
+                      response.json().then(console.warn).catch(console.error);
+                    }
+                  }).catch((error) => {
+                    console.error("Error", error);
+                    display_information_modal("Une erreur est survenue lors de la suppression");
+                  }).finally(() => {
+                    toggle_loader();
+                  });
+                  break;
+                }
+                case "edit": {
+                  let entry = inbox.entries.filter((entry2) => entry2.id == entryId);
+                  if (entry) {
+                    display_formCreator({ inbox, entry_data, entry, onsuccess: (data2) => {
+                      console.log("OXFORD", data2);
+                    } });
                   } else {
-                    console.error("Bad status code", response.status);
-                    display_information_modal("La suppression n'a pas pu être effectuée");
-                    response.json().then(console.warn).catch(console.error);
+                    console.error("No entry to delete found");
                   }
-                }).catch((error) => {
-                  console.error("Error", error);
-                  display_information_modal("Une erreur est survenue lors de la suppression");
-                }).finally(() => {
-                  toggle_loader();
-                });
+                  break;
+                }
               }
             };
             if (inbox.entries && inbox.entries.forEach) {
@@ -940,15 +968,21 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             button.onclick = function(event) {
               event.preventDefault();
               display_formCreator({ inbox, entry_data, onsuccess: (data2) => {
-                let { entryId: id, fieldValues } = data2, tr2 = document.createElement("tr"), td_delete = document.createElement("td"), delete_link = document.createElement("a");
+                let { entryId: id, fieldValues } = data2, tr2 = document.createElement("tr"), td_delete = document.createElement("td"), div_button = document.createElement("button"), delete_link = document.createElement("a"), modify_link = document.createElement("a");
                 input.value += "," + id;
                 tr2.setAttribute("entryId", id);
                 delete_link.setAttribute("entryId", id);
                 delete_link.setAttribute("data-action", "delete");
+                modify_link.setAttribute("entryId", id);
+                modify_link.setAttribute("data-action", "modify");
                 delete_link.href = "#";
                 delete_link.textContent = "Supprimer";
+                modify_link.href = "#";
+                modify_link.textContent = "Modifier";
                 inbox.gpfnfields.forEach(build_inner_table2(tr2, fieldValues));
-                td_delete.appendChild(delete_link);
+                div_button.appendChild(modify_link);
+                div_button.appendChild(modify_link);
+                td_delete.appendChild(div_button);
                 tr2.appendChild(td_delete);
                 tbody.appendChild(tr2);
               } });

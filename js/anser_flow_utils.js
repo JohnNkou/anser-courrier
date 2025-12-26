@@ -506,7 +506,8 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      		action = target.getAttribute('data-action'),
 	      		entryId = target.getAttribute('entryId');
 
-	      		if(action == 'delete'){
+	      		switch(action){
+	      		case 'delete':{
 	      			let f = new FormData();
 
 	      			f.append('action','gpnf_delete_entry');
@@ -560,7 +561,23 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      				display_information_modal("Une erreur est survenue lors de la suppression");
 	      			}).finally(()=>{
 	      				toggle_loader();
-	      			})
+	      			});
+
+	      			break;
+	      		}
+	      		case 'edit':{
+	      			let entry = inbox.entries.filter((entry)=> entry.id == entryId);
+
+	      			if(entry){
+	      				display_formCreator({ inbox, entry_data, entry, onsuccess:(data)=>{
+	      					console.log('OXFORD',data);
+	      				} })
+	      			}
+	      			else{
+	      				console.error("No entry to delete found");
+	      			}
+	      			break
+	      		}
 	      		}
 	      	}
 
@@ -616,19 +633,27 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      			fieldValues = data.fieldValues,
 	      			tr = document.createElement('tr'),
 	      			td_delete = document.createElement('td'),
-	      			delete_link = document.createElement('a');
+	      			div_button = document.createElement('button'),
+	      			delete_link = document.createElement('a'),
+	      			modify_link = document.createElement('a');
 
 	      			input.value += "," + id;
 
 	      			tr.setAttribute('entryId',id);
 	      			delete_link.setAttribute('entryId',id);
 	      			delete_link.setAttribute('data-action','delete');
+	      			modify_link.setAttribute('entryId',id);
+	      			modify_link.setAttribute('data-action','modify');
 	      			delete_link.href = "#";
 	      			delete_link.textContent = "Supprimer";
+	      			modify_link.href = "#";
+	      			modify_link.textContent = "Modifier";
 
 	      			inbox.gpfnfields.forEach(build_inner_table(tr, fieldValues));
 
-	      			td_delete.appendChild(delete_link);
+	      			div_button.appendChild(modify_link);
+	      			div_button.appendChild(modify_link);
+	      			td_delete.appendChild(div_button);
 	      			tr.appendChild(td_delete);
 	      			tbody.appendChild(tr);
 	      		}});

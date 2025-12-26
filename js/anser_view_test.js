@@ -24,7 +24,7 @@ var require_anser_utily = __commonJS((exports2) => {
       }
     });
   }
-  function display_formCreator({ inbox, entry_data, onsuccess }) {
+  function display_formCreator({ inbox, entry_data, onsuccess, entry }) {
     let { gpfnfields: fields, id: field_id, label: title, gpfnfForm: form_id } = inbox, parent_form_id = entry_data.form_id, entry_id = entry_data.entry_id, div = document.getElementById("formCreator"), form = div && div.querySelector("form"), titleNode = document.createElement("div"), contentNode = div && div.querySelector(".content"), button = div && div.querySelector(".close"), hidden_fields = [{ name: "gpnf_parent_form_id", value: parent_form_id }, { name: "gpnf_nested_form_field_id", value: field_id }, { name: "gform_submission_method", value: "iframe" }, { name: "gform_theme", value: "gravity-theme" }, { name: "is_submit_" + form_id, value: "1" }, { name: "gform_submit", value: form_id }];
     if (inbox.gform_ajax) {
       hidden_fields.push({ name: "gform_ajax", value: inbox.gform_ajax });
@@ -41,6 +41,11 @@ var require_anser_utily = __commonJS((exports2) => {
       searchParams.append("id", parent_form_id);
       searchParams.append("lid", entry_id);
       searchParams.append("anser_ajax", "true");
+      if (entry) {
+        searchParams.append("gpnf_entry_id", entry.id);
+        searchParams.append("gpnf_mode", "edit");
+        searchParams.append("gpnf_edit_entry_submission", inbox.edit_nonce);
+      }
       toggle_loader("Mise à jour");
       fetch(url, {
         method: "POST",
@@ -91,6 +96,9 @@ var require_anser_utily = __commonJS((exports2) => {
         case "textarea": {
           inputNode = document.createElement("textarea");
           inputNode.name = id;
+          if (entry) {
+            inputNode.value = entry[id].value;
+          }
           break;
         }
         case "select": {
@@ -100,6 +108,9 @@ var require_anser_utily = __commonJS((exports2) => {
             option.value = choice.value;
             option.textContent = choice.text;
             inputNode.appendChild(option);
+            if (entry && entry[id].value == choice.value) {
+              option.selected = true;
+            }
           });
           inputNode.name = id;
           break;
@@ -113,6 +124,9 @@ var require_anser_utily = __commonJS((exports2) => {
           inputNode.name = id;
           if (field.value) {
             inputNode.value = field.value;
+          }
+          if (entry) {
+            inputNode.value = entry[id].value;
           }
           break;
         case "fileupload":
