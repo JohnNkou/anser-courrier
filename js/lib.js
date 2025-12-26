@@ -167,6 +167,10 @@ function Select(field,rootNode){
 		div_dropdown.classList.add('hidden');
 	}
 
+	div_span.onclick = (event)=>{
+		event.stopImmediatePropagation();
+	}
+
 	div_span.oninput = (event)=>{
 		if(selected.length){
 			let spans = div_span.querySelectorAll('.text-nowrap'),

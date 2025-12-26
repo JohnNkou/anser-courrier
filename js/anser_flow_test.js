@@ -418,6 +418,9 @@ var require_lib = __commonJS((exports2) => {
     div_span.onfocusout = function() {
       div_dropdown.classList.add("hidden");
     };
+    div_span.onclick = (event) => {
+      event.stopImmediatePropagation();
+    };
     div_span.oninput = (event) => {
       if (selected.length) {
         let spans2 = div_span.querySelectorAll(".text-nowrap"), input_span = div_span.querySelector(".input"), length = spans2.length;
