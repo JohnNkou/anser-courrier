@@ -369,9 +369,14 @@ var require_lib = __commonJS((exports2) => {
     select.setAttribute("multiple", "true");
     select.setAttribute("name", "input_" + field.id);
     div_span.setAttribute("contenteditable", "true");
+    if (!field.leaf_value instanceof Array) {
+      field = { ...field };
+      field.leaf_value = [field.leaf_value];
+    }
+    selected = field.leaf_value.map((value2) => field.choices.filter((x) => x.value == value2)[0]);
     function draw_view() {
-      div_span.innerHTML = selected.map((data2, index) => {
-        return '<span index="' + index + '" class="text-nowrap cursor-pointer">' + data2 + "</span>";
+      div_span.innerHTML = selected.map((choice, index) => {
+        return '<span index="' + index + '" class="text-nowrap cursor-pointer">' + choice.text + "</span>";
       }).join("");
       spans = div_span.querySelectorAll(".text-nowrap");
       if (div_span.innerHTML.trim().length) {
@@ -385,35 +390,22 @@ var require_lib = __commonJS((exports2) => {
       }
     }
     function display_choices(choices) {
-      let chosen_choices = [];
       div_dropdown.innerHTML = "";
       choices.forEach((choice, index) => {
-        let option = document.createElement("option"), field_value = field.leaf_value || field.value;
+        let option = document.createElement("option"), a;
         option.value = choice.value;
-        select.appendChild(option);
-        if (field_value instanceof Array) {
-          for (let i = 0;i < field_value.length; i++) {
-            if (field_value[i] == choice.value) {
-              selected.push(choice.text);
-              option.setAttribute("selected", "true");
-            } else if (option.selected) {
-              option.removeAttribute("selected");
-            }
+        if (!select.options.length) {
+          select.appendChild(option);
+        }
+        if (selected.filter((s) => s.value == choice.value)[0]) {
+          option.setAttribute("selected", true);
+        } else {
+          if (option.selected) {
+            option.removeAttribute("selected");
           }
-        } else if (field_value == choice.value) {
-          selected.push(choice.text);
-          option.setAttribute("selected", "true");
-        }
-        if (selected.indexOf(choice.text) == -1) {
-          chosen_choices.push([choice, index]);
-        }
-      });
-      chosen_choices.forEach((data2) => {
-        let text = data2[0].text, value2 = data2[0].value, index = data2[1], a;
-        if (selected.indexOf(text) == -1) {
           a = document.createElement("a");
-          a.textContent = text;
-          a.setAttribute("value", value2);
+          a.textContent = choice.text;
+          a.setAttribute("value", choice.value);
           a.setAttribute("index", index);
           div_dropdown.appendChild(a);
         }
@@ -430,7 +422,7 @@ var require_lib = __commonJS((exports2) => {
       if (selected.length) {
         let spans2 = div_span.querySelectorAll(".text-nowrap"), input_span = div_span.querySelector(".input"), length = spans2.length;
         while (length--) {
-          let data2 = selected[length], span_data = spans2[length].innerHTML;
+          let data2 = selected[length].text, span_data = spans2[length].innerHTML;
           if (span_data == data2) {
             continue;
           }
@@ -464,16 +456,15 @@ var require_lib = __commonJS((exports2) => {
     };
     div_dropdown.onclick = function(event) {
       event.preventDefault();
-      let target = event.target, value2 = target.textContent, _index = target.getAttribute("index"), index = selected.indexOf(value2);
-      if (index == -1) {
-        selected.push(value2);
+      let target = event.target, value2 = target.textContent, _index = target.getAttribute("index"), choice = field.choices[_index];
+      if (choice) {
+        selected.push(choice);
         select.options[_index].selected = true;
+        display_choices(field.choices);
+        draw_view();
       } else {
-        selected.splice(index, 1);
-        delete select.options[_index].selected;
+        console.warn("MAJOR PROBLEME NO CHOICE FOUND");
       }
-      display_choices(field.choices);
-      draw_view();
     };
     draw_view();
     div.appendChild(div_span);

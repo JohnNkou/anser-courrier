@@ -98,9 +98,16 @@ function Select(field,rootNode){
 	select.setAttribute('name','input_'+field.id);
 	div_span.setAttribute('contenteditable','true');
 
+	if(!field.leaf_value instanceof Array){
+		field = {...field};
+		field.leaf_value = [field.leaf_value];
+	}
+
+	selected = field.leaf_value.map((value)=> field.choices.filter((x)=> x.value == value)[0]);
+
 	function draw_view(){
-		div_span.innerHTML = selected.map((data,index)=>{
-			return '<span index="'+ index +'" class="text-nowrap cursor-pointer">'+data+'</span>';
+		div_span.innerHTML = selected.map((choice,index)=>{
+			return '<span index="'+ index +'" class="text-nowrap cursor-pointer">'+ choice.text +'</span>';
 		}).join('');
 
 		spans = div_span.querySelectorAll('.text-nowrap');
@@ -120,53 +127,34 @@ function Select(field,rootNode){
 
 
 	function display_choices(choices){
-		let chosen_choices = [];
 		div_dropdown.innerHTML = '';
 
 		choices.forEach((choice,index)=>{
 			let option = document.createElement('option'),
-			field_value = field.leaf_value || field.value;
-
-			option.value = choice.value;
-			select.appendChild(option);
-
-			if(field_value instanceof Array){
-				for(let i=0; i < field_value.length; i++){
-					if(field_value[i] == choice.value){
-						selected.push(choice.text);
-						option.setAttribute('selected','true');
-					}
-					else if(option.selected){
-						option.removeAttribute('selected');
-					}
-				}
-			}
-			else if(field_value == choice.value){
-				selected.push(choice.text);
-				option.setAttribute('selected','true');
-			}
-
-			if(selected.indexOf(choice.text) == -1){
-				chosen_choices.push([choice,index]);
-			}
-		});
-
-		chosen_choices.forEach((data)=>{
-			let text = data[0].text,
-			value = data[0].value,
-			index = data[1],
 			a;
 
-			if(selected.indexOf(text) == -1){
-				a = document.createElement('a');
+			option.value = choice.value;
 
-				a.textContent = text;
-				a.setAttribute('value', value);
-				a.setAttribute('index', index);
+			if(!select.options.length){
+				select.appendChild(option);
+			}
+
+			if(selected.filter((s)=> s.value == choice.value)[0]){
+				option.setAttribute('selected',true);
+			}
+			else{
+				if(option.selected){
+					option.removeAttribute('selected');
+				}
+
+				a = document.createElement('a');
+				a.textContent = choice.text;
+				a.setAttribute('value', choice.value);
+				a.setAttribute('index',index);
 
 				div_dropdown.appendChild(a);
 			}
-		})
+		});
 	}
 
 	display_choices(field.choices);
@@ -186,7 +174,7 @@ function Select(field,rootNode){
 			length = spans.length;
 
 			while(length--){
-				let data = selected[length],
+				let data = selected[length].text,
 				span_data = spans[length].innerHTML;
 
 				if(span_data == data){
@@ -239,20 +227,19 @@ function Select(field,rootNode){
 		let target = event.target,
 		value = target.textContent,
 		_index = target.getAttribute('index'),
-		index = selected.indexOf(value);
+		choice = field.choices[_index];
 
-		if(index == -1){
-			selected.push(value);
+		if(choice){
+			selected.push(choice);
 			select.options[_index].selected = true;
+
+			display_choices(field.choices);
+
+			draw_view();
 		}
 		else{
-			selected.splice(index,1);
-			delete select.options[_index].selected;
+			console.warn("MAJOR PROBLEME NO CHOICE FOUND");
 		}
-
-		display_choices(field.choices);
-
-		draw_view();
 	}
 
 	draw_view();
