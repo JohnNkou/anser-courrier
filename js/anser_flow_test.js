@@ -952,15 +952,21 @@ var require_anser_flow_utils = __commonJS((exports2) => {
             if (inbox.entries && inbox.entries.forEach) {
               let ids = [];
               inbox.entries.forEach((entry) => {
-                let id = entry.id, tr2 = document.createElement("tr"), delete_link = document.createElement("a");
+                let id = entry.id, tr2 = document.createElement("tr"), div_button = document.createElement("div"), modify_link = document.createElement("a"), delete_link = document.createElement("a");
                 ids.push(id);
                 delete_link.setAttribute("entryId", id);
                 delete_link.setAttribute("data-action", "delete");
+                modify_link.setAttribute("entryId", id);
+                modify_link.setAttribute("data-action", "edit");
                 delete_link.href = "#";
                 delete_link.textContent = "Supprimer";
+                modify_link.href = "#";
+                modify_link.textContent = "Modifier";
                 tr2.setAttribute("entryId", id);
                 inbox.gpfnfields.forEach(build_inner_table2(tr2, entry));
-                tr2.appendChild(delete_link);
+                div_button.appendChild(modify_link);
+                div_button.appendChild(delete_link);
+                tr2.appendChild(div_button);
                 tbody.appendChild(tr2);
               });
               input.value = ids.join(",");

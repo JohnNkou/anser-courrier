@@ -587,18 +587,26 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
 	      		inbox.entries.forEach((entry)=>{
 	      			let id = entry.id,
 	      			tr = document.createElement('tr'),
+	      			div_button = document.createElement('div'),
+	      			modify_link = document.createElement('a'),
 	      			delete_link = document.createElement('a');
 
 	      			ids.push(id);
 	      			delete_link.setAttribute('entryId',id);
 	      			delete_link.setAttribute('data-action','delete');
+	      			modify_link.setAttribute('entryId',id);
+	      			modify_link.setAttribute('data-action','edit');
 	      			delete_link.href = "#";
 	      			delete_link.textContent = "Supprimer";
+	      			modify_link.href = "#";
+	      			modify_link.textContent = 'Modifier';
 
 	      			tr.setAttribute('entryId',id);
 
 	      			inbox.gpfnfields.forEach(build_inner_table(tr, entry));
-	      			tr.appendChild(delete_link);
+	      			div_button.appendChild(modify_link);
+	      			div_button.appendChild(delete_link);
+	      			tr.appendChild(div_button);
 
 	      			tbody.appendChild(tr);
 	      		})
