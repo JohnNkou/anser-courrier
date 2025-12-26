@@ -238,7 +238,7 @@ function Select(field,rootNode){
 
 		let target = event.target,
 		value = target.getAttribute('value'),
-		choice = field.choices.filter((choice)=> choice.value == value),
+		choice = field.choices.filter((choice)=> choice.value == value)[0],
 		optionLength = select.options.length;
 
 		if(choice){

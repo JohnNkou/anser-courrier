@@ -463,7 +463,7 @@ var require_lib = __commonJS((exports2) => {
     };
     div_dropdown.onclick = function(event) {
       event.preventDefault();
-      let target = event.target, value2 = target.getAttribute("value"), choice = field.choices.filter((choice2) => choice2.value == value2), optionLength = select.options.length;
+      let target = event.target, value2 = target.getAttribute("value"), choice = field.choices.filter((choice2) => choice2.value == value2)[0], optionLength = select.options.length;
       if (choice) {
         selected.push(choice);
         while (optionLength--) {
