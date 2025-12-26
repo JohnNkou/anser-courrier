@@ -238,11 +238,18 @@ function Select(field,rootNode){
 
 		let target = event.target,
 		value = target.getAttribute('value'),
-		choice = field.choices.filter((choice)=> choice.value == value);
+		choice = field.choices.filter((choice)=> choice.value == value),
+		optionLength = select.options.length;
 
 		if(choice){
 			selected.push(choice);
-			select.options[_index].selected = true;
+
+			while(optionLength--){
+				if(select.options[optionLength].value == choice.value){
+					select.options[optionLength].selected = true;
+					break;
+				}
+			}
 
 			display_choices(field.choices);
 
