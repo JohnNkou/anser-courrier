@@ -128,7 +128,6 @@ class GPNF_Session {
 	}
 
 	public function set_cookie() {
-		flogs("%s", print_r(debug_backtrace(),true));
 		$result = setcookie( $this->get_cookie_name(), json_encode( $this->_cookie ), time() + 60 * 60 * 24 * 7, COOKIEPATH, COOKIE_DOMAIN, is_ssl() );
 	}
 
