@@ -1819,8 +1819,6 @@ class GP_Nested_Forms extends GP_Plugin {
 			'fieldValues' => $field_values,
 			'mode'        => $mode,
 		);
-		
-		flogs("HANDLING NESTED CONFIRMATION");
 
 		return '<script type="text/javascript"> if( typeof GPNestedForms != "undefined" ) { GPNestedForms.loadEntry( ' . json_encode( $args ) . ' ); } </script>';
 
