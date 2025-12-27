@@ -1799,7 +1799,8 @@ class GP_Nested_Forms extends GP_Plugin {
 			flogs("\n\nNOT NESTED FORM\n\n");
 			return $confirmation;
 		}
-		flogs("\n\nNETSED FORM\n\n")
+		flogs("\n\nNETSED FORM\n\n");
+		
 		$parent_form       = GFAPI::get_form( $this->get_parent_form_id() );
 		$nested_form_field = $this->get_posted_nested_form_field( $parent_form );
 		//$display_fields    = $nested_form_field->gpnfFields;
