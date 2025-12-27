@@ -35,21 +35,21 @@ var require_anser_utily = __commonJS((exports2) => {
     form.onsubmit = function(event) {
       event.preventDefault();
       console.log("Ok submit happening");
-      let url = new URL(location.href), searchParams = url.searchParams;
+      let url = new URL(location.href), searchParams = url.searchParams, fData = new FormData(event.target);
       searchParams.append("page", "gravityflow-inbox");
       searchParams.append("view", "entry");
       searchParams.append("id", parent_form_id);
       searchParams.append("lid", entry_id);
       searchParams.append("anser_ajax", "true");
       if (entry) {
-        searchParams.append("gpnf_entry_id", entry.id);
-        searchParams.append("gpnf_mode", "edit");
-        searchParams.append("gpnf_edit_entry_submission", inbox.edit_nonce);
+        fData.append("gpnf_entry_id", entry.id);
+        fData.append("gpnf_mode", "edit");
+        fData.append("gpnf_edit_entry_submission", inbox.edit_nonce);
       }
       toggle_loader("Mise à jour");
       fetch(url, {
         method: "POST",
-        body: new FormData(event.target),
+        body: fData,
         headers: {
           "no-cache": "true"
         }
