@@ -300,7 +300,7 @@ require_once ABSPATH ."anser-php/anser_gravityview_renderer.php";
 require_once ABSPATH ."anser-php/anser_gravityflow.php";
 require_once ABSPATH ."anser-php/anser_gravityflow_inbox.php";
 
-$start;
+$start = 0;
 
 add_action("muplugins_loaded",function() use($start){
     $start = time();
