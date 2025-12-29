@@ -1259,9 +1259,7 @@ function load_gravityflow_inbox(){
 
     }
 
-    flogs("\n\nTOTAL ELAPSED TIME SINCE BIRTH %s\n\n", time() - $start);
-    
-    wp_send_json_success(["entries"=>$filtered_entries, "field_values"=> $fields_values, "total"=> $total]);
+    wp_send_json_success(["entries"=>$filtered_entries, "field_values"=> $fields_values, "total"=> $total, "elapsed"=> time() - $start]);
 }
 
 function get_display_name($user_id){
