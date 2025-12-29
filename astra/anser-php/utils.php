@@ -1115,6 +1115,8 @@ function load_gravityflow_inbox(){
     
     /*check_ajax_referer('gravityflow_inbox_nonce', 'security');*/
 
+    global $start;
+
     if(!isset($_GET['form_ids'])){
         http_response_code(400);
 
@@ -1256,6 +1258,8 @@ function load_gravityflow_inbox(){
 
 
     }
+
+    flogs("\n\nTOTAL ELAPSED TIME SINCE BIRTH %s\n\n", time() - $start);
     
     wp_send_json_success(["entries"=>$filtered_entries, "field_values"=> $fields_values, "total"=> $total]);
 }

@@ -300,16 +300,7 @@ require_once ABSPATH ."anser-php/anser_gravityview_renderer.php";
 require_once ABSPATH ."anser-php/anser_gravityflow.php";
 require_once ABSPATH ."anser-php/anser_gravityflow_inbox.php";
 
-if(strpos($_SERVER['REQUEST_URI'], '.') == false){
-    $start = time();
-
-    add_action("shutdown", function() use($start){
-        flogs("\n\nStart is %s %s",$start, $_SERVER['REQUEST_URI']);
-        flogs("Now is %s %s", time(), $_SERVER['REQUEST_URI']);
-        flogs("%s second has passed %s", (time() - $start), $_SERVER['REQUEST_URI']);
-        flogs("\n\n");
-    });
-}
+$start = time();
 
 add_action('wp_enqueue_scripts',function(){
     global $post;
