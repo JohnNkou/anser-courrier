@@ -1115,7 +1115,7 @@ function load_gravityflow_inbox(){
     
     /*check_ajax_referer('gravityflow_inbox_nonce', 'security');*/
 
-    global $start;
+    //global $start;
 
     if(!isset($_GET['form_ids'])){
         http_response_code(400);
