@@ -7,6 +7,8 @@ use Aws\Exception\AwsException;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
+$PROFILERS = [];
+
 function set_anser_cookie(){
     $user_id = get_current_user_id();
 
@@ -1115,7 +1117,7 @@ function load_gravityflow_inbox(){
     
     /*check_ajax_referer('gravityflow_inbox_nonce', 'security');*/
 
-    global $start;
+    global $PROFILERS;
 
     if(!isset($_GET['form_ids'])){
         http_response_code(400);
@@ -1343,7 +1345,5 @@ function search_reception($term, $offset=0,$limit=15){
     
     return ["entries"=>[], "total"=>0];
 }
-
-$PROFILERS = [];
 
 ?>
