@@ -7,8 +7,6 @@ use Aws\Exception\AwsException;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-$PROFILERS = [];
-
 function set_anser_cookie(){
     $user_id = get_current_user_id();
 
@@ -1117,7 +1115,7 @@ function load_gravityflow_inbox(){
     
     /*check_ajax_referer('gravityflow_inbox_nonce', 'security');*/
 
-    global $PROFILERS;
+    global $now;
 
     if(!isset($_GET['form_ids'])){
         http_response_code(400);
@@ -1261,7 +1259,7 @@ function load_gravityflow_inbox(){
 
     }
 
-    flogs("\n\nPROFILER DATA %s\n\n", print_r($PROFILERS,true));
+    flogs("\n\nELAPSED TIME IS %s\n\n", (hrtime(true) - $now) / 1e+6);
     
     wp_send_json_success(["entries"=>$filtered_entries, "field_values"=> $fields_values, "total"=> $total]);
 }
