@@ -1259,7 +1259,7 @@ function load_gravityflow_inbox(){
 
     }
 
-    flogs("\n\nESTIMATED TIME PASSED %s\n\n", time() - $start);
+    flogs("\n\nPROFILER DATA %s\n\n", print_r($PROFILERS,true));
     
     wp_send_json_success(["entries"=>$filtered_entries, "field_values"=> $fields_values, "total"=> $total]);
 }
@@ -1343,5 +1343,7 @@ function search_reception($term, $offset=0,$limit=15){
     
     return ["entries"=>[], "total"=>0];
 }
+
+$PROFILERS = [];
 
 ?>
