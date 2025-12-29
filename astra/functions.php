@@ -308,7 +308,7 @@ add_action("muplugins_loaded",function() use($start){
 
 add_action("shutdown", function() use($start){
     flogs("%s second has passed", time() - $start);
-})
+});
 
 add_action('wp_enqueue_scripts',function(){
     global $post;
