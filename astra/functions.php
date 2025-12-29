@@ -300,12 +300,9 @@ require_once ABSPATH ."anser-php/anser_gravityview_renderer.php";
 require_once ABSPATH ."anser-php/anser_gravityflow.php";
 require_once ABSPATH ."anser-php/anser_gravityflow_inbox.php";
 
-add_action("muplugins_loaded",function() use($start){
-    $GLOBALS['start'] = time();
-},50000);
+$start = time();
 
 add_action("shutdown", function() use($start){
-    $start = $GLOBALS['start'];
     flogs("Start is %s",$start);
     flogs("Now is %s", time());
     flogs("%s second has passed", (time() - $start));
