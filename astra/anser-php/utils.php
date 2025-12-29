@@ -1115,7 +1115,9 @@ function load_gravityflow_inbox(){
     
     /*check_ajax_referer('gravityflow_inbox_nonce', 'security');*/
 
-    $now = hrtime(true);
+    global $now;
+
+    flogs("\n\nELAPSED TIME IS %s\n\n", (hrtime(true) - $now) / 1e+6);
 
     if(!isset($_GET['form_ids'])){
         http_response_code(400);
@@ -1258,8 +1260,6 @@ function load_gravityflow_inbox(){
 
 
     }
-
-    flogs("\n\nELAPSED TIME IS %s\n\n", (hrtime(true) - $now) / 1e+6);
     
     wp_send_json_success(["entries"=>$filtered_entries, "field_values"=> $fields_values, "total"=> $total]);
 }
