@@ -300,6 +300,16 @@ require_once ABSPATH ."anser-php/anser_gravityview_renderer.php";
 require_once ABSPATH ."anser-php/anser_gravityflow.php";
 require_once ABSPATH ."anser-php/anser_gravityflow_inbox.php";
 
+$start;
+
+add_action("muplugins_loaded",function() use($start){
+    $start = time();
+},50000);
+
+add_action("shutdown", function() use($start){
+    flogs("%s second has passed", time() - $start);
+})
+
 add_action('wp_enqueue_scripts',function(){
     global $post;
 
