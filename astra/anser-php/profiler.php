@@ -18,11 +18,11 @@
 			$this->names[$keyName] = hrtime(true);
 		}
 
-		public function timeEnd($keyName){
+		public function timeEnd($keyName,$minimum=0){
 			$timeThen = $this->names[$keyName] ?? null;
 			if ($timeThen) {
 				$timeElapsed = (hrtime(true) - $timeThen) / 1e+6;
-				if(!$this->silent){
+				if($timeElapsed >= $minimum){
 					error_log(sprintf("\n\n%s It took %sms to run %s\n\n", $this->prefix, $timeElapsed, $keyName ));
 				}
 
