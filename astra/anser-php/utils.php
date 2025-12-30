@@ -1348,10 +1348,4 @@ function search_reception($term, $offset=0,$limit=15){
     return ["entries"=>[], "total"=>0];
 }
 
-add_filter("option_active_plugins",function($plugins){
-    flogs("PLUGINS ARE %s",$plugins);
-
-    return $plugins;
-});
-
 ?>
