@@ -1262,7 +1262,7 @@ function load_gravityflow_inbox(){
     }
 
     if($profiler){
-        $profiler.timeEnd('anser_gravityflow');
+        $profiler->timeEnd('anser_gravityflow');
     }
     
     wp_send_json_success(["entries"=>$filtered_entries, "field_values"=> $fields_values, "total"=> $total]);
