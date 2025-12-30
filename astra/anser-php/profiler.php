@@ -13,11 +13,11 @@
 		
 		public function time($keyName)
 		{
-			$names[$keyName] = hrtime(true);
+			$this->names[$keyName] = hrtime(true);
 		}
 
 		public function timeEnd($keyName){
-			$timeThen = $names[$keyName] ?? null;
+			$timeThen = $this->names[$keyName] ?? null;
 			if ($timeThen) {
 				$timeElapsed = (hrtime(true) - $timeThen) / 1e+6;
 				error_log(sprintf("\n\n%s It took %sms to run %s\n\n", $this->prefix, $timeElapsed, $keyName ));
