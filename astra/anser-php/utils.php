@@ -1115,7 +1115,7 @@ function load_gravityflow_inbox(){
     
     /*check_ajax_referer('gravityflow_inbox_nonce', 'security');*/
 
-    global $now;
+    $profiler = $GLOBALS['profiler'] ?? null;
 
     flogs("\n\nELAPSED TIME IS %s\n\n", (hrtime(true) - $now) / 1e+6);
 
@@ -1259,6 +1259,10 @@ function load_gravityflow_inbox(){
         exit;
 
 
+    }
+
+    if($profiler){
+        $profiler.timeEnd('anser_gravityflow');
     }
     
     wp_send_json_success(["entries"=>$filtered_entries, "field_values"=> $fields_values, "total"=> $total]);
