@@ -1,5 +1,4 @@
 <?php
-flogs("\n\nUTILS\n\n");
 require_once ABSPATH . "/wp-content/plugins/gravityview/future/includes/class-gv-shortcode.php";
 require_once ABSPATH . "vendor/autoload.php";
 require_once ABSPATH . "/anser-php/profiler.php";
