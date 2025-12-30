@@ -1,6 +1,7 @@
 <?php
 require_once ABSPATH . "/wp-content/plugins/gravityview/future/includes/class-gv-shortcode.php";
 require_once ABSPATH . "vendor/autoload.php";
+require_once ABSPATH . "/anser-php/profiler.php";
 
 use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
@@ -1115,7 +1116,7 @@ function load_gravityflow_inbox(){
     
     /*check_ajax_referer('gravityflow_inbox_nonce', 'security');*/
 
-    $profiler = $GLOBALS['profiler'] ?? null;
+    $profiler = new Profiler("load_gravityflow_inbox");
     $profiler->time("anser_gravityflow");
 
     if(!isset($_GET['form_ids'])){
