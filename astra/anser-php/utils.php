@@ -1116,8 +1116,7 @@ function load_gravityflow_inbox(){
     /*check_ajax_referer('gravityflow_inbox_nonce', 'security');*/
 
     $profiler = $GLOBALS['profiler'] ?? null;
-
-    flogs("\n\nELAPSED TIME IS %s\n\n", (hrtime(true) - $now) / 1e+6);
+    $profiler->time("anser_gravityflow");
 
     if(!isset($_GET['form_ids'])){
         http_response_code(400);
