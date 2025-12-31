@@ -1,9 +1,7 @@
 <?php
 	function wp_settings(){
-		error_log("WP SETTING CALLED");
-		add_filter('option_active_plugins', "plugin_remover");
-
-		function plugin_remover($plugins){
+		$displayed = false;
+		add_filter('option_active_plugins', function($plugins) use(&$displayed){
 			if(isset($_REQUEST['action'])){
 		        require_once "constant.php";
 		        $authorized_plugins;
@@ -29,13 +27,17 @@
 		               return false;
 		            });
 
-		        	//error_log(sprintf("Total plugin loaded after filter %s",count($plugins)));
+		            if($displayed == false){
+		            	error_log(sprintf("Total plugin loaded after filter %s",count($plugins)));
+		            	error_log(sprintf("Plugin after filter %s",print_r($plugins)));
+		            	$displayed = true;
+		            }
 		        }   
 		    }
 
 		    //error_log(sprintf("\n\nPLUGINS NUMBER %s %s\n\n", count($plugins), $_SERVER['REQUEST_URI']));
 	    
 	    	return $plugins;
-		}
+		});
 	}
 ?>
