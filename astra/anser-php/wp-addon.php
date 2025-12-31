@@ -10,7 +10,7 @@
 		        	GRAVITYFLOW_AJAX_ENDPOINT,
 		        	GRAVITYFLOW_ENTRY_AJAX_ENDPOINT
 		        ])){
-		        	$authorized_plugins = ['gravityform','gravityflow'];
+		        	$authorized_plugins = ['gravityform','gravityflow','gravityview'];
 		        }
 		        elseif (in_array($_REQUEST['action'], [
 		        	GRAVITYVIEW_AJAX_ENDPOINT, GRAVITYVIEW_ENTRY_AJAX_ENDPOINT
