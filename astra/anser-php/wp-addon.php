@@ -18,7 +18,7 @@
 		        	$authorized_plugins = ['gravity'];
 		        }
 		        
-		        if(is_array($authorized_plugins)){
+		        if(isset($authorized_plugins) && is_array($authorized_plugins)){
 		        	$plugins = array_filter($plugins,function($data) use($authorized_plugins){
 		               foreach ($authorized_plugins as $k_name){
 		                   	if(strpos($data,$k_name) !== false){
