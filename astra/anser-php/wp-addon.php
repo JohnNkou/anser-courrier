@@ -1,5 +1,6 @@
 <?php
 	function wp_settings(){
+		error_log("WP SETTING CALLED");
 		add_filter('option_active_plugins', "plugin_remover");
 
 		function plugin_remover($plugins){
