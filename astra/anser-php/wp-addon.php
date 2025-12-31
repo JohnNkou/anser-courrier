@@ -4,12 +4,23 @@
 	    
 		    if(isset($_REQUEST['action'])){
 		        require_once "constant.php";
-		        
+
+		        $authorized_plugins;
+		        $rejected_plugins;
+
 		        if(in_array($_REQUEST['action'], [
-		            GRAVITYVIEW_AJAX_ENDPOINT, GRAVITYVIEW_ENTRY_AJAX_ENDPOINT, GRAVITYFLOW_AJAX_ENDPOINT
-		            ])){
-		            $authorized_plugins = ['gravity'];
-		            
+		        	GRAVITYFLOW_AJAX_ENDPOINT,
+		        	GRAVITYFLOW_ENTRY_AJAX_ENDPOINT
+		        ])){
+		        	$authorized_plugins = ['gravityforms', 'gravityflow.php'];
+		        }
+		        elseif (in_array($_REQUEST['action'], [
+		        	GRAVITYVIEW_AJAX_ENDPOINT, GRAVITYVIEW_ENTRY_AJAX_ENDPOINT
+		        ])) {
+		        	$authorized_plugins = ['gravityview'];
+		        }
+		        
+		        if(is_array($authorized_plugins)){
 		            $plugins = array_filter($plugins,function($data) use($authorized_plugins){
 		               foreach ($authorized_plugins as $k_name){
 		                   return strpos($data,$k_name) !== false;
