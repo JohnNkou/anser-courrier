@@ -1,6 +1,6 @@
 <?php
 	function wp_settings(){
-		add_filter('option_active_plugins', function($plugins){
+		/*add_filter('option_active_plugins', function($plugins){
 	    
 		    if(isset($_REQUEST['action'])){
 		        require_once "constant.php";
@@ -33,11 +33,9 @@
 		        }   
 		    }
 
-		    error_log("MUSTAFA");
-	    
-	    	//error_log(sprintf("\n\nPLUGINS NUMBER %s %s\n\n", count($plugins), $_SERVER['REQUEST_URI']));
+		    //error_log(sprintf("\n\nPLUGINS NUMBER %s %s\n\n", count($plugins), $_SERVER['REQUEST_URI']));
 	    
 	    	return $plugins;
-		});
+		});*/
 	}
 ?>
