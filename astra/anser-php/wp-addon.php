@@ -21,7 +21,9 @@
 		        if(is_array($authorized_plugins)){
 		        	$plugins = array_filter($plugins,function($data) use($authorized_plugins){
 		               foreach ($authorized_plugins as $k_name){
-		                   return strpos($data,$k_name) !== false;
+		                   	if(strpos($data,$k_name) !== false){
+		                   		return true;
+		                   	}
 		               } 
 		               
 		               return false;
