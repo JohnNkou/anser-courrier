@@ -33,8 +33,6 @@
 		    }
 
 		    //error_log(sprintf("\n\nPLUGINS NUMBER %s %s\n\n", count($plugins), $_SERVER['REQUEST_URI']));
-
-		    remove_filter("option_active_plugins","plugin_remover");
 	    
 	    	return $plugins;
 		}
