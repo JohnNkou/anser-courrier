@@ -317,9 +317,6 @@ class GFForms {
 	* @return void
 	*/
 	public static function register_services() {
-		$profiler = new Profiler("Gravityforms");
-		$profiler->time("Start");
-
 		$container = self::get_service_container();
 
 		$container->add_provider( new \Gravity_Forms\Gravity_Forms\Util\GF_Util_Service_Provider() );
@@ -349,8 +346,6 @@ class GFForms {
 		$container->add_provider( new \GF_System_Report_Service_Provider() );
 		$container->add_provider( new \Gravity_Forms\Gravity_Forms\Telemetry\GF_Telemetry_Service_Provider() );
 		$container->add_provider( new \Gravity_Forms\Gravity_Forms\Form_Switcher\GF_Form_Switcher_Service_Provider() );
-
-		$profiler->timeEnd("Start");
 	}
 
 	/**
