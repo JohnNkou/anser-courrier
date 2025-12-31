@@ -1119,6 +1119,8 @@ function load_gravityflow_inbox(){
     $profiler = new Profiler("load_gravityflow_inbox");
     $profiler->time("anser_gravityflow");
 
+    flogs("I'm here");
+
     if(!isset($_GET['form_ids'])){
         http_response_code(400);
 
