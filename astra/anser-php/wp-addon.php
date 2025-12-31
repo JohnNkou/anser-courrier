@@ -3,14 +3,13 @@
 		add_filter('option_active_plugins', function($plugins){
 	    	if(isset($_REQUEST['action'])){
 		        require_once "constant.php";
-		        error_log("WIth Action");
 		        $authorized_plugins;
 
 		        if(in_array($_REQUEST['action'], [
 		        	GRAVITYFLOW_AJAX_ENDPOINT,
 		        	GRAVITYFLOW_ENTRY_AJAX_ENDPOINT
 		        ])){
-		        	$authorized_plugins = ['gravity'];
+		        	$authorized_plugins = ['gravityform'];
 		        }
 		        elseif (in_array($_REQUEST['action'], [
 		        	GRAVITYVIEW_AJAX_ENDPOINT, GRAVITYVIEW_ENTRY_AJAX_ENDPOINT
@@ -27,7 +26,7 @@
 		               return false;
 		            });
 
-		            error_log(sprintf("\n\nPLUGINS OBEDED %s\n\n",print_r(array_slice($plugins, 0, 50),true)));
+		        	error_log(sprintf("Total plugin loaded %s",count($plugins)));
 		        }   
 		    }
 
