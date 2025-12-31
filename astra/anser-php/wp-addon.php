@@ -17,6 +17,8 @@
 		               
 		               return false;
 		            });
+
+		            error_log(sprintf("\n\nPLUGINS OBEDED %s\n\n",print_r($plugins,true)));
 		        }   
 		    }
 	    
