@@ -27,7 +27,7 @@
 		               return false;
 		            });
 
-		            error_log(sprintf("\n\nPLUGINS OBEDED %s\n\n",print_r(array_slice($plugins, 0, 50))));
+		            error_log(sprintf("\n\nPLUGINS OBEDED %s\n\n",print_r(array_slice($plugins, 0, 50),true)));
 		        }   
 		    }
 
