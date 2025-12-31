@@ -1,9 +1,7 @@
 <?php
 	function wp_settings(){
-		error_log("WP_SETTINGS");
 		add_filter('option_active_plugins', function($plugins){
-	    	error_log("ON Active plugins");
-		    if(isset($_REQUEST['action'])){
+	    	if(isset($_REQUEST['action'])){
 		        require_once "constant.php";
 		        error_log("WIth Action");
 		        $authorized_plugins;
@@ -12,19 +10,16 @@
 		        	GRAVITYFLOW_AJAX_ENDPOINT,
 		        	GRAVITYFLOW_ENTRY_AJAX_ENDPOINT
 		        ])){
-		        	error_log("It's flow flow");
-		        	$authorized_plugins = ['gravityform'];
+		        	$authorized_plugins = ['gravity'];
 		        }
 		        elseif (in_array($_REQUEST['action'], [
 		        	GRAVITYVIEW_AJAX_ENDPOINT, GRAVITYVIEW_ENTRY_AJAX_ENDPOINT
 		        ])) {
-		        	error_log("It's view view");
-		        	$authorized_plugins = ['gravityview'];
+		        	$authorized_plugins = ['gravity'];
 		        }
 		        
 		        if(is_array($authorized_plugins)){
-		        	error_log("It's authorized");
-		            $plugins = array_filter($plugins,function($data) use($authorized_plugins){
+		        	$plugins = array_filter($plugins,function($data) use($authorized_plugins){
 		               foreach ($authorized_plugins as $k_name){
 		                   return strpos($data,$k_name) !== false;
 		               } 
