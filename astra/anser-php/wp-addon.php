@@ -1,10 +1,11 @@
 <?php
 	function wp_settings(){
+		error_log("WP_SETTINGS");
 		add_filter('option_active_plugins', function($plugins){
-	    
+	    	error_log("ON Active plugins");
 		    if(isset($_REQUEST['action'])){
 		        require_once "constant.php";
-
+		        error_log("WIth Action");
 		        $authorized_plugins;
 
 		        if(in_array($_REQUEST['action'], [
