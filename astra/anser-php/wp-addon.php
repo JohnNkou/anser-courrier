@@ -29,7 +29,7 @@
 		               return false;
 		            });
 
-		        	error_log(sprintf("Total plugin loaded after filter %s",count($plugins)));
+		        	//error_log(sprintf("Total plugin loaded after filter %s",count($plugins)));
 		        }   
 		    }
 
