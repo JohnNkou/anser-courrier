@@ -32,6 +32,8 @@
 		            error_log(sprintf("\n\nPLUGINS OBEDED %s\n\n",print_r($plugins,true)));
 		        }   
 		    }
+
+		    error_log("MUSTAFA");
 	    
 	    	//error_log(sprintf("\n\nPLUGINS NUMBER %s %s\n\n", count($plugins), $_SERVER['REQUEST_URI']));
 	    
