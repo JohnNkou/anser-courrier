@@ -1,7 +1,9 @@
 <?php
 	function wp_settings(){
-		add_filter('option_active_plugins', function($plugins){
-	    	if(isset($_REQUEST['action'])){
+		add_filter('option_active_plugins', "plugin_remover");
+
+		function plugin_remover($plugins){
+			if(isset($_REQUEST['action'])){
 		        require_once "constant.php";
 		        $authorized_plugins;
 
@@ -31,8 +33,10 @@
 		    }
 
 		    //error_log(sprintf("\n\nPLUGINS NUMBER %s %s\n\n", count($plugins), $_SERVER['REQUEST_URI']));
+
+		    remove_filter("option_active_plugins","plugin_remover");
 	    
 	    	return $plugins;
-		});
+		}
 	}
 ?>
