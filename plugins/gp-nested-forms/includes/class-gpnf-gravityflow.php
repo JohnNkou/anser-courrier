@@ -250,4 +250,3 @@ class GPNF_GravityFlow {
 function gpnf_gravityflow() {
 	return GPNF_GravityFlow::get_instance();
 }
-error_log("\n\nI'm kinda cool\n\n");
