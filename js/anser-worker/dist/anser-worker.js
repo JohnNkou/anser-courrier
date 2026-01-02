@@ -1,5 +1,5 @@
 // js/anser-worker/index.js
-var APP_NAME = "anser-worker-v1.1.31";
+var APP_NAME = "anser-worker-v1.1.32";
 var COOKIE_NAME = "u-e";
 self.addEventListener("install", (event) => {
   self.skipWaiting();
