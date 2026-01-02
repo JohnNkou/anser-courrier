@@ -11,7 +11,7 @@
 			        	GRAVITYFLOW_AJAX_ENDPOINT,
 			        	GRAVITYFLOW_ENTRY_AJAX_ENDPOINT
 			        ])){
-			        	$authorized_plugins = ['gravityform','gravityflow.php','gravityview.php','gp-','gravity-notifications.php','gravityview-advanced-filter','gravityview-az-filters','gravityview-calendar','gravityview-diy','gravityview-entry-revisions','gravityview-featured-entries','gravityview-importer','gravityview-inline-edit','gravityview-math','gravityview-multiple-forms'];
+			        	$authorized_plugins = ['gravityform','gravityflow.php','gravityview','gp-','gravity-notifications.php',];
 			        }
 			        elseif (in_array($_REQUEST['action'], [
 			        	GRAVITYVIEW_AJAX_ENDPOINT, GRAVITYVIEW_ENTRY_AJAX_ENDPOINT
