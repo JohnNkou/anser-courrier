@@ -694,6 +694,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
               if (choice.value == value) {
                 input.setAttribute("checked", "checked");
               }
+              input.setAttribute("id", inbox.id);
               label2.textContent = choice.text;
               input.type = "radio";
               input.name = "input_" + inbox.id;

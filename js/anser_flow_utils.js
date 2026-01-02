@@ -245,6 +245,8 @@ function build_entry_element({ inbox, inputAtts, atts, failedAtts, inbox_index, 
               input.setAttribute('checked','checked')
             }
 
+            input.setAttribute('id',inbox.id);
+
             label.textContent = choice.text;
             input.type = 'radio';
             input.name = 'input_' + inbox.id;
