@@ -378,6 +378,9 @@ function get_view($id){
 
 
 function load_gravityview(){
+    $profiler = new Profiler("load_gravityview");
+    $profiler->time("Start");
+
     if(!isset($_GET['id'])){
         http_response_code(400);
         return wp_send_json_error("No id given");
@@ -421,6 +424,8 @@ function load_gravityview(){
         $an['id'] = $id;
         array_push($results, $an);
     }
+
+    $profiler->timeEnd("load_gravityview");
 
     wp_send_json_success(["entries"=>$results, "total"=> $entries->total()]);
 }
