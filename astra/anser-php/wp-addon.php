@@ -10,7 +10,7 @@
 
 		        $plugins = array_filter($plugins,function($plugin) use($banned_plugins){
 		        	return array_find($banned_plugins,function($bann) use($plugin){
-		        		return strpos($plugin, $bann) !== false;
+		        		return strpos($plugin, $bann) === false;
 		        	});
 		        });
 
