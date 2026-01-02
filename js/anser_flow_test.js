@@ -552,6 +552,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         let section = document.createElement("section"), h5 = document.createElement("h5"), div_content = document.createElement("div");
         h5.className = "title";
         h5.textContent = inbox.label;
+        atts.append("class", build_index_class(inbox_index));
         setAttribute(section, atts);
         section.appendChild(h5);
         section.appendChild(div_content);
