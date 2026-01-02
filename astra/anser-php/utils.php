@@ -857,6 +857,7 @@ function build_inbox_editable_result($form,$entry,$current_step){
             }
 
             if($field->type == 'form'){
+                flogs("\nPLUGAPLUGA %s\n", print_r(wp_get_active_and_valid_plugins(),true));
                 gpnf_gravityflow();
 
                $_GET['lid'] = $entry['id'];
