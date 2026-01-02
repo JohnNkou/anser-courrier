@@ -256,13 +256,14 @@ class View_Renderer extends Renderer
 
  	protected function filter(){
         if($this->search_criteria){
+            flogs("HAS SEARCH CRITERIA MOTI");
             $search_fields = $this->search_criteria['search_fields'];
             $workflow_field = array_find($search_fields,function($field){
                 return $field["key"] == 'workflow_final_status';
             });
 
-            /*flogs("Workflow_field %s",print_r($workflow_field,true));
-            flogs("search_field %s",print_r($search_fields,true));*/
+            flogs("Workflow_field %s",print_r($workflow_field,true));
+            flogs("search_field %s",print_r($search_fields,true));
 
             if($workflow_field){
                 ?>
