@@ -359,12 +359,24 @@ class View_Renderer extends Renderer
 
         <script>
             if("serviceWorker" in navigator){
-                var url = "<?php echo $_SERVER['REQUEST_URI'] ?>";
-                navigator.serviceWorker.ready.then((workerRegistration)=>{
+                var url = location.origin + location.pathname,
+                serviceWorkerContainer = navigator.serviceWorker;
+
+                serviceWorkerContainer.oncontrollerchange = ()=>{
+                    let worker = serviceWorkerContainer.controller;
+
+                    console.log("Posting message on controllerchange");
+
+                    worker.postMessage({ type:'REGISTER', url: url });
+                }
+
+                serviceWorkerContainer.ready.then((workerRegistration)=>{
                     let worker = workerRegistration.active || workerRegistration.installing;
 
+                    console.log("Posting message on ready");
+
                     worker.postMessage({ type:'REGISTER', url });
-                })
+                });
             }
         </script>
  	<?php	
