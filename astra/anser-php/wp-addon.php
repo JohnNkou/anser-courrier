@@ -11,7 +11,7 @@
 		        	GRAVITYFLOW_AJAX_ENDPOINT,
 		        	GRAVITYFLOW_ENTRY_AJAX_ENDPOINT
 		        ])){
-		        	$authorized_plugins = ['gravityforms.php','gravityflow.php','gravityview.php','gravityformswebhooks','gravityformsadvancedpostcreation'];
+		        	$authorized_plugins = ['gravityforms.php','gravityflow.php','gravityview.php','gravityformswebhooks','gravityformsadvancedpostcreation','gp-nested-forms'];
 
 		        	if($method == 'POST'){
 		        		array_push($authorized_plugins, 'gravityflow');
