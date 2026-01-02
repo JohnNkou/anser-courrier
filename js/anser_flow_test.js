@@ -1422,7 +1422,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       if (id) {
         if (dependents[id]) {
           var inbox_index = field_ids[id], t_field = get_field_by_location(inbox_index, inboxes), classes = build_dependent_classe([{ fieldId: id }]), deps = document.querySelectorAll("." + classes), length = deps.length;
-          if (target.type == "radio" && !target.checked) {
+          if ((target.type == "radio" || target.type == "checkbox") && !target.checked) {
             t_field.leaf_value = "";
           } else {
             t_field.leaf_value = value2;
