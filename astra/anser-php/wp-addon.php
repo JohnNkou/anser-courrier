@@ -6,24 +6,12 @@
 				$method = $_SERVER['REQUEST_METHOD'];
 				require_once "constant.php";
 		        $authorized_plugins;
-		        $banned_plugins = ["prevent-","user-","um-","rcp-","hostinger","say-what","tuxedo-big-file","wp-","elementor","wordpress","bp-","astra","404","health-check","maintenance.php"];
 
-		        $plugins = array_filter($plugins,function($plugin) use($banned_plugins){
-		        	
-		        	foreach ($banned_plugins as $ban) {
-		        		if(strpos($plugin, $ban) !== false){
-		        			return false;
-		        		}
-		        	}
-
-		        	return true;
-		        });
-
-		        /*if(in_array($_REQUEST['action'], [
+		        if(in_array($_REQUEST['action'], [
 		        	GRAVITYFLOW_AJAX_ENDPOINT,
 		        	GRAVITYFLOW_ENTRY_AJAX_ENDPOINT
 		        ])){
-		        	$authorized_plugins = ['gravity','gf-', 'gravityforms.php','gravityflow.php','buddypress', 'gravityview.php','gp-', 'gravityformswebhooks','gravityformsadvancedpostcreation',];
+		        	$authorized_plugins = ['gravityview','gravityflow','gravityform','gravity-forms','gf-', 'gravityforms.php','gravityflow.php','gravityview.php','gp-', 'gravityformswebhooks','gravityformsadvancedpostcreation','spellbook'];
 
 		        	if($method == 'POST'){
 		        		array_push($authorized_plugins, 'gravityflow');
@@ -46,12 +34,11 @@
 		               return false;
 		            });
 
-		        }*/
-
-		        if(!$displayed){
-		        	error_log(sprintf("Total plugin loaded after custom filter %s",count($plugins)));
-		        	error_log(sprintf("Plugin after filter %s",print_r($plugins,true)));
-					$displayed = true;
+		            if(!$displayed){
+		            	error_log(sprintf("Total plugin loaded after custom filter %s",count($plugins)));
+		            	error_log(sprintf("Plugin after filter %s",print_r($plugins,true)));
+		            	$displayed = true;
+		            }
 		        }
 		    }
 		    /*elseif (strpos($_SERVER['REQUEST_URI'], 'reception-dg')) {
