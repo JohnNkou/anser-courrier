@@ -1392,7 +1392,14 @@ function display_entry(payloads, entry_data) {
         		t_field = get_field_by_location(inbox_index,inboxes),
         		classes = build_dependent_classe([{ fieldId: id }]), deps = document.querySelectorAll("." + classes), length = deps.length;
 
-        		t_field.leaf_value = value;
+        		if(target.type == 'radio'){
+        			if(!target.checked){
+        				t_field.leaf_value = '';
+        			}
+        		} 
+        		else{
+        			t_field.leaf_value = value;
+        		}
 
         		/*while (length--) {
           			deps[length].classList.toggle("hidden");
