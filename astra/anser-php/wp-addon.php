@@ -6,12 +6,17 @@
 				$method = $_SERVER['REQUEST_METHOD'];
 				require_once "constant.php";
 		        $authorized_plugins;
-		        $banned_plugins = ["prevent-","user-","um-","rcp-","hostinger"];
+		        $banned_plugins = ["prevent-","user-","um-","rcp-","hostinger","say-what","tuxedo-big-file"];
 
 		        $plugins = array_filter($plugins,function($plugin) use($banned_plugins){
-		        	return array_find($banned_plugins,function($bann) use($plugin){
-		        		return strpos($plugin, $bann) === false;
-		        	});
+		        	
+		        	foreach ($banned_plugins as $ban) {
+		        		if(strpos($plugin, $ban) !== false){
+		        			return false;
+		        		}
+		        	}
+
+		        	return true;
 		        });
 
 		        /*if(in_array($_REQUEST['action'], [
