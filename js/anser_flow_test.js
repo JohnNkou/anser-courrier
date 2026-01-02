@@ -1551,29 +1551,32 @@ var require_anser_view_util = __commonJS((exports2) => {
     display_data(entries, table);
   }
   function filter_handler(page_handler2, table) {
-    let filter_root = document.querySelector(".status_filter"), links = filter_root.querySelectorAll("a");
-    function reset_link_style() {
-      links.forEach((link) => {
-        link.classList.remove("active");
-      });
-    }
-    filter_root.onclick = function(event) {
-      event.preventDefault();
-      let target = event.target, value2 = target.getAttribute("data-value");
-      if (target.tagName.toLowerCase() == "a") {
-        if (!target.classList.contains("active")) {
-          reset_link_style();
-          target.classList.add("active");
-          if (value2) {
-            page_handler2.removeQueries([..._Page.filters, "gv_search"]);
-            page_handler2.addQueries({ filter_workflow_final_status: value2, mode: "all" });
-          } else {
-            page_handler2.removeQueries(["filter_workflow_final_status"]);
+    let filter_root = document.querySelector(".status_filter"), links = filter_root && filter_root.querySelectorAll("a");
+    if (filter_root) {
+      let reset_link_style2 = function() {
+        links.forEach((link) => {
+          link.classList.remove("active");
+        });
+      };
+      var reset_link_style = reset_link_style2;
+      filter_root.onclick = function(event) {
+        event.preventDefault();
+        let target = event.target, value2 = target.getAttribute("data-value");
+        if (target.tagName.toLowerCase() == "a") {
+          if (!target.classList.contains("active")) {
+            reset_link_style2();
+            target.classList.add("active");
+            if (value2) {
+              page_handler2.removeQueries([..._Page.filters, "gv_search"]);
+              page_handler2.addQueries({ filter_workflow_final_status: value2, mode: "all" });
+            } else {
+              page_handler2.removeQueries(["filter_workflow_final_status"]);
+            }
+            page_handler2.load_data({}, 0).then((json_response) => result_handler(json_response, table));
           }
-          page_handler2.load_data({}, 0).then((json_response) => result_handler(json_response, table));
         }
-      }
-    };
+      };
+    }
   }
   function display_data(entries, table) {
     let trs = "", tbody = table.querySelector("tbody");

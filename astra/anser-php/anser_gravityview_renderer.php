@@ -371,7 +371,7 @@ class View_Renderer extends Renderer
  	}
 
  	protected function register_scripts(){
- 		wp_enqueue_script('gravityview-ajax','/js/anser_view_test.js',[], null, true);
+ 		wp_enqueue_script('gravityview-ajax','/js/anser_view_test.js',[], '1.1', true);
         wp_localize_script('gravityview-ajax',JS_AJAX_NAME, [
         	'ajax_url' => admin_url('admin-ajax.php'),
         	'view_action'=> GRAVITYVIEW_AJAX_ENDPOINT,

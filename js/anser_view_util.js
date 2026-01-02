@@ -8,34 +8,35 @@ function result_handler(json_response,table){
 
 function filter_handler(page_handler,table){
 	let filter_root = document.querySelector('.status_filter'),
-	links = filter_root.querySelectorAll('a');
+	links = filter_root && filter_root.querySelectorAll('a');
 
+	if(filter_root){
+		function reset_link_style(){
+			links.forEach((link)=>{
+				link.classList.remove('active');
+			})
+		}
 
-	function reset_link_style(){
-		links.forEach((link)=>{
-			link.classList.remove('active');
-		})
-	}
+		filter_root.onclick = function(event){
+			event.preventDefault();
 
-	filter_root.onclick = function(event){
-		event.preventDefault();
+			let target = event.target,
+			value = target.getAttribute('data-value');
 
-		let target = event.target,
-		value = target.getAttribute('data-value');
+			if(target.tagName.toLowerCase() == 'a'){
+				if(!target.classList.contains('active')){
+					reset_link_style();
+					target.classList.add('active');
+					if(value){
+						page_handler.removeQueries([..._Page.filters,'gv_search']);
+						page_handler.addQueries({ filter_workflow_final_status: value, mode:'all' });
+					}
+					else{
+						page_handler.removeQueries(["filter_workflow_final_status"]);
+					}
 
-		if(target.tagName.toLowerCase() == 'a'){
-			if(!target.classList.contains('active')){
-				reset_link_style();
-				target.classList.add('active');
-				if(value){
-					page_handler.removeQueries([..._Page.filters,'gv_search']);
-					page_handler.addQueries({ filter_workflow_final_status: value, mode:'all' });
+					page_handler.load_data({},0).then((json_response)=> result_handler(json_response,table));
 				}
-				else{
-					page_handler.removeQueries(["filter_workflow_final_status"]);
-				}
-
-				page_handler.load_data({},0).then((json_response)=> result_handler(json_response,table));
 			}
 		}
 	}
