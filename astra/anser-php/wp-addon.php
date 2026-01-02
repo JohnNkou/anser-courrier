@@ -11,7 +11,7 @@
 		        	GRAVITYFLOW_AJAX_ENDPOINT,
 		        	GRAVITYFLOW_ENTRY_AJAX_ENDPOINT
 		        ])){
-		        	$authorized_plugins = ['gravityform','gravityflow.php','gravityview.php'];
+		        	$authorized_plugins = ['gravityforms.php','gravityflow.php','gravityview.php'];
 
 		        	if($method == 'POST'){
 		        		array_push($authorized_plugins, 'gravityflow');
