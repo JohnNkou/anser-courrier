@@ -857,7 +857,13 @@ function build_inbox_editable_result($form,$entry,$current_step){
             }
 
             if($field->type == 'form'){
-                flogs("\nCLASS EXIST OUF %s\n", class_exists("GPNF_GravityFlow"));
+                if(class_exists("GPNF_GravityFlow")){
+                    flogs("\nGPNF_GravityFlow CLASS EXIST\n");
+                }
+                else{
+                    flogs("\n GPNF_GravityFlow don't exist\n");
+                }
+
                 gpnf_gravityflow();
 
                $_GET['lid'] = $entry['id'];
