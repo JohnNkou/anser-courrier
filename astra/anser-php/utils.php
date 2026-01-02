@@ -744,12 +744,8 @@ function get_workflow_info($current_step,$form, $entry){
 function get_upload_data_settings($html){
     preg_match("/data-settings=['\"]([^'\"]+?)['\"]/", $html, $matches);
 
-    error_log("MATCH IS ".print_r($matches,true));
-
     if(count($matches) > 1){
         $j = htmlspecialchars_decode($matches[1]);
-        error_log("JOLIADED $j");
-        error_log("FINKA ".print_r(json_decode($j),true));
         return json_decode(htmlspecialchars_decode($matches[1]));
     }
 
