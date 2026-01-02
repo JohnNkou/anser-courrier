@@ -3,7 +3,7 @@
 		$displayed = false;
 		add_filter('option_active_plugins', function($plugins) use(&$displayed){
 			if(isset($_REQUEST['action'])){
-				if($_SERVER['REQUEST_METHOD'] == 'GET'){
+				if(true/*$_SERVER['REQUEST_METHOD'] == 'GET'*/){
 					require_once "constant.php";
 			        $authorized_plugins;
 
@@ -11,7 +11,7 @@
 			        	GRAVITYFLOW_AJAX_ENDPOINT,
 			        	GRAVITYFLOW_ENTRY_AJAX_ENDPOINT
 			        ])){
-			        	$authorized_plugins = ['gravityform','gravityflow.php','gravityview.php','gp-'];
+			        	$authorized_plugins = ['gravityform','gravityflow.php','gravityview.php','gp-','gravity-notifications.php'];
 			        }
 			        elseif (in_array($_REQUEST['action'], [
 			        	GRAVITYVIEW_AJAX_ENDPOINT, GRAVITYVIEW_ENTRY_AJAX_ENDPOINT
