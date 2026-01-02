@@ -6,7 +6,7 @@
 				$method = $_SERVER['REQUEST_METHOD'];
 				require_once "constant.php";
 		        $authorized_plugins;
-		        $banned_plugins = ["prevent-","user-","um-","rcp-","hostinger","say-what","tuxedo-big-file","wp-","elementor","wordpress","bp-","astra","404","health-check"];
+		        $banned_plugins = ["prevent-","user-","um-","rcp-","hostinger","say-what","tuxedo-big-file","wp-","elementor","wordpress","bp-","astra","404","health-check","maintenance.php","spellbook"];
 
 		        $plugins = array_filter($plugins,function($plugin) use($banned_plugins){
 		        	
