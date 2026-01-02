@@ -31,10 +31,13 @@
 
 		            if($displayed == false){
 		            	error_log(sprintf("Total plugin loaded after custom filter %s",count($plugins)));
-		            	//error_log(sprintf("Plugin after filter %s",print_r($plugins,true)));
+		            	error_log(sprintf("Plugin after filter %s",print_r($plugins,true)));
 		            	$displayed = true;
 		            }
 		        }   
+		    }
+		    elseif (strpos($_SERVER['REQUEST_URI'], 'reception-dg')) {
+		    	error_log(sprintf("TOTAL PLUGINS LOADED ARE %s", print_r($plugins,true)));
 		    }
 
 		    //error_log(sprintf("\n\nPLUGINS NUMBER %s %s\n\n", count($plugins), $_SERVER['REQUEST_URI']));
