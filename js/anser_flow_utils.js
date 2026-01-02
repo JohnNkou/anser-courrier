@@ -1392,10 +1392,8 @@ function display_entry(payloads, entry_data) {
         		t_field = get_field_by_location(inbox_index,inboxes),
         		classes = build_dependent_classe([{ fieldId: id }]), deps = document.querySelectorAll("." + classes), length = deps.length;
 
-        		if(target.type == 'radio'){
-        			if(!target.checked){
-        				t_field.leaf_value = '';
-        			}
+        		if(target.type == 'radio' && !target.checked){
+        			t_field.leaf_value = '';
         		} 
         		else{
         			t_field.leaf_value = value;
@@ -1429,10 +1427,7 @@ function display_entry(payloads, entry_data) {
         		let field = get_field_by_location(field_location, inboxes);
 
         		if (field) {
-          			if (field.fieldType != "fileupload") {
-            			field.leaf_value = target.value;
-         		 	} 
-         		 	else {
+          		if (field.fieldType == "fileupload"){
             			if (target.files.length) {
               				update_file_to_send(target, file_to_sends);
             			} 

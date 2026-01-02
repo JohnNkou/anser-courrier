@@ -1422,7 +1422,11 @@ var require_anser_flow_utils = __commonJS((exports2) => {
       if (id) {
         if (dependents[id]) {
           var inbox_index = field_ids[id], t_field = get_field_by_location(inbox_index, inboxes), classes = build_dependent_classe([{ fieldId: id }]), deps = document.querySelectorAll("." + classes), length = deps.length;
-          t_field.leaf_value = value2;
+          if (target.type == "radio" && !target.checked) {
+            t_field.leaf_value = "";
+          } else {
+            t_field.leaf_value = value2;
+          }
         }
         dependents[id] && dependents[id].forEach((field_id) => {
           let inbox_index2 = field_ids[field_id], field = get_field_by_location(inbox_index2, inboxes), node = document.querySelector("." + build_index_class(inbox_index2));
@@ -1440,9 +1444,7 @@ var require_anser_flow_utils = __commonJS((exports2) => {
         if (field_location) {
           let field = get_field_by_location(field_location, inboxes);
           if (field) {
-            if (field.fieldType != "fileupload") {
-              field.leaf_value = target.value;
-            } else {
+            if (field.fieldType == "fileupload") {
               if (target.files.length) {
                 update_file_to_send(target, file_to_sends);
               } else {
