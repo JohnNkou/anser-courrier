@@ -10,7 +10,7 @@
 		        	GRAVITYFLOW_AJAX_ENDPOINT,
 		        	GRAVITYFLOW_ENTRY_AJAX_ENDPOINT
 		        ])){
-		        	$authorized_plugins = ['gravityform','gravityflow.php','gravityview.php'];
+		        	$authorized_plugins = ['gravityform','gravityflow.php','gravityview.php','gp-'];
 		        }
 		        elseif (in_array($_REQUEST['action'], [
 		        	GRAVITYVIEW_AJAX_ENDPOINT, GRAVITYVIEW_ENTRY_AJAX_ENDPOINT
@@ -36,11 +36,10 @@
 		            }
 		        }   
 		    }
-		    elseif (strpos($_SERVER['REQUEST_URI'], 'reception-dg')) {
+		    /*elseif (strpos($_SERVER['REQUEST_URI'], 'reception-dg')) {
 		    	error_log(sprintf("TOTAL PLUGINS LOADED ARE %s", print_r($plugins,true)));
-		    }
+		    }*/
 
-		    //error_log(sprintf("\n\nPLUGINS NUMBER %s %s\n\n", count($plugins), $_SERVER['REQUEST_URI']));
 	    
 	    	return $plugins;
 		});
