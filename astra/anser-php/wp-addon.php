@@ -22,6 +22,10 @@
 		        ])) {
 		        	$authorized_plugins = ['gravityview.php','gravityforms.php','gravityview-diy','gravityview-entry-revisions','gravityview-advanced-filter','gravityview-featured-entries','gravityview-multiple-forms'];
 		        }
+
+		        if(!$displayed){
+		        	error_log(sprintf("INITIAL PLUGIN %s", print_r($plugins,true)));
+		        }
 		        
 		        if(isset($authorized_plugins) && is_array($authorized_plugins)){
 		        	$plugins = array_filter($plugins,function($data) use($authorized_plugins){
@@ -35,7 +39,6 @@
 		            });
 
 		            if(!$displayed){
-		            	error_log(sprintf("INITIAL PLUGIN %s", print_r($plugins,true)));
 		            	error_log(sprintf("Total plugin loaded after custom filter %s",count($plugins)));
 		            	error_log(sprintf("Plugin after filter %s",print_r($plugins,true)));
 		            	$displayed = true;
