@@ -20,7 +20,7 @@
 		        elseif (in_array($_REQUEST['action'], [
 		        	GRAVITYVIEW_AJAX_ENDPOINT, GRAVITYVIEW_ENTRY_AJAX_ENDPOINT
 		        ])) {
-		        	$authorized_plugins = ['gravityview.php','gravityforms.php',/*'gravityview-diy','gravityview-entry-revisions','gravityview-advanced-filter',*/'gravityview-featured-entries','gravityview-multiple-forms','spellbook'];
+		        	$authorized_plugins = ['gravityview.php','gravityforms.php',/*'gravityview-diy','gravityview-entry-revisions',*/'gravityview-advanced-filter','gravityview-featured-entries',/*'gravityview-multiple-forms',*/'spellbook'];
 		        }
 
 		        if(isset($authorized_plugins) && is_array($authorized_plugins)){
